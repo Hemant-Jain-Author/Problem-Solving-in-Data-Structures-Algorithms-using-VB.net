@@ -79,7 +79,7 @@ Public Class Searching
 		Dim mid As Integer
 
 		Do While low <= high
-			mid = low + (high - low) \ 2 ' To avoid the overflow
+			mid = (low + high) \ 2
 			If arr(mid) = value Then
 				Return True
 			ElseIf arr(mid) < value Then
@@ -97,7 +97,7 @@ Public Class Searching
 		If low > high Then
 			Return False
 		End If
-		Dim mid As Integer = low + (high - low) \ 2 ' To avoid the overflow
+		Dim mid As Integer = (low + high) \ 2
 		If arr(mid) = value Then
 			Return True
 		ElseIf arr(mid) < value Then
