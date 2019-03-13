@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 
 Public Class PriorityQueue(Of T As IComparable(Of T))
 	Private Const CAPACITY As Integer = 32
@@ -7,7 +7,7 @@ Public Class PriorityQueue(Of T As IComparable(Of T))
 	Private isMinHeap As Boolean
 
 	Public Sub New(Optional ByVal isMin As Boolean = True)
-		arr = New T(CAPACITY - 1){}
+		arr = New T(CAPACITY - 1) {}
 		Count = 0
 		isMinHeap = isMin
 	End Sub
@@ -73,8 +73,8 @@ Public Class PriorityQueue(Of T As IComparable(Of T))
 			doubleSize()
 		End If
 
-'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
-'ORIGINAL LINE: arr[Count++] = value;
+		'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
+		'ORIGINAL LINE: arr[Count++] = value;
 		arr(Count) = value
 		Count += 1
 		proclateUp(Count - 1)
@@ -82,7 +82,7 @@ Public Class PriorityQueue(Of T As IComparable(Of T))
 
 	Private Sub doubleSize()
 		Dim old() As T = arr
-		arr = New T((arr.Length * 2) - 1){}
+		arr = New T((arr.Length * 2) - 1) {}
 		Array.Copy(old, 0, arr, 0, Count)
 	End Sub
 
@@ -100,7 +100,7 @@ Public Class PriorityQueue(Of T As IComparable(Of T))
 
 	Public Sub print()
 		For i As Integer = 0 To Count - 1
-			Console.Write(arr(i) & " ")
+			Console.Write(arr(i))
 		Next i
 	End Sub
 
@@ -130,7 +130,7 @@ End Class
 
 Public Class PQDemo
 	Public Shared Sub Main(ByVal args() As String)
-		Dim a() As Integer = { 1, 9, 6, 7, 8, 0, 2, 4, 5, 3 }
+		Dim a() As Integer = {1, 9, 6, 7, 8, 0, 2, 4, 5, 3}
 		Dim hp As New PriorityQueue(Of Integer)(a, True)
 		hp.print()
 		Console.WriteLine()
@@ -183,9 +183,11 @@ Public Class MedianHeap
 			Return minHeap.peek()
 		End If
 	End Function
+End Class
 
-	Public Shared Sub Main(ByVal args() As String)
-		Dim arr() As Integer = { 1, 9, 2, 8, 3, 7, 4, 6, 5, 1 }
+Module Module1
+	Public Sub Main(ByVal args() As String)
+		Dim arr() As Integer = {1, 9, 2, 8, 3, 7, 4, 6, 5, 1}
 		Dim hp As New MedianHeap()
 
 		For i As Integer = 0 To 9
@@ -193,4 +195,4 @@ Public Class MedianHeap
 			Console.WriteLine("Median after insertion of " & arr(i) & " is  " & hp.median())
 		Next i
 	End Sub
-End Class
+End Module

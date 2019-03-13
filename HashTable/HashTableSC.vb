@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 
 Public Class HashTableSC
 	Private tableSize As Integer
@@ -16,7 +16,7 @@ Public Class HashTableSC
 
 	Public Sub New()
 		tableSize = 512
-		listArray = New Node(tableSize - 1){}
+		listArray = New Node(tableSize - 1) {}
 		For i As Integer = 0 To tableSize - 1
 			listArray(i) = Nothing
 		Next i
@@ -53,12 +53,18 @@ Public Class HashTableSC
 
 	Public Sub print()
 		For i As Integer = 0 To tableSize - 1
-			Console.WriteLine("printing for index value :: " & i & "List of value printing :: ")
 			Dim head As Node = listArray(i)
+
+			If head IsNot Nothing Then
+				Console.WriteLine("")
+				Console.Write("Index :: " & i & " Value are :: ")
+			End If
+
 			Do While head IsNot Nothing
-				Console.WriteLine(head.value)
+				Console.Write(head.value)
 				head = head.next
 			Loop
+
 		Next i
 	End Sub
 
@@ -73,16 +79,18 @@ Public Class HashTableSC
 		Loop
 		Return False
 	End Function
-
-	Public Shared Sub Main(ByVal args() As String)
-		Dim ht As New HashTableSC()
-
-		For i As Integer = 100 To 109
-			ht.add(i)
-		Next i
-		Console.WriteLine("search 100 :: " & ht.find(100))
-		Console.WriteLine("remove 100 :: " & ht.remove(100))
-		Console.WriteLine("search 100 :: " & ht.find(100))
-		Console.WriteLine("remove 100 :: " & ht.remove(100))
-	End Sub
 End Class
+
+
+Module Module1
+	Public Sub Main(ByVal args() As String)
+		Dim ht As New HashTableSC()
+		ht.add(1)
+		ht.add(2)
+		ht.add(3)
+		ht.print()
+		Console.WriteLine(ht.remove(1))
+		Console.WriteLine(ht.remove(4))
+		ht.print()
+	End Sub
+End Module

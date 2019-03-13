@@ -1,8 +1,8 @@
-﻿Imports System
+Imports System
 Imports System.Collections.Generic
 
-Friend Class StackDemo
-	Public Shared Sub Main(ByVal args() As String)
+Module Module1
+	Public Sub Main(ByVal args() As String)
 		Dim stk As New Stack(Of Integer)()
 		stk.Push(1)
 		stk.Push(2)
@@ -15,4 +15,4 @@ Friend Class StackDemo
 			Console.WriteLine("Pop from stack: " & stk.Pop())
 		Next i
 	End Sub
-End Class
+End Module

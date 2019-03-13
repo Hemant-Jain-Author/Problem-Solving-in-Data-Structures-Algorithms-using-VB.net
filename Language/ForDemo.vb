@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 
 Public Class ForDemo
 	Private Const text As String = "Hello, World!"

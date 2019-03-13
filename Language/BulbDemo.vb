@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 
 Friend Class Bulb2
 	'Class Variables 

@@ -1,9 +1,9 @@
-﻿Imports System
+Imports Microsoft.VisualBasic
+Imports System
 Imports System.Collections.Generic
 
-
-Public Class ListDemo
-	Public Shared Sub Main(ByVal args() As String)
+Module Module1
+	Public Sub Main(ByVal args() As String)
 		Dim al As New List(Of Integer)()
 		al.Add(1) ' add 1 to the end of the list
 		al.Add(2) ' add 2 to the end of the list
@@ -22,15 +22,17 @@ Public Class ListDemo
 		al.Clear() ' all the elements of List are removed.
 		Console.WriteLine(ControlChars.Lf & "List IsEmpty after clear:" & (al.Count = 0))
 	End Sub
-End Class
 
-'
-' Contents of List after adding 1,2,3,4:1234
-'Contents of List at index 0:1
-'List Size:4
-'List IsEmpty:False
-'
-'List Size after element removed:3
-'
-'List IsEmpty after clear:True
-'
+
+	'
+	' Contents of List after adding 1,2,3,4:1234
+	'Contents of List at index 0:1
+	'List Size:4
+	'List IsEmpty:False
+	'
+	'List Size after element removed:3
+	'
+	'List IsEmpty after clear:True
+	'
+
+End Module

@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 
 Public Class BubbleSort
 	Private Shared Function less(ByVal value1 As Integer, ByVal value2 As Integer) As Boolean

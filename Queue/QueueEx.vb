@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 Imports System.Collections.Generic
 
 Public Class QueueEx
@@ -34,9 +34,9 @@ Public Class QueueEx
 	Public Shared Sub Main1(ByVal args() As String)
 		' Testing code
 		Dim tour(,) As Integer = {
-			{8, 6},
-			{1, 4},
-			{7, 6}
+			{ 8, 6 },
+			{ 1, 4 },
+			{ 7, 6 }
 		}
 		Console.WriteLine(" Circular Tour : " & CircularTour(tour, 3))
 	End Sub
@@ -51,6 +51,8 @@ Public Class QueueEx
 		que.Enqueue(src)
 		Do While que.Count <> 0
 			value = que.Dequeue()
+'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
+'ORIGINAL LINE: arr[index++] = value;
 			arr(index) = value
 			index += 1
 
@@ -97,7 +99,7 @@ Public Class QueueEx
 	End Sub
 
 	Public Shared Sub Main3(ByVal args() As String)
-		Dim arr() As Integer = {11, 2, 75, 92, 59, 90, 55}
+		Dim arr() As Integer = { 11, 2, 75, 92, 59, 90, 55 }
 		Dim k As Integer = 3
 		maxSlidingWindows(arr, 7, 3)
 		' Output 75, 92, 92, 92, 90
@@ -126,7 +128,7 @@ Public Class QueueEx
 	End Function
 
 	Public Shared Sub Main4(ByVal args() As String)
-		Dim arr() As Integer = {11, 2, 75, 92, 59, 90, 55}
+		Dim arr() As Integer = { 11, 2, 75, 92, 59, 90, 55 }
 		minOfMaxSlidingWindows(arr, 7, 3)
 		' Output 75
 	End Sub
@@ -153,7 +155,7 @@ Public Class QueueEx
 	End Sub
 
 	Public Shared Sub Main5(ByVal args() As String)
-		Dim arr() As Integer = {11, 2, 75, 92, 59, 90, 55}
+		Dim arr() As Integer = { 11, 2, 75, 92, 59, 90, 55 }
 		Dim k As Integer = 3
 		maxOfMinSlidingWindows(arr, 7, 3)
 		' Output 59, as minimum values in sliding windows are [2, 2, 59, 59, 55]
@@ -182,7 +184,7 @@ Public Class QueueEx
 	End Sub
 
 	Public Shared Sub Main6(ByVal args() As String)
-		Dim arr() As Integer = {3, -2, -6, 10, -14, 50, 14, 21}
+		Dim arr() As Integer = { 3, -2, -6, 10, -14, 50, 14, 21 }
 		Dim k As Integer = 3
 		firstNegSlidingWindows(arr, 8, 3)
 		' Output [-2, -2, -6, -14, -14, NAN]
@@ -196,4 +198,4 @@ Public Class QueueEx
 		Main5(args)
 		Main6(args)
 	End Sub
-End Class
+}

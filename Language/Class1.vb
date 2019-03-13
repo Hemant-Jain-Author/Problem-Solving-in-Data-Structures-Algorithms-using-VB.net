@@ -1,4 +1,4 @@
-﻿Public Class Bulb3
+Public Class Bulb3
 	Private isOn As Boolean = False
 
 	Public Overridable Sub turnOn()

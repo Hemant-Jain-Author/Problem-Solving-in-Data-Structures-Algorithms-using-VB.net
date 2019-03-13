@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 
 Public Class TwoStack
 	Private ReadOnly MAX_SIZE As Integer = 50
@@ -9,7 +9,7 @@ Public Class TwoStack
 	Public Sub New()
 		top1 = -1
 		top2 = MAX_SIZE
-		data = New Integer(MAX_SIZE - 1) {}
+		data = New Integer(MAX_SIZE - 1){}
 	End Sub
 
 	Public Shared Sub Main(ByVal args() As String)
@@ -26,26 +26,32 @@ Public Class TwoStack
 		Next i
 	End Sub
 
-	Public Sub StackPush1(ByVal value As Integer)
+	Public Overridable Sub StackPush1(ByVal value As Integer)
 		If top1 < top2 - 1 Then
 			top1 += 1
+'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
+'ORIGINAL LINE: data[++top1] = value;
 			data(top1) = value
 		Else
 			Console.Write("Stack is Full!")
 		End If
 	End Sub
 
-	Public Sub StackPush2(ByVal value As Integer)
+	Public Overridable Sub StackPush2(ByVal value As Integer)
 		If top1 < top2 - 1 Then
 			top2 -= 1
+'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
+'ORIGINAL LINE: data[--top2] = value;
 			data(top2) = value
 		Else
 			Console.Write("Stack is Full!")
 		End If
 	End Sub
 
-	Public Function StackPop1() As Integer
+	Public Overridable Function StackPop1() As Integer
 		If top1 >= 0 Then
+'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
+'ORIGINAL LINE: int value = data[top1--];
 			Dim value As Integer = data(top1)
 			top1 -= 1
 			Return value
@@ -55,8 +61,10 @@ Public Class TwoStack
 		Return -999
 	End Function
 
-	Public Function StackPop2() As Integer
+	Public Overridable Function StackPop2() As Integer
 		If top2 < MAX_SIZE Then
+'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
+'ORIGINAL LINE: int value = data[top2++];
 			Dim value As Integer = data(top2)
 			top2 += 1
 			Return value

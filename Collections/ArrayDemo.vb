@@ -1,7 +1,7 @@
-﻿Imports System
+Imports System
 
-Public Class ArrayDemo
-	Private Shared Sub onedimension()
+Module Module1
+	Private Sub onedimension()
 		Dim arr(9) As Integer
 		For i As Integer = 0 To 9
 			arr(i) = i
@@ -13,7 +13,7 @@ Public Class ArrayDemo
 	End Sub
 
 
-	Private Shared Sub twodimension()
+	Private Sub twodimension()
 		Dim arr(3, 3) As Integer
 
 		For i As Integer = 0 To 3
@@ -30,8 +30,8 @@ Public Class ArrayDemo
 		Next i
 	End Sub
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main()
 		onedimension()
 		twodimension()
 	End Sub
-End Class
+End Module

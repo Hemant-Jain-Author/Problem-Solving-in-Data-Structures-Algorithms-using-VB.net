@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 
 Public Class DoublyCircularLinkedList
 	Private head As Node = Nothing

@@ -1,8 +1,6 @@
-﻿Imports System
+Imports Microsoft.VisualBasic
+Imports System
 Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
-Imports System.Threading.Tasks
 
 Public Class GraphAM
 	Friend count As Integer
@@ -34,13 +32,13 @@ Public Class GraphAM
 		Next i
 	End Sub
 
-	Public Shared Sub Main(ByVal args() As String)
-		Dim graph_Renamed As New GraphAM(4)
-		graph_Renamed.addUndirectedEdge(0, 1, 1)
-		graph_Renamed.addUndirectedEdge(0, 2, 1)
-		graph_Renamed.addUndirectedEdge(1, 2, 1)
-		graph_Renamed.addUndirectedEdge(2, 3, 1)
-		graph_Renamed.print()
+	Public Shared Sub main1()
+		Dim graph As New GraphAM(4)
+		graph.addUndirectedEdge(0, 1, 1)
+		graph.addUndirectedEdge(0, 2, 1)
+		graph.addUndirectedEdge(1, 2, 1)
+		graph.addUndirectedEdge(2, 3, 1)
+		graph.print()
 	End Sub
 
 	Private Class Edge
@@ -155,7 +153,7 @@ Public Class GraphAM
 		Next i
 	End Sub
 
-	Public Shared Sub main40(ByVal args() As String)
+	Public Shared Sub main2()
 		Dim gph As New GraphAM(9)
 		gph.addUndirectedEdge(0, 1, 4)
 		gph.addUndirectedEdge(0, 7, 8)
@@ -176,7 +174,7 @@ Public Class GraphAM
 		dijkstra(gph, 0)
 	End Sub
 
-	Public Shared Sub main41(ByVal args() As String)
+	Public Shared Sub main3()
 		Dim gph As New GraphAM(9)
 		gph.addUndirectedEdge(0, 2, 1)
 		gph.addUndirectedEdge(1, 2, 5)
@@ -194,20 +192,21 @@ Public Class GraphAM
 		dijkstra(gph, 1)
 	End Sub
 
-	Public Shared Function hamiltonianPathUtil(ByVal graph_Renamed As GraphAM, ByVal path() As Integer, ByVal pSize As Integer, ByVal added() As Integer) As Boolean
+	Public Shared Function hamiltonianPathUtil(ByVal graph As GraphAM, ByVal path() As Integer, ByVal pSize As Integer, ByVal added() As Integer) As Boolean
 		' Base case full length path is found
-		If pSize = graph_Renamed.count Then
+		If pSize = graph.count Then
 			Return True
 		End If
-		For vertex As Integer = 0 To graph_Renamed.count - 1
+		For vertex As Integer = 0 To graph.count - 1
 			' there is a path from last element and next vertex
 			' and next vertex is not already included in path.
-			If pSize = 0 OrElse (graph_Renamed.adj(path(pSize - 1), vertex) = 1 AndAlso added(vertex) = 0) Then
-
+			If pSize = 0 OrElse (graph.adj(path(pSize - 1), vertex) = 1 AndAlso added(vertex) = 0) Then
+				'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
+				'ORIGINAL LINE: path[pSize++] = vertex;
 				path(pSize) = vertex
 				pSize += 1
 				added(vertex) = 1
-				If hamiltonianPathUtil(graph_Renamed, path, pSize, added) Then
+				If hamiltonianPathUtil(graph, path, pSize, added) Then
 					Return True
 				End If
 				' backtracking
@@ -218,13 +217,13 @@ Public Class GraphAM
 		Return False
 	End Function
 
-	Public Shared Function hamiltonianPath(ByVal graph_Renamed As GraphAM) As Boolean
-		Dim path(graph_Renamed.count - 1) As Integer
-		Dim added(graph_Renamed.count - 1) As Integer
+	Public Shared Function hamiltonianPath(ByVal graph As GraphAM) As Boolean
+		Dim path(graph.count - 1) As Integer
+		Dim added(graph.count - 1) As Integer
 
-		If hamiltonianPathUtil(graph_Renamed, path, 0, added) Then
+		If hamiltonianPathUtil(graph, path, 0, added) Then
 			Console.WriteLine("Hamiltonian Path found :: ")
-			For i As Integer = 0 To graph_Renamed.count - 1
+			For i As Integer = 0 To graph.count - 1
 				Console.WriteLine(" " & path(i))
 			Next i
 			Return True
@@ -233,24 +232,25 @@ Public Class GraphAM
 		Return False
 	End Function
 
-	Public Shared Function hamiltonianCycleUtil(ByVal graph_Renamed As GraphAM, ByVal path() As Integer, ByVal pSize As Integer, ByVal added() As Integer) As Boolean
+	Public Shared Function hamiltonianCycleUtil(ByVal graph As GraphAM, ByVal path() As Integer, ByVal pSize As Integer, ByVal added() As Integer) As Boolean
 		' Base case full length path is found this last check can be modified to make it a path.
-		If pSize = graph_Renamed.count Then
-			If graph_Renamed.adj(path(pSize - 1), path(0)) = 1 Then
+		If pSize = graph.count Then
+			If graph.adj(path(pSize - 1), path(0)) = 1 Then
 				path(pSize) = path(0)
 				Return True
 			Else
 				Return False
 			End If
 		End If
-		For vertex As Integer = 0 To graph_Renamed.count - 1
+		For vertex As Integer = 0 To graph.count - 1
 			' there is a path from last element and next vertex
-			If pSize = 0 OrElse (graph_Renamed.adj(path(pSize - 1), vertex) = 1 AndAlso added(vertex) = 0) Then
-
+			If pSize = 0 OrElse (graph.adj(path(pSize - 1), vertex) = 1 AndAlso added(vertex) = 0) Then
+				'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
+				'ORIGINAL LINE: path[pSize++] = vertex;
 				path(pSize) = vertex
 				pSize += 1
 				added(vertex) = 1
-				If hamiltonianCycleUtil(graph_Renamed, path, pSize, added) Then
+				If hamiltonianCycleUtil(graph, path, pSize, added) Then
 					Return True
 				End If
 				' backtracking
@@ -261,12 +261,12 @@ Public Class GraphAM
 		Return False
 	End Function
 
-	Public Shared Function hamiltonianCycle(ByVal graph_Renamed As GraphAM) As Boolean
-		Dim path(graph_Renamed.count) As Integer
-		Dim added(graph_Renamed.count - 1) As Integer
-		If hamiltonianCycleUtil(graph_Renamed, path, 0, added) Then
+	Public Shared Function hamiltonianCycle(ByVal graph As GraphAM) As Boolean
+		Dim path(graph.count) As Integer
+		Dim added(graph.count - 1) As Integer
+		If hamiltonianCycleUtil(graph, path, 0, added) Then
 			Console.WriteLine("Hamiltonian Cycle found :: ")
-			For i As Integer = 0 To graph_Renamed.count
+			For i As Integer = 0 To graph.count
 				Console.Write(" " & path(i))
 			Next i
 			Return True
@@ -275,9 +275,9 @@ Public Class GraphAM
 		Return False
 	End Function
 
-	Public Shared Sub main2(ByVal args() As String)
+	Public Shared Sub main4()
 		Dim count As Integer = 5
-		Dim graph_Renamed As New GraphAM(count)
+		Dim graph As New GraphAM(count)
 		Dim adj(,) As Integer = {
 			{0, 1, 0, 1, 0},
 			{1, 0, 1, 1, 0},
@@ -289,12 +289,12 @@ Public Class GraphAM
 		For i As Integer = 0 To count - 1
 			For j As Integer = 0 To count - 1
 				If adj(i, j) = 1 Then
-					graph_Renamed.addDirectedEdge(i, j, 1)
+					graph.addDirectedEdge(i, j, 1)
 				End If
 			Next j
 		Next i
-		Console.WriteLine("hamiltonianPath : " & hamiltonianPath(graph_Renamed))
-		Console.WriteLine("hamiltonianCycle : " & hamiltonianCycle(graph_Renamed))
+		Console.WriteLine("hamiltonianPath : " & hamiltonianPath(graph))
+		Console.WriteLine("hamiltonianCycle : " & hamiltonianCycle(graph))
 
 		Dim graph2 As New GraphAM(count)
 		Dim adj2(,) As Integer = {
@@ -316,7 +316,20 @@ Public Class GraphAM
 		Console.WriteLine("hamiltonianCycle :  " & hamiltonianCycle(graph2))
 	End Sub
 
+	Public Shared Sub Main()
+		main1()
+		main2()
+		main3()
+		main4()
+	End Sub
 End Class
+
+Module Module1
+	Public Sub Main(ByVal args() As String)
+		GraphAM.Main()
+	End Sub
+End Module
+
 
 Public Class PriorityQueue(Of T As IComparable(Of T))
 	Private Const CAPACITY As Integer = 32
@@ -390,7 +403,6 @@ Public Class PriorityQueue(Of T As IComparable(Of T))
 		If Count = arr.Length Then
 			doubleSize()
 		End If
-
 		arr(Count) = value
 		Count += 1
 		proclateUp(Count - 1)

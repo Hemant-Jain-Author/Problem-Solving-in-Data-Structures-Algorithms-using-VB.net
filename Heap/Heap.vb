@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 
 Public Class Heap
 	Private Const CAPACITY As Integer = 32
@@ -7,7 +7,7 @@ Public Class Heap
 	Private isMinHeap As Boolean
 
 	Public Sub New(Optional ByVal isMin As Boolean = True)
-		arr = New Integer(CAPACITY - 1){}
+		arr = New Integer(CAPACITY - 1) {}
 		Count = 0
 		isMinHeap = isMin
 	End Sub
@@ -72,9 +72,6 @@ Public Class Heap
 		If Count = arr.Length Then
 			doubleSize()
 		End If
-
-'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
-'ORIGINAL LINE: arr[Count++] = value;
 		arr(Count) = value
 		Count += 1
 		proclateUp(Count - 1)
@@ -82,7 +79,7 @@ Public Class Heap
 
 	Private Sub doubleSize()
 		Dim old() As Integer = arr
-		arr = New Integer((arr.Length * 2) - 1){}
+		arr = New Integer((arr.Length * 2) - 1) {}
 		Array.Copy(old, 0, arr, 0, Count)
 	End Sub
 
@@ -126,8 +123,11 @@ Public Class Heap
 		Next i
 	End Sub
 
-	Public Shared Sub Main(ByVal args() As String)
-		Dim a() As Integer = { 1, 9, 6, 7, 8, 0, 2, 4, 5, 3 }
+End Class
+
+Module Module1
+	Public Sub Main(ByVal args() As String)
+		Dim a() As Integer = {1, 9, 6, 7, 8, 0, 2, 4, 5, 3}
 		Dim hp As New Heap(a, False)
 		hp.add(100)
 		hp.add(-1)
@@ -139,16 +139,16 @@ Public Class Heap
 		Loop
 
 		Console.WriteLine()
-		Dim a1() As Integer = { 1, 9, 6, 7, 8, 0, 2, 4, 5, 3 }
+		Dim a1() As Integer = {1, 9, 6, 7, 8, 0, 2, 4, 5, 3}
 		Heap.heapSort(a1, True)
 		For i As Integer = 0 To a1.Length - 1
 			Console.Write(a1(i) & " ")
 		Next i
 		Console.WriteLine()
-		Dim a2() As Integer = { 1, 9, 6, 7, 8, 0, 2, 4, 5, 3 }
+		Dim a2() As Integer = {1, 9, 6, 7, 8, 0, 2, 4, 5, 3}
 		Heap.heapSort(a2, False)
 		For i As Integer = 0 To a2.Length - 1
 			Console.Write(a2(i) & " ")
 		Next i
 	End Sub
-End Class
+End Module

@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 
 'Abstract Class
 Public MustInherit Class Shape

@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 
 Public Class Calculator
 'INSTANT VB NOTE: The field value was renamed since Visual Basic does not allow fields to have the same name as methods:
@@ -77,6 +77,3 @@ End Class
 '	String s= s1+s2;
 '	System.out.println(s);
 '}
-
-
-

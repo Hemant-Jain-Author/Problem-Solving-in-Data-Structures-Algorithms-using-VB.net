@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 
 Public Class HashTableLP
 
@@ -12,8 +12,8 @@ Public Class HashTableLP
 
 	Public Sub New(ByVal tSize As Integer)
 		tableSize = tSize
-		Arr = New Integer(tSize){}
-		Flag = New Integer(tSize){}
+		Arr = New Integer(tSize) {}
+		Flag = New Integer(tSize) {}
 		For i As Integer = 0 To tSize
 			Flag(i) = EMPTY_VALUE
 		Next i
@@ -88,8 +88,10 @@ Public Class HashTableLP
 			End If
 		Next i
 	End Sub
+End Class
 
-	Public Shared Sub Main(ByVal args() As String)
+Module Module1
+	Public Sub Main(ByVal args() As String)
 		Dim ht As New HashTableLP(1000)
 		ht.add(1)
 		ht.add(2)
@@ -99,4 +101,5 @@ Public Class HashTableLP
 		Console.WriteLine(ht.remove(4))
 		ht.print()
 	End Sub
-End Class
+End Module
+

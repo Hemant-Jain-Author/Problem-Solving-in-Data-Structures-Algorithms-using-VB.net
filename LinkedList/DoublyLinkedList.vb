@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 
 Public Class DoublyLinkedList
 	Private head As Node
@@ -261,4 +261,4 @@ Public Class DoublyLinkedList
 		ll.addHead(61)
 		ll.print()
 	End Sub
-End Class
+}

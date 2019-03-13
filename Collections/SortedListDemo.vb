@@ -1,8 +1,8 @@
-﻿Imports System
+Imports System
 Imports System.Collections.Generic
 
-Public Class SortedListDemo
-	Public Shared Sub Main(ByVal args() As String)
+Module Module1
+	Public Sub Main(ByVal args() As String)
 		' Create a Sorted List.
 		Dim tm As New SortedList(Of String, Integer)()
 
@@ -23,7 +23,8 @@ Public Class SortedListDemo
 		tm.Remove("Emma")
 		Console.WriteLine("Emma present in class :: " & tm.ContainsKey("Emma"))
 	End Sub
-End Class
+End Module
+
 '
 'Total number of students in class :: 4
 'Alexander score marks :80

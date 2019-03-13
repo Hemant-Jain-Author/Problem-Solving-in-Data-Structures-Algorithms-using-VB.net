@@ -1,4 +1,4 @@
-﻿Public Interface BulbInterface
+Public Interface BulbInterface
 	Sub turnOn()
 	Sub turnOff()
 	ReadOnly Property IsOn() As Boolean

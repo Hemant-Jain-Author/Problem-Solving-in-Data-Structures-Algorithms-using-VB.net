@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 
 Public Class Introduction
 	'public static void Main(string[] args)
@@ -50,4 +50,3 @@ Friend Module TwoDArrays
 		Return newArray
 	End Function
 End Module
-

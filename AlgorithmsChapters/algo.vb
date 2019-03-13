@@ -1,11 +1,6 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
-Imports System.Threading.Tasks
-
-Public Class algo
-	Public Shared Function fibonacci(ByVal n As Integer) As Integer
+Imports System
+Module Module1
+	Public Function fibonacci(ByVal n As Integer) As Integer
 		If n <= 1 Then
 			Return n
 		End If
@@ -13,7 +8,7 @@ Public Class algo
 		Return fibonacci(n - 1) + fibonacci(n - 2)
 	End Function
 
-	Public Shared Function fibonacci2(ByVal n As Integer) As Integer
+	Public Function fibonacci2(ByVal n As Integer) As Integer
 		Dim first As Integer = 0
 		Dim second As Integer = 1
 		Dim temp As Integer = 0
@@ -34,14 +29,14 @@ Public Class algo
 		Return temp
 	End Function
 
-	Public Shared Sub print(ByVal Q() As Integer, ByVal n As Integer)
+	Public Sub print(ByVal Q() As Integer, ByVal n As Integer)
 		For i As Integer = 0 To n - 1
 			Console.Write(" " & Q(i))
 		Next i
 		Console.WriteLine(" ")
 	End Sub
 
-	Public Shared Function Feasible(ByVal Q() As Integer, ByVal k As Integer) As Boolean
+	Public Function Feasible(ByVal Q() As Integer, ByVal k As Integer) As Boolean
 		For i As Integer = 0 To k - 1
 			If Q(k) = Q(i) OrElse Math.Abs(Q(i) - Q(k)) = Math.Abs(i - k) Then
 				Return False
@@ -50,7 +45,7 @@ Public Class algo
 		Return True
 	End Function
 
-	Public Shared Sub NQueens(ByVal Q() As Integer, ByVal k As Integer, ByVal n As Integer)
+	Public Sub NQueens(ByVal Q() As Integer, ByVal k As Integer, ByVal n As Integer)
 		If k = n Then
 			print(Q, n)
 			Return
@@ -65,12 +60,12 @@ Public Class algo
 		Loop
 	End Sub
 
-	Public Shared Sub Main(ByVal args() As String)
+	Public Sub main1()
 		Dim Q(7) As Integer
 		NQueens(Q, 0, 8)
 	End Sub
 
-	Public Shared Sub TOHUtil(ByVal num As Integer, ByVal from As Char, ByVal [to] As Char, ByVal temp As Char)
+	Public Sub TOHUtil(ByVal num As Integer, ByVal from As Char, ByVal [to] As Char, ByVal temp As Char)
 		If num < 1 Then
 			Return
 		End If
@@ -80,12 +75,12 @@ Public Class algo
 		TOHUtil(num - 1, temp, [to], from)
 	End Sub
 
-	Public Shared Sub TowersOfHanoi(ByVal num As Integer)
+	Public Sub TowersOfHanoi(ByVal num As Integer)
 		Console.WriteLine("The sequence of moves involved in the Tower of Hanoi are :")
 		TOHUtil(num, "A"c, "C"c, "B"c)
 	End Sub
 
-	Public Shared Sub main2(ByVal args() As String)
+	Public Sub main2()
 		TowersOfHanoi(3)
 	End Sub
 
@@ -102,4 +97,10 @@ Public Class algo
 		Loop
 		Return answer
 	End Function
-End Class
+
+	Sub Main()
+		main1()
+		main2()
+	End Sub
+End Module
+

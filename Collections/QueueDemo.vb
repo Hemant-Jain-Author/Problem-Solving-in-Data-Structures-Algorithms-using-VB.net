@@ -1,8 +1,8 @@
-﻿Imports System
+Imports System
 Imports System.Collections.Generic
 
-Friend Class QueueDemo
-	Public Shared Sub Main(ByVal args() As String)
+Module Module1
+	Public Sub Main(ByVal args() As String)
 		Dim que As New Queue(Of Integer)()
 		que.Enqueue(1)
 		que.Enqueue(2)
@@ -14,4 +14,4 @@ Friend Class QueueDemo
 			Console.WriteLine("Dequeue from queue: " & que.Dequeue())
 		Next i
 	End Sub
-End Class
+End Module

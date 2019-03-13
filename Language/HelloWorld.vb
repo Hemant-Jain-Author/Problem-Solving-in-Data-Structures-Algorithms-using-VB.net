@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 
 Public Class HelloWorld
 	' This is a Single line comment

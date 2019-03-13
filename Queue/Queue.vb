@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 Imports System.Collections
 
 Public Class Queue
@@ -10,22 +10,22 @@ Public Class Queue
 
 	Public Sub New()
 		count = 0
-		data = New Integer(99) {}
+		data = New Integer(99){}
 	End Sub
 
-	Public Function add(ByVal value As Integer) As Boolean
+	Public Overridable Function add(ByVal value As Integer) As Boolean
 		If count >= capacity Then
 			Console.WriteLine("Queue is full.")
 			Return False
 		Else
 			count += 1
 			data(back) = value
-			back = (back + 1) Mod (capacity - 1)
+			back = (++back) Mod (capacity - 1)
 		End If
 		Return True
 	End Function
 
-	Public Function remove() As Integer
+	Public Overridable Function remove() As Integer
 		Dim value As Integer
 		If count <= 0 Then
 			Console.WriteLine("Queue is empty.")
@@ -33,18 +33,18 @@ Public Class Queue
 		Else
 			count -= 1
 			value = data(front)
-			front = (front + 1) Mod (capacity - 1)
+			front = (++front) Mod (capacity - 1)
 		End If
 		Return value
 	End Function
 
-	ReadOnly Property Empty() As Boolean
+	Friend Overridable ReadOnly Property Empty() As Boolean
 		Get
 			Return count = 0
 		End Get
 	End Property
 
-	Function size() As Integer
+	Friend Overridable Function size() As Integer
 		Return count
 	End Function
 

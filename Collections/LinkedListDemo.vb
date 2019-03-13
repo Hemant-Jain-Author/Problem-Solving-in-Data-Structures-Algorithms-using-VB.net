@@ -1,8 +1,9 @@
-﻿Imports System
+Imports Microsoft.VisualBasic
+Imports System
 Imports System.Collections.Generic
 
-Public Class LinkedListDemo
-	Public Shared Sub Main(ByVal args() As String)
+Module Module1
+	Public Sub Main(ByVal args() As String)
 		Dim ll As New LinkedList(Of Integer)()
 		ll.AddFirst(10)
 		ll.AddLast(20)
@@ -24,4 +25,5 @@ Public Class LinkedListDemo
 			Console.Write(val & " ")
 		Next val
 	End Sub
-End Class
+End Module
+

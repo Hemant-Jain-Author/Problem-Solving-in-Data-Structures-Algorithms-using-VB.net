@@ -1,8 +1,8 @@
-﻿Imports System
+Imports System
 Imports System.Collections.Generic
 
-Public Class DictionaryDemo
-	Public Shared Sub Main(ByVal args() As String)
+Module Module1
+	Public Sub Main(ByVal args() As String)
 		' Create a Dictionary or map.
 		Dim hm As New Dictionary(Of String, Integer)()
 
@@ -20,4 +20,5 @@ Public Class DictionaryDemo
 		Console.WriteLine("Emma present in class :: " & hm.ContainsKey("Emma"))
 		Console.WriteLine("John present in class :: " & hm.ContainsKey("John"))
 	End Sub
-End Class
+End Module
+

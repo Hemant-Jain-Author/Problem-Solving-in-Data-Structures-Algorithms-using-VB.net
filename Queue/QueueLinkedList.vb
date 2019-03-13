@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 
 Public Class QueueLL
 	Private tail As Node = Nothing
@@ -14,11 +14,11 @@ Public Class QueueLL
 		End Sub
 	End Class
 
-	Public Function size() As Integer
+	Public Overridable Function size() As Integer
 		Return count
 	End Function
 
-	Public ReadOnly Property Empty() As Boolean
+	Public Overridable ReadOnly Property Empty() As Boolean
 		Get
 			Return count = 0
 		End Get
@@ -26,7 +26,7 @@ Public Class QueueLL
 
 	' Other Methods 
 
-	Public Function peek() As Integer
+	Public Overridable Function peek() As Integer
 		If Empty Then
 			Throw New System.InvalidOperationException("StackEmptyException")
 		End If
@@ -40,7 +40,7 @@ Public Class QueueLL
 		Return value
 	End Function
 
-	Public Sub add(ByVal value As Integer)
+	Public Overridable Sub add(ByVal value As Integer)
 		Dim temp As New Node(value, Nothing)
 
 		If tail Is Nothing Then
@@ -54,7 +54,7 @@ Public Class QueueLL
 		count += 1
 	End Sub
 
-	Public Function remove() As Integer
+	Public Overridable Function remove() As Integer
 		If Empty Then
 			Throw New System.InvalidOperationException("StackEmptyException")
 		End If

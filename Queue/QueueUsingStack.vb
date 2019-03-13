@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 Imports System.Collections.Generic
 
 Public Class QueueUsingStack
@@ -33,7 +33,7 @@ Public Class QueueUsingStack
 		que.add(2)
 		que.add(3)
 		For i As Integer = 0 To 2
-			Console.WriteLine(que.remove())
+			Console.WriteLine(q.remove())
 		Next i
 	End Sub
 End Class

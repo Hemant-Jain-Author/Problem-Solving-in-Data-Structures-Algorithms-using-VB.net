@@ -1,8 +1,6 @@
-﻿Imports System
+﻿Imports Microsoft.VisualBasic
+Imports System
 Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
-Imports System.Threading.Tasks
 
 Public Class Graph
 	Friend count As Integer
@@ -380,14 +378,14 @@ Public Class Graph
 		Console.WriteLine(bfsDistance(gph, 1, 6))
 	End Sub
 
-	Public Shared Function isCyclePresentUndirectedDFS(ByVal graph_Renamed As Graph, ByVal index As Integer, ByVal parentIndex As Integer, ByVal visited() As Boolean) As Boolean
+	Public Shared Function isCyclePresentUndirectedDFS(ByVal graph As Graph, ByVal index As Integer, ByVal parentIndex As Integer, ByVal visited() As Boolean) As Boolean
 		visited(index) = True
 		Dim dest As Integer
-		Dim adl As List(Of Edge) = graph_Renamed.Adj(index)
+		Dim adl As List(Of Edge) = graph.Adj(index)
 		For Each adn As Edge In adl
 			dest = adn.dest
 			If visited(dest) = False Then
-				If isCyclePresentUndirectedDFS(graph_Renamed, dest, index, visited) Then
+				If isCyclePresentUndirectedDFS(graph, dest, index, visited) Then
 					Return True
 				End If
 			ElseIf parentIndex <> dest Then
@@ -397,12 +395,12 @@ Public Class Graph
 		Return False
 	End Function
 
-	Public Shared Function isCyclePresentUndirected(ByVal graph_Renamed As Graph) As Boolean
-		Dim count As Integer = graph_Renamed.count
+	Public Shared Function isCyclePresentUndirected(ByVal graph As Graph) As Boolean
+		Dim count As Integer = graph.count
 		Dim visited(count - 1) As Boolean
 		For i As Integer = 0 To count - 1
 			If visited(i) = False Then
-				If isCyclePresentUndirectedDFS(graph_Renamed, i, -1, visited) Then
+				If isCyclePresentUndirectedDFS(graph, i, -1, visited) Then
 					Return True
 				End If
 			End If
@@ -424,10 +422,10 @@ Public Class Graph
 	'	
 	'		* Given a directed graph find if there is a cycle in it.
 	'		
-	Public Shared Function isCyclePresentDFS(ByVal graph_Renamed As Graph, ByVal index As Integer, ByVal visited() As Boolean, ByVal marked() As Integer) As Boolean
+	Public Shared Function isCyclePresentDFS(ByVal graph As Graph, ByVal index As Integer, ByVal visited() As Boolean, ByVal marked() As Integer) As Boolean
 		visited(index) = True
 		marked(index) = 1
-		Dim adl As List(Of Edge) = graph_Renamed.Adj(index)
+		Dim adl As List(Of Edge) = graph.Adj(index)
 		For Each adn As Edge In adl
 			Dim dest As Integer = adn.dest
 			If marked(dest) = 1 Then
@@ -435,7 +433,7 @@ Public Class Graph
 			End If
 
 			If visited(dest) = False Then
-				If isCyclePresentDFS(graph_Renamed, dest, visited, marked) Then
+				If isCyclePresentDFS(graph, dest, visited, marked) Then
 					Return True
 				End If
 			End If
@@ -444,13 +442,13 @@ Public Class Graph
 		Return False
 	End Function
 
-	Public Shared Function isCyclePresent(ByVal graph_Renamed As Graph) As Boolean
-		Dim count As Integer = graph_Renamed.count
+	Public Shared Function isCyclePresent(ByVal graph As Graph) As Boolean
+		Dim count As Integer = graph.count
 		Dim visited(count - 1) As Boolean
 		Dim marked(count - 1) As Integer
 		For index As Integer = 0 To count - 1
 			If visited(index) = False Then
-				If isCyclePresentDFS(graph_Renamed, index, visited, marked) Then
+				If isCyclePresentDFS(graph, index, visited, marked) Then
 					Return True
 				End If
 			End If
@@ -458,10 +456,10 @@ Public Class Graph
 		Return False
 	End Function
 
-	Public Shared Function isCyclePresentDFSColor(ByVal graph_Renamed As Graph, ByVal index As Integer, ByVal visited() As Integer) As Boolean
+	Public Shared Function isCyclePresentDFSColor(ByVal graph As Graph, ByVal index As Integer, ByVal visited() As Integer) As Boolean
 		visited(index) = 1 ' 1 = grey
 		Dim dest As Integer
-		Dim adl As List(Of Edge) = graph_Renamed.Adj(index)
+		Dim adl As List(Of Edge) = graph.Adj(index)
 		For Each adn As Edge In adl
 			dest = adn.dest
 			If visited(dest) = 1 Then ' "Grey":
@@ -469,7 +467,7 @@ Public Class Graph
 			End If
 
 			If visited(dest) = 0 Then ' "White":
-				If isCyclePresentDFSColor(graph_Renamed, dest, visited) Then
+				If isCyclePresentDFSColor(graph, dest, visited) Then
 					Return True
 				End If
 			End If
@@ -478,12 +476,12 @@ Public Class Graph
 		Return False
 	End Function
 
-	Public Shared Function isCyclePresentColor(ByVal graph_Renamed As Graph) As Boolean
-		Dim count As Integer = graph_Renamed.count
+	Public Shared Function isCyclePresentColor(ByVal graph As Graph) As Boolean
+		Dim count As Integer = graph.count
 		Dim visited(count - 1) As Integer
 		For i As Integer = 0 To count - 1
 			If visited(i) = 0 Then ' "White"
-				If isCyclePresentDFSColor(graph_Renamed, i, visited) Then
+				If isCyclePresentDFSColor(graph, i, visited) Then
 					Return True
 				End If
 			End If
@@ -774,18 +772,17 @@ Public Class Graph
 		Dim count As Integer = gph.count
 		Dim distance(count - 1) As Integer
 		Dim path(count - 1) As Integer
+		Dim i As Integer = 0
 
-		For j As Integer = 0 To count - 1
-			distance(j) = 999999 ' infinite
-			path(j) = -1
-		Next j
-
+		For i = 0 To count - 1
+			distance(i) = 999999 ' infinite
+			path(i) = -1
+		Next i
 		distance(source) = 0
 		' Outer loop will run (V-1) number of times.
 		' Inner for loop and while loop runs combined will run for Edges number of times.
 		' Which make the total complexity as O(V*E)
-
-		Dim i As Integer = 0
+		i = 0
 		Do While i < count - 1
 			For j As Integer = 0 To count - 1
 				Dim adl As List(Of Edge) = gph.Adj(j)
@@ -799,9 +796,10 @@ Public Class Graph
 			Next j
 			i += 1
 		Loop
-		For k As Integer = 0 To count - 1
-			Console.WriteLine(path(k) & " to " & k & " weight " & distance(k))
-		Next k
+
+		For i = 0 To count - 1
+			Console.WriteLine(path(i) & " to " & i & " weight " & distance(i))
+		Next i
 	End Sub
 
 	Public Shared Sub main13()
@@ -923,24 +921,25 @@ Public Class Graph
 	'		}
 	'		return -1;
 	'	}
-	'	
-	Public Shared Function isConnected(ByVal graph_Renamed As Graph) As Boolean
-		Dim count As Integer = graph_Renamed.count
+	'
+
+	Public Shared Function isConnected(ByVal graph As Graph) As Boolean
+		Dim count As Integer = graph.count
 		Dim visited(count - 1) As Boolean
 
 		' Find a vertex with non - zero degree
 		' DFS traversal of graph from a vertex with non - zero degree
 		Dim adl As List(Of Edge)
 		For i As Integer = 0 To count - 1
-			adl = graph_Renamed.Adj(i)
+			adl = graph.Adj(i)
 			If adl.Count > 0 Then
-				dfsUtil(graph_Renamed, i, visited)
+				dfsUtil(graph, i, visited)
 				Exit For
 			End If
 		Next i
 		' Check if all non - zero degree count are visited
 		For i As Integer = 0 To count - 1
-			adl = graph_Renamed.Adj(i)
+			adl = graph.Adj(i)
 			If adl.Count > 0 Then
 				If visited(i) = False Then
 					Return False
@@ -955,14 +954,14 @@ Public Class Graph
 	'		* Eulerian Return 1 if graph has an Euler path (Semi-Eulerian) Return 2 if
 	'		* graph has an Euler Circuit (Eulerian)
 	'		
-	Public Shared Function isEulerian(ByVal graph_Renamed As Graph) As Integer
-		Dim count As Integer = graph_Renamed.count
+	Public Shared Function isEulerian(ByVal graph As Graph) As Integer
+		Dim count As Integer = graph.count
 		Dim odd As Integer
 		Dim inDegree() As Integer
 		Dim outDegree() As Integer
 		Dim adl As List(Of Edge)
 		' Check if all non - zero degree nodes are connected
-		If isConnected(graph_Renamed) = False Then
+		If isConnected(graph) = False Then
 			Console.WriteLine("graph is not Eulerian")
 			Return 0
 		Else
@@ -972,7 +971,7 @@ Public Class Graph
 			outDegree = New Integer(count - 1) {}
 
 			For i As Integer = 0 To count - 1
-				adl = graph_Renamed.Adj(i)
+				adl = graph.Adj(i)
 				For Each adn As Edge In adl
 					outDegree(i) += 1
 					inDegree(adn.dest) += 1
@@ -1007,36 +1006,36 @@ Public Class Graph
 		Console.WriteLine(isEulerian(gph))
 	End Sub
 
-	Public Shared Function isStronglyConnected2(ByVal graph_Renamed As Graph) As Boolean
-		Dim count As Integer = graph_Renamed.count
+	Public Shared Function isStronglyConnected2(ByVal graph As Graph) As Boolean
+		Dim count As Integer = graph.count
 		Dim visited(count - 1) As Boolean
 		Dim gReversed As Graph
 		Dim index As Integer
 		' Find a vertex with non - zero degree
 		Dim adl As List(Of Edge)
 		For index = 0 To count - 1
-			adl = graph_Renamed.Adj(index)
+			adl = graph.Adj(index)
 			If adl.Count > 0 Then
 				Exit For
 			End If
 		Next index
 		' DFS traversal of graph from a vertex with non - zero degree
-		dfsUtil(graph_Renamed, index, visited)
+		dfsUtil(graph, index, visited)
 		For i As Integer = 0 To count - 1
-			adl = graph_Renamed.Adj(i)
+			adl = graph.Adj(i)
 			If visited(i) = False AndAlso adl.Count > 0 Then
 				Return False
 			End If
 		Next i
 
-		gReversed = transposeGraph(graph_Renamed)
+		gReversed = transposeGraph(graph)
 		For i As Integer = 0 To count - 1
 			visited(i) = False
 		Next i
 		dfsUtil(gReversed, index, visited)
 
 		For i As Integer = 0 To count - 1
-			adl = graph_Renamed.Adj(i)
+			adl = graph.Adj(i)
 			If visited(i) = False AndAlso adl.Count > 0 Then
 				Return False
 			End If
@@ -1044,18 +1043,18 @@ Public Class Graph
 		Return True
 	End Function
 
-	Public Shared Function isEulerianCycle(ByVal graph_Renamed As Graph) As Boolean
+	Public Shared Function isEulerianCycle(ByVal graph As Graph) As Boolean
 		' Check if all non - zero degree count are connected
-		Dim count As Integer = graph_Renamed.count
+		Dim count As Integer = graph.count
 		Dim inDegree(count - 1) As Integer
 		Dim outDegree(count - 1) As Integer
-		If Not isStronglyConnected2(graph_Renamed) Then
+		If Not isStronglyConnected2(graph) Then
 			Return False
 		End If
 
 		' Check if in degree and out degree of every vertex is same
 		For i As Integer = 0 To count - 1
-			Dim adl As List(Of Edge) = graph_Renamed.Adj(i)
+			Dim adl As List(Of Edge) = graph.Adj(i)
 			For Each adn As Edge In adl
 				outDegree(i) += 1
 				inDegree(adn.dest) += 1
@@ -1080,9 +1079,8 @@ Public Class Graph
 		Console.WriteLine(isEulerianCycle(gph))
 	End Sub
 
-	Public Shared Sub Main(ByVal args() As String)
+	Public Shared Sub Main()
 		Main1()
-		main3()
 		main2()
 		main3()
 		main4()
@@ -1100,6 +1098,12 @@ Public Class Graph
 		main16()
 	End Sub
 End Class
+
+Module Module1
+	Public Sub Main(ByVal args() As String)
+		Graph.Main()
+	End Sub
+End Module
 
 
 Public Class PriorityQueue(Of T As IComparable(Of T))
@@ -1175,6 +1179,8 @@ Public Class PriorityQueue(Of T As IComparable(Of T))
 			doubleSize()
 		End If
 
+		'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
+		'ORIGINAL LINE: arr[Count++] = value;
 		arr(Count) = value
 		Count += 1
 		proclateUp(Count - 1)
