@@ -1,5 +1,4 @@
-Imports System
-Imports System.Collections
+﻿Imports System
 
 Public Class Queue
 	Private count As Integer
@@ -8,24 +7,25 @@ Public Class Queue
 	Friend front As Integer = 0
 	Friend back As Integer = 0
 
-	Public Sub New()
+	Public Sub New(ByVal n As Integer)
 		count = 0
-		data = New Integer(99){}
+		capacity = n
+		data = New Integer(n - 1){}
 	End Sub
 
-	Public Overridable Function add(ByVal value As Integer) As Boolean
+	Public Function add(ByVal value As Integer) As Boolean
 		If count >= capacity Then
 			Console.WriteLine("Queue is full.")
 			Return False
 		Else
 			count += 1
 			data(back) = value
-			back = (++back) Mod (capacity - 1)
+			back = (++back) Mod capacity
 		End If
 		Return True
 	End Function
 
-	Public Overridable Function remove() As Integer
+	Public Function remove() As Integer
 		Dim value As Integer
 		If count <= 0 Then
 			Console.WriteLine("Queue is empty.")
@@ -33,28 +33,49 @@ Public Class Queue
 		Else
 			count -= 1
 			value = data(front)
-			front = (++front) Mod (capacity - 1)
+			front = (++front) Mod capacity
 		End If
 		Return value
 	End Function
 
-	Friend Overridable ReadOnly Property Empty() As Boolean
-		Get
-			Return count = 0
-		End Get
-	End Property
+	Friend Function isEmpty() As Boolean
+		Return count = 0
+	End Function
 
-	Friend Overridable Function size() As Integer
+	Friend Function Size() As Integer
 		Return count
 	End Function
 
+	Friend Sub print()
+		If count = 0 Then
+			Console.Write("Queue is empty.")
+			Return
+		End If
+		Dim temp As Integer = front
+		Dim s As Integer = count
+		Console.Write("Queue is : ")
+		Do While s > 0
+			s -= 1
+			Console.Write(data(temp) & " ")
+			temp = (++temp) Mod capacity
+		Loop
+		Console.WriteLine()
+	End Sub
+
 	Public Shared Sub Main(ByVal args() As String)
-		Dim q As New Queue()
-		q.add(1)
-		q.add(2)
-		q.add(3)
-		For i As Integer = 0 To 2
-			Console.WriteLine(q.remove())
+		Dim que As New Queue(5)
+		For i As Integer = 0 To 4
+			que.add(i)
+		Next i
+		que.print()
+
+		For i As Integer = 0 To 4
+			Console.Write(que.remove() & " ")
 		Next i
 	End Sub
 End Class
+
+'
+'Queue is : 0 1 2 3 4 
+'0 1 2 3 4 
+'

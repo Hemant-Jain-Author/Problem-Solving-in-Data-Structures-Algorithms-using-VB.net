@@ -1,3 +1,4 @@
+﻿
 Imports System
 
 Public Class CircularLinkedList
@@ -6,169 +7,265 @@ Public Class CircularLinkedList
 
 	Private Class Node
 		Friend value As Integer
-		Friend [next] As Node
+		Friend nextPtr As Node
 
-		Public Sub New(ByVal v As Integer, ByVal n As Node)
+		Friend Sub New(ByVal v As Integer, ByVal n As Node)
 			value = v
-			[next] = n
+			nextPtr = n
 		End Sub
 	End Class
-	Public Function size() As Integer
+
+	' Other methods 
+
+	Public Function Size() As Integer
 		Return count
 	End Function
 
-	Public ReadOnly Property Empty() As Boolean
-		Get
-			Return count = 0
-		End Get
-	End Property
-
-	Public Function peek() As Integer
-		If Empty Then
-			Throw New System.InvalidOperationException("EmptyListException")
-		End If
-		Return tail.next.value
+	Public Function IsEmpty() As Boolean
+		Return count = 0
 	End Function
 
-	Public Sub addTail(ByVal value As Integer)
-		Dim temp As New Node(value, Nothing)
-		If Empty Then
-			tail = temp
-			temp.next = temp
-		Else
-			temp.next = tail.next
-			tail.next = temp
-			tail = temp
-		End If
-		count += 1
-	End Sub
-
-	Public Sub addHead(ByVal value As Integer)
-		Dim temp As New Node(value, Nothing)
-		If Empty Then
-			tail = temp
-			temp.next = temp
-		Else
-			temp.next = tail.next
-			tail.next = temp
-		End If
-		count += 1
-	End Sub
-
-	Public Function removeHead() As Integer
-		If Empty Then
+	Public Function Peek() As Integer
+		If IsEmpty() Then
 			Throw New System.InvalidOperationException("EmptyListException")
 		End If
-		Dim value As Integer = tail.next.value
-		If tail Is tail.next Then
+		Return tail.nextPtr.value
+	End Function
+
+	Public Sub AddTail(ByVal value As Integer)
+		Dim temp As New Node(value, Nothing)
+		If IsEmpty() Then
+			tail = temp
+			temp.nextPtr = temp
+		Else
+			temp.nextPtr = tail.nextPtr
+			tail.nextPtr = temp
+			tail = temp
+		End If
+		count += 1
+	End Sub
+
+	Public Sub AddHead(ByVal value As Integer)
+		Dim temp As New Node(value, Nothing)
+		If IsEmpty() Then
+			tail = temp
+			temp.nextPtr = temp
+		Else
+			temp.nextPtr = tail.nextPtr
+			tail.nextPtr = temp
+		End If
+		count += 1
+	End Sub
+
+	Public Function RemoveHead() As Integer
+		If IsEmpty() Then
+			Throw New System.InvalidOperationException("EmptyListException")
+		End If
+		Dim value As Integer = tail.nextPtr.value
+		If tail Is tail.nextPtr Then
 			tail = Nothing
 		Else
-			tail.next = tail.next.next
+			tail.nextPtr = tail.nextPtr.nextPtr
 		End If
 
 		count -= 1
 		Return value
 	End Function
 
-	Public Function removeNode(ByVal key As Integer) As Boolean
-		If Empty Then
+	Public Function DeleteNode(ByVal key As Integer) As Boolean
+		If IsEmpty() Then
 			Return False
 		End If
 		Dim prev As Node = tail
-		Dim curr As Node = tail.next
-		Dim head As Node = tail.next
+		Dim curr As Node = tail.nextPtr
+		Dim head As Node = tail.nextPtr
 
 		If curr.value = key Then ' head and single node case.
-			If curr Is curr.next Then ' single node case
+			If curr Is curr.nextPtr Then ' single node case
 				tail = Nothing
 			Else ' head case
-				tail.next = tail.next.next
+				tail.nextPtr = tail.nextPtr.nextPtr
 			End If
 			Return True
 		End If
 
 		prev = curr
-		curr = curr.next
+		curr = curr.nextPtr
 
 		Do While curr IsNot head
 			If curr.value = key Then
 				If curr Is tail Then
 					tail = prev
 				End If
-				prev.next = curr.next
+				prev.nextPtr = curr.nextPtr
 				Return True
 			End If
 			prev = curr
-			curr = curr.next
+			curr = curr.nextPtr
 		Loop
+
 		Return False
 	End Function
 
-	Public Function copyListReversed() As CircularLinkedList
+	Public Function CopyListReversed() As CircularLinkedList
 		Dim cl As New CircularLinkedList()
-		Dim curr As Node = tail.next
+		If tail Is Nothing Then
+			Return cl
+		End If
+		Dim curr As Node = tail.nextPtr
 		Dim head As Node = curr
 
 		If curr IsNot Nothing Then
-			cl.addHead(curr.value)
-			curr = curr.next
+			cl.AddHead(curr.value)
+			curr = curr.nextPtr
 		End If
 		Do While curr IsNot head
-			cl.addHead(curr.value)
-			curr = curr.next
+			cl.AddHead(curr.value)
+			curr = curr.nextPtr
 		Loop
 		Return cl
 	End Function
 
-	Public Function copyList() As CircularLinkedList
+	Public Function CopyList() As CircularLinkedList
 		Dim cl As New CircularLinkedList()
-		Dim curr As Node = tail.next
+		If tail Is Nothing Then
+			Return cl
+		End If
+		Dim curr As Node = tail.nextPtr
 		Dim head As Node = curr
 
 		If curr IsNot Nothing Then
-			cl.addTail(curr.value)
-			curr = curr.next
+			cl.AddTail(curr.value)
+			curr = curr.nextPtr
 		End If
 		Do While curr IsNot head
-			cl.addTail(curr.value)
-			curr = curr.next
+			cl.AddTail(curr.value)
+			curr = curr.nextPtr
 		Loop
 		Return cl
 	End Function
 
-	Public Function searchList(ByVal data As Integer) As Boolean
+	Public Function Search(ByVal data As Integer) As Boolean
 		Dim temp As Node = tail
 		For i As Integer = 0 To count - 1
 			If temp.value = data Then
 				Return True
 			End If
-			temp = temp.next
+			temp = temp.nextPtr
 		Next i
 		Return False
 	End Function
 
-	Public Sub deleteList()
+	Public Sub DeleteList()
 		tail = Nothing
 		count = 0
 	End Sub
 
-	Public Sub print()
-		If Empty Then
+	Public Sub Print()
+		If IsEmpty() Then
+			Console.WriteLine("Empty List.")
 			Return
 		End If
-		Dim temp As Node = tail.next
+		Dim temp As Node = tail.nextPtr
 		Do While temp IsNot tail
 			Console.Write(temp.value & " ")
-			temp = temp.next
+			temp = temp.nextPtr
 		Loop
-		Console.Write(temp.value)
+		Console.WriteLine(temp.value)
 	End Sub
 
-	Public Shared Sub Main(ByVal args() As String)
+	Public Shared Sub Main1()
 		Dim ll As New CircularLinkedList()
-		ll.addHead(1)
-		ll.addHead(2)
-		ll.addHead(3)
-		ll.print()
+		ll.AddHead(1)
+		ll.AddHead(2)
+		ll.AddHead(3)
+		ll.Print()
+		Console.WriteLine(ll.Size())
+		Console.WriteLine(ll.IsEmpty())
+		Console.WriteLine(ll.Peek())
+		Console.WriteLine(ll.Search(3))
+	End Sub
+
+'	
+'3 2 1
+'3
+'False
+'3
+'True
+'	
+
+	Public Shared Sub Main2()
+		Dim ll As New CircularLinkedList()
+		ll.AddTail(1)
+		ll.AddTail(2)
+		ll.AddTail(3)
+		ll.Print()
+	End Sub
+
+'	
+'	1 2 3
+'	
+
+	Public Shared Sub Main3()
+		Dim ll As New CircularLinkedList()
+		ll.AddHead(1)
+		ll.AddHead(2)
+		ll.AddHead(3)
+		ll.Print()
+		ll.RemoveHead()
+		ll.Print()
+		ll.DeleteNode(2)
+		ll.Print()
+		ll.DeleteList()
+		ll.Print()
+	End Sub
+
+'	
+'3 2 1
+'2 1
+'1
+'Empty List.
+'	
+
+
+	Public Shared Sub Main4()
+		Dim ll As New CircularLinkedList()
+		ll.AddHead(1)
+		ll.AddHead(2)
+		ll.AddHead(3)
+		ll.Print()
+		Dim ll2 As CircularLinkedList = ll.CopyList()
+		ll2.Print()
+		Dim ll3 As CircularLinkedList = ll.CopyListReversed()
+		ll3.Print()
+	End Sub
+
+'	
+'	3 2 1
+'	3 2 1
+'	1 2 3
+'	
+
+	Public Shared Sub Main5()
+		Dim ll As New CircularLinkedList()
+		ll.AddHead(1)
+		ll.AddHead(2)
+		ll.AddHead(3)
+		ll.Print()
+		ll.DeleteNode(2)
+		ll.Print()
+	End Sub
+
+'	
+'	3 2 1
+'	3 1
+'	
+
+	Public Shared Sub Main(ByVal args() As String)
+		Main1()
+		Main2()
+		Main3()
+		Main4()
+		Main5()
 	End Sub
 End Class

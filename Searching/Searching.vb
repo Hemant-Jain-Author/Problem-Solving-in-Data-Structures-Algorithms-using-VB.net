@@ -1,1916 +1,2836 @@
-Imports Microsoft.VisualBasic
+﻿
 Imports System
 Imports System.Collections.Generic
 
 Public Class Searching
+	Public Shared Function LinearSearchUnsorted(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
+		For i As Integer = 0 To size - 1
+			If value = arr(i) Then
+				Return True
+			End If
+		Next i
+		Return False
+	End Function
 
-Public Shared Function linearSearchUnsorted(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
-	For i As Integer = 0 To size - 1
-		If value = arr(i) Then
-			Return True
-		End If
-	Next i
-	Return False
-End Function
+	Public Shared Function LinearSearchSorted(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
+		For i As Integer = 0 To size - 1
+			If value = arr(i) Then
+				Return True
+			ElseIf value < arr(i) Then
+				Return False
+			End If
+		Next i
+		Return False
+	End Function
 
-Public Shared Function linearSearchSorted(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
-	For i As Integer = 0 To size - 1
-		If value = arr(i) Then
-			Return True
-		ElseIf value < arr(i) Then
+	' Binary Search Algorithm - Iterative Way
+	Public Shared Function BinarySearch(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
+		Dim low As Integer = 0
+		Dim high As Integer = size - 1
+		Dim mid As Integer
+
+		Do While low <= high
+			mid = (low + high) \ 2
+			If arr(mid) = value Then
+				Return True
+			ElseIf arr(mid) < value Then
+				low = mid + 1
+			Else
+				high = mid - 1
+			End If
+		Loop
+		Return False
+	End Function
+
+	'Binary Search Algorithm - Recursive Way
+	Public Shared Function BinarySearchRec(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
+		Dim low As Integer = 0
+		Dim high As Integer = size - 1
+		Return BinarySearchRecUtil(arr, low, high, value)
+	End Function
+
+	Public Shared Function BinarySearchRecUtil(ByVal arr() As Integer, ByVal low As Integer, ByVal high As Integer, ByVal value As Integer) As Boolean
+		If low > high Then
 			Return False
 		End If
-	Next i
-	Return False
-End Function
-
-' Binary Search Algorithm - Iterative Way
-Public Shared Function Binarysearch(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
-	Dim low As Integer = 0
-	Dim high As Integer = size - 1
-	Dim mid As Integer
-
-	Do While low <= high
-		mid = (low + high) \ 2
+		Dim mid As Integer = (low + high) \ 2
 		If arr(mid) = value Then
 			Return True
 		ElseIf arr(mid) < value Then
-			low = mid + 1
+			Return BinarySearchRecUtil(arr, mid + 1, high, value)
 		Else
-			high = mid - 1
+			Return BinarySearchRecUtil(arr, low, mid - 1, value)
 		End If
-	Loop
-	Return False
-End Function
+	End Function
 
-Public Shared Function BinarySearchRec(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
-	Dim low As Integer = 0
-	Dim high As Integer = size - 1
-	Return BinarySearchRecUtil(arr, low, high, value)
-End Function
+	Public Shared Function BinarySearch(ByVal arr() As Integer, ByVal start As Integer, ByVal finish As Integer, ByVal key As Integer, ByVal isInc As Boolean) As Integer
+		Dim mid As Integer
+		If finish < start Then
+			Return -1
+		End If
+		mid = (start + finish) \ 2
+		If key = arr(mid) Then
+			Return mid
+		End If
+		If isInc <> False AndAlso key < arr(mid) OrElse isInc = False AndAlso key > arr(mid) Then
+			Return BinarySearch(arr, start, mid - 1, key, isInc)
+		Else
+			Return BinarySearch(arr, mid + 1, finish, key, isInc)
+		End If
+	End Function
 
-' Binary Search Algorithm - Recursive Way
-Public Shared Function BinarySearchRecUtil(ByVal arr() As Integer, ByVal low As Integer, ByVal high As Integer, ByVal value As Integer) As Boolean
-	If low > high Then
+	Public Shared Function FibonacciSearch(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
+		' Initialize Binary numbers 
+		Dim fibNMn2 As Integer = 0
+		Dim fibNMn1 As Integer = 1
+		Dim fibN As Integer = fibNMn2 + fibNMn1
+
+		Do While fibN < size
+			fibNMn2 = fibNMn1
+			fibNMn1 = fibN
+			fibN = fibNMn2 + fibNMn1
+		Loop
+
+		Dim low As Integer = 0
+		Do While fibN > 1 ' Fibonacci series start with 0, 1, 1, 2
+			Dim i As Integer = Math.Min(low + fibNMn2, size-1)
+			If arr(i) = value Then
+				Return True
+			ElseIf arr(i) < value Then
+				fibN = fibNMn1
+				fibNMn1 = fibNMn2
+				fibNMn2 = fibN - fibNMn1
+				low = i
+			Else ' for feb2 <= 1, these will be invalid.
+				fibN = fibNMn2
+				fibNMn1 = fibNMn1 - fibNMn2
+				fibNMn2 = fibN - fibNMn1
+			End If
+		Loop
+		If arr(low + fibNMn2) = value Then ' above loop does not check when fibNMn2 = 0
+			Return True
+		End If
 		Return False
-	End If
-	Dim mid As Integer = (low + high) \ 2
-	If arr(mid) = value Then
-		Return True
-	ElseIf arr(mid) < value Then
-		Return BinarySearchRecUtil(arr, mid + 1, high, value)
-	Else
-		Return BinarySearchRecUtil(arr, low, mid - 1, value)
-	End If
-End Function
+	End Function
 
-'INSTANT VB NOTE: The method BinarySearch was renamed since Visual Basic does not allow same-signature methods with the same name:
-Public Shared Function BinarySearch_Renamed(ByVal arr() As Integer, ByVal start As Integer, ByVal [end] As Integer, ByVal key As Integer, ByVal isInc As Boolean) As Integer
-	Dim mid As Integer
-	If [end] < start Then
-		Return -1
-	End If
-	mid = (start + [end]) \ 2
-	If key = arr(mid) Then
-		Return mid
-	End If
-	If isInc <> False AndAlso key < arr(mid) OrElse isInc = False AndAlso key > arr(mid) Then
-		Return BinarySearch_Renamed(arr, start, mid - 1, key, isInc)
-	Else
-		Return BinarySearch_Renamed(arr, mid + 1, [end], key, isInc)
-	End If
-End Function
+	Public Shared Sub Main1()
+		Dim first() As Integer = {1, 3, 5, 7, 9, 25, 30}
+'	    Console.WriteLine(LinearSearchUnsorted(first, 7, 8));
+'	    Console.WriteLine(LinearSearchSorted(first, 7, 8));
+'	    Console.WriteLine(BinarySearch(first, 7, 8));
+'	    Console.WriteLine(BinarySearchRec(first, 7, 8));
+'	
+'	    Console.WriteLine(LinearSearchUnsorted(first, 7, 25));
+'	    Console.WriteLine(LinearSearchSorted(first, 7, 25));
+'	    Console.WriteLine(BinarySearch(first, 7, 25));
+'	    Console.WriteLine(BinarySearchRec(first, 7, 25));
+'
+	For i As Integer = 0 To 31
+		Console.WriteLine(i & " : " & FibonacciSearch(first, 7, i))
+	Next i
+	End Sub
+'	
+'	false
+'	false
+'	false
+'	false
+'	
+'	true
+'	true
+'	true
+'	true
+'	
 
-Public Shared Sub Main1(ByVal args() As String)
-	Dim first() As Integer = { 1, 3, 5, 7, 9, 25, 30 }
-	Console.WriteLine(linearSearchUnsorted(first, 7, 8))
-	Console.WriteLine(linearSearchSorted(first, 7, 8))
-	Console.WriteLine(Binarysearch(first, 7, 8))
-	Console.WriteLine(BinarySearchRec(first, 7, 8))
-	Console.WriteLine(linearSearchUnsorted(first, 7, 25))
-	Console.WriteLine(linearSearchSorted(first, 7, 25))
-	Console.WriteLine(Binarysearch(first, 7, 25))
-	Console.WriteLine(BinarySearchRec(first, 7, 25))
+	Public Shared Sub Swap(ByVal arr() As Integer, ByVal first As Integer, ByVal second As Integer)
+		Dim temp As Integer = arr(first)
+		arr(first) = arr(second)
+		arr(second) = temp
+	End Sub
 
-End Sub
+	Public Shared Function FirstRepeated(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		For i As Integer = 0 To size - 1
+			For j As Integer = i + 1 To size - 1
+				If arr(i) = arr(j) Then
+					Return arr(i)
+				End If
+			Next j
+		Next i
+		Return 0
+	End Function
 
-Public Shared Sub swap(ByVal arr() As Integer, ByVal first As Integer, ByVal second As Integer)
-	Dim temp As Integer = arr(first)
-	arr(first) = arr(second)
-	arr(second) = temp
-End Sub
+	Public Shared Function FirstRepeated2(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim hm As New Dictionary(Of Integer, Integer)()
 
-Public Shared Function FirstRepeated(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	For i As Integer = 0 To size - 1
-		For j As Integer = i + 1 To size - 1
-			If arr(i) = arr(j) Then
+		For i As Integer = 0 To size - 1
+			If hm.ContainsKey(arr(i)) Then
+				hm(arr(i)) = 2
+			Else
+				hm(arr(i)) = 1
+			End If
+		Next i
+
+		For i As Integer = 0 To size - 1
+			If hm(arr(i)) = 2 Then
 				Return arr(i)
 			End If
-		Next j
-	Next i
-	Return 0
-End Function
+		Next i
+		Return 0
+	End Function
 
-Public Shared Sub Main2(ByVal args() As String)
-	Dim first() As Integer = { 34, 56, 77, 1, 5, 6, 6, 6, 6, 6, 6, 7, 8, 10, 34, 20, 30 }
-	Console.WriteLine(FirstRepeated(first, first.Length))
-End Sub
 
-Public Shared Sub printRepeating(ByVal arr() As Integer, ByVal size As Integer)
-	Console.Write(" " & ControlChars.Lf & "Repeating elements are ")
-	For i As Integer = 0 To size - 1
-		For j As Integer = i + 1 To size - 1
-			If arr(i) = arr(j) Then
+	Public Shared Sub Main2()
+		Dim first() As Integer = {1, 3, 5, 3, 9, 1, 30}
+		Console.WriteLine(FirstRepeated(first, first.Length))
+		Console.WriteLine(FirstRepeated2(first, first.Length))
+
+	End Sub
+'	
+'	1
+'	
+
+	Public Shared Sub PrintRepeating(ByVal arr() As Integer, ByVal size As Integer)
+		Console.Write("Repeating elements are ")
+		For i As Integer = 0 To size - 1
+			For j As Integer = i + 1 To size - 1
+				If arr(i) = arr(j) Then
+					Console.Write(" " & arr(i))
+				End If
+			Next j
+		Next i
+		Console.WriteLine()
+	End Sub
+
+	Public Shared Sub PrintRepeating2(ByVal arr() As Integer, ByVal size As Integer)
+		Array.Sort(arr)
+		Console.Write("Repeating elements are ")
+
+		For i As Integer = 1 To size - 1
+			If arr(i) = arr(i - 1) Then
 				Console.Write(" " & arr(i))
 			End If
-		Next j
-	Next i
-End Sub
+		Next i
+		Console.WriteLine()
+	End Sub
 
-Public Shared Sub printRepeating2(ByVal arr() As Integer, ByVal size As Integer)
-	Array.Sort(arr)
-	Console.Write(" " & ControlChars.Lf & "Repeating elements are ")
-
-	For i As Integer = 1 To size - 1
-		If arr(i) = arr(i - 1) Then
-			Console.Write(" " & arr(i))
-		End If
-	Next i
-End Sub
-
-Public Shared Sub printRepeating3(ByVal arr() As Integer, ByVal size As Integer)
-	Dim hs As New HashSet(Of Integer)()
-	Console.Write(" " & ControlChars.Lf & "Repeating elements are ")
-	For i As Integer = 0 To size - 1
-		If hs.Contains(arr(i)) Then
-			Console.Write(" " & arr(i))
-		Else
-			hs.Add(arr(i))
-		End If
-	Next i
-End Sub
-
-Imports Microsoft.VisualBasic
-
-Public Shared Sub printRepeating4(ByVal arr() As Integer, ByVal size As Integer, ByVal range As Integer)
-	Dim count(range - 1) As Integer
-	Dim i As Integer
-	For i = 0 To size - 1
-		count(i) = 0
-	Next i
-	Console.Write(" " & ControlChars.Lf & "Repeating elements are ")
-	For i = 0 To size - 1
-		If count(arr(i)) = 1 Then
-			Console.Write(" " & arr(i))
-		Else
-			count(arr(i)) += 1
-		End If
-	Next i
-End Sub
-
-Public Shared Sub Main3(ByVal args() As String)
-	Dim first() As Integer = { 1, 3, 5, 3, 9, 1, 30 }
-	printRepeating(first, first.Length)
-	printRepeating2(first, first.Length)
-	printRepeating3(first, first.Length)
-	printRepeating4(first, first.Length, 50)
-End Sub
-
-Public Shared Function removeDuplicates(ByVal array() As Integer, ByVal size As Integer) As Integer()
-	Dim j As Integer = 0
-	System.Array.Sort(array)
-	For i As Integer = 1 To size - 1
-		If array(i) <> array(j) Then
-			j += 1
-			array(j) = array(i)
-		End If
-	Next i
-	Dim ret(j) As Integer
-	System.Array.Copy(array, ret, j + 1)
-	Return ret
-End Function
-
-Public Shared Sub Main4(ByVal args() As String)
-	Dim first() As Integer = { 1, 3, 5, 3, 9, 1, 30 }
-	Dim ret() As Integer = removeDuplicates(first, first.Length)
-	For i As Integer = 0 To ret.Length - 1
-		Console.Write(ret(i) & " ")
-	Next i
-End Sub
-
-Public Shared Function findMissingNumber(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Dim i As Integer, j As Integer, found As Integer = 0
-	For i = 1 To size
-		found = 0
-		For j = 0 To size - 1
-			If arr(j) = i Then
-				found = 1
-				Exit For
+	Public Shared Sub PrintRepeating3(ByVal arr() As Integer, ByVal size As Integer)
+		Dim hs As New HashSet(Of Integer)()
+		Console.Write("Repeating elements are ")
+		For i As Integer = 0 To size - 1
+			If hs.Contains(arr(i)) Then
+				Console.Write(" " & arr(i))
+			Else
+				hs.Add(arr(i))
 			End If
-		Next j
-		If found = 0 Then
-			Return i
-		End If
-	Next i
-	Return Integer.MaxValue
-End Function
+		Next i
+		Console.WriteLine()
+	End Sub
 
-Public Shared Function findMissingNumber2(ByVal arr() As Integer, ByVal size As Integer, ByVal range As Integer) As Integer
-	Dim i As Integer
-	Dim xorSum As Integer = 0
-	' get the XOR of all the numbers from 1 to range
-	For i = 1 To range
-		xorSum = xorSum Xor i
-	Next i
-	' loop through the array and get the XOR of elements
-	For i = 0 To size - 1
-		xorSum = xorSum Xor arr(i)
-	Next i
-	Return xorSum
-End Function
+	Public Shared Sub PrintRepeating4(ByVal arr() As Integer, ByVal size As Integer, ByVal range As Integer)
+		Dim count(range - 1) As Integer
+		Dim i As Integer
+		For i = 0 To size - 1
+			count(i) = 0
+		Next i
+		Console.Write("Repeating elements are ")
+		For i = 0 To size - 1
+			If count(arr(i)) = 1 Then
+				Console.Write(" " & arr(i))
+			Else
+				count(arr(i)) += 1
+			End If
+		Next i
+		Console.WriteLine()
+	End Sub
 
-Public Shared Function findMissingNumber3(ByVal arr() As Integer, ByVal size As Integer, ByVal upperRange As Integer) As Integer
-	Dim st As New HashSet(Of Integer)()
+	Public Shared Sub Main3()
+		Dim first() As Integer = {1, 3, 5, 3, 9, 1, 30}
+		PrintRepeating(first, first.Length)
+		PrintRepeating2(first, first.Length)
+		PrintRepeating3(first, first.Length)
+		PrintRepeating4(first, first.Length, 50)
+	End Sub
+'	
+'	Repeating elements are  1 3
+'	Repeating elements are  1 3
+'	Repeating elements are  1 3
+'	Repeating elements are  1 3
+'	
 
-	Dim i As Integer = 0
-	Do While i < size
-		st.Add(arr(i))
-		i += 1
-	Loop
-	i = 1
-	Do While i <= upperRange
-		If st.Contains(i) = False Then
-			Return i
-		End If
-		i += 1
-	Loop
-	Console.WriteLine("NoNumberMissing")
-	Return -1
-End Function
+	Public Shared Function RemoveDuplicates(ByVal array() As Integer, ByVal size As Integer) As Integer()
+		Dim j As Integer = 0
+		Array.Sort(array)
+		For i As Integer = 1 To size - 1
+			If array(i) <> array(j) Then
+				j += 1
+				array(j) = array(i)
+			End If
+		Next i
+		Dim ret(j) As Integer
+		Array.Copy(array, ret, j + 1)
+		Return ret
+	End Function
 
-Public Shared Sub Main5(ByVal args() As String)
-	Dim first() As Integer = { 1, 3, 5, 4, 6, 8, 7 }
-	Console.WriteLine(findMissingNumber(first, first.Length))
-	Console.WriteLine(findMissingNumber2(first, first.Length, 8))
-	Console.WriteLine(findMissingNumber3(first, first.Length, 8))
-End Sub
+	Public Shared Function RemoveDuplicates2(ByVal arr() As Integer, ByVal size As Integer) As Integer()
+		Dim hm As New Dictionary(Of Integer, Integer)()
+		Dim j As Integer = 0
+		For i As Integer = 0 To size - 1
+			If Not hm.ContainsKey(arr(i)) Then
+				arr(j) = arr(i)
+				j += 1
+				hm(arr(i)) = 1
+			End If
+		Next i
+		Dim ret(j - 1) As Integer
+		Array.Copy(arr, ret, j)
+		Return ret
+	End Function
 
-Public Shared Sub MissingValues(ByVal arr() As Integer, ByVal size As Integer)
-	Array.Sort(arr)
-	Dim value As Integer = arr(0)
-	Dim i As Integer = 0
-	Do While i < size
-		If value = arr(i) Then
-			value += 1
+	Public Shared Sub Main4()
+		Dim first() As Integer = {1, 3, 5, 3, 9, 1, 30}
+		Dim ret() As Integer = RemoveDuplicates(first, first.Length)
+		For i As Integer = 0 To ret.Length - 1
+			Console.Write(ret(i) & " ")
+		Next i
+		Console.WriteLine()
+
+		Dim first2() As Integer = {1, 3, 5, 3, 9, 1, 30}
+		Dim ret2() As Integer = RemoveDuplicates2(first2, first2.Length)
+		For i As Integer = 0 To ret2.Length - 1
+			Console.Write(ret2(i) & " ")
+		Next i
+		Console.WriteLine()
+	End Sub
+'	
+'	1 3 5 9 30 
+'	
+
+	Public Shared Function FindMissingNumber(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim i As Integer, j As Integer, found As Integer = 0
+		For i = 1 To size
+			found = 0
+			For j = 0 To size - 1
+				If arr(j) = i Then
+					found = 1
+					Exit For
+				End If
+			Next j
+			If found = 0 Then
+				Return i
+			End If
+		Next i
+		Return Integer.MaxValue
+	End Function
+
+	Public Shared Function FindMissingNumber2(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Array.Sort(arr)
+		For i As Integer = 0 To size - 1
+			If arr(i) <> i + 1 Then
+				Return i + 1
+			End If
+		Next i
+		Return size
+	End Function
+
+	Public Shared Function FindMissingNumber3(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim hm As New Dictionary(Of Integer, Integer)()
+		For i As Integer = 0 To size - 1
+			hm(arr(i)) = 1
+		Next i
+
+		For i As Integer = 1 To size
+			If Not hm.ContainsKey(i) Then
+				Return i
+			End If
+		Next i
+
+		Return Integer.MaxValue
+	End Function
+
+	Public Shared Function FindMissingNumber4(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim count(size) As Integer
+		Array.Fill(count, -1)
+		For i As Integer = 0 To size - 1
+			count(arr(i) - 1) = 1
+		Next i
+
+		For i As Integer = 0 To size
+			If count(i) = -1 Then
+				Return i + 1
+			End If
+		Next i
+
+		Return Integer.MaxValue
+	End Function
+
+	Public Shared Function FindMissingNumber5(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim sum As Integer = 0
+		' Element value range is from 1 to size+1.
+		Dim i As Integer = 1
+		Do While i < (size+2)
+			sum += i
 			i += 1
-		Else
-			Console.WriteLine(value)
-			value += 1
-		End If
-	Loop
-End Sub
+		Loop
+		For i As Integer = 0 To size - 1
+			sum -= arr(i)
+		Next i
+		Return sum
+	End Function
 
-Public Shared Sub MissingValues2(ByVal arr() As Integer, ByVal size As Integer)
-	Dim ht As New HashSet(Of Integer)()
-	Dim minVal As Integer = 999999
-	Dim maxVal As Integer = -999999
+	Public Shared Function FindMissingNumber6(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim i As Integer = 0
+		Do While i < size
+			arr((arr(i)) Mod (size) - 1) += size+1
+			i += 1
+		Loop
 
-	For i As Integer = 0 To size - 1
-		ht.Add(arr(i))
-		If minVal > arr(i) Then
-			minVal = arr(i)
-		End If
-		If maxVal < arr(i) Then
-			maxVal = arr(i)
-		End If
-	Next i
-	Dim i As Integer = minVal
-	Do While i < maxVal + 1
-		If ht.Contains(i) = False Then
-			Console.WriteLine(i)
-		End If
-		i += 1
-	Loop
-End Sub
+		For i As Integer = 0 To size - 1
+			If arr(i) < size+1 Then
+				Return i + 1
+			End If
+		Next i
+		Return Integer.MaxValue
+	End Function
 
-Public Shared Sub Main6(ByVal args() As String)
-	Dim arr() As Integer = { 1, 9, 2, 8, 3, 7, 4, 6 }
-	Dim size As Integer = arr.Length
-	MissingValues(arr, size)
-	MissingValues2(arr, size)
-End Sub
+	Public Shared Function FindMissingNumber7(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim i As Integer
+		Dim xorSum As Integer = 0
+		' Element value range is from 1 to size+1.
+		i = 1
+		Do While i < (size+2)
+			xorSum = xorSum Xor i
+			i += 1
+		Loop
+		' loop through the array and get the XOR of elements
+		For i = 0 To size - 1
+			xorSum = xorSum Xor arr(i)
+		Next i
+		Return xorSum
+	End Function
 
-Public Shared Sub OddCount(ByVal arr() As Integer, ByVal size As Integer)
-	Dim ctr As New Dictionary(Of Integer, Integer)()
-	Dim count As Integer = 0
+	Public Shared Function FindMissingNumber8(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim st As New HashSet(Of Integer)()
+		Dim i As Integer = 0
+		Do While i < size
+			st.Add(arr(i))
+			i += 1
+		Loop
+		i = 1
+		Do While i <= size
+			If st.Contains(i) = False Then
+				Return i
+			End If
+			i += 1
+		Loop
+		Console.WriteLine("NoNumberMissing")
+		Return -1
+	End Function
 
-	For i As Integer = 0 To size - 1
-		If ctr.ContainsKey(arr(i)) Then
-			ctr(arr(i)) = ctr(arr(i)) + 1
-		Else
-			ctr(arr(i)) = 1
-		End If
-	Next i
-	For i As Integer = 0 To size - 1
-		If ctr.ContainsKey(arr(i)) AndAlso (ctr(arr(i)) Mod 2 = 1) Then
-			Console.WriteLine(arr(i))
-			count += 1
-			ctr.Remove(arr(i))
-		End If
-	Next i
-	Console.WriteLine("Odd count is :: " & count)
-End Sub
+	Public Shared Sub Main5()
+		Dim first() As Integer = {1, 5, 4, 3, 2, 7, 8, 9}
+		Console.WriteLine(FindMissingNumber(first, first.Length))
+		Console.WriteLine(FindMissingNumber2(first, first.Length))
+		Console.WriteLine(FindMissingNumber3(first, first.Length))
+		Console.WriteLine(FindMissingNumber4(first, first.Length))
+		Console.WriteLine(FindMissingNumber5(first, first.Length))
+		Console.WriteLine(FindMissingNumber7(first, first.Length))
+		Console.WriteLine(FindMissingNumber8(first, first.Length))
+		Console.WriteLine(FindMissingNumber6(first, first.Length))
 
-Public Shared Sub OddCount2(ByVal arr() As Integer, ByVal size As Integer)
-	Dim xorSum As Integer = 0
-	Dim first As Integer = 0
-	Dim second As Integer = 0
-	Dim setBit As Integer
+	End Sub
 '	
-'		* xor of all elements in arr[] even occurrence will cancel each other. sum will
-'		* contain sum of two odd elements.
-'		
-	For i As Integer = 0 To size - 1
-		xorSum = xorSum Xor arr(i)
-	Next i
-
-	' Rightmost set bit. 
-	setBit = xorSum And Not (xorSum - 1)
-
+'	6
+'	6
+'	6
 '	
-'		* Dividing elements in two group: Elements having setBit bit as 1. Elements
-'		* having setBit bit as 0. Even elements cancelled themselves if group and we
-'		* get our numbers.
+
+	Public Shared Sub MissingValues(ByVal arr() As Integer, ByVal size As Integer)
+		Dim max As Integer = arr(0)
+		Dim min As Integer = arr(0)
+		For i As Integer = 1 To size - 1
+			If max < arr(i) Then
+				max = arr(i)
+			End If
+
+			If min > arr(i) Then
+				min = arr(i)
+			End If
+		Next i
+		Dim found As Boolean
+		For i As Integer = min + 1 To max - 1
+			found = False
+			For j As Integer = 0 To size - 1
+				If arr(j) = i Then
+					found = True
+					Exit For
+				End If
+			Next j
+			If Not found Then
+				Console.Write(i & " ")
+			End If
+		Next i
+		Console.WriteLine()
+	End Sub
+
+	Public Shared Sub MissingValues2(ByVal arr() As Integer, ByVal size As Integer)
+		Array.Sort(arr)
+		Dim value As Integer = arr(0)
+		Dim i As Integer = 0
+		Do While i < size
+			If value = arr(i) Then
+				value += 1
+				i += 1
+			Else
+				Console.Write(value & " ")
+				value += 1
+			End If
+		Loop
+		Console.WriteLine()
+	End Sub
+
+	Public Shared Sub MissingValues3(ByVal arr() As Integer, ByVal size As Integer)
+		Dim ht As New HashSet(Of Integer)()
+		Dim minVal As Integer = 999999
+		Dim maxVal As Integer = -999999
+
+		For i As Integer = 0 To size - 1
+			ht.Add(arr(i))
+			If minVal > arr(i) Then
+				minVal = arr(i)
+			End If
+			If maxVal < arr(i) Then
+				maxVal = arr(i)
+			End If
+		Next i
+		Dim i As Integer = minVal
+		Do While i < maxVal + 1
+			If ht.Contains(i) = False Then
+				Console.Write(i & " ")
+			End If
+			i += 1
+		Loop
+		Console.WriteLine()
+	End Sub
+
+	Public Shared Sub Main6()
+		Dim arr() As Integer = {11, 14, 13, 17, 21, 18, 19, 23, 24}
+		Dim size As Integer = arr.Length
+		MissingValues(arr, size)
+		MissingValues2(arr, size)
+		MissingValues3(arr, size)
+
+	End Sub
+'	
+'	12 15 16 20 22 
+'	12 15 16 20 22 
+'	
+
+	Public Shared Sub OddCount(ByVal arr() As Integer, ByVal size As Integer)
+		Dim xorSum As Integer = 0
+		For i As Integer = 0 To size - 1
+			xorSum = xorSum Xor arr(i)
+		Next i
+		Console.WriteLine("Odd values: " & xorSum)
+	End Sub
+
+	Public Shared Sub OddCount2(ByVal arr() As Integer, ByVal size As Integer)
+		Dim hm As New Dictionary(Of Integer, Integer)()
+		For i As Integer = 0 To size - 1
+			If hm.ContainsKey(arr(i)) Then
+				hm.Remove(arr(i))
+			Else
+				hm(arr(i)) = 1
+			End If
+		Next i
+		Console.Write("Odd values: ")
+		For Each key? As Integer In hm.Keys
+			Console.Write(key & " ")
+		Next key
+		Console.WriteLine()
+
+		Console.WriteLine("Odd count is :: " & hm.Count)
+	End Sub
+
+
+	Public Shared Sub OddCount3(ByVal arr() As Integer, ByVal size As Integer)
+		Dim xorSum As Integer = 0
+		Dim first As Integer = 0
+		Dim second As Integer = 0
+		Dim setBit As Integer
 '		
-	For i As Integer = 0 To size - 1
-		If (arr(i) And setBit) <> 0 Then
-			first = first Xor arr(i)
-		Else
-			second = second Xor arr(i)
-		End If
-	Next i
-	Console.WriteLine(first + second)
-End Sub
+'		 * xor of all elements in arr[] even occurrence will cancel each other. sum will
+'		 * contain sum of two odd elements.
+'		 
+		For i As Integer = 0 To size - 1
+			xorSum = xorSum Xor arr(i)
+		Next i
 
-Public Shared Sub SumDistinct(ByVal arr() As Integer, ByVal size As Integer)
-	Dim sum As Integer = 0
-	Array.Sort(arr)
-	Dim i As Integer = 0
-	Do While i < (size - 1)
-		If arr(i) <> arr(i + 1) Then
-			sum += arr(i)
-		End If
-		i += 1
-	Loop
-	sum += arr(size - 1)
-	Console.WriteLine(sum)
-End Sub
+		' Rightmost set bit. 
+		setBit = xorSum And Not (xorSum - 1)
 
-Public Shared Sub minAbsSumPair(ByVal arr() As Integer, ByVal size As Integer)
-	Dim l, r, minSum, sum, minFirst, minSecond As Integer
-	' Array should have at least two elements
-	If size < 2 Then
-		Console.WriteLine("Invalid Input")
-		Return
-	End If
-	' Initialization of values
-	minFirst = 0
-	minSecond = 1
-	minSum = Math.Abs(arr(0) + arr(1))
-	l = 0
-	Do While l < size - 1
-		For r = l + 1 To size - 1
-			sum = Math.Abs(arr(l) + arr(r))
-			If sum < minSum Then
-				minSum = sum
+'		
+'		 * Dividing elements in two group: Elements having setBit bit as 1. Elements
+'		 * having setBit bit as 0. Even elements cancelled themselves if group and we
+'		 * get our numbers.
+'		 
+		For i As Integer = 0 To size - 1
+			If (arr(i) And setBit) <> 0 Then
+				first = first Xor arr(i)
+			Else
+				second = second Xor arr(i)
+			End If
+		Next i
+		Console.WriteLine("Odd values: " & first & " " & second)
+	End Sub
+
+	Public Shared Sub Main7()
+		Dim arr() As Integer = {10, 25, 30, 10, 15, 25, 15}
+		Dim size As Integer = arr.Length
+		OddCount(arr, size)
+		OddCount2(arr, size)
+		Dim arr2() As Integer = {10, 25, 30, 10, 15, 25, 15, 40}
+		Dim size2 As Integer = arr2.Length
+		OddCount3(arr2, size2)
+	End Sub
+'	
+'	30 40 
+'	Odd count is :: 2
+'	30 40
+'	
+
+	Public Shared Sub SumDistinct(ByVal arr() As Integer, ByVal size As Integer)
+		Dim sum As Integer = 0
+		Array.Sort(arr)
+		Dim i As Integer = 0
+		Do While i < (size - 1)
+			If arr(i) <> arr(i + 1) Then
+				sum += arr(i)
+			End If
+			i += 1
+		Loop
+		sum += arr(size - 1)
+		Console.WriteLine("sum : " & sum)
+	End Sub
+
+	Public Shared Sub Main8()
+		Dim arr() As Integer = {1, 2, 3, 1, 1, 4, 5, 6}
+		Dim size As Integer = arr.Length
+		SumDistinct(arr, size)
+	End Sub
+'	
+'	sum : 21
+'	
+
+		Public Shared Sub MinAbsSumPair(ByVal arr() As Integer, ByVal size As Integer)
+		Dim l, r, minSum, sum, minFirst, minSecond As Integer
+		' Array should have at least two elements
+		If size < 2 Then
+			Console.WriteLine("Invalid Input")
+			Return
+		End If
+		' Initialization of values
+		minFirst = 0
+		minSecond = 1
+		minSum = Math.Abs(arr(0) + arr(1))
+		l = 0
+		Do While l < size - 1
+			For r = l + 1 To size - 1
+				sum = Math.Abs(arr(l) + arr(r))
+				If sum < minSum Then
+					minSum = sum
+					minFirst = l
+					minSecond = r
+				End If
+			Next r
+			l += 1
+		Loop
+		Console.WriteLine("Minimum sum elements are : " & arr(minFirst) & " , " & arr(minSecond))
+		End Sub
+
+	Public Shared Sub MinAbsSumPair2(ByVal arr() As Integer, ByVal size As Integer)
+		Dim l, r, minSum, sum, minFirst, minSecond As Integer
+		' Array should have at least two elements
+		If size < 2 Then
+			Console.WriteLine("Invalid Input")
+			Return
+		End If
+		Array.Sort(arr)
+
+		' Initialization of values
+		minFirst = 0
+		minSecond = size - 1
+		minSum = Math.Abs(arr(minFirst) + arr(minSecond))
+		l = 0
+		r = size - 1
+		Do While l < r
+			sum = (arr(l) + arr(r))
+			If Math.Abs(sum) < minSum Then
+				minSum = Math.Abs(sum)
 				minFirst = l
 				minSecond = r
 			End If
-		Next r
-		l += 1
-	Loop
-	Console.WriteLine(" Minimum sum elements are : " & arr(minFirst) & " , " & arr(minSecond))
-End Sub
+			If sum < 0 Then
+				l += 1
+			ElseIf sum > 0 Then
+				r -= 1
+			Else
+				Exit Do
+			End If
+		Loop
+		Console.WriteLine("Minimum sum elements are : " & arr(minFirst) & " , " & arr(minSecond))
+	End Sub
 
-Public Shared Sub minAbsSumPair2(ByVal arr() As Integer, ByVal size As Integer)
-	Dim l, r, minSum, sum, minFirst, minSecond As Integer
-	' Array should have at least two elements
-	If size < 2 Then
-		Console.WriteLine("Invalid Input")
-		Return
-	End If
-	Array.Sort(arr) ' Array.Sort(arr);
+		Public Shared Sub Main9()
+		Dim first() As Integer = {1, 5, -10, 3, 2, -6, 8, 9, 6}
+		MinAbsSumPair2(first, first.Length)
+		MinAbsSumPair(first, first.Length)
 
-	' Initialization of values
-	minFirst = 0
-	minSecond = size - 1
-	minSum = Math.Abs(arr(minFirst) + arr(minSecond))
-	l = 0
-	r = size - 1
-	Do While l < r
-		sum = (arr(l) + arr(r))
-		If Math.Abs(sum) < minSum Then
-			minSum = Math.Abs(sum) '/ just corrected......hemant
-			minFirst = l
-			minSecond = r
-		End If
-		If sum < 0 Then
-			l += 1
-		ElseIf sum > 0 Then
-			r -= 1
-		Else
-			Exit Do
-		End If
-	Loop
-	Console.WriteLine(" Minimum sum pair : " & arr(minFirst) & " , " & arr(minSecond))
-End Sub
+	End Sub
+'	
+'	Minimum sum elements are : -6 , 6
+'	Minimum sum elements are : -6 , 6
+'	
 
-Public Shared Sub Main7(ByVal str() As String)
-	Dim first() As Integer = { 1, 5, -10, 3, 2, -6, 8, 9, 6 }
-	minAbsSumPair2(first, first.Length)
-	minAbsSumPair(first, first.Length)
+	Public Shared Function FindPair(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
+		For i As Integer = 0 To size - 1
+			For j As Integer = i + 1 To size - 1
+				If (arr(i) + arr(j)) = value Then
+					Console.WriteLine("The pair is : " & arr(i) & ", " & arr(j))
+					Return True
+				End If
+			Next j
+		Next i
+		Return False
+	End Function
 
-End Sub
+	Public Shared Function FindPair2(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
+		Dim first As Integer = 0, second As Integer = size - 1
+		Dim curr As Integer
+		Array.Sort(arr)
+		Do While first < second
+			curr = arr(first) + arr(second)
+			If curr = value Then
+				Console.WriteLine("The pair is " & arr(first) & ", " & arr(second))
+				Return True
+			ElseIf curr < value Then
+				first += 1
+			Else
+				second -= 1
+			End If
+		Loop
+		Return False
+	End Function
 
-Public Shared Function FindPair(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
-	For i As Integer = 0 To size - 1
-		For j As Integer = i + 1 To size - 1
-			If (arr(i) + arr(j)) = value Then
-				Console.WriteLine("The pair is : " & arr(i) & "," & arr(j))
+	Public Shared Function FindPair3(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
+		Dim hs As New HashSet(Of Integer)()
+		For i As Integer = 0 To size - 1
+			If hs.Contains(value - arr(i)) Then
+				Console.WriteLine("The pair is : " & arr(i) & ", " & (value - arr(i)))
 				Return True
 			End If
-		Next j
-	Next i
-	Return False
-End Function
+			hs.Add(arr(i))
+		Next i
+		Return False
+	End Function
 
-Public Shared Function FindPair2(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
-	Dim first As Integer = 0, second As Integer = size - 1
-	Dim curr As Integer
-	Array.Sort(arr) ' Array.Sort(arr);
-	Do While first < second
-		curr = arr(first) + arr(second)
-		If curr = value Then
-			Console.WriteLine("The pair is " & arr(first) & "," & arr(second))
-			Return True
-		ElseIf curr < value Then
-			first += 1
-		Else
-			second -= 1
-		End If
-	Loop
-	Return False
-End Function
-
-Public Shared Function FindPair3(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
-	Dim hs As New HashSet(Of Integer)()
-	For i As Integer = 0 To size - 1
-		If hs.Contains(value - arr(i)) Then
-			Console.WriteLine("The pair is : " & arr(i) & " , " & (value - arr(i)))
-			Return True
-		End If
-		hs.Add(arr(i))
-	Next i
-	Return False
-End Function
-
-Public Shared Sub Main8(ByVal args() As String)
-	Dim first() As Integer = { 1, 5, 4, 3, 2, 7, 8, 9, 6 }
-	Console.WriteLine(FindPair(first, first.Length, 8))
-	Console.WriteLine(FindPair2(first, first.Length, 8))
-	Console.WriteLine(FindPair3(first, first.Length, 8))
-
-End Sub
-
-Public Shared Function FindDifference(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
-	For i As Integer = 0 To size - 1
-		For j As Integer = i + 1 To size - 1
-			If Math.Abs(arr(i) - arr(j)) = value Then
-				Console.WriteLine("The pair is:: " & arr(i) & " & " & arr(j))
+	Public Shared Function FindPair4(ByVal arr() As Integer, ByVal size As Integer, ByVal range As Integer, ByVal value As Integer) As Boolean
+		Dim count(range) As Integer
+		Array.Fill(count, 0)
+		For i As Integer = 0 To size - 1
+			If count(value - arr(i)) > 0 Then
+				Console.WriteLine("The pair is : " & arr(i) & ", " & (value - arr(i)))
 				Return True
 			End If
-		Next j
-	Next i
-	Return False
-End Function
+			count(arr(i)) += 1
+		Next i
+		Return False
+	End Function
 
-Public Shared Function FindDifference2(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
-	Dim first As Integer = 0
-	Dim second As Integer = 0
-	Dim diff As Integer
-	Array.Sort(arr)
-	Do While first < size AndAlso second < size
-		diff = Math.Abs(arr(first) - arr(second))
-		If diff = value Then
-			Console.WriteLine("The pair is::" & arr(first) & " & " & arr(second))
-			Return True
-		ElseIf diff > value Then
-			first += 1
-		Else
-			second += 1
-		End If
-	Loop
-	Return False
-End Function
+	Public Shared Sub Main10()
+		Dim first() As Integer = {1, 5, 4, 3, 2, 7, 8, 9, 6}
+		Console.WriteLine(FindPair(first, first.Length, 8))
+		Console.WriteLine(FindPair2(first, first.Length, 8))
+		Console.WriteLine(FindPair3(first, first.Length, 8))
+		Console.WriteLine(FindPair4(first, first.Length, 9, 8))
+	End Sub
+'	
+'	The pair is : 1, 7
+'	true
+'	The pair is 1, 7
+'	true
+'	The pair is : 5, 3
+'	true
+'	The pair is : 5, 3
+'	true
+'	
 
-Public Shared Function findMinDiff(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Array.Sort(arr)
-	Dim diff As Integer = 9999999
 
-	Dim i As Integer = 0
-	Do While i < (size - 1)
-		If (arr(i + 1) - arr(i)) < diff Then
-			diff = arr(i + 1) - arr(i)
-		End If
-		i += 1
-	Loop
-	Return diff
-End Function
+	Public Shared Function FindPairTwoLists(ByVal arr1() As Integer, ByVal size1 As Integer, ByVal arr2() As Integer, ByVal size2 As Integer, ByVal value As Integer) As Boolean
+		For i As Integer = 0 To size1 - 1
+			For j As Integer = 0 To size2 - 1
+				If (arr1(i) + arr2(j)) = value Then
+					Console.WriteLine("The pair is : " & arr1(i) & ", " & arr2(j))
+					Return True
+				End If
+			Next j
+		Next i
+		Return False
+	End Function
 
-Public Shared Function MinDiffPair(ByVal arr1() As Integer, ByVal size1 As Integer, ByVal arr2() As Integer, ByVal size2 As Integer) As Integer
-	Dim minDiff As Integer = 9999999
-	Dim first As Integer = 0
-	Dim second As Integer = 0
-	Dim out1 As Integer = 0, out2 As Integer = 0, diff As Integer
-	Array.Sort(arr1)
-	Array.Sort(arr2)
-	Do While first < size1 AndAlso second < size2
-		diff = Math.Abs(arr1(first) - arr2(second))
-		If minDiff > diff Then
-			minDiff = diff
-			out1 = arr1(first)
-			out2 = arr2(second)
-		End If
-		If arr1(first) < arr2(second) Then
-			first += 1
-		Else
-			second += 1
-		End If
-	Loop
-	Console.WriteLine("The pair is :: " & out1 + out2)
-	Console.WriteLine("Minimum difference is :: " & minDiff)
-	Return minDiff
-End Function
-
-Public Shared Sub Main9(ByVal args() As String)
-	Dim first() As Integer = { 1, 5, 4, 3, 2, 7, 8, 9, 6 }
-	Console.WriteLine(FindDifference(first, first.Length, 6))
-	Console.WriteLine(FindDifference2(first, first.Length, 6))
-	Console.WriteLine(findMinDiff(first, first.Length))
-	Console.WriteLine(MinDiffPair(first, first.Length, first, first.Length))
-End Sub
-
-Public Shared Sub ClosestPair(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer)
-	Dim diff As Integer = 999999
-	Dim first As Integer = -1
-	Dim second As Integer = -1
-	Dim curr As Integer
-	For i As Integer = 0 To size - 1
-		For j As Integer = i + 1 To size - 1
-			curr = Math.Abs(value - (arr(i) + arr(j)))
-			If curr < diff Then
-				diff = curr
-				first = arr(i)
-				second = arr(j)
+	Public Shared Function FindPairTwoLists2(ByVal arr1() As Integer, ByVal size1 As Integer, ByVal arr2() As Integer, ByVal size2 As Integer, ByVal value As Integer) As Boolean
+		Array.Sort(arr2)
+		For i As Integer = 0 To size1 - 1
+			If BinarySearch(arr2, size2, value - arr1(i)) Then
+				Console.WriteLine("The pair is " & arr1(i) & ", " & (value - arr1(i)))
+				Return True
 			End If
-		Next j
-	Next i
-	Console.WriteLine("closest pair is ::" & first + second)
-End Sub
+		Next i
+		Return False
+	End Function
 
-Public Shared Sub ClosestPair2(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer)
-	Dim first As Integer = 0, second As Integer = 0
-	Dim start As Integer = 0
-	Dim [stop] As Integer = size - 1
-	Dim diff, curr As Integer
-	Array.Sort(arr)
-	diff = 9999999
-	If True Then
-		Do While start < [stop]
-			curr = (value - (arr(start) + arr([stop])))
+	Public Shared Function FindPairTwoLists3(ByVal arr1() As Integer, ByVal size1 As Integer, ByVal arr2() As Integer, ByVal size2 As Integer, ByVal value As Integer) As Boolean
+		Dim first As Integer = 0, second As Integer = size2 - 1, curr As Integer = 0
+		Array.Sort(arr1)
+		Array.Sort(arr2)
+		Do While first < size1 AndAlso second >= 0
+			curr = arr1(first) + arr2(second)
+			If curr = value Then
+				Console.WriteLine("The pair is " & arr1(first) & ", " & arr2(second))
+				Return True
+			ElseIf curr < value Then
+				first += 1
+			Else
+				second -= 1
+			End If
+		Loop
+		Return False
+	End Function
+
+
+	Public Shared Function FindPairTwoLists4(ByVal arr1() As Integer, ByVal size1 As Integer, ByVal arr2() As Integer, ByVal size2 As Integer, ByVal value As Integer) As Boolean
+		Dim hs As New HashSet(Of Integer)()
+		For i As Integer = 0 To size2 - 1
+			hs.Add(arr2(i))
+		Next i
+
+		For i As Integer = 0 To size1 - 1
+			If hs.Contains(value - arr1(i)) Then
+				Console.WriteLine("The pair is : " & arr1(i) & ", " & (value - arr1(i)))
+				Return True
+			End If
+		Next i
+		Return False
+	End Function
+
+	Public Shared Function FindPairTwoLists5(ByVal arr1() As Integer, ByVal size1 As Integer, ByVal arr2() As Integer, ByVal size2 As Integer, ByVal range As Integer, ByVal value As Integer) As Boolean
+		Dim count(range) As Integer
+		Array.Fill(count, 0)
+
+		For i As Integer = 0 To size2 - 1
+			count(arr2(i)) = 1
+		Next i
+
+		For i As Integer = 0 To size1 - 1
+			If count(value - arr1(i)) <> 0 Then
+				Console.WriteLine("The pair is : " & arr1(i) & ", " & (value - arr1(i)))
+				Return True
+			End If
+		Next i
+		Return False
+	End Function
+
+	Public Shared Sub Main10A()
+		Dim first() As Integer = {1, 5, 4, 3, 2, 7, 8, 9, 6}
+		Dim second() As Integer = {1, 5, 4, 3, 2, 7, 8, 9, 6}
+		Console.WriteLine(FindPairTwoLists(first, first.Length, second, second.Length, 8))
+		Console.WriteLine(FindPairTwoLists2(first, first.Length, second, second.Length, 8))
+		Console.WriteLine(FindPairTwoLists3(first, first.Length, second, second.Length, 8))
+		Console.WriteLine(FindPairTwoLists4(first, first.Length, second, second.Length, 8))
+		Console.WriteLine(FindPairTwoLists5(first, first.Length, second, second.Length, 9, 8))
+	End Sub
+
+'
+'The pair is : 1, 7
+'true
+'The pair is 1, 7
+'true
+'The pair is 1, 7
+'true
+'The pair is : 1, 7
+'true
+'The pair is : 1, 7
+'true    
+
+	Public Shared Function FindDifference(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
+		For i As Integer = 0 To size - 1
+			For j As Integer = i + 1 To size - 1
+				If Math.Abs(arr(i) - arr(j)) = value Then
+					Console.WriteLine("The pair is:: " & arr(i) & " & " & arr(j))
+					Return True
+				End If
+			Next j
+		Next i
+		Return False
+	End Function
+
+	Public Shared Function FindDifference2(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Boolean
+		Dim first As Integer = 0
+		Dim second As Integer = 0
+		Dim diff As Integer
+		Array.Sort(arr)
+		Do While first < size AndAlso second < size
+			diff = Math.Abs(arr(first) - arr(second))
+			If diff = value Then
+				Console.WriteLine("The pair is::" & arr(first) & " & " & arr(second))
+				Return True
+			ElseIf diff > value Then
+				first += 1
+			Else
+				second += 1
+			End If
+		Loop
+		Return False
+	End Function
+	
+	Public Shared Sub Main11()
+		Dim first() As Integer = {1, 5, 4, 3, 2, 7, 8, 9, 6}
+		Console.WriteLine(FindDifference(first, first.Length, 6))
+		Console.WriteLine(FindDifference2(first, first.Length, 6))
+	End Sub
+'	
+'	The pair is:: 1 & 7
+'	true
+'	The pair is::1 & 7
+'	true
+'	
+
+	Public Shared Function FindMinDiff(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim diff As Integer = Integer.MaxValue
+		For i As Integer = 0 To size - 1
+			For j As Integer = i + 1 To size - 1
+				Dim value As Integer = Math.Abs(arr(i) - arr(j))
+				If diff > value Then
+					diff = value
+				End If
+			Next j
+		Next i
+		Return diff
+	End Function
+
+	Public Shared Function FindMinDiff2(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Array.Sort(arr)
+		Dim diff As Integer = Integer.MaxValue
+
+		Dim i As Integer = 0
+		Do While i < (size - 1)
+			If (arr(i + 1) - arr(i)) < diff Then
+				diff = arr(i + 1) - arr(i)
+			End If
+			i += 1
+		Loop
+		Return diff
+	End Function
+
+	Public Shared Sub Main12()
+		Dim second() As Integer = {1, 6, 4, 19, 17, 20}
+		Console.WriteLine("FindMinDiff : " & FindMinDiff(second, second.Length))
+		Console.WriteLine("FindMinDiff : " & FindMinDiff2(second, second.Length))
+	End Sub
+'	
+'	FindMinDiff : 1
+'	
+
+	Public Shared Function MinDiffPair(ByVal arr1() As Integer, ByVal size1 As Integer, ByVal arr2() As Integer, ByVal size2 As Integer) As Integer
+		Dim diff As Integer = Integer.MaxValue
+		Dim first As Integer = 0
+		Dim second As Integer = 0
+		For i As Integer = 0 To size1 - 1
+			For j As Integer = 0 To size2 - 1
+				Dim value As Integer = Math.Abs(arr1(i) - arr2(j))
+				If diff > value Then
+					diff = value
+					first = arr1(i)
+					second = arr2(j)
+				End If
+			Next j
+		Next i
+		Console.WriteLine("The pair is :: " & first & " & " & second)
+		Console.WriteLine("Minimum difference is :: " & diff)
+		Return diff
+	End Function
+
+
+	Public Shared Function MinDiffPair2(ByVal arr1() As Integer, ByVal size1 As Integer, ByVal arr2() As Integer, ByVal size2 As Integer) As Integer
+		Dim minDiff As Integer = Integer.MaxValue
+		Dim i As Integer = 0
+		Dim j As Integer = 0
+		Dim first As Integer = 0, second As Integer = 0, diff As Integer
+		Array.Sort(arr1)
+		Array.Sort(arr2)
+		Do While i < size1 AndAlso j < size2
+			diff = Math.Abs(arr1(i) - arr2(j))
+			If minDiff > diff Then
+				minDiff = diff
+				first = arr1(i)
+				second = arr2(j)
+			End If
+			If arr1(i) < arr2(j) Then
+				i += 1
+			Else
+				j += 1
+			End If
+		Loop
+		Console.WriteLine("The pair is :: " & first & " & " & second)
+		Console.WriteLine("Minimum difference is :: " & minDiff)
+		Return minDiff
+	End Function
+
+	Public Shared Sub Main13()
+		Dim first() As Integer = {1, 5, 4, 3, 2, 7, 8, 9, 6}
+		Dim second() As Integer = {6, 4, 19, 17, 20}
+		MinDiffPair(first, first.Length, second, second.Length)
+		MinDiffPair(first, first.Length, second, second.Length)
+	End Sub
+'	
+'	The pair is :: 4 4
+'	Minimum difference is :: 0
+'	
+
+	Public Shared Sub ClosestPair(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer)
+		Dim diff As Integer = 999999
+		Dim first As Integer = -1
+		Dim second As Integer = -1
+		Dim curr As Integer
+		For i As Integer = 0 To size - 1
+			For j As Integer = i + 1 To size - 1
+				curr = Math.Abs(value - (arr(i) + arr(j)))
+				If curr < diff Then
+					diff = curr
+					first = arr(i)
+					second = arr(j)
+				End If
+			Next j
+		Next i
+		Console.WriteLine("closest pair is :: " & first & " " & second)
+	End Sub
+
+	Public Shared Sub ClosestPair2(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer)
+		Dim first As Integer = 0, second As Integer = 0
+		Dim start As Integer = 0
+		Dim finish As Integer = size - 1
+		Dim diff, curr As Integer
+		Array.Sort(arr)
+		diff = 9999999
+		Do While start < finish
+			curr = (value - (arr(start) + arr(finish)))
 			If Math.Abs(curr) < diff Then
 				diff = Math.Abs(curr)
 				first = arr(start)
-				second = arr([stop])
+				second = arr(finish)
 			End If
 			If curr = 0 Then
 				Exit Do
 			ElseIf curr > 0 Then
 				start += 1
 			Else
-				[stop] -= 1
+				finish -= 1
+			End If
+
+		Loop
+		Console.WriteLine("closest pair is :: " & first & " " & second)
+	End Sub
+
+	Public Shared Sub Main14()
+		Dim first() As Integer = {10, 20, 3, 4, 50, 80}
+		ClosestPair(first, first.Length, 47)
+		ClosestPair2(first, first.Length, 47)
+	End Sub
+'	
+'	closest pair is :: 3 50
+'	closest pair is :: 3 50
+'	
+
+	Public Shared Function SumPairRestArray(ByVal arr() As Integer, ByVal size As Integer) As Boolean
+		Dim total, low, high, curr, value As Integer
+		Array.Sort(arr)
+		total = 0
+		For i As Integer = 0 To size - 1
+			total += arr(i)
+		Next i
+		value = total \ 2
+		low = 0
+		high = size - 1
+		Do While low < high
+			curr = arr(low) + arr(high)
+			If curr = value Then
+				Console.WriteLine("Pair is :: " & arr(low) & " " & arr(high))
+				Return True
+			ElseIf curr < value Then
+				low += 1
+			Else
+				high -= 1
 			End If
 		Loop
-	End If
-	Console.WriteLine("closest pair is :: " & first + second)
-End Sub
+		Return False
+	End Function
 
-Public Shared Sub Main10(ByVal args() As String)
-	Dim first() As Integer = { 1, 5, 4, 3, 2, 7, 8, 9, 6 }
-	ClosestPair(first, first.Length, 6)
-	ClosestPair2(first, first.Length, 6)
-End Sub
+	Public Shared Sub Main15()
+		Dim first() As Integer = {1, 2, 4, 8, 16, 15}
+		Console.WriteLine(SumPairRestArray(first, first.Length))
+	End Sub
+'	
+'	Pair is :: 8 15
+'	true
+'	
 
-Public Shared Function SumPairRestArray(ByVal arr() As Integer, ByVal size As Integer) As Boolean
-	Dim total, low, high, curr, value As Integer
-	Array.Sort(arr)
-	total = 0
-	For i As Integer = 0 To size - 1
-		total += arr(i)
-	Next i
-	value = total \ 2
-	low = 0
-	high = size - 1
-	Do While low < high
-		curr = arr(low) + arr(high)
-		If curr = value Then
-			Console.WriteLine("Pair is :: " & arr(low) + arr(high))
-			Return True
-		ElseIf curr < value Then
-			low += 1
-		Else
-			high -= 1
-		End If
-	Loop
-	Return False
-End Function
+	Public Shared Sub ZeroSumTriplets(ByVal arr() As Integer, ByVal size As Integer)
+		Dim i As Integer = 0
+		Do While i < (size - 2)
+			Dim j As Integer = i + 1
+			Do While j < (size - 1)
+				For k As Integer = j + 1 To size - 1
+					If arr(i) + arr(j) + arr(k) = 0 Then
+						Console.WriteLine("Triplet:: " & arr(i) & " " & arr(j) & " " & arr(k))
+					End If
+				Next k
+				j += 1
+			Loop
+			i += 1
+		Loop
+	End Sub
 
-Public Shared Sub ZeroSumTriplets(ByVal arr() As Integer, ByVal size As Integer)
-	Dim i As Integer = 0
-	Do While i < (size - 2)
-		Dim j As Integer = i + 1
-		Do While j < (size - 1)
-			For k As Integer = j + 1 To size - 1
-				If arr(i) + arr(j) + arr(k) = 0 Then
-					Console.WriteLine("Triplet :: " & arr(i) + arr(j) + arr(k))
+	Public Shared Sub ZeroSumTriplets2(ByVal arr() As Integer, ByVal size As Integer)
+		Dim start, finish As Integer
+		Array.Sort(arr)
+		Dim i As Integer = 0
+		Do While i < (size - 2)
+			start = i + 1
+			finish = size - 1
+
+			Do While start < finish
+				If arr(i) + arr(start) + arr(finish) = 0 Then
+					Console.WriteLine("Triplet :: " & arr(i) & " " & arr(start) & " " & arr(finish))
+					start += 1
+					finish -= 1
+				ElseIf arr(i) + arr(start) + arr(finish) > 0 Then
+					finish -= 1
+				Else
+					start += 1
+				End If
+			Loop
+			i += 1
+		Loop
+	End Sub
+
+	Public Shared Sub Main16()
+		Dim first() As Integer = {0, -1, 2, -3, 1}
+		ZeroSumTriplets(first, first.Length)
+		ZeroSumTriplets2(first, first.Length)
+	End Sub
+'	
+'	Triplet:: 0 -1 1
+'	Triplet:: 2 -3 1
+'	Triplet :: -3 1 2
+'	Triplet :: -1 0 1
+'	
+	Public Shared Sub FindTriplet(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer)
+		Dim i As Integer = 0
+		Do While i < (size - 2)
+			Dim j As Integer = i + 1
+			Do While j < (size - 1)
+				For k As Integer = j + 1 To size - 1
+					If (arr(i) + arr(j) + arr(k)) = value Then
+						Console.WriteLine("Triplet :: " & arr(i) & " " & arr(j) & " " & arr(k))
+					End If
+				Next k
+				j += 1
+			Loop
+			i += 1
+		Loop
+	End Sub
+
+	Public Shared Sub FindTriplet2(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer)
+		Dim start, finish As Integer
+		Array.Sort(arr)
+		Dim i As Integer = 0
+		Do While i < size - 2
+			start = i + 1
+			finish = size - 1
+			Do While start < finish
+				If arr(i) + arr(start) + arr(finish) = value Then
+					Console.WriteLine("Triplet ::" & arr(i) & " " & arr(start) & " " & arr(finish))
+					start += 1
+					finish -= 1
+				ElseIf arr(i) + arr(start) + arr(finish) > value Then
+					finish -= 1
+				Else
+					start += 1
+				End If
+			Loop
+			i += 1
+		Loop
+	End Sub
+
+	Public Shared Sub Main17()
+		Dim first() As Integer = {1, 5, 15, 6, 9, 8}
+		FindTriplet(first, first.Length, 22)
+		FindTriplet2(first, first.Length, 22)
+	End Sub
+'	
+'	Triplet :: 1 15 6
+'	Triplet :: 5 9 8
+'	Triplet ::1 6 15
+'	Triplet ::5 8 9
+'	
+
+
+	Public Shared Sub AbcTriplet(ByVal arr() As Integer, ByVal size As Integer)
+		Dim i As Integer = 0
+		Do While i < size-1
+		For j As Integer = i + 1 To size - 1
+			For k As Integer = 0 To size - 1
+				If k <> i AndAlso k <> j AndAlso arr(i) + arr(j) = arr(k) Then
+					Console.WriteLine("AbcTriplet:: " & arr(i) & " " & arr(j) & " " & arr(k))
 				End If
 			Next k
-			j += 1
+		Next j
+			i += 1
 		Loop
-		i += 1
-	Loop
-End Sub
+	End Sub
 
-Public Shared Sub ZeroSumTriplets2(ByVal arr() As Integer, ByVal size As Integer)
-	Dim start, [stop] As Integer
-	Array.Sort(arr)
-	Dim i As Integer = 0
-	Do While i < (size - 2)
-		start = i + 1
-		[stop] = size - 1
-
-		Do While start < [stop]
-			If arr(i) + arr(start) + arr([stop]) = 0 Then
-				Console.WriteLine("Triplet :: " & arr(i) + arr(start) + arr([stop]))
-				start += 1
-				[stop] -= 1
-			ElseIf arr(i) + arr(start) + arr([stop]) > 0 Then
-				[stop] -= 1
-			Else
-				start += 1
-			End If
-		Loop
-		i += 1
-	Loop
-End Sub
-
-Public Shared Sub findTriplet(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer)
-	Dim i As Integer = 0
-	Do While i < (size - 2)
-		Dim j As Integer = i + 1
-		Do While j < (size - 1)
-			For k As Integer = j + 1 To size - 1
-				If (arr(i) + arr(j) + arr(k)) = value Then
-					Console.WriteLine("Triplet :: " & arr(i) + arr(j) + arr(k))
+	Public Shared Sub AbcTriplet2(ByVal arr() As Integer, ByVal size As Integer)
+		Dim start, finish As Integer
+		Array.Sort(arr)
+		For i As Integer = 0 To size - 1
+			start = 0
+			finish = size - 1
+			Do While start < finish
+				If arr(i) = arr(start) + arr(finish) Then
+					Console.WriteLine("AbcTriplet:: " & arr(start) & " " & arr(finish) & " " & arr(i))
+					start += 1
+					finish -= 1
+				ElseIf arr(i) < arr(start) + arr(finish) Then
+					finish -= 1
+				Else
+					start += 1
 				End If
-			Next k
-			j += 1
-		Loop
-		i += 1
-	Loop
-End Sub
+			Loop
+		Next i
+	End Sub
 
-Public Shared Sub findTriplet2(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer)
-	Dim start, [stop] As Integer
-	Array.Sort(arr)
-	Dim i As Integer = 0
-	Do While i < size - 2
-		start = i + 1
-		[stop] = size - 1
-		Do While start < [stop]
-			If arr(i) + arr(start) + arr([stop]) = value Then
-				Console.WriteLine("Triplet ::" & arr(i) + arr(start) + arr([stop]))
-				start += 1
-				[stop] -= 1
-			ElseIf arr(i) + arr(start) + arr([stop]) > value Then
-				[stop] -= 1
-			Else
-				start += 1
+	Public Shared Sub Main18()
+		Dim first() As Integer = {1, 5, 15, 6, 9, 8}
+		AbcTriplet(first, first.Length)
+		AbcTriplet2(first, first.Length)
+	End Sub
+
+'	
+'	AbcTriplet:: 1 5 6
+'	AbcTriplet:: 1 8 9
+'	AbcTriplet:: 6 9 15
+'	
+
+	Public Shared Sub SmallerThenTripletCount(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer)
+		Dim count As Integer = 0
+		Dim i As Integer = 0
+		Do While i < size-1
+		For j As Integer = i + 1 To size - 1
+		For k As Integer = j + 1 To size - 1
+			If arr(i) + arr(j) + arr(k) < value Then
+				count += 1
 			End If
+		Next k
+		Next j
+			i += 1
 		Loop
-		i += 1
-	Loop
-End Sub
+		Console.WriteLine("SmallerThenTripletCount:: " & count)
+	End Sub
 
-Public Shared Sub ABCTriplet(ByVal arr() As Integer, ByVal size As Integer)
-	Dim start, [stop] As Integer
-	Array.Sort(arr)
-	Dim i As Integer = 0
-	Do While i < (size - 2)
-		start = i + 1
-		[stop] = size - 1
-		Do While start < [stop]
-			If arr(i) = arr(start) + arr([stop]) Then
-				Console.WriteLine("Triplet ::%d, %d, %d" & arr(i) + arr(start) + arr([stop]))
-				start += 1
-				[stop] -= 1
-			ElseIf arr(i) > arr(start) + arr([stop]) Then
-				[stop] -= 1
-			Else
-				start += 1
-			End If
+	Public Shared Sub SmallerThenTripletCount2(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer)
+		Dim start, finish As Integer
+		Dim count As Integer = 0
+		Array.Sort(arr)
+
+		Dim i As Integer = 0
+		Do While i < (size - 2)
+			start = i + 1
+			finish = size - 1
+			Do While start < finish
+				If arr(i) + arr(start) + arr(finish) >= value Then
+					finish -= 1
+				Else
+					count += finish - start
+					start += 1
+				End If
+			Loop
+			i += 1
 		Loop
-		i += 1
-	Loop
-End Sub
+		Console.WriteLine("SmallerThenTripletCount:: " & count)
+	End Sub
 
-Public Shared Sub SmallerThenTripletCount(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer)
-	Dim start, [stop] As Integer
-	Dim count As Integer = 0
-	Array.Sort(arr)
+	Public Shared Sub Main19()
+		Dim first() As Integer = {-2, -1, 0, 1}
+		SmallerThenTripletCount(first, first.Length, 2)
+		SmallerThenTripletCount(first, first.Length, 2)
+	End Sub
+'	
+'	4
+'	4
+'	
 
-	Dim i As Integer = 0
-	Do While i < (size - 2)
-		start = i + 1
-		[stop] = size - 1
-		Do While start < [stop]
-			If arr(i) + arr(start) + arr([stop]) >= value Then
-				[stop] -= 1
-			Else
-				count += [stop] - start
-				start += 1
-			End If
+	Public Shared Sub APTriplets(ByVal arr() As Integer, ByVal size As Integer)
+		Dim i, j, k As Integer
+		i = 1
+		Do While i < size - 1
+			j = i - 1
+			k = i + 1
+			Do While j >= 0 AndAlso k < size
+				If arr(j) + arr(k) = 2 * arr(i) Then
+					Console.WriteLine("AP Triplet:: " & arr(j) & " " & arr(i) & " " & arr(k))
+					k += 1
+					j -= 1
+				ElseIf arr(j) + arr(k) < 2 * arr(i) Then
+					k += 1
+				Else
+					j -= 1
+				End If
+			Loop
+			i += 1
 		Loop
-		i += 1
-	Loop
-	Console.WriteLine(count)
-End Sub
+	End Sub
 
-Public Shared Sub APTriplets(ByVal arr() As Integer, ByVal size As Integer)
-	Dim i, j, k As Integer
-	i = 1
-	Do While i < size - 1
-		j = i - 1
-		k = i + 1
-		Do While j >= 0 AndAlso k < size
-			If arr(j) + arr(k) = 2 * arr(i) Then
-				Console.WriteLine("Triplet ::" & arr(j) + arr(i) + arr(k))
-				k += 1
-				j -= 1
-			ElseIf arr(j) + arr(k) < 2 * arr(i) Then
-				k += 1
-			Else
-				j -= 1
-			End If
+	Public Shared Sub Main20()
+		Dim arr() As Integer = {2, 4, 10, 12, 14, 18, 36}
+		APTriplets(arr, arr.Length)
+	End Sub
+'	
+'	AP Triplet:: 2 10 18
+'	AP Triplet:: 10 12 14
+'	AP Triplet:: 10 14 18
+'	
+
+	Public Shared Sub GPTriplets(ByVal arr() As Integer, ByVal size As Integer)
+		Dim i, j, k As Integer
+		i = 1
+		Do While i < size - 1
+			j = i - 1
+			k = i + 1
+			Do While j >= 0 AndAlso k < size
+				If arr(j) * arr(k) = arr(i) * arr(i) Then
+					Console.WriteLine("GP Triplet:: " & arr(j) & " " & arr(i) & " " & arr(k))
+					k += 1
+					j -= 1
+				ElseIf arr(j) + arr(k) < 2 * arr(i) Then
+					k += 1
+				Else
+					j -= 1
+				End If
+			Loop
+			i += 1
 		Loop
-		i += 1
-	Loop
-End Sub
+	End Sub
 
-Public Shared Sub GPTriplets(ByVal arr() As Integer, ByVal size As Integer)
-	Dim i, j, k As Integer
-	i = 1
-	Do While i < size - 1
-		j = i - 1
-		k = i + 1
-		Do While j >= 0 AndAlso k < size
-			If arr(j) * arr(k) = arr(i) * arr(i) Then
-				Console.WriteLine("Triplet is :: " & arr(j) + arr(i) + arr(k))
-				k += 1
-				j -= 1
-			ElseIf arr(j) + arr(k) < 2 * arr(i) Then
-				k += 1
-			Else
-				j -= 1
-			End If
+	Public Shared Sub Main21()
+		Dim arr() As Integer = {1, 2, 4, 8, 16}
+		GPTriplets(arr, arr.Length)
+	End Sub
+'	
+'	GP Triplet:: 1 2 4
+'	GP Triplet:: 2 4 8
+'	GP Triplet:: 1 4 16
+'	GP Triplet:: 4 8 16
+'	
+
+	Public Shared Function NumberOfTriangles(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim i As Integer, j As Integer, k As Integer, count As Integer = 0
+		i = 0
+		Do While i < (size - 2)
+			j = i + 1
+			Do While j < (size - 1)
+				For k = j + 1 To size - 1
+					If arr(i) + arr(j) > arr(k) Then
+						count += 1
+					End If
+				Next k
+				j += 1
+			Loop
+			i += 1
 		Loop
-		i += 1
-	Loop
-End Sub
+		Return count
+	End Function
 
-Public Shared Function numberOfTriangles(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Dim i As Integer, j As Integer, k As Integer, count As Integer = 0
-	i = 0
-	Do While i < (size - 2)
-		j = i + 1
-		Do While j < (size - 1)
-			For k = j + 1 To size - 1
-				If arr(i) + arr(j) > arr(k) Then
+	Public Shared Function NumberOfTriangles2(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim i As Integer, j As Integer, k As Integer, count As Integer = 0
+		Array.Sort(arr)
+
+		i = 0
+		Do While i < (size - 2)
+			k = i + 2
+			j = i + 1
+			Do While j < (size - 1)
+'				
+'				 * if sum of arr[i] & arr[j] is greater arr[k] then sum of arr[i] & arr[j + 1]
+'				 * is also greater than arr[k] this improvement make algo O(n2)
+'				 
+				Do While k < size AndAlso arr(i) + arr(j) > arr(k)
+					k += 1
+				Loop
+
+				count += k - j - 1
+				j += 1
+			Loop
+			i += 1
+		Loop
+		Return count
+	End Function
+
+	Public Shared Sub Main22()
+		Dim arr() As Integer = {1, 2, 3, 4, 5}
+		Console.WriteLine(NumberOfTriangles(arr, arr.Length))
+		Console.WriteLine(NumberOfTriangles2(arr, arr.Length))
+	End Sub
+'	
+'	3
+'	3
+'	
+
+	Public Shared Function GetMax(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim max As Integer = arr(0), count As Integer = 1, maxCount As Integer = 1
+		For i As Integer = 0 To size - 1
+			count = 1
+			For j As Integer = i + 1 To size - 1
+				If arr(i) = arr(j) Then
 					count += 1
 				End If
-			Next k
-			j += 1
-		Loop
-		i += 1
-	Loop
-	Return count
-End Function
-
-Public Shared Function numberOfTriangles2(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Dim i As Integer, j As Integer, k As Integer, count As Integer = 0
-	Array.Sort(arr)
-
-	i = 0
-	Do While i < (size - 2)
-		k = i + 2
-		j = i + 1
-		Do While j < (size - 1)
-'			
-'				* if sum of arr[i] & arr[j] is greater arr[k] then sum of arr[i] & arr[j + 1]
-'				* is also greater than arr[k] this improvement make algo O(n2)
-'				
-			Do While k < size AndAlso arr(i) + arr(j) > arr(k)
-				k += 1
-			Loop
-
-			count += k - j - 1
-			j += 1
-		Loop
-		i += 1
-	Loop
-	Return count
-End Function
-
-Public Shared Function getMax(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Dim max As Integer = arr(0), count As Integer = 1, maxCount As Integer = 1
-	For i As Integer = 0 To size - 1
-		count = 1
-		For j As Integer = i + 1 To size - 1
-			If arr(i) = arr(j) Then
-				count += 1
+			Next j
+			If count > maxCount Then
+				max = arr(i)
+				maxCount = count
 			End If
-		Next j
-		If count > maxCount Then
-			max = arr(i)
-			maxCount = count
-		End If
-	Next i
-	Return max
-End Function
-
-Public Shared Function getMax2(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Dim max As Integer = arr(0), maxCount As Integer = 1
-	Dim curr As Integer = arr(0), currCount As Integer = 1
-	Array.Sort(arr)
-	For i As Integer = 1 To size - 1
-		If arr(i) = arr(i - 1) Then
-			currCount += 1
-		Else
-			currCount = 1
-			curr = arr(i)
-		End If
-		If currCount > maxCount Then
-			maxCount = currCount
-			max = curr
-		End If
-	Next i
-	Return max
-End Function
-
-Public Shared Function getMax3(ByVal arr() As Integer, ByVal size As Integer, ByVal range As Integer) As Integer
-	Dim max As Integer = arr(0), maxCount As Integer = 1
-	Dim count(range - 1) As Integer
-	For i As Integer = 0 To size - 1
-		count(arr(i)) += 1
-		If count(arr(i)) > maxCount Then
-			maxCount = count(arr(i))
-			max = arr(i)
-		End If
-	Next i
-	Return max
-End Function
-
-Public Shared Sub Main11(ByVal args() As String)
-	Dim first() As Integer = { 1, 30, 5, 13, 9, 31, 5 }
-	Console.WriteLine(getMax(first, first.Length))
-	Console.WriteLine(getMax2(first, first.Length))
-	Console.WriteLine(getMax3(first, first.Length, 50))
-End Sub
-
-Public Shared Function getMajority(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Dim max As Integer = 0, count As Integer = 0, maxCount As Integer = 0
-	For i As Integer = 0 To size - 1
-		For j As Integer = i + 1 To size - 1
-			If arr(i) = arr(j) Then
-				count += 1
-			End If
-		Next j
-		If count > maxCount Then
-			max = arr(i)
-			maxCount = count
-		End If
-	Next i
-	If maxCount > size \ 2 Then
+		Next i
 		Return max
-	Else
-		Return 0
-	End If
-End Function
-
-Public Shared Function getMajority2(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Dim majIndex As Integer = size \ 2, count As Integer = 1
-	Dim candidate As Integer
-	Array.Sort(arr)
-	candidate = arr(majIndex)
-	count = 0
-	For i As Integer = 0 To size - 1
-		If arr(i) = candidate Then
-			count += 1
-		End If
-	Next i
-	If count > size \ 2 Then
-		Return arr(majIndex)
-	Else
-		Return Integer.MinValue
-	End If
-End Function
-
-Public Shared Function getMajority3(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Dim majIndex As Integer = 0, count As Integer = 1
-	Dim i As Integer
-	Dim candidate As Integer
-	For i = 1 To size - 1
-		If arr(majIndex) = arr(i) Then
-			count += 1
-		Else
-			count -= 1
-		End If
-		If count = 0 Then
-			majIndex = i
-			count = 1
-		End If
-	Next i
-	candidate = arr(majIndex)
-	count = 0
-	For i = 0 To size - 1
-		If arr(i) = candidate Then
-			count += 1
-		End If
-	Next i
-	If count > size \ 2 Then
-		Return arr(majIndex)
-	Else
-		Return 0
-	End If
-End Function
-
-Public Shared Sub Main12(ByVal args() As String)
-	Dim first() As Integer = { 1, 5, 5, 13, 5, 31, 5 }
-	Console.WriteLine(getMajority(first, first.Length))
-	Console.WriteLine(getMajority2(first, first.Length))
-	Console.WriteLine(getMajority3(first, first.Length))
-End Sub
-
-Public Shared Function getMedian(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Array.Sort(arr)
-	Return arr(size \ 2)
-End Function
-
-Public Shared Function SearchBotinicArrayMax(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Dim start As Integer = 0, [end] As Integer = size - 1
-	Dim mid As Integer = (start + [end]) \ 2
-	Dim maximaFound As Integer = 0
-	If size < 3 Then
-		Console.WriteLine("error")
-		Return 0
-	End If
-	Do While start <= [end]
-		mid = (start + [end]) \ 2
-		If arr(mid - 1) < arr(mid) AndAlso arr(mid + 1) < arr(mid) Then ' maxima
-			maximaFound = 1
-			Exit Do
-		ElseIf arr(mid - 1) < arr(mid) AndAlso arr(mid) < arr(mid + 1) Then ' increasing
-			start = mid + 1
-		ElseIf arr(mid - 1) > arr(mid) AndAlso arr(mid) > arr(mid + 1) Then ' decreasing
-			[end] = mid - 1
-		Else
-			Exit Do
-		End If
-	Loop
-	If maximaFound = 0 Then
-		Console.WriteLine("error")
-		Return 0
-	End If
-	Return arr(mid)
-End Function
-
-Public Shared Function SearchBitonicArray(ByVal arr() As Integer, ByVal size As Integer, ByVal key As Integer) As Integer
-	Dim max As Integer = FindMaxBitonicArray(arr, size)
-	Dim k As Integer = BinarySearch(arr, 0, max, key, True)
-	If k <> -1 Then
-		Return k
-	Else
-		Return BinarySearch(arr, max + 1, size - 1, key, False)
-	End If
-End Function
-
-Public Shared Function FindMaxBitonicArray(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Dim start As Integer = 0, [end] As Integer = size - 1, mid As Integer
-	If size < 3 Then
-		Console.WriteLine("error")
-		Return -1
-	End If
-	Do While start <= [end]
-		mid = (start + [end]) \ 2
-		If arr(mid - 1) < arr(mid) AndAlso arr(mid + 1) < arr(mid) Then ' maxima
-			Return mid
-		ElseIf arr(mid - 1) < arr(mid) AndAlso arr(mid) < arr(mid + 1) Then ' increasing
-			start = mid + 1
-		ElseIf arr(mid - 1) > arr(mid) AndAlso arr(mid) > arr(mid + 1) Then ' increasing
-			[end] = mid - 1
-		Else
-			Exit Do
-		End If
-	Loop
-	Console.WriteLine("error")
-	Return -1
-End Function
-
-Public Shared Sub Main13(ByVal args() As String)
-	Dim first() As Integer = { 1, 5, 10, 13, 20, 30, 8, 7, 6 }
-
-	Console.WriteLine(SearchBotinicArrayMax(first, first.Length))
-	Console.WriteLine(SearchBitonicArray(first, first.Length, 7))
-End Sub
-
-Public Shared Function findKeyCount(ByVal arr() As Integer, ByVal size As Integer, ByVal key As Integer) As Integer
-	Dim count As Integer = 0
-	For i As Integer = 0 To size - 1
-		If arr(i) = key Then
-			count += 1
-		End If
-	Next i
-	Return count
-End Function
-
-Public Shared Function findKeyCount2(ByVal arr() As Integer, ByVal size As Integer, ByVal key As Integer) As Integer
-'INSTANT VB NOTE: The variable firstIndex was renamed since Visual Basic does not handle local variables named the same as class members well:
-	Dim firstIndex_Renamed, lastIndex As Integer
-	firstIndex_Renamed = findFirstIndex(arr, 0, size - 1, key)
-	lastIndex = findLastIndex(arr, 0, size - 1, key)
-	Return (lastIndex - firstIndex_Renamed + 1)
-End Function
-
-' Using binary search method. 
-Public Shared Function FirstIndex(ByVal arr() As Integer, ByVal size As Integer, ByVal low As Integer, ByVal high As Integer, ByVal value As Integer) As Integer
-	Dim mid As Integer = 0
-	If high >= low Then
-		mid = (low + high) \ 2
-	End If
-
-'	
-'		* Find first occurrence of value, either it should be the first element of the
-'		* array or the value before it is smaller than it.
-'		
-	If (mid = 0 OrElse arr(mid - 1) < value) AndAlso (arr(mid) = value) Then
-		Return mid
-	ElseIf arr(mid) < value Then
-		Return FirstIndex(arr, size, mid + 1, high, value)
-	Else
-		Return FirstIndex(arr, size, low, mid - 1, value)
-	End If
-End Function
-
-public static bool isMajority(int[] arr, int size)
-{
-	int majority = arr[size / 2];
-	int i = FirstIndex(arr, size, 0, size - 1, majority);
-	/*
-		* we are using majority element form array so we will get some valid index
-		* always.
-		*/
-	if (((i + size / 2) <= (size - 1)) && arr[i + size / 2] == majority)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-public static int findFirstIndex(int[] arr, int start, int end, int key)
-{
-	int mid;
-	if (end < start)
-	{
-		return -1;
-	}
-	mid = (start + end) / 2;
-	if (key == arr[mid] && (mid == start || arr[mid - 1] != key))
-	{
-		return mid;
-	}
-	if (key <= arr[mid]) // <= is us the number.t in sorted array.
-	{
-		return findFirstIndex(arr, start, mid - 1, key);
-	}
-	else
-	{
-		return findFirstIndex(arr, mid + 1, end, key);
-	}
-}
-
-public static int findLastIndex(int[] arr, int start, int end, int key)
-{
-	if (end < start)
-	{
-		return -1;
-	}
-	int mid = (start + end) / 2;
-	if (key == arr[mid] && (mid == end || arr[mid + 1] != key))
-	{
-		return mid;
-	}
-	if (key < arr[mid]) // <
-	{
-		return findLastIndex(arr, start, mid - 1, key);
-	}
-	else
-	{
-		return findLastIndex(arr, mid + 1, end, key);
-	}
-}
-
-public static void Main14(string[] args)
-{
-	int[] first = new int[] { 1, 5, 10, 13, 20, 30, 8, 7, 6 };
-	Console.WriteLine(findKeyCount(first, first.Length, 6));
-	Console.WriteLine(findKeyCount2(first, first.Length, 6));
-}
-
-public static int maxProfit(int[] stocks, int size)
-{
-	int buy = 0, sell = 0;
-	int curMin = 0;
-	int currProfit = 0;
-	int maxProfit = 0;
-	for (int i = 0; i < size; i++)
-	{
-		if (stocks[i] < stocks[curMin])
-		{
-			curMin = i;
-		}
-		currProfit = stocks[i] - stocks[curMin];
-		if (currProfit > maxProfit)
-		{
-			buy = curMin;
-			sell = i;
-			maxProfit = currProfit;
-		}
-	}
-	Console.WriteLine("Purchase day is- " + buy + " at price " + stocks[buy]);
-	Console.WriteLine("Sell day is- " + sell + " at price " + stocks[sell]);
-	return maxProfit;
-}
-
-public static void Main15(string[] args)
-{
-	int[] first = new int[] { 10, 150, 6, 67, 61, 16, 86, 6, 67, 78, 150, 3, 28, 143 };
-	Console.WriteLine(maxProfit(first, first.Length));
-}
-
-public static int findMedian(int[] arrFirst, int sizeFirst, int[] arrSecond, int sizeSecond)
-{
-	int medianIndex = ((sizeFirst + sizeSecond) + (sizeFirst + sizeSecond) % 2) / 2; // cealing
-																						// function.
-	int i = 0, j = 0;
-	int count = 0;
-	while (count < medianIndex - 1)
-	{
-		if (i < sizeFirst - 1 && arrFirst[i] < arrSecond[j])
-		{
-			i++;
-		}
-		else
-		{
-			j++;
-		}
-		count++;
-	}
-	if (arrFirst[i] < arrSecond[j])
-	{
-		return arrFirst[i];
-	}
-	else
-	{
-		return arrSecond[j];
-	}
-}
-
-public static void Main16(string[] args)
-{
-	int[] first = new int[] { 1, 5, 6, 6, 6, 6, 6, 6, 7, 8, 10, 13, 20, 30 };
-	int[] second = new int[] { 1, 5, 6, 6, 6, 6, 6, 6, 7, 8, 10, 13, 20, 30 };
-	Console.WriteLine(findMedian(first, first.Length, second, second.Length));
-}
-
-public static int BinarySearch01(int[] arr, int size)
-{
-	if (size == 1 && arr[0] == 1)
-	{
-		return 0;
-	}
-	return BinarySearch01Util(arr, 0, size - 1);
-}
-
-public static int BinarySearch01Util(int[] arr, int start, int end)
-{
-	if (end < start)
-	{
-		return -1;
-	}
-	int mid = (start + end) / 2;
-	if (1 == arr[mid] && 0 == arr[mid - 1])
-	{
-		return mid;
-	}
-	if (0 == arr[mid])
-	{
-		return BinarySearch01Util(arr, mid + 1, end);
-	}
-	else
-	{
-		return BinarySearch01Util(arr, start, mid - 1);
-	}
-}
-
-public static void Main17(string[] args)
-{
-	int[] first = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 };
-	Console.WriteLine(BinarySearch01(first, first.Length));
-}
-
-public static int RotationMaxUtil(int[] arr, int start, int end)
-{
-	if (end <= start)
-	{
-		return arr[start];
-	}
-	int mid = (start + end) / 2;
-	if (arr[mid] > arr[mid + 1])
-	{
-		return arr[mid];
-	}
-
-	if (arr[start] <= arr[mid]) // increasing part.
-	{
-		return RotationMaxUtil(arr, mid + 1, end);
-	}
-	else
-	{
-		return RotationMaxUtil(arr, start, mid - 1);
-	}
-}
-
-public static int RotationMax(int[] arr, int size)
-{
-	return RotationMaxUtil(arr, 0, size - 1);
-}
-
-Public Shared Function FindRotationMaxUtil(ByVal arr() As Integer, ByVal start As Integer, ByVal [end] As Integer) As Integer
-	' single element case. 
-	If [end] <= start Then
-		Return start
-	End If
-
-	Dim mid As Integer = (start + [end]) \ 2
-	If arr(mid) > arr(mid + 1) Then
-		Return mid
-	End If
-
-	If arr(start) <= arr(mid) Then ' increasing part.
-		Return FindRotationMaxUtil(arr, mid + 1, [end])
-	Else
-		Return FindRotationMaxUtil(arr, start, mid - 1)
-	End If
-End Function
-
-Public Shared Function FindRotationMax(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Return FindRotationMaxUtil(arr, 0, size - 1)
-End Function
-
-Public Shared Function CountRotation(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Dim maxIndex As Integer = FindRotationMaxUtil(arr, 0, size - 1)
-	Return (maxIndex + 1) Mod size
-End Function
-
-Public Shared Function BinarySearchRotateArrayUtil(ByVal arr() As Integer, ByVal start As Integer, ByVal [end] As Integer, ByVal key As Integer) As Integer
-	If [end] < start Then
-		Return -1
-	End If
-	Dim mid As Integer = (start + [end]) \ 2
-	If key = arr(mid) Then
-		Return mid
-	End If
-	If arr(mid) > arr(start) Then
-		If arr(start) <= key AndAlso key < arr(mid) Then
-			Return BinarySearchRotateArrayUtil(arr, start, mid - 1, key)
-		Else
-			Return BinarySearchRotateArrayUtil(arr, mid + 1, [end], key)
-		End If
-	Else
-		If arr(mid) < key AndAlso key <= arr([end]) Then
-			Return BinarySearchRotateArrayUtil(arr, mid + 1, [end], key)
-		Else
-			Return BinarySearchRotateArrayUtil(arr, start, mid - 1, key)
-		End If
-	End If
-End Function
-
-Public Shared Function BinarySearchRotateArray(ByVal arr() As Integer, ByVal size As Integer, ByVal key As Integer) As Integer
-	Return BinarySearchRotateArrayUtil(arr, 0, size - 1, key)
-End Function
-
-Public Shared Sub Main18(ByVal args() As String)
-	Dim first() As Integer = { 34, 56, 77, 1, 5, 6, 6, 6, 6, 6, 6, 7, 8, 10, 13, 20, 30 }
-	Console.WriteLine(BinarySearchRotateArray(first, first.Length, 20))
-	Console.WriteLine(CountRotation(first, first.Length))
-	Console.WriteLine(first(FindRotationMax(first, first.Length)))
-End Sub
-
-Public Shared Function minAbsDiffAdjCircular(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Dim diff As Integer = 9999999
-	If size < 2 Then
-		Return -1
-	End If
-
-	For i As Integer = 0 To size - 1
-		diff = Math.Min(diff, Math.Abs(arr(i) - arr((i + 1) Mod size)))
-	Next i
-
-	Return diff
-End Function
-
-'
-'	* Testing code
-'	
-Public Shared Sub Main19(ByVal str() As String)
-	Dim arr() As Integer = { 5, 29, 18, 51, 11 }
-	Console.WriteLine(minAbsDiffAdjCircular(arr, arr.Length))
-End Sub
-
-Public Shared Sub swapch(ByVal arr() As Char, ByVal first As Integer, ByVal second As Integer)
-	Dim temp As Char = arr(first)
-	arr(first) = arr(second)
-	arr(second) = temp
-End Sub
-
-Public Shared Sub transformArrayAB1(ByVal arr() As Char, ByVal size As Integer)
-	Dim N As Integer = size \ 2, i As Integer, j As Integer
-	For i = 1 To N - 1
-		For j = 0 To i - 1
-			swapch(arr, N - i + 2 * j, N - i + 2 * j + 1)
-		Next j
-	Next i
-End Sub
-
-Public Shared Sub Main20(ByVal args() As String)
-	Dim str() As Char = "aaaabbbb".ToCharArray()
-	transformArrayAB1(str, str.Length)
-	Console.WriteLine(str)
-End Sub
-
-Public Shared Function checkPermutation(ByVal array1() As Char, ByVal size1 As Integer, ByVal array2() As Char, ByVal size2 As Integer) As Boolean
-	If size1 <> size2 Then
-		Return False
-	End If
-	Array.Sort(array1)
-	Array.Sort(array2)
-	For i As Integer = 0 To size1 - 1
-		If array1(i) <> array2(i) Then
-			Return False
-		End If
-	Next i
-	Return True
-End Function
-
-Public Shared Sub Main21(ByVal args() As String)
-	Dim str1() As Char = "aaaabbbb".ToCharArray()
-	Dim str2() As Char = "bbaaaabb".ToCharArray()
-
-	Console.WriteLine(checkPermutation(str1, str1.Length, str2, str2.Length))
-End Sub
-
-Public Shared Function FindElementIn2DArray(ByVal arr()() As Integer, ByVal r As Integer, ByVal c As Integer, ByVal value As Integer) As Boolean
-	Dim row As Integer = 0
-	Dim column As Integer = c - 1
-	Do While row < r AndAlso column >= 0
-		If arr(row)(column) = value Then
-			Return True
-		ElseIf arr(row)(column) > value Then
-			column -= 1
-		Else
-			row += 1
-		End If
-	Loop
-	Return False
-End Function
-
-Public Shared Function isAP(ByVal arr() As Integer, ByVal size As Integer) As Boolean
-	If size <= 1 Then
-		Return True
-	End If
-
-	Array.Sort(arr)
-	Dim diff As Integer = arr(1) - arr(0)
-	For i As Integer = 2 To size - 1
-		If arr(i) - arr(i - 1) <> diff Then
-			Return False
-		End If
-	Next i
-	Return True
-End Function
-
-Public Shared Function isAP2(ByVal arr() As Integer, ByVal size As Integer) As Boolean
-	Dim first As Integer = 9999999
-	Dim second As Integer = 9999999
-	Dim value As Integer
-	Dim hs As New HashSet(Of Integer)()
-	For i As Integer = 0 To size - 1
-		If arr(i) < first Then
-			second = first
-			first = arr(i)
-		ElseIf arr(i) < second Then
-			second = arr(i)
-		End If
-	Next i
-	Dim diff As Integer = second - first
-
-	For i As Integer = 0 To size - 1
-		If hs.Contains(arr(i)) Then
-			Return False
-		End If
-		hs.Add(arr(i))
-	Next i
-	For i As Integer = 0 To size - 1
-		value = first + i * diff
-		If Not hs.Contains(value) Then
-			Return False
-		End If
-	Next i
-	Return True
-End Function
-
-Public Shared Function isAP3(ByVal arr() As Integer, ByVal size As Integer) As Boolean
-	Dim first As Integer = 9999999
-	Dim second As Integer = 9999999
-	Dim count(size - 1) As Integer
-	Dim index As Integer = -1
-	For i As Integer = 0 To size - 1
-		If arr(i) < first Then
-			second = first
-			first = arr(i)
-		ElseIf arr(i) < second Then
-			second = arr(i)
-		End If
-	Next i
-	Dim diff As Integer = second - first
-
-	For i As Integer = 0 To size - 1
-		index = (arr(i) - first) \ diff
-	Next i
-	If index > size - 1 OrElse count(index) <> 0 Then
-		Return False
-	End If
-	count(index) = 1
-
-	For i As Integer = 0 To size - 1
-		If count(i) <> 1 Then
-			Return False
-		End If
-	Next i
-	Return True
-End Function
-
-Public Shared Function findBalancedPoint(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Dim first As Integer = 0
-	Dim second As Integer = 0
-	For i As Integer = 1 To size - 1
-		second += arr(i)
-	Next i
-
-	For i As Integer = 0 To size - 1
-		If first = second Then
-			Console.WriteLine(i)
-			Return i
-		End If
-		If i < size - 1 Then
-			first += arr(i)
-		End If
-		second -= arr(i + 1)
-	Next i
-	Return -1
-End Function
-
-'
-'	* Testing code
-'	
-Public Shared Sub Main22(ByVal args() As String)
-	Dim arr() As Integer = { -7, 1, 5, 2, -4, 3, 0 }
-	Console.WriteLine(findBalancedPoint(arr, arr.Length))
-
-End Sub
-
-Public Shared Function findFloor(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Integer
-	Dim start As Integer = 0
-	Dim [stop] As Integer = size - 1
-	Dim mid As Integer
-	Do While start <= [stop]
-		mid = (start + [stop]) \ 2
-'		
-'			* search value is equal to arr[mid] value.. search value is greater than mid
-'			* index value and less than mid+1 index value. value is greater than
-'			* arr[size-1] then floor is arr[size-1]
-'			
-		If arr(mid) = value OrElse (arr(mid) < value AndAlso (mid = size - 1 OrElse arr(mid + 1) > value)) Then
-			Return mid
-		ElseIf arr(mid) < value Then
-			start = mid + 1
-		Else
-			[stop] = mid - 1
-		End If
-	Loop
-	Return -1
-End Function
-
-Public Shared Function findCeil(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Integer
-	Dim start As Integer = 0
-	Dim [stop] As Integer = size - 1
-	Dim mid As Integer
-
-	Do While start <= [stop]
-		mid = (start + [stop]) \ 2
-'		
-'			* search value is equal to arr[mid] value.. search value is less than mid index
-'			* value and greater than mid-1 index value. value is less than arr[0] then ceil
-'			* is arr[0]
-'			
-		If arr(mid) = value OrElse (arr(mid) > value AndAlso (mid = 0 OrElse arr(mid - 1) < value)) Then
-			Return mid
-		ElseIf arr(mid) < value Then
-			start = mid + 1
-		Else
-			[stop] = mid - 1
-		End If
-	Loop
-	Return -1
-End Function
-
-Public Shared Function ClosestNumber(ByVal arr() As Integer, ByVal size As Integer, ByVal num As Integer) As Integer
-	Dim start As Integer = 0
-	Dim [stop] As Integer = size - 1
-	Dim output As Integer = -1
-	Dim minDist As Integer = 9999
-	Dim mid As Integer
-
-	Do While start <= [stop]
-		mid = (start + [stop]) \ 2
-		If minDist > Math.Abs(arr(mid) - num) Then
-			minDist = Math.Abs(arr(mid) - num)
-			output = arr(mid)
-		End If
-		If arr(mid) = num Then
-			Exit Do
-		ElseIf arr(mid) > num Then
-			[stop] = mid - 1
-		Else
-			start = mid + 1
-		End If
-	Loop
-	Return output
-End Function
-
-Public Shared Function DuplicateKDistance(ByVal arr() As Integer, ByVal size As Integer, ByVal k As Integer) As Boolean
-	Dim hm As New Dictionary(Of Integer, Integer)()
-
-	For i As Integer = 0 To size - 1
-		If hm.ContainsKey(arr(i)) AndAlso i - hm(arr(i)) <= k Then
-			Console.WriteLine("Value:" & arr(i) & " Index: " & hm(arr(i)) & " & " & i)
-			Return True
-		Else
-			hm(arr(i)) = i
-		End If
-	Next i
-	Return False
-End Function
-
-'
-'	* Testing code
-'	
-Public Shared Sub Main23(ByVal args() As String)
-	Dim arr() As Integer = { 1, 2, 3, 1, 4, 5 }
-	DuplicateKDistance(arr, arr.Length, 3)
-End Sub
-
-Public Shared Sub frequencyCounts(ByVal arr() As Integer, ByVal size As Integer)
-	Dim index As Integer
-	For i As Integer = 0 To size - 1
-		Do While arr(i) > 0
-			index = arr(i) - 1
-			If arr(index) > 0 Then
-				arr(i) = arr(index)
-				arr(index) = -1
+	End Function
+
+	Public Shared Function GetMax2(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim max As Integer = arr(0), maxCount As Integer = 1
+		Dim curr As Integer = arr(0), currCount As Integer = 1
+		Array.Sort(arr) ' Sort(arr,size);
+		For i As Integer = 1 To size - 1
+			If arr(i) = arr(i - 1) Then
+				currCount += 1
 			Else
-				arr(index) -= 1
-				arr(i) = 0
+				currCount = 1
+				curr = arr(i)
+			End If
+			If currCount > maxCount Then
+				maxCount = currCount
+				max = curr
+			End If
+		Next i
+		Return max
+	End Function
+
+	Public Shared Function GetMax3(ByVal arr() As Integer, ByVal size As Integer, ByVal range As Integer) As Integer
+		Dim max As Integer = arr(0), maxCount As Integer = 1
+		Dim count(range - 1) As Integer
+		For i As Integer = 0 To size - 1
+			count(arr(i)) += 1
+			If count(arr(i)) > maxCount Then
+				maxCount = count(arr(i))
+				max = arr(i)
+			End If
+		Next i
+		Return max
+	End Function
+
+	Public Shared Sub Main23()
+		Dim first() As Integer = {1, 30, 5, 13, 9, 31, 5}
+		Console.WriteLine(GetMax(first, first.Length))
+		Console.WriteLine(GetMax2(first, first.Length))
+		Console.WriteLine(GetMax3(first, first.Length, 50))
+	End Sub
+'	
+'	5
+'	5
+'	5
+'	
+
+	Public Shared Function GetMajority(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim max As Integer = 0, count As Integer = 0, maxCount As Integer = 0
+		For i As Integer = 0 To size - 1
+			For j As Integer = i + 1 To size - 1
+				If arr(i) = arr(j) Then
+					count += 1
+				End If
+			Next j
+			If count > maxCount Then
+				max = arr(i)
+				maxCount = count
+			End If
+		Next i
+		If maxCount > size \ 2 Then
+			Return max
+		Else
+			Return 0
+		End If
+	End Function
+
+	Public Shared Function GetMajority2(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim majIndex As Integer = size \ 2, count As Integer = 1
+		Dim candidate As Integer
+		Array.Sort(arr)
+		candidate = arr(majIndex)
+		count = 0
+		For i As Integer = 0 To size - 1
+			If arr(i) = candidate Then
+				count += 1
+			End If
+		Next i
+		If count > size \ 2 Then
+			Return arr(majIndex)
+		Else
+			Return Integer.MinValue
+		End If
+	End Function
+
+	Public Shared Function GetMajority3(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim majIndex As Integer = 0, count As Integer = 1
+		Dim i As Integer
+		Dim candidate As Integer
+		For i = 1 To size - 1
+			If arr(majIndex) = arr(i) Then
+				count += 1
+			Else
+				count -= 1
+			End If
+			If count = 0 Then
+				majIndex = i
+				count = 1
+			End If
+		Next i
+		candidate = arr(majIndex)
+		count = 0
+		For i = 0 To size - 1
+			If arr(i) = candidate Then
+				count += 1
+			End If
+		Next i
+		If count > size \ 2 Then
+			Return arr(majIndex)
+		Else
+			Return 0
+		End If
+	End Function
+
+	Public Shared Sub Main24()
+		Dim first() As Integer = {1, 5, 5, 13, 5, 31, 5}
+		Console.WriteLine(GetMajority(first, first.Length))
+		Console.WriteLine(GetMajority2(first, first.Length))
+		Console.WriteLine(GetMajority3(first, first.Length))
+	End Sub
+'	
+'	5
+'	5
+'	5
+'	
+
+
+
+	Public Shared Function GetMedian(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Array.Sort(arr)
+		Return arr(size \ 2)
+	End Function
+
+	Public Shared Function GetMedian2(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		QuickSelectUtil(arr, 0, size - 1, size \ 2)
+		Return arr(size \ 2)
+	End Function
+
+	Public Shared Sub Main25()
+		Dim first() As Integer = {1, 5, 6, 6, 6, 6, 6, 6, 7, 8, 10, 13, 20, 30}
+		Console.WriteLine(GetMedian(first, first.Length))
+		Console.WriteLine(GetMedian(first, first.Length))
+	End Sub
+'	
+'	6
+'	
+
+
+	Public Shared Function SearchBitonicArrayMax(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim i As Integer = 0
+		Do While i < size-2
+			If arr(i) > arr(i + 1) Then
+				Return arr(i)
+			End If
+			i += 1
+		Loop
+		Console.WriteLine("error not a bitonic array")
+		Return 0
+	End Function
+
+	Public Shared Function SearchBitonicArrayMax2(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim start As Integer = 0, finish As Integer = size - 1
+		Dim mid As Integer = (start + finish) \ 2
+		Dim maximaFound As Integer = 0
+		If size < 3 Then
+			Console.WriteLine("error")
+			Return 0
+		End If
+		Do While start <= finish
+			mid = (start + finish) \ 2
+			If arr(mid - 1) < arr(mid) AndAlso arr(mid + 1) < arr(mid) Then ' maxima
+				maximaFound = 1
+				Exit Do
+			ElseIf arr(mid - 1) < arr(mid) AndAlso arr(mid) < arr(mid + 1) Then ' increasing
+				start = mid + 1
+			ElseIf arr(mid - 1) > arr(mid) AndAlso arr(mid) > arr(mid + 1) Then ' decreasing
+				finish = mid - 1
+			Else
+				Exit Do
 			End If
 		Loop
-	Next i
-	For i As Integer = 0 To size - 1
-		Console.WriteLine((i + 1) + Math.Abs(arr(i)))
-	Next i
-End Sub
-
-Public Shared Function KLargestElements(ByVal arrIn() As Integer, ByVal size As Integer, ByVal k As Integer) As Integer
-	Dim arr(size - 1) As Integer
-	For i As Integer = 0 To size - 1
-		arr(i) = arrIn(i)
-	Next i
-
-	Array.Sort(arr)
-	For i As Integer = 0 To size - 1
-		If arrIn(i) >= arr(size - k) Then
-			Console.WriteLine(arrIn(i))
-			Return arrIn(i)
+		If maximaFound = 0 Then
+			Console.WriteLine("error not a bitonic array")
+			Return 0
 		End If
-	Next i
-	Return -1
-End Function
+		Return arr(mid)
+	End Function
 
-Public Shared Sub QuickSelectUtil(ByVal arr() As Integer, ByVal lower As Integer, ByVal upper As Integer, ByVal k As Integer)
-	If upper <= lower Then
-		Return
-	End If
+	Public Shared Function SearchBitonicArray(ByVal arr() As Integer, ByVal size As Integer, ByVal key As Integer) As Integer
+		Dim max As Integer = findMaxBitonicArray(arr, size)
+		Dim k As Integer = BinarySearch(arr, 0, max, key, True)
+		If k <> -1 Then
+			Return k
+		Else
+			Return BinarySearch(arr, max + 1, size - 1, key, False)
+		End If
+	End Function
 
-	Dim pivot As Integer = arr(lower)
-	Dim start As Integer = lower
-	Dim [stop] As Integer = upper
-
-	Do While lower < upper
-		Do While arr(lower) <= pivot
-			lower += 1
+	Public Shared Function findMaxBitonicArray(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim start As Integer = 0, finish As Integer = size - 1, mid As Integer
+		If size < 3 Then
+			Console.WriteLine("error")
+			Return -1
+		End If
+		Do While start <= finish
+			mid = (start + finish) \ 2
+			If arr(mid - 1) < arr(mid) AndAlso arr(mid + 1) < arr(mid) Then ' maxima
+				Return mid
+			ElseIf arr(mid - 1) < arr(mid) AndAlso arr(mid) < arr(mid + 1) Then ' increasing
+				start = mid + 1
+			ElseIf arr(mid - 1) > arr(mid) AndAlso arr(mid) > arr(mid + 1) Then ' increasing
+				finish = mid - 1
+			Else
+				Exit Do
+			End If
 		Loop
-		Do While arr(upper) > pivot
-			upper -= 1
-		Loop
-		If lower < upper Then
-			swap(arr, upper, lower)
+		Console.WriteLine("error")
+		Return -1
+	End Function
+
+	Public Shared Sub Main26()
+		Dim first() As Integer = {1, 5, 10, 13, 20, 30, 8, 7, 6}
+		Console.WriteLine(SearchBitonicArrayMax(first, first.Length))
+		Console.WriteLine(SearchBitonicArrayMax2(first, first.Length))
+		Console.WriteLine(SearchBitonicArray(first, first.Length, 7))
+	End Sub
+'	
+'	30
+'	7
+'	
+
+	Public Shared Function FindKeyCount(ByVal arr() As Integer, ByVal size As Integer, ByVal key As Integer) As Integer
+		Dim count As Integer = 0
+		For i As Integer = 0 To size - 1
+			If arr(i) = key Then
+				count += 1
+			End If
+		Next i
+		Return count
+	End Function
+
+	Public Shared Function FindFirstIndex(ByVal arr() As Integer, ByVal start As Integer, ByVal finish As Integer, ByVal key As Integer) As Integer
+		Dim mid As Integer
+		If finish < start Then
+			Return -1
 		End If
-	Loop
-
-	swap(arr, upper, start) ' upper is the pivot position
-	If k < upper Then
-		QuickSelectUtil(arr, start, upper - 1, k) ' pivot -1 is the upper for left sub array.
-	End If
-	If k > upper Then
-		QuickSelectUtil(arr, upper + 1, [stop], k) ' pivot + 1 is the lower for right sub array.
-	End If
-End Sub
-
-Public Shared Function KLargestElements2(ByVal arrIn() As Integer, ByVal size As Integer, ByVal k As Integer) As Integer
-	Dim arr(size - 1) As Integer
-	For i As Integer = 0 To size - 1
-		arr(i) = arrIn(i)
-	Next i
-
-	QuickSelectUtil(arr, 0, size - 1, size - k)
-	For i As Integer = 0 To size - 1
-		If arrIn(i) >= arr(size - k) Then
-			Console.WriteLine(arrIn(i))
-			Return arrIn(i)
-		End If
-	Next i
-	Return -1
-End Function
-
-' linear search method 
-Public Shared Function FixPoint(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	For i As Integer = 0 To size - 1
-		If arr(i) = i Then
-			Return i
-		End If
-	Next i ' fix point not found so return invalid index
-	Return -1
-End Function
-
-' Binary search method 
-Public Shared Function FixPoint2(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Dim low As Integer = 0
-	Dim high As Integer = size - 1
-	Dim mid As Integer
-	Do While low <= high
-		mid = (low + high) \ 2
-		If arr(mid) = mid Then
+		mid = (start + finish) \ 2
+		If key = arr(mid) AndAlso (mid = start OrElse arr(mid - 1) <> key) Then
 			Return mid
-		ElseIf arr(mid) < mid Then
-			low = mid + 1
+		End If
+		If key <= arr(mid) Then
+			Return FindFirstIndex(arr, start, mid - 1, key)
 		Else
-			high = mid - 1
+			Return FindFirstIndex(arr, mid + 1, finish, key)
 		End If
-	Loop
-	' fix point not found so return invalid index 
-	Return -1
-End Function
+	End Function
 
-Public Shared Function subArraySums(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Integer
-	Dim first As Integer = 0
-	Dim second As Integer = 0
-	Dim sum As Integer = arr(first)
-	Do While second < size AndAlso first < size
-		If sum = value Then
-			Console.WriteLine(first + second)
+	Public Shared Function FindLastIndex(ByVal arr() As Integer, ByVal start As Integer, ByVal finish As Integer, ByVal key As Integer) As Integer
+		If finish < start Then
+			Return -1
+		End If
+		Dim mid As Integer = (start + finish) \ 2
+		If key = arr(mid) AndAlso (mid = finish OrElse arr(mid + 1) <> key) Then
+			Return mid
+		End If
+		If key < arr(mid) Then
+			Return FindLastIndex(arr, start, mid - 1, key)
+		Else
+			Return FindLastIndex(arr, mid + 1, finish, key)
+		End If
+	End Function
+
+	Public Shared Function FindKeyCount2(ByVal arr() As Integer, ByVal size As Integer, ByVal key As Integer) As Integer
+		Dim FirstIndex, lastIndex As Integer
+		FirstIndex = FindFirstIndex(arr, 0, size - 1, key)
+		lastIndex = FindLastIndex(arr, 0, size - 1, key)
+		Return (lastIndex - FirstIndex + 1)
+	End Function
+
+	Public Shared Sub Main27()
+		Dim first() As Integer = {1, 5, 10, 13, 20, 30, 8, 7, 6}
+		Console.WriteLine(FindKeyCount(first, first.Length, 6))
+		Console.WriteLine(FindKeyCount2(first, first.Length, 6))
+	End Sub
+'	
+'	1
+'	1
+'	
+
+	' Using Binary search method. 
+	Public Shared Function FirstIndex(ByVal arr() As Integer, ByVal size As Integer, ByVal low As Integer, ByVal high As Integer, ByVal value As Integer) As Integer
+		Dim mid As Integer = 0
+		If high >= low Then
+			mid = (low + high) \ 2
 		End If
 
-		If sum < value Then
-			second += 1
-			If second < size Then
-				sum += arr(second)
+'		
+'		 * Find first occurrence of value, either it should be the first element of the
+'		 * array or the value before it is smaller than it.
+'		 
+		If (mid = 0 OrElse arr(mid - 1) < value) AndAlso (arr(mid) = value) Then
+			Return mid
+		ElseIf arr(mid) < value Then
+			Return FirstIndex(arr, size, mid + 1, high, value)
+		Else
+			Return FirstIndex(arr, size, low, mid - 1, value)
+		End If
+	End Function
+
+
+	Public Shared Function IsMajority2(ByVal arr() As Integer, ByVal size As Integer) As Boolean
+		Dim majority As Integer = arr(size \ 2)
+		Dim i As Integer = FirstIndex(arr, size, 0, size - 1, majority)
+'		
+'		 * we are using majority element form array so we will get some valid index
+'		 * always.
+'		 
+		If ((i + size \ 2) <= (size - 1)) AndAlso arr(i + size \ 2) = majority Then
+			Return True
+		Else
+			Return False
+		End If
+	End Function
+
+
+	Public Shared Function IsMajority(ByVal arr() As Integer, ByVal size As Integer) As Boolean
+		Dim count As Integer = 0
+		Dim mid As Integer = arr(size \ 2)
+		For i As Integer = 0 To size - 1
+			If arr(i) = mid Then
+				count += 1
+			End If
+		Next i
+
+		If count > size \ 2 Then
+			Return True
+		End If
+		Return False
+	End Function
+
+	Public Shared Sub Main28()
+		Dim arr() As Integer = {3, 3, 3, 3, 4, 5, 10}
+		Console.WriteLine(IsMajority(arr, arr.Length))
+		Console.WriteLine(IsMajority2(arr, arr.Length))
+	End Sub
+'	
+'	true
+'	
+	Public Shared Function MaxProfit(ByVal stocks() As Integer, ByVal size As Integer) As Integer
+		Dim maxProfitVal As Integer = 0
+		Dim buy As Integer = 0, sell As Integer = 0
+
+		Dim i As Integer = 0
+		Do While i < size-1
+			For j As Integer = i + 1 To size - 1
+				If maxProfitVal < stocks(j) - stocks(i) Then
+					maxProfitVal = stocks(j) - stocks(i)
+					buy = i
+					sell = j
+				End If
+			Next j
+			i += 1
+		Loop
+		Console.WriteLine("Purchase day is " & buy & " at price " & stocks(buy))
+		Console.WriteLine("Sell day is " & sell & " at price " & stocks(sell))
+		Return maxProfitVal
+	End Function
+
+	Public Shared Function MaxProfit2(ByVal stocks() As Integer, ByVal size As Integer) As Integer
+		Dim buy As Integer = 0, sell As Integer = 0
+		Dim curMin As Integer = 0
+		Dim currProfit As Integer = 0
+		Dim maxProfit As Integer = 0
+		For i As Integer = 0 To size - 1
+			If stocks(i) < stocks(curMin) Then
+				curMin = i
+			End If
+			currProfit = stocks(i) - stocks(curMin)
+			If currProfit > maxProfit Then
+				buy = curMin
+				sell = i
+				maxProfit = currProfit
+			End If
+		Next i
+		Console.WriteLine("Purchase day is " & buy & " at price " & stocks(buy))
+		Console.WriteLine("Sell day is " & sell & " at price " & stocks(sell))
+		Return maxProfit
+	End Function
+
+	Public Shared Sub Main29()
+		Dim first() As Integer = {10, 150, 6, 67, 61, 16, 86, 6, 67, 78, 150, 3, 28, 143}
+		Console.WriteLine(MaxProfit(first, first.Length))
+		Console.WriteLine(MaxProfit2(first, first.Length))
+
+	End Sub
+'	
+'	Purchase day is- 2 at price 6
+'	Sell day is- 10 at price 150
+'	144
+'	
+
+	Public Shared Function FindMedian(ByVal arrFirst() As Integer, ByVal sizeFirst As Integer, ByVal arrSecond() As Integer, ByVal sizeSecond As Integer) As Integer
+		Dim medianIndex As Integer = ((sizeFirst + sizeSecond) + (sizeFirst + sizeSecond) Mod 2) \ 2 ' ceiling
+																						' function.
+		Dim i As Integer = 0, j As Integer = 0
+		Dim count As Integer = 0
+		Do While count < medianIndex - 1
+			If i < sizeFirst - 1 AndAlso arrFirst(i) < arrSecond(j) Then
+				i += 1
+			Else
+				j += 1
+			End If
+			count += 1
+		Loop
+		If arrFirst(i) < arrSecond(j) Then
+			Return arrFirst(i)
+		Else
+			Return arrSecond(j)
+		End If
+	End Function
+
+	Public Shared Sub Main30()
+		Dim first() As Integer = {1, 5, 6, 6, 6, 6, 6, 6, 7, 8, 10, 13, 20, 30}
+		Dim second() As Integer = {1, 5, 6, 6, 6, 6, 6, 6, 7, 8, 10, 13, 20, 30}
+		Console.WriteLine(FindMedian(first, first.Length, second, second.Length))
+	End Sub
+'	
+'	6
+'	
+
+
+
+	Public Shared Function Search01(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		For i As Integer = 0 To size - 1
+			If arr(i) = 1 Then
+				Return i
+			End If
+		Next i
+		Return -1
+	End Function
+
+	Public Shared Function BinarySearch01(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		If size = 1 AndAlso arr(0) = 1 Then
+			Return 0
+		End If
+		Return BinarySearch01Util(arr, 0, size - 1)
+	End Function
+
+	Public Shared Function BinarySearch01Util(ByVal arr() As Integer, ByVal start As Integer, ByVal finish As Integer) As Integer
+		If finish < start Then
+			Return -1
+		End If
+		Dim mid As Integer = (start + finish) \ 2
+		If 1 = arr(mid) AndAlso 0 = arr(mid - 1) Then
+			Return mid
+		End If
+		If 0 = arr(mid) Then
+			Return BinarySearch01Util(arr, mid + 1, finish)
+		Else
+			Return BinarySearch01Util(arr, start, mid - 1)
+		End If
+	End Function
+
+	Public Shared Sub Main31()
+		Dim first() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1}
+		Console.WriteLine(Search01(first, first.Length))
+		Console.WriteLine(BinarySearch01(first, first.Length))
+
+	End Sub
+'	
+'	8
+'	
+
+	Public Shared Function RotationMax(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim i As Integer = 0
+		Do While i < size-1
+			If arr(i) > arr(i + 1) Then
+				Return arr(i)
+			End If
+			i += 1
+		Loop
+		Return -1
+	End Function
+
+	Public Shared Function RotationMaxUtil(ByVal arr() As Integer, ByVal start As Integer, ByVal finish As Integer) As Integer
+		If finish <= start Then
+			Return arr(start)
+		End If
+		Dim mid As Integer = (start + finish) \ 2
+		If arr(mid) > arr(mid + 1) Then
+			Return arr(mid)
+		End If
+
+		If arr(start) <= arr(mid) Then ' increasing part.
+			Return RotationMaxUtil(arr, mid + 1, finish)
+		Else
+			Return RotationMaxUtil(arr, start, mid - 1)
+		End If
+	End Function
+
+	Public Shared Function RotationMax2(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Return RotationMaxUtil(arr, 0, size - 1)
+	End Function
+
+	Public Shared Sub Main32()
+		Dim first() As Integer = {34, 56, 77, 1, 5, 6, 6, 8, 10, 20, 30, 34}
+		Console.WriteLine(RotationMax(first, first.Length))
+		Console.WriteLine(RotationMax2(first, first.Length))
+	End Sub
+'	
+'	77
+'	   
+
+	Public Shared Function FindRotationMax(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim i As Integer = 0
+		Do While i < size-1
+			If arr(i) > arr(i + 1) Then
+				Return i
+			End If
+			i += 1
+		Loop
+		Return -1
+	End Function
+
+
+	Public Shared Function FindRotationMaxUtil(ByVal arr() As Integer, ByVal start As Integer, ByVal finish As Integer) As Integer
+		' single element case. 
+		If finish <= start Then
+			Return start
+		End If
+
+		Dim mid As Integer = (start + finish) \ 2
+		If arr(mid) > arr(mid + 1) Then
+			Return mid
+		End If
+
+		If arr(start) <= arr(mid) Then ' increasing part.
+			Return FindRotationMaxUtil(arr, mid + 1, finish)
+		Else
+			Return FindRotationMaxUtil(arr, start, mid - 1)
+		End If
+	End Function
+
+	Public Shared Function FindRotationMax2(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Return FindRotationMaxUtil(arr, 0, size - 1)
+	End Function
+
+	Public Shared Sub Main33()
+		Dim first() As Integer = {34, 56, 77, 1, 5, 6, 6, 8, 10, 20, 30, 34}
+		Console.WriteLine(FindRotationMax(first, first.Length))
+		Console.WriteLine(FindRotationMax2(first, first.Length))
+	End Sub
+'	
+'	2
+'	
+
+	Public Shared Function CountRotation(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim maxIndex As Integer = FindRotationMaxUtil(arr, 0, size - 1)
+		Return (maxIndex + 1) Mod size
+	End Function
+
+	Public Shared Sub Main34()
+		Dim first() As Integer = {34, 56, 77, 1, 5, 6, 6, 8, 10, 20, 30, 34}
+		Console.WriteLine(CountRotation(first, first.Length))
+	End Sub
+'	
+'	3
+'	
+
+	Public Shared Function SearchRotateArray(ByVal arr() As Integer, ByVal size As Integer, ByVal key As Integer) As Integer
+		Dim i As Integer = 0
+		Do While i < size-1
+			If arr(i) = key Then
+				Return i
+			End If
+			i += 1
+		Loop
+		Return -1
+	End Function
+
+	Public Shared Function BinarySearchRotateArrayUtil(ByVal arr() As Integer, ByVal start As Integer, ByVal finish As Integer, ByVal key As Integer) As Integer
+		If finish < start Then
+			Return -1
+		End If
+		Dim mid As Integer = (start + finish) \ 2
+		If key = arr(mid) Then
+			Return mid
+		End If
+		If arr(mid) > arr(start) Then
+			If arr(start) <= key AndAlso key < arr(mid) Then
+				Return BinarySearchRotateArrayUtil(arr, start, mid - 1, key)
+			Else
+				Return BinarySearchRotateArrayUtil(arr, mid + 1, finish, key)
 			End If
 		Else
-			sum -= arr(first)
-			first += 1
+			If arr(mid) < key AndAlso key <= arr(finish) Then
+				Return BinarySearchRotateArrayUtil(arr, mid + 1, finish, key)
+			Else
+				Return BinarySearchRotateArrayUtil(arr, start, mid - 1, key)
+			End If
 		End If
-	Loop
-	Return sum
-End Function
+	End Function
 
-Public Shared Function MaxConSub(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Dim currMax As Integer = 0
-	Dim maximum As Integer = 0
-	For i As Integer = 0 To size - 1
-		currMax = Math.Max(arr(i), currMax + arr(i))
-		If currMax < 0 Then
-			currMax = 0
+	Public Shared Function BinarySearchRotateArray(ByVal arr() As Integer, ByVal size As Integer, ByVal key As Integer) As Integer
+		Return BinarySearchRotateArrayUtil(arr, 0, size - 1, key)
+	End Function
+
+
+	Public Shared Sub Main35()
+		Dim first() As Integer = {34, 56, 77, 1, 5, 6, 6, 6, 6, 6, 6, 7, 8, 10, 13, 20, 30}
+		Console.WriteLine(SearchRotateArray(first, first.Length, 20))
+		Console.WriteLine(BinarySearchRotateArray(first, first.Length, 20))
+		Console.WriteLine(CountRotation(first, first.Length))
+		Console.WriteLine(first(FindRotationMax(first, first.Length)))
+	End Sub
+'	
+'	15
+'	3
+'	77
+'	
+
+	Public Shared Function MinAbsDiffAdjCircular(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim diff As Integer = 9999999
+		If size < 2 Then
+			Return -1
 		End If
-		If maximum < currMax Then
-			maximum = currMax
+
+		For i As Integer = 0 To size - 1
+			diff = Math.Min(diff, Math.Abs(arr(i) - arr((i + 1) Mod size)))
+		Next i
+
+		Return diff
+	End Function
+
+	' Testing Code
+	Public Shared Sub Main36()
+		Dim arr() As Integer = {5, 29, 18, 51, 11}
+		Console.WriteLine(MinAbsDiffAdjCircular(arr, arr.Length))
+	End Sub
+'	
+'	6
+'	
+
+	Public Shared Sub Swapch(ByVal arr() As Char, ByVal first As Integer, ByVal second As Integer)
+		Dim temp As Char = arr(first)
+		arr(first) = arr(second)
+		arr(second) = temp
+	End Sub
+
+	Public Shared Sub TransformArrayAB1(ByVal arr() As Char, ByVal size As Integer)
+		Dim N As Integer = size \ 2, i As Integer, j As Integer
+		For i = 1 To N - 1
+			For j = 0 To i - 1
+				Swapch(arr, N - i + 2 * j, N - i + 2 * j + 1)
+			Next j
+		Next i
+	End Sub
+	
+	Public Shared Sub Main37()
+		Dim str() As Char = "aaaabbbb".ToCharArray()
+		TransformArrayAB1(str, str.Length)
+		Console.WriteLine(str)
+	End Sub
+'	
+'	abababab
+'	
+
+	Public Shared Function CheckPermutation(ByVal array1() As Char, ByVal size1 As Integer, ByVal array2() As Char, ByVal size2 As Integer) As Boolean
+		If size1 <> size2 Then
+			Return False
 		End If
-	Next i
-	Console.WriteLine(maximum)
-	Return maximum
-End Function
+		Array.Sort(array1)
+		Array.Sort(array2)
+		For i As Integer = 0 To size1 - 1
+			If array1(i) <> array2(i) Then
+				Return False
+			End If
+		Next i
+		Return True
+	End Function
 
-Public Shared Function MaxConSubArr(ByVal A() As Integer, ByVal sizeA As Integer, ByVal B() As Integer, ByVal sizeB As Integer) As Integer
-	Dim currMax As Integer = 0
-	Dim maximum As Integer = 0
-	Dim hs As New HashSet(Of Integer)()
-
-	For i As Integer = 0 To sizeB - 1
-		hs.Add(B(i))
-	Next i
-
-	For i As Integer = 0 To sizeA - 1
-		If hs.Contains(A(i)) Then
-			currMax = 0
-		Else
-			currMax = Math.Max(A(i), currMax + A(i))
+	Public Shared Function CheckPermutation2(ByVal arr1() As Char, ByVal size1 As Integer, ByVal arr2() As Char, ByVal size2 As Integer) As Boolean
+		If size1 <> size2 Then
+			Return False
 		End If
-	Next i
-	If currMax < 0 Then
-		currMax = 0
-	End If
-	If maximum < currMax Then
-		maximum = currMax
-	End If
-	Console.WriteLine(maximum)
-	Return maximum
-End Function
 
-Public Shared Function MaxConSubArr2(ByVal A() As Integer, ByVal sizeA As Integer, ByVal B() As Integer, ByVal sizeB As Integer) As Integer
-	Array.Sort(B)
-	Dim currMax As Integer = 0
-	Dim maximum As Integer = 0
+		Dim hm As New Dictionary(Of Char, Integer)()
+		For i As Integer = 0 To size1 - 1
+			If hm.ContainsKey(arr1(i)) Then
+				hm(arr1(i)) = hm(arr1(i)) + 1
+			Else
+				hm(arr1(i)) = 1
+			End If
+		Next i
+		For i As Integer = 0 To size2 - 1
+			If hm.ContainsKey(arr2(i)) AndAlso hm(arr2(i)) <> 0 Then
+				hm(arr2(i)) = hm(arr2(i)) - 1
+			Else
+				Return False
+			End If
+		Next i
+		Return True
+	End Function
 
-	For i As Integer = 0 To sizeA - 1
-		If Binarysearch(B, sizeB, A(i)) Then
-			currMax = 0
-		Else
-			currMax = Math.Max(A(i), currMax + A(i))
+
+	Public Shared Function CheckPermutation3(ByVal array1() As Char, ByVal size1 As Integer, ByVal array2() As Char, ByVal size2 As Integer) As Boolean
+		If size1 <> size2 Then
+			Return False
+		End If
+		Dim count(255) As Integer
+		For i As Integer = 0 To size1 - 1
+			count(AscW(array1(i))) += 1
+			count(AscW(array2(i))) -= 1
+		Next i
+
+		For i As Integer = 0 To size1 - 1
+			If count(i) <> 0 Then
+				Console.WriteLine("Not Permutation")
+				Return False
+			End If
+		Next i
+		Console.WriteLine("Permutation.")
+		Return True
+	End Function
+
+
+	Public Shared Sub Main38()
+		Dim str1() As Char = "aaaabbbb".ToCharArray()
+		Dim str2() As Char = "bbaaaabb".ToCharArray()
+		Console.WriteLine(CheckPermutation(str1, str1.Length, str2, str2.Length))
+		Console.WriteLine(CheckPermutation2(str1, str1.Length, str2, str2.Length))
+		Console.WriteLine(CheckPermutation3(str1, str1.Length, str2, str2.Length))
+
+	End Sub
+'	
+'	true
+'	
+
+	Public Shared Function FindElementIn2DArray(ByVal arr(,) As Integer, ByVal r As Integer, ByVal c As Integer, ByVal value As Integer) As Boolean
+		Dim row As Integer = 0
+		Dim column As Integer = c - 1
+		Do While row < r AndAlso column >= 0
+			If arr(row, column) = value Then
+				Return True
+			ElseIf arr(row, column) > value Then
+				column -= 1
+			Else
+				row += 1
+			End If
+		Loop
+		Return False
+	End Function
+
+	Public Shared Function IsAP(ByVal arr() As Integer, ByVal size As Integer) As Boolean
+		If size <= 1 Then
+			Return True
+		End If
+
+		Array.Sort(arr)
+		Dim diff As Integer = arr(1) - arr(0)
+		For i As Integer = 2 To size - 1
+			If arr(i) - arr(i - 1) <> diff Then
+				Return False
+			End If
+		Next i
+		Return True
+	End Function
+
+	Public Shared Function IsAP2(ByVal arr() As Integer, ByVal size As Integer) As Boolean
+		Dim first As Integer = 9999999
+		Dim second As Integer = 9999999
+		Dim value As Integer
+		Dim hs As New HashSet(Of Integer)()
+		For i As Integer = 0 To size - 1
+			If arr(i) < first Then
+				second = first
+				first = arr(i)
+			ElseIf arr(i) < second Then
+				second = arr(i)
+			End If
+		Next i
+		Dim diff As Integer = second - first
+
+		For i As Integer = 0 To size - 1
+			If hs.Contains(arr(i)) Then
+				Return False
+			End If
+			hs.Add(arr(i))
+		Next i
+		For i As Integer = 0 To size - 1
+			value = first + i * diff
+			If Not hs.Contains(value) Then
+				Return False
+			End If
+		Next i
+		Return True
+	End Function
+
+
+
+	Public Shared Function IsAP3(ByVal arr() As Integer, ByVal size As Integer) As Boolean
+		Dim first As Integer = 9999999
+		Dim second As Integer = 9999999
+		Dim count(size - 1) As Integer
+		Dim index As Integer = -1
+		For i As Integer = 0 To size - 1
+			If arr(i) < first Then
+				second = first
+				first = arr(i)
+			ElseIf arr(i) < second Then
+				second = arr(i)
+			End If
+		Next i
+		Dim diff As Integer = second - first
+
+		For i As Integer = 0 To size - 1
+			index = (arr(i) - first) \ diff
+			If index > size - 1 OrElse count(index) <> 0 Then
+				Return False
+			End If
+			count(index) = 1
+		Next i
+
+		For i As Integer = 0 To size - 1
+			If count(i) <> 1 Then
+				Return False
+			End If
+		Next i
+		Return True
+	End Function
+
+	Public Shared Sub Main39()
+		Dim arr() As Integer = {20, 25, 15, 5, 0, 10, 35, 30}
+		Console.WriteLine(IsAP(arr, arr.Length))
+		Console.WriteLine(IsAP2(arr, arr.Length))
+		Console.WriteLine(IsAP3(arr, arr.Length))
+
+	End Sub
+'	
+'	true
+'	true
+'	true
+'	
+
+	Public Shared Function FindBalancedPoint(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim first As Integer = 0
+		Dim second As Integer = 0
+		For i As Integer = 1 To size - 1
+			second += arr(i)
+		Next i
+
+		For i As Integer = 0 To size - 1
+			If first = second Then
+				Console.WriteLine(i)
+				Return i
+			End If
+			If i < size - 1 Then
+				first += arr(i)
+			End If
+			second -= arr(i + 1)
+		Next i
+		Return -1
+	End Function
+
+	' Testing Code
+	Public Shared Sub Main40()
+		Dim arr() As Integer = {-7, 1, 5, 2, -4, 3, 0}
+		Console.WriteLine(FindBalancedPoint(arr, arr.Length))
+
+	End Sub
+'	
+'	3
+'	
+
+	Public Shared Function FindFloor(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Integer
+		Dim start As Integer = 0
+		Dim finish As Integer = size - 1
+		Dim mid As Integer
+		Do While start <= finish
+			mid = (start + finish) \ 2
+'			
+'			 * search value is equal to arr[mid] value.. search value is greater than mid
+'			 * index value and less than mid+1 index value. value is greater than
+'			 * arr[size-1] then floor is arr[size-1]
+'			 
+			If arr(mid) = value OrElse (arr(mid) < value AndAlso (mid = size - 1 OrElse arr(mid + 1) > value)) Then
+				Return arr(mid)
+			ElseIf arr(mid) < value Then
+				start = mid + 1
+			Else
+				finish = mid - 1
+			End If
+		Loop
+		Return -1
+	End Function
+
+	Public Shared Function FindCeil(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Integer
+		Dim start As Integer = 0
+		Dim finish As Integer = size - 1
+		Dim mid As Integer
+
+		Do While start <= finish
+			mid = (start + finish) \ 2
+'			
+'			 * search value is equal to arr[mid] value.. search value is less than mid index
+'			 * value and greater than mid-1 index value. value is less than arr[0] then ceil
+'			 * is arr[0]
+'			 
+			If arr(mid) = value OrElse (arr(mid) > value AndAlso (mid = 0 OrElse arr(mid - 1) < value)) Then
+				Return arr(mid)
+			ElseIf arr(mid) < value Then
+				start = mid + 1
+			Else
+				finish = mid - 1
+			End If
+		Loop
+		Return -1
+	End Function
+
+	Public Shared Sub Main41()
+		Dim arr() As Integer = {2, 4, 8, 16}
+		Console.WriteLine(FindFloor(arr, arr.Length, 5))
+		Console.WriteLine(FindCeil(arr, arr.Length, 5))
+	End Sub
+'	
+'	1
+'	2
+'	
+
+	Public Shared Function ClosestNumber(ByVal arr() As Integer, ByVal size As Integer, ByVal num As Integer) As Integer
+		Dim start As Integer = 0
+		Dim finish As Integer = size - 1
+		Dim output As Integer = -1
+		Dim minDist As Integer = Integer.MaxValue
+		Dim mid As Integer
+
+		Do While start <= finish
+			mid = (start + finish) \ 2
+			If minDist > Math.Abs(arr(mid) - num) Then
+				minDist = Math.Abs(arr(mid) - num)
+				output = arr(mid)
+			End If
+			If arr(mid) = num Then
+				Exit Do
+			ElseIf arr(mid) > num Then
+				finish = mid - 1
+			Else
+				start = mid + 1
+			End If
+		Loop
+		Return output
+	End Function
+
+	Public Shared Sub Main42()
+		Dim arr() As Integer = {2, 4, 8, 16}
+		Console.WriteLine(ClosestNumber(arr, arr.Length, 9))
+	End Sub
+'	
+'	8
+'	
+
+	Public Shared Function DuplicateKDistance(ByVal arr() As Integer, ByVal size As Integer, ByVal k As Integer) As Boolean
+		Dim hm As New Dictionary(Of Integer, Integer)()
+
+		For i As Integer = 0 To size - 1
+			If hm.ContainsKey(arr(i)) AndAlso i - hm(arr(i)) <= k Then
+				Console.WriteLine("Value:" & arr(i) & " Index: " & hm(arr(i)) & " & " & i)
+				Return True
+			Else
+				hm(arr(i)) = i
+			End If
+		Next i
+		Return False
+	End Function
+
+	' Testing Code
+	Public Shared Sub Main43()
+		Dim arr() As Integer = {1, 2, 3, 1, 4, 5}
+		DuplicateKDistance(arr, arr.Length, 3)
+	End Sub
+'	
+'	Value:1 Index: 0 & 3
+'	
+	Public Shared Sub FrequencyCounts(ByVal arr() As Integer, ByVal size As Integer)
+		Dim hm As New Dictionary(Of Integer, Integer)()
+		For i As Integer = 0 To size - 1
+			If hm.ContainsKey(arr(i)) Then
+				hm(arr(i)) = hm(arr(i)) + 1
+			Else
+				hm(arr(i)) = 1
+			End If
+		Next i
+		For Each key As Integer In hm.Keys
+			Console.Write("(" & key & " : " & hm(key) & ") ")
+		Next key
+		Console.WriteLine()
+	End Sub
+
+	Public Shared Sub FrequencyCounts2(ByVal arr() As Integer, ByVal size As Integer)
+		Array.Sort(arr)
+		Dim count As Integer = 1
+		For i As Integer = 1 To size - 1
+			If arr(i) = arr(i - 1) Then
+				count += 1
+			Else
+				Console.Write("(" & arr(i - 1) & " : " & count & ") ")
+				count = 1
+			End If
+		Next i
+		Console.Write("(" & arr(size-1) & " : " & count & ") ")
+		Console.WriteLine()
+	End Sub
+
+	Public Shared Sub FrequencyCounts3(ByVal arr() As Integer, ByVal size As Integer)
+		Dim aux(size) As Integer
+		For i As Integer = 0 To size - 1
+			aux(arr(i)) += 1
+		Next i
+		Dim i As Integer = 0
+		Do While i < size+1
+			If aux(i) > 0 Then
+				Console.Write("(" & i & " : " & aux(i) & ") ")
+			End If
+			i += 1
+		Loop
+		Console.WriteLine()
+	End Sub
+
+	Public Shared Sub FrequencyCounts4(ByVal arr() As Integer, ByVal size As Integer)
+		Dim index As Integer
+		For i As Integer = 0 To size - 1
+			Do While arr(i) > 0
+				index = arr(i) - 1
+				If arr(index) > 0 Then
+					arr(i) = arr(index)
+					arr(index) = -1
+				Else
+					arr(index) -= 1
+					arr(i) = 0
+				End If
+			Loop
+		Next i
+		For i As Integer = 0 To size - 1
+			If arr(i) <> 0 Then
+				Console.Write("(" & (i + 1) & " : " & Math.Abs(arr(i)) & ") ")
+			End If
+		Next i
+		Console.WriteLine()
+	End Sub
+
+	Public Shared Sub Main44()
+		Dim arr() As Integer = {1, 2, 2, 2, 1}
+		FrequencyCounts(arr, arr.Length)
+		FrequencyCounts2(arr, arr.Length)
+		FrequencyCounts3(arr, arr.Length)
+		FrequencyCounts4(arr, arr.Length)
+	End Sub
+'
+'(1 : 2) (2 : 3) 
+'(1 : 2) (2 : 3) 
+'(1 : 2) (2 : 3) 
+'(1 : 2) (2 : 3)    
+'
+
+	Public Shared Sub KLargestElements(ByVal arrIn() As Integer, ByVal size As Integer, ByVal k As Integer)
+		Dim arr(size - 1) As Integer
+		For i As Integer = 0 To size - 1
+			arr(i) = arrIn(i)
+		Next i
+
+		Array.Sort(arr)
+		For i As Integer = 0 To size - 1
+			If arrIn(i) >= arr(size - k) Then
+				Console.Write(arrIn(i) & " ")
+			End If
+		Next i
+		Console.WriteLine()
+	End Sub
+
+	Public Shared Sub QuickSelectUtil(ByVal arr() As Integer, ByVal lower As Integer, ByVal upper As Integer, ByVal k As Integer)
+		If upper <= lower Then
+			Return
+		End If
+
+		Dim pivot As Integer = arr(lower)
+		Dim start As Integer = lower
+		Dim finish As Integer = upper
+
+		Do While lower < upper
+			Do While arr(lower) <= pivot AndAlso lower < upper
+				lower += 1
+			Loop
+			Do While arr(upper) > pivot AndAlso lower <= upper
+				upper -= 1
+			Loop
+			If lower < upper Then
+				Swap(arr, upper, lower)
+			End If
+		Loop
+
+		Swap(arr, upper, start) ' upper is the pivot position
+		If k < upper Then
+			QuickSelectUtil(arr, start, upper - 1, k) ' pivot -1 is the upper for left sub array.
+		End If
+		If k > upper Then
+			QuickSelectUtil(arr, upper + 1, finish, k) ' pivot + 1 is the lower for right sub array.
+		End If
+	End Sub
+
+	Public Shared Sub KLargestElements2(ByVal arrIn() As Integer, ByVal size As Integer, ByVal k As Integer)
+		Dim arr(size - 1) As Integer
+		For i As Integer = 0 To size - 1
+			arr(i) = arrIn(i)
+		Next i
+
+		QuickSelectUtil(arr, 0, size - 1, size - k)
+		For i As Integer = 0 To size - 1
+			If arrIn(i) >= arr(size - k) Then
+				Console.Write(arrIn(i) & " ")
+			End If
+		Next i
+		Console.WriteLine()
+	End Sub
+
+	Public Shared Sub Main45()
+		Dim arr() As Integer = {10, 50, 30, 60, 15}
+		KLargestElements(arr, arr.Length, 2)
+		KLargestElements2(arr, arr.Length, 2)
+	End Sub
+
+'	
+'	50 60 
+'	50 60 
+'	
+
+	' linear search method 
+	Public Shared Function FixPoint(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		For i As Integer = 0 To size - 1
+			If arr(i) = i Then
+				Return i
+			End If
+		Next i ' fix point not found so return invalid index
+		Return -1
+	End Function
+
+	' Binary search method 
+	Public Shared Function FixPoint2(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim low As Integer = 0
+		Dim high As Integer = size - 1
+		Dim mid As Integer
+		Do While low <= high
+			mid = (low + high) \ 2
+			If arr(mid) = mid Then
+				Return mid
+			ElseIf arr(mid) < mid Then
+				low = mid + 1
+			Else
+				high = mid - 1
+			End If
+		Loop
+		' fix point not found so return invalid index 
+		Return -1
+	End Function
+
+	Public Shared Sub Main46()
+		Dim arr() As Integer = {-10, -2, 0, 3, 11, 12, 35, 51, 200}
+		Console.WriteLine(FixPoint(arr, arr.Length))
+		Console.WriteLine(FixPoint2(arr, arr.Length))
+	End Sub
+'	
+'	3
+'	3
+'	
+
+	Public Shared Sub SubArraySums(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer)
+		Dim start As Integer = 0, finish As Integer = 0, sum As Integer = 0
+		Do While start < size AndAlso finish < size
+			If sum < value Then
+				sum += arr(finish)
+				finish += 1
+			Else
+				sum -= arr(start)
+				start += 1
+			End If
+
+			If sum = value Then
+				Console.WriteLine(start & " " & (finish - 1))
+			End If
+		Loop
+	End Sub
+
+	Public Shared Sub Main47()
+		Dim arr() As Integer = {15, 5, 5, 20, 10, 5, 5, 20, 10, 10}
+		SubArraySums(arr, arr.Length, 20)
+	End Sub
+'	
+'	0 1
+'	3 3
+'	4 6
+'	7 7
+'	8 9
+'	
+	Public Shared Function MaxConSub(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim currMax As Integer = 0, maximum As Integer = 0
+		For i As Integer = 0 To size - 1
+			currMax += arr(i)
 			If currMax < 0 Then
 				currMax = 0
 			End If
 			If maximum < currMax Then
 				maximum = currMax
 			End If
-		End If
-	Next i
-	Console.WriteLine(maximum)
-	Return maximum
-End Function
+		Next i
+		Console.WriteLine(maximum)
+		Return maximum
+	End Function
 
-Public Shared Function RainWater(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Dim leftHigh(size - 1) As Integer
-	Dim rightHigh(size - 1) As Integer
+	Public Shared Function MaxConSubArr(ByVal A() As Integer, ByVal sizeA As Integer, ByVal B() As Integer, ByVal sizeB As Integer) As Integer
+		Dim currMax As Integer = 0
+		Dim maximum As Integer = 0
+		Dim hs As New HashSet(Of Integer)()
 
-	Dim max As Integer = arr(0)
-	leftHigh(0) = arr(0)
-	For i As Integer = 1 To size - 1
-		If max < arr(i) Then
-			max = arr(i)
-		End If
-		leftHigh(i) = max
-	Next i
-	max = arr(size - 1)
-	rightHigh(size - 1) = arr(size - 1)
-	For i As Integer = (size - 2) To 0 Step -1
-		If max < arr(i) Then
-			max = arr(i)
-		End If
-		rightHigh(i) = max
-	Next i
+		For i As Integer = 0 To sizeB - 1
+			hs.Add(B(i))
+		Next i
 
-	Dim water As Integer = 0
-	For i As Integer = 0 To size - 1
-		water += Math.Min(leftHigh(i), rightHigh(i)) - arr(i)
-	Next i
-	Console.WriteLine("Water : " & water)
-	Return water
-End Function
-
-Public Shared Function RainWater2(ByVal arr() As Integer, ByVal size As Integer) As Integer
-	Dim water As Integer = 0
-	Dim leftMax As Integer = 0, rightMax As Integer = 0
-	Dim left As Integer = 0
-	Dim right As Integer = size - 1
-
-	Do While left <= right
-		If arr(left) < arr(right) Then
-			If arr(left) > leftMax Then
-				leftMax = arr(left)
+		For i As Integer = 0 To sizeA - 1
+			If hs.Contains(A(i)) Then
+				currMax = 0
 			Else
-				water += leftMax - arr(left)
+				currMax = currMax + A(i)
+				If currMax < 0 Then
+					currMax = 0
+				End If
+				If maximum < currMax Then
+					maximum = currMax
+				End If
 			End If
-			left += 1
-		Else
-			If arr(right) > rightMax Then
-				rightMax = arr(right)
+		Next i
+		Console.WriteLine(maximum)
+		Return maximum
+	End Function
+
+	Public Shared Function MaxConSubArr2(ByVal A() As Integer, ByVal sizeA As Integer, ByVal B() As Integer, ByVal sizeB As Integer) As Integer
+		Array.Sort(B)
+		Dim currMax As Integer = 0
+		Dim maximum As Integer = 0
+
+		For i As Integer = 0 To sizeA - 1
+			If BinarySearch(B, sizeB, A(i)) Then
+				currMax = 0
 			Else
-				water += rightMax - arr(right)
+				currMax = currMax + A(i)
+				If currMax < 0 Then
+					currMax = 0
+				End If
+				If maximum < currMax Then
+					maximum = currMax
+				End If
 			End If
-			right -= 1
-		End If
-	Loop
-	Console.WriteLine("Water : " & water)
-	Return water
-End Function
+		Next i
+		Console.WriteLine(maximum)
+		Return maximum
+	End Function
 
-Public Shared Sub seperateEvenAndOdd(ByVal arr() As Integer, ByVal size As Integer)
-	Dim left As Integer = 0, right As Integer = size - 1
-	Do While left < right
-		If arr(left) Mod 2 = 0 Then
-			left += 1
-		ElseIf arr(right) Mod 2 = 1 Then
-			right -= 1
-		Else
-			swap(arr, left, right)
-			left += 1
-			right -= 1
-		End If
-	Loop
-End Sub
+	Public Shared Sub Main48()
+		Dim arr() As Integer = {1, 2, -3, 4, 5, -10, 6, 7}
+		MaxConSub(arr, arr.Length)
+		Dim arr2() As Integer = {1, 2, 3, 4, 5, -10, 6, 7, 3}
+		Dim arr3() As Integer = {1, 3}
+		MaxConSubArr(arr2, arr2.Length, arr3, arr3.Length)
+		MaxConSubArr2(arr2, arr2.Length, arr3, arr3.Length)
+	End Sub
+'	
+'	13
+'	13
+'	13
+'	
 
-Public Shared Sub Main24(ByVal args() As String)
-	Dim first() As Integer = { 1, 5, 6, 6, 6, 6, 6, 6, 7, 8, 10, 13, 20, 30 }
-	seperateEvenAndOdd(first, first.Length)
-	For Each val As Integer In first
-		Console.Write(val & " ")
-	Next val
-End Sub
+	Public Shared Function RainWater(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim leftHigh(size - 1) As Integer
+		Dim rightHigh(size - 1) As Integer
 
-Public Shared Sub Main(ByVal args() As String)
-	Main1(args)
-	Main2(args)
-	Main3(args)
-	Main4(args)
-	Main5(args)
-	Main6(args)
-	Main7(args)
-	Main8(args)
-	Main9(args)
-	Main10(args)
-	Main11(args)
-	Main12(args)
-	Main13(args)
-	Main14(args)
-	Main15(args)
-	Main16(args)
-	Main17(args)
-	Main18(args)
-	Main19(args)
-	Main20(args)
-	Main21(args)
-	Main22(args)
-	Main23(args)
-	Main24(args)
-End Sub
-}
+		Dim max As Integer = arr(0)
+		leftHigh(0) = arr(0)
+		For i As Integer = 1 To size - 1
+			If max < arr(i) Then
+				max = arr(i)
+			End If
+			leftHigh(i) = max
+		Next i
+		max = arr(size - 1)
+		rightHigh(size - 1) = arr(size - 1)
+		For i As Integer = (size - 2) To 0 Step -1
+			If max < arr(i) Then
+				max = arr(i)
+			End If
+			rightHigh(i) = max
+		Next i
+
+		Dim water As Integer = 0
+		For i As Integer = 0 To size - 1
+			water += Math.Min(leftHigh(i), rightHigh(i)) - arr(i)
+		Next i
+		Console.WriteLine("Water : " & water)
+		Return water
+	End Function
+
+
+	Public Shared Function RainWater2(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim water As Integer = 0
+		Dim leftMax As Integer = 0, rightMax As Integer = 0
+		Dim left As Integer = 0
+		Dim right As Integer = size - 1
+
+		Do While left <= right
+			If arr(left) < arr(right) Then
+				If arr(left) > leftMax Then
+					leftMax = arr(left)
+				Else
+					water += leftMax - arr(left)
+				End If
+				left += 1
+			Else
+				If arr(right) > rightMax Then
+					rightMax = arr(right)
+				Else
+					water += rightMax - arr(right)
+				End If
+				right -= 1
+			End If
+		Loop
+		Console.WriteLine("Water : " & water)
+		Return water
+	End Function
+
+	Public Shared Sub Main49()
+		Dim arr() As Integer = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1}
+		RainWater(arr, arr.Length)
+		RainWater2(arr, arr.Length)
+	End Sub
+'	
+'	Water : 6
+'	Water : 6
+'	
+
+	Public Shared Sub SeparateEvenAndOdd(ByVal arr() As Integer, ByVal size As Integer)
+		Dim left As Integer = 0, right As Integer = size - 1
+		Do While left < right
+			If arr(left) Mod 2 = 0 Then
+				left += 1
+			ElseIf arr(right) Mod 2 = 1 Then
+				right -= 1
+			Else
+				Swap(arr, left, right)
+				left += 1
+				right -= 1
+			End If
+		Loop
+	End Sub
+
+	Public Shared Sub Main50()
+		Dim first() As Integer = {1, 5, 6, 6, 6, 6, 6, 6, 7, 8, 10, 13, 20, 30}
+		SeparateEvenAndOdd(first, first.Length)
+		For Each val As Integer In first
+			Console.Write(val & " ")
+		Next val
+	End Sub
+
+'	
+'	30 20 6 6 6 6 6 6 10 8 7 13 5 1
+'	
+
+	Public Shared Sub Main(ByVal args() As String)
+		Main1()
+		Main2()
+		Main3()
+		Main4()
+		Main5()
+		Main6()
+		Main7()
+		Main8()
+		Main9()
+		Main10()
+		Main10A()
+		Main11()
+		Main12()
+		Main13()
+		Main14()
+		Main15()
+		Main16()
+		Main17()
+		Main18()
+		Main19()
+		Main20()
+		Main21()
+		Main22()
+		Main23()
+		Main24()
+		Main25()
+		Main26()
+		Main27()
+		Main28()
+		Main29()
+		Main30()
+		Main31()
+		Main32()
+		Main33()
+		Main34()
+		Main35()
+		Main36()
+		Main37()
+		Main38()
+		Main39()
+		Main40()
+		Main41()
+		Main42()
+		Main43()
+		Main44()
+		Main45()
+		Main46()
+		Main47()
+		Main48()
+		Main49()
+		Main50()
+	End Sub
+End Class

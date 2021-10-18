@@ -1,3 +1,4 @@
+﻿
 Imports System
 
 Public Class DoublyCircularLinkedList
@@ -7,79 +8,66 @@ Public Class DoublyCircularLinkedList
 
 	Private Class Node
 		Friend value As Integer
-		Friend [next] As Node
+		Friend nextPtr As Node
 		Friend prev As Node
 
-		Public Sub New(ByVal v As Integer, ByVal nxt As Node, ByVal prv As Node)
+		Friend Sub New(ByVal v As Integer, ByVal nxt As Node, ByVal prv As Node)
 			value = v
-			[next] = nxt
+			nextPtr = nxt
 			prev = prv
-		End Sub
-
-		Public Sub New(ByVal v As Integer)
-			value = v
-			[next] = Me
-			prev = Me
 		End Sub
 	End Class
 	' Other methods 
-
-	Public Function size() As Integer
+	Public Function Size() As Integer
 		Return count
 	End Function
 
-	Public ReadOnly Property Empty() As Boolean
-		Get
-			Return count = 0
-		End Get
-	End Property
+	Public Function IsEmpty() As Boolean
+		Return count = 0
+	End Function
 
-	Public Function peekHead() As Integer
-		If Empty Then
+	Public Function PeekHead() As Integer
+		If IsEmpty() Then
 			Throw New System.InvalidOperationException("EmptyListException")
 		End If
 		Return head.value
 	End Function
 
-	Public Sub addHead(ByVal value As Integer)
+	Public Sub AddHead(ByVal value As Integer)
 		Dim newNode As New Node(value, Nothing, Nothing)
 		If count = 0 Then
-'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
-'ORIGINAL LINE: tail = head = newNode;
 			head = newNode
 			tail = head
-			newNode.next = newNode
+			newNode.nextPtr = newNode
 			newNode.prev = newNode
 		Else
-			newNode.next = head
+			newNode.nextPtr = head
 			newNode.prev = head.prev
 			head.prev = newNode
-			newNode.prev.next = newNode
+			newNode.prev.nextPtr = newNode
 			head = newNode
 		End If
 		count += 1
 	End Sub
 
-	Public Sub addTail(ByVal value As Integer)
+	Public Sub AddTail(ByVal value As Integer)
 		Dim newNode As New Node(value, Nothing, Nothing)
 		If count = 0 Then
-'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
-'ORIGINAL LINE: head = tail = newNode;
 			tail = newNode
 			head = tail
-			newNode.next = newNode
+			newNode.nextPtr = newNode
 			newNode.prev = newNode
 		Else
-			newNode.next = tail.next
+			newNode.nextPtr = tail.nextPtr
 			newNode.prev = tail
-			tail.next = newNode
-			newNode.next.prev = newNode
+			tail.nextPtr = newNode
+			newNode.nextPtr.prev = newNode
 			tail = newNode
 		End If
 		count += 1
 	End Sub
 
-	Public Function removeHead() As Integer
+	Public Function RemoveHead() As Integer
 		If count = 0 Then
 			Throw New System.InvalidOperationException("EmptyListException")
 		End If
@@ -93,14 +81,14 @@ Public Class DoublyCircularLinkedList
 			Return value
 		End If
 
-		Dim [next] As Node = head.next
-		[next].prev = tail
-		tail.next = [next]
-		head = [next]
+		Dim nextPtr As Node = head.nextPtr
+		nextPtr.prev = tail
+		tail.nextPtr = nextPtr
+		head = nextPtr
 		Return value
 	End Function
 
-	Public Function removeTail() As Integer
+	Public Function RemoveTail() As Integer
 		If count = 0 Then
 			Throw New System.InvalidOperationException("EmptyListException")
 		End If
@@ -115,13 +103,13 @@ Public Class DoublyCircularLinkedList
 		End If
 
 		Dim prev As Node = tail.prev
-		prev.next = head
+		prev.nextPtr = head
 		head.prev = prev
 		tail = prev
 		Return value
 	End Function
 
-	Public Function isPresent(ByVal key As Integer) As Boolean
+	Public Function Search(ByVal key As Integer) As Boolean
 		Dim temp As Node = head
 		If head Is Nothing Then
 			Return False
@@ -131,38 +119,106 @@ Public Class DoublyCircularLinkedList
 			If temp.value = key Then
 				Return True
 			End If
-			temp = temp.next
+			temp = temp.nextPtr
 		Loop While temp IsNot head
 
 		Return False
 	End Function
 
-	Public Sub deleteList()
+	Public Sub DeleteList()
 		head = Nothing
 		tail = Nothing
 		count = 0
 	End Sub
 
-	Public Sub print()
-		If Empty Then
+	Public Sub Print()
+		If IsEmpty() Then
+			Console.WriteLine("Empty List.")
 			Return
 		End If
 		Dim temp As Node = head
 		Do While temp IsNot tail
 			Console.Write(temp.value & " ")
-			temp = temp.next
+			temp = temp.nextPtr
 		Loop
-		Console.Write(temp.value)
+		Console.WriteLine(temp.value)
 	End Sub
 
-	Public Shared Sub Main(ByVal args() As String)
+	Public Shared Sub Main1()
 		Dim ll As New DoublyCircularLinkedList()
-		ll.addHead(1)
-		ll.addHead(2)
-		ll.addHead(3)
-		ll.addHead(1)
-		ll.addHead(2)
-		ll.addHead(3)
-		ll.print()
+		ll.AddHead(1)
+		ll.AddHead(2)
+		ll.AddHead(3)
+		ll.Print()
+		Console.WriteLine(ll.Size())
+		Console.WriteLine(ll.IsEmpty())
+		Console.WriteLine(ll.PeekHead())
+		Console.WriteLine(ll.Search(3))
+	End Sub
+
+'
+'3 2 1
+'3
+'False
+'3
+'True
+'
+
+	Public Shared Sub Main2()
+		Dim ll As New DoublyCircularLinkedList()
+		ll.AddTail(1)
+		ll.AddTail(2)
+		ll.AddTail(3)
+		ll.Print()
+
+		ll.RemoveHead()
+		ll.Print()
+		ll.RemoveTail()
+		ll.Print()
+		ll.DeleteList()
+		ll.Print()
+	End Sub
+
+'
+'1 2 3
+'2 3
+'2
+'Empty List.
+'
+
+	Public Shared Sub Main3()
+		Dim ll As New DoublyCircularLinkedList()
+		ll.AddHead(1)
+		ll.AddHead(2)
+		ll.AddHead(3)
+		ll.Print()
+
+		ll.RemoveHead()
+		ll.Print()
+
+	End Sub
+'
+'3 2 1
+'2 1
+'
+	Public Shared Sub Main4()
+		Dim ll As New DoublyCircularLinkedList()
+		ll.AddHead(1)
+		ll.AddHead(2)
+		ll.AddHead(3)
+		ll.Print()
+
+		ll.RemoveTail()
+		ll.Print()
+	End Sub
+'
+'3 2 1
+'3 2
+'
+	Public Shared Sub Main(ByVal args() As String)
+		Main1()
+		Main2()
+		Main3()
+		Main4()
 	End Sub
 End Class

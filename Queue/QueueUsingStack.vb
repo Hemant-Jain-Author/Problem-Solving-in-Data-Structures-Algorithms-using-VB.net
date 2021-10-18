@@ -1,7 +1,8 @@
-Imports System
+﻿Imports System
 Imports System.Collections.Generic
 
 Public Class QueueUsingStack
+
 	Private stk1 As Stack(Of Integer)
 	Private stk2 As Stack(Of Integer)
 
@@ -10,11 +11,11 @@ Public Class QueueUsingStack
 		stk2 = New Stack(Of Integer)()
 	End Sub
 
-	Friend Sub add(ByVal value As Integer)
+	Friend Sub Add(ByVal value As Integer)
 		stk1.Push(value)
 	End Sub
 
-	Friend Function remove() As Integer
+	Friend Function Remove() As Integer
 		Dim value As Integer
 		If stk2.Count > 0 Then
 			Return stk2.Pop()
@@ -29,11 +30,16 @@ Public Class QueueUsingStack
 
 	Public Shared Sub Main(ByVal args() As String)
 		Dim que As New QueueUsingStack()
-		que.add(1)
-		que.add(2)
-		que.add(3)
+		que.Add(1)
+		que.Add(2)
+		que.Add(3)
 		For i As Integer = 0 To 2
-			Console.WriteLine(q.remove())
+			Console.WriteLine(que.Remove())
 		Next i
 	End Sub
 End Class
+'
+'1
+'2
+'3
+'
