@@ -173,9 +173,9 @@ Public Class DoublyLinkedList
 		End If
 	End Sub
 
-'	
-'	 * Reverse a doubly linked List iteratively
-'	 
+	'	
+	'	 * Reverse a doubly linked List iteratively
+	'	 
 
 	Public Sub ReverseList()
 		Dim curr As Node = head
@@ -225,7 +225,7 @@ Public Class DoublyLinkedList
 		Return dll
 	End Function
 
-		Public Function CopyList() As DoublyLinkedList
+	Public Function CopyList() As DoublyLinkedList
 		Dim dll As New DoublyLinkedList()
 		Dim curr As Node = head
 
@@ -246,11 +246,11 @@ Public Class DoublyLinkedList
 		ll.Print()
 		Console.WriteLine(ll.Search(2))
 	End Sub
-'	
-'	3 2 1 
-'	2 1 
-'	True
-'	
+	'	
+	'	3 2 1 
+	'	2 1 
+	'	True
+	'	
 
 	Public Shared Sub Main2()
 		Dim ll As New DoublyLinkedList()
@@ -265,11 +265,11 @@ Public Class DoublyLinkedList
 		ll.RemoveDuplicate()
 		ll.Print()
 	End Sub
-'	
-'	1 2 3 
-'	1 1 2 2 3 3 
-'	1 2 3 
-'	
+	'	
+	'	1 2 3 
+	'	1 1 2 2 3 3 
+	'	1 2 3 
+	'	
 
 	Public Shared Sub Main3()
 		Dim ll As New DoublyLinkedList()
@@ -283,11 +283,11 @@ Public Class DoublyLinkedList
 		Dim l3 As DoublyLinkedList = ll.CopyListReversed()
 		l3.Print()
 	End Sub
-'	
-'	3 2 1 
-'	3 2 1 
-'	1 2 3
-'	
+	'	
+	'	3 2 1 
+	'	3 2 1 
+	'	1 2 3
+	'	
 
 	Public Shared Sub Main4()
 		Dim ll As New DoublyLinkedList()
@@ -299,10 +299,10 @@ Public Class DoublyLinkedList
 		ll.Print()
 	End Sub
 
-'	
-'	3 2 1 
-'	3 1 
-'	
+	'	
+	'	3 2 1 
+	'	3 1 
+	'	
 
 	Public Shared Sub Main5()
 		Dim ll As New DoublyLinkedList()
@@ -314,10 +314,10 @@ Public Class DoublyLinkedList
 		ll.Print()
 	End Sub
 
-'	
-'	3 2 1
-'	1 2 3
-'	
+	'	
+	'	3 2 1
+	'	1 2 3
+	'	
 
 	Public Shared Sub Main(ByVal args() As String)
 		Main1()

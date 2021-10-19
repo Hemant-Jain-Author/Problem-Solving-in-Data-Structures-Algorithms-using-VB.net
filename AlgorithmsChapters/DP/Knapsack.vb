@@ -48,7 +48,7 @@ Public Class Knapsack
 		End If
 
 		Dim second As Integer = GetMaxCost01TD(dp, wt, cost, i - 1, w)
-		dp(w, i) = Math.Max(first,second)
+		dp(w, i) = Math.Max(first, second)
 		Return dp(w, i)
 	End Function
 
@@ -69,7 +69,7 @@ Public Class Knapsack
 				End If
 
 				Dim second As Integer = dp(w, i - 1)
-				dp(w, i) = Math.Max(first,second)
+				dp(w, i) = Math.Max(first, second)
 			Next i
 		Next w
 		'PrintItems(dp, wt, cost, n, capacity);
@@ -108,7 +108,7 @@ Public Class Knapsack
 		Return dp(capacity) ' Number of weights considered and final capacity.
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Public Shared Sub Main1(ByVal args() As String)
 		Dim wt() As Integer = {5, 10, 15}
 		Dim cost() As Integer = {10, 30, 20}
 		Dim capacity As Integer = 20
@@ -123,7 +123,7 @@ Public Class Knapsack
 		Console.WriteLine("Maximum cost obtained = " & maxCost)
 	End Sub
 
-	Public Shared Sub main2(ByVal args() As String)
+	Public Shared Sub Main(ByVal args() As String)
 		Dim wt() As Integer = {10, 40, 20, 30}
 		Dim cost() As Integer = {60, 40, 90, 120}
 		Dim capacity As Integer = 50

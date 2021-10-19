@@ -17,8 +17,8 @@ Public Class Knapsack
 	Private Class DecDensity
 		Implements IComparer(Of Items)
 
-		Public Function Compare(ByVal a As Items, ByVal b As Items) As Integer
-			Return CInt(Math.Truncate(b.density - a.density))
+		Private Function IComparer_Compare(x As Items, y As Items) As Integer Implements IComparer(Of Items).Compare
+			Return CInt(Math.Truncate(y.density - x.density))
 		End Function
 	End Class
 
@@ -27,12 +27,15 @@ Public Class Knapsack
 		Dim totalCost As Integer = 0
 		Dim n As Integer = wt.Length
 		Dim itemList(n - 1) As Items
-		For i As Integer = 0 To n - 1
+
+		Dim i As Integer = 0
+		For i = 0 To n - 1
 			itemList(i) = New Items(wt(i), cost(i))
 		Next i
 
 		Array.Sort(itemList, New DecDensity())
-		Dim i As Integer = 0
+
+		i = 0
 		Do While i < n AndAlso capacity > 0
 			If capacity - itemList(i).wt >= 0 Then
 				capacity -= itemList(i).wt

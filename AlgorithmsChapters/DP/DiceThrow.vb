@@ -5,11 +5,9 @@ Public Class DiceThrow
 		Dim dp(n, V) As Integer
 
 		' Table entries for only one dice.
-		Dim j As Integer = 1
-		Do While j <= m AndAlso j <= V
+		For j As Integer = 1 To Math.Min(m, V)
 			dp(1, j) = 1
-			j += 1
-		Loop
+		Next j
 
 		' i is number of dice, j is Value, k value of dice.
 		For i As Integer = 2 To n

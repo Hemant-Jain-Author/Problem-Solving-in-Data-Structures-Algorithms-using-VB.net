@@ -1,23 +1,23 @@
 Imports System
 
 Public Class PriorityQueue(Of T As IComparable(Of T))
-	Private Const CAPACITY As Integer = 100
-	Private Count As Integer ' Number of elements in Heap
+	Private CAPACITY As Integer = 100
+	Private count As Integer ' Number of elements in Heap
 	Private arr() As T ' The Heap array
 	Private isMinHeap As Boolean
 
 	Public Sub New(Optional ByVal isMin As Boolean = True)
 		arr = New T(CAPACITY) {}
-		Count = 0
+		count = 0
 		isMinHeap = isMin
 	End Sub
 
-	Public Sub New(ByVal array() As T, ByVal arrlen As Integer , Optional ByVal isMin As Boolean = True)
-		CAPACITY = arrlen
-		Count = arrlen
+	Public Sub New(ByVal array() As T, Optional ByVal isMin As Boolean = True)
+		CAPACITY = array.Length
+		count = array.Length
 		arr = array
 		isMinHeap = isMin
-		For i As Integer = (Count \ 2) To 0 Step -1
+		For i As Integer = (count \ 2) To 0 Step -1
 			proclateDown(i)
 		Next i
 	End Sub
@@ -37,11 +37,11 @@ Public Class PriorityQueue(Of T As IComparable(Of T))
 		Dim child As Integer = -1
 		Dim temp As T
 
-		If lChild < Count Then
+		If lChild < count Then
 			child = lChild
 		End If
 
-		If rChild < Count AndAlso compare(arr, lChild, rChild) Then
+		If rChild < count AndAlso compare(arr, lChild, rChild) Then
 			child = rChild
 		End If
 
@@ -69,59 +69,61 @@ Public Class PriorityQueue(Of T As IComparable(Of T))
 	End Sub
 
 	Public Sub add(ByVal value As T)
-		If Count = CAPACITY Then
+		If count = CAPACITY Then
 			doubleSize()
 		End If
 
-		arr(Count) = value
-		Count += 1
-		proclateUp(Count - 1)
+		arr(count) = value
+		count += 1
+		proclateUp(count - 1)
 	End Sub
 
 	Private Sub doubleSize()
 		Dim old() As T = arr
 		arr = New T(CAPACITY * 2) {}
 		CAPACITY = CAPACITY * 2
-		For i As Integer = 0 To Count - 1
+		For i As Integer = 0 To count - 1
 			arr(i) = old(i)
 		Next i
-		' Array.Copy(old, 0, arr, 0, Count)
+		' Array.Copy(old, 0, arr, 0, count)
 	End Sub
 
 	Public Function remove() As T
-		If Count = 0 Then
+		If count = 0 Then
 			Throw New System.InvalidOperationException()
 		End If
 
 		Dim value As T = arr(0)
-		arr(0) = arr(Count - 1)
-		Count -= 1
+		arr(0) = arr(count - 1)
+		count -= 1
 		proclateDown(0)
 		Return value
 	End Function
 
 	Public Sub print()
-		' For i As Integer = 0 To Count - 1
-		' 	Console.Write(arr(i) & " ")
-		' Next i
+		For i As Integer = 0 To count - 1
+			Console.Write(arr(i))
+			Console.Write(" ")
+		Next i
+		Console.WriteLine()
 	End Sub
 
 	Public Function isEmpty() As Boolean
-		Return (Count = 0)
+		Return (count = 0)
 	End Function
 
 	Public Function size() As Integer
-		Return Count
+		Return count
 	End Function
 
 	Public Function peek() As T
-		If Count = 0 Then
+		If count = 0 Then
 			Throw New System.InvalidOperationException()
 		End If
 		Return arr(0)
 	End Function
 
-	Public Shared Sub HeapSort(ByVal array() As Integer, ByVal inc As Boolean)
+	Friend Shared Sub HeapSort(ByVal array() As Integer, ByVal inc As Boolean)
 		' Create max heap for increasing order sorting.
 		Dim hp As New PriorityQueue(Of Integer)(array, Not inc)
 		For i As Integer = 0 To array.Length - 1
@@ -130,14 +132,31 @@ Public Class PriorityQueue(Of T As IComparable(Of T))
 	End Sub
 End Class
 
-Public Class PQDemo
+Public Class PriorityQueueDemo
 	Public Shared Sub Main(ByVal args() As String)
-		Dim a() As Integer = {1, 9, 6, 7, 8, 0, 2, 4, 5, 3}
-		Dim hp As New PriorityQueue(Of Integer)(a, True)
-		hp.print()
+
+		Dim pq As New PriorityQueue(Of Integer)()
+		Dim arr() As Integer = {1, 2, 10, 8, 7, 3, 4, 6, 5, 9}
+		For Each i As Integer In arr
+			pq.add(i)
+		Next i
+
+		Console.Write("Heap Array: ")
+		pq.print()
+		Do While pq.isEmpty() = False
+			Console.Write(pq.remove() & " ")
+		Loop
 		Console.WriteLine()
-		Do While hp.isEmpty() = False
-			Console.Write(hp.remove() & " ")
+
+		pq = New PriorityQueue(Of Integer)(False)
+		For Each i As Integer In arr
+			pq.add(i)
+		Next i
+
+		Console.Write("Heap Array: ")
+		pq.print()
+		Do While pq.isEmpty() = False
+			Console.Write(pq.remove() & " ")
 		Loop
 	End Sub
 End Class

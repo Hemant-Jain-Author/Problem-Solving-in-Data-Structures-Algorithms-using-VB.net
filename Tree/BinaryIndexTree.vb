@@ -6,7 +6,7 @@ Public Class BinaryIndexTree
 
 	Public Sub New(ByVal arr() As Integer)
 		size = arr.Length
-		BIT = New Integer(size){}
+		BIT = New Integer(size) {}
 		Array.Fill(BIT, 0)
 
 		' Populating bit. 
@@ -68,7 +68,6 @@ Public Class BinaryIndexTree
 	' Main function
 	Public Shared Sub Main(ByVal args() As String)
 		Dim arr() As Integer = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}
-'INSTANT VB NOTE: The variable tree was renamed since it may cause conflicts with calls to static members of the user-defined type with this name:
 		Dim tree As New BinaryIndexTree(arr)
 
 		Console.WriteLine("Sum of elements in range(0, 5): " & tree.PrefixSum(5))
@@ -84,6 +83,6 @@ End Class
 
 '
 'Sum of elements in range(0, 5): 21
-'Sum of elements in range(2, 5): 15
+'Sum of elements in range(2, 5): 18
 'Sum of elements in range(0, 5): 27
 '

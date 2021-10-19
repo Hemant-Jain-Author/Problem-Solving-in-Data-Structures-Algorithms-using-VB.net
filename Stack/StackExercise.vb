@@ -17,32 +17,32 @@ Public Class StackExercise
 		Function1()
 		Console.WriteLine("Main line 2")
 	End Sub
-'	
-'Main line 1
-'Function1 line 1
-'Function2 line 1
-'Function1 line 2
-'Main line 2
-'	
+	'	
+	'Main line 1
+	'Function1 line 1
+	'Function2 line 1
+	'Function1 line 2
+	'Main line 2
+	'	
 
 	Public Shared Function IsBalancedParenthesis(ByVal expn As String) As Boolean
 		Dim stk As New Stack(Of Char)()
 		For Each ch As Char In expn.ToCharArray()
 			Select Case ch
-			Case "{"c, "["c, "("c
-				stk.Push(ch)
-			Case "}"c
-				If stk.Pop() <> AscW("{"c) Then
-					Return False
-				End If
-			Case "]"c
-				If stk.Pop() <> AscW("["c) Then
-					Return False
-				End If
-			Case ")"c
-				If stk.Pop() <> AscW("("c) Then
+				Case "{"c, "["c, "("c
+					stk.Push(ch)
+				Case "}"c
+					If stk.Pop() <> "{"c Then
 						Return False
-				End If
+					End If
+				Case "]"c
+					If stk.Pop() <> "["c Then
+						Return False
+					End If
+				Case ")"c
+					If stk.Pop() <> "("c Then
+						Return False
+					End If
 			End Select
 		Next ch
 		Return stk.Count = 0
@@ -54,36 +54,36 @@ Public Class StackExercise
 		Console.WriteLine("Result after isParenthesisMatched: " & value)
 	End Sub
 
-'	
-'	Result after isParenthesisMatched: True
-'	
+	'	
+	'	Result after isParenthesisMatched: True
+	'	
 
-Public Shared Function PostfixEvaluate(ByVal expn As String) As Integer
-	Dim stk As New Stack(Of Integer)()
-	Dim tokens() As String = expn.Split(" "c)
+	Public Shared Function PostfixEvaluate(ByVal expn As String) As Integer
+		Dim stk As New Stack(Of Integer)()
+		Dim tokens() As String = expn.Split(" "c)
 
-	For Each token As String In tokens
-		If "+-*/".Contains(token) Then
-			Dim num1 As Integer = stk.Pop()
-			Dim num2 As Integer = stk.Pop()
+		For Each token As String In tokens
+			If "+-*/".Contains(token) Then
+				Dim num1 As Integer = stk.Pop()
+				Dim num2 As Integer = stk.Pop()
 
-			Select Case token
-				Case "+"
-					stk.Push(num1 + num2)
-				Case "-"
-					stk.Push(num1 - num2)
-				Case "*"
-					stk.Push(num1 * num2)
-				Case "/"
-					stk.Push(num1 \ num2)
-			End Select
-		Else
-			stk.Push(Convert.ToInt32(token))
-		End If
+				Select Case token
+					Case "+"
+						stk.Push(num1 + num2)
+					Case "-"
+						stk.Push(num1 - num2)
+					Case "*"
+						stk.Push(num1 * num2)
+					Case "/"
+						stk.Push(num1 \ num2)
+				End Select
+			Else
+				stk.Push(Convert.ToInt32(token))
+			End If
 
-	Next token
-	Return stk.Pop()
-End Function
+		Next token
+		Return stk.Pop()
+	End Function
 
 	Public Shared Sub Main3()
 		Dim expn As String = "6 5 2 3 + 8 * + 3 + *"
@@ -92,10 +92,10 @@ End Function
 		Console.WriteLine("Result after Evaluation: " & value)
 	End Sub
 
-'	
-'	Given Postfix Expn: 6 5 2 3 + 8 * + 3 + *
-'	Result after Evaluation: 288
-'	
+	'	
+	'	Given Postfix Expn: 6 5 2 3 + 8 * + 3 + *
+	'	Result after Evaluation: 288
+	'	
 
 	Public Shared Function precedence(ByVal x As Char) As Integer
 		If x = "("c Then
@@ -123,16 +123,6 @@ End Function
 		Return output
 	End Function
 
-	Public Shared Function InfixToPostfix(ByVal expn As String) As String
-		Dim output As String = ""
-		Dim outVr() As Char = InfixToPostfix(expn.ToCharArray())
-
-		For Each ch As Char In outVr
-			output = output & ch
-		Next ch
-		Return output
-	End Function
-
 	Public Shared Function InfixToPostfix(ByVal expn() As Char) As Char()
 		Dim stk As New Stack(Of Char)()
 
@@ -144,23 +134,23 @@ End Function
 				output = output & ch
 			Else
 				Select Case ch
-				Case "+"c, "-"c, "*"c, "/"c, "%"c, "^"c
-					Do While stk.Count > 0 AndAlso precedence(ch) <= precedence(stk.Peek())
+					Case "+"c, "-"c, "*"c, "/"c, "%"c, "^"c
+						Do While stk.Count > 0 AndAlso precedence(ch) <= precedence(stk.Peek())
+							outVr = stk.Pop()
+							output = output & " " & outVr
+						Loop
+						stk.Push(ch)
+						output = output & " "
+					Case "("c
+						stk.Push(ch)
+					Case ")"c
 						outVr = stk.Pop()
-						output = output & " " & outVr
-					Loop
-					stk.Push(ch)
-					output = output & " "
-				Case "("c
-					stk.Push(ch)
-				Case ")"c
-					outVr = stk.Pop()
-'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
-'ORIGINAL LINE: while (stk.Count > 0 && (outVr = stk.Pop()) != "("c)
-					Do While stk.Count > 0 AndAlso outVr <> "("c
-						output = output & " " & outVr & " "
-						outVr = stk.Pop()
-					Loop
+						'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
+						'ORIGINAL LINE: while (stk.Count > 0 && (outVr = stk.Pop()) != "("c)
+						Do While stk.Count > 0 AndAlso outVr <> "("c
+							output = output & " " & outVr & " "
+							outVr = stk.Pop()
+						Loop
 				End Select
 			End If
 		Next ch
@@ -179,10 +169,10 @@ End Function
 		Console.WriteLine("Postfix Expn: " & value)
 	End Sub
 
-'	
-'	Infix Expn: 10+((3))*5/(16-4)
-'	Postfix Expn: 10 3 5 * 16 4 - / + 
-'	
+	'	
+	'	Infix Expn: 10+((3))*5/(16-4)
+	'	Postfix Expn: 10 3 5 * 16 4 - / + 
+	'	
 
 	Public Shared Function InfixToPrefix(ByVal expn As String) As String
 		Dim arr() As Char = expn.ToCharArray()
@@ -227,10 +217,10 @@ End Function
 		Console.WriteLine("Prefix Expn: " & value)
 	End Sub
 
-'	
-'	Infix Expn: 10+((3))*5/(16-4)
-'	Prefix Expn:  +10 * 3 / 5  - 16 4
-'	
+	'	
+	'	Infix Expn: 10+((3))*5/(16-4)
+	'	Prefix Expn:  +10 * 3 / 5  - 16 4
+	'	
 
 	Public Shared Function StockSpanRange(ByVal arr() As Integer) As Integer()
 		Dim SR(arr.Length - 1) As Integer
@@ -280,10 +270,10 @@ End Function
 		Console.WriteLine()
 	End Sub
 
-'	
-'	StockSpanRange : 1 1 1 1 1 4 6 8 9 
-'	StockSpanRange : 1 1 1 1 1 4 6 8 9 
-'	
+	'	
+	'	StockSpanRange : 1 1 1 1 1 4 6 8 9 
+	'	StockSpanRange : 1 1 1 1 1 4 6 8 9 
+	'	
 
 	Public Shared Function GetMaxArea(ByVal arr() As Integer) As Integer
 		Dim size As Integer = arr.Length
@@ -337,31 +327,31 @@ End Function
 		Console.WriteLine("GetMaxArea :: " & value)
 	End Sub
 
-'	
-'	GetMaxArea :: 20
-'	GetMaxArea :: 20
-'	
+	'	
+	'	GetMaxArea :: 20
+	'	GetMaxArea :: 20
+	'	
 
 
-Public Shared Sub StockAnalystAdd(ByVal stk As Stack(Of Integer), ByVal value As Integer)
-	Do While stk.Count > 0 AndAlso stk.Peek() <= value
-		stk.Pop()
-	Loop
-	stk.Push(value)
-End Sub
+	Public Shared Sub StockAnalystAdd(ByVal stk As Stack(Of Integer), ByVal value As Integer)
+		Do While stk.Count > 0 AndAlso stk.Peek() <= value
+			stk.Pop()
+		Loop
+		stk.Push(value)
+	End Sub
 
 
-Public Shared Sub Main7a()
-	Dim arr() As Integer = {20, 19, 10, 21, 40, 35, 39, 50, 45, 42}
-	Dim stk As New Stack(Of Integer)()
-	For i As Integer = arr.Length - 1 To 0 Step -1
-		StockAnalystAdd(stk, arr(i))
-	Next i
-	For Each ele In stk
-		Console.Write(ele & " ")
-	Next ele
-	Console.WriteLine()
-End Sub
+	Public Shared Sub Main7a()
+		Dim arr() As Integer = {20, 19, 10, 21, 40, 35, 39, 50, 45, 42}
+		Dim stk As New Stack(Of Integer)()
+		For i As Integer = arr.Length - 1 To 0 Step -1
+			StockAnalystAdd(stk, arr(i))
+		Next i
+		For Each ele In stk
+			Console.Write(ele & " ")
+		Next ele
+		Console.WriteLine()
+	End Sub
 
 	Public Shared Sub SortedInsert(ByVal stk As Stack(Of Integer), ByVal element As Integer)
 		Dim temp As Integer
@@ -390,10 +380,10 @@ End Sub
 		Next ele
 		Console.WriteLine()
 	End Sub
-'	
-'4 3 1 
-'4 3 2 1 
-'	
+	'	
+	'4 3 1 
+	'4 3 2 1 
+	'	
 
 	Public Shared Sub SortStack(ByVal stk As Stack(Of Integer))
 		Dim temp As Integer
@@ -452,12 +442,12 @@ End Sub
 		Console.WriteLine()
 	End Sub
 
-'	
-'2 4 1 3 
-'4 3 2 1 
-'2 4 1 3 
-'4 3 2 1 
-'	
+	'	
+	'2 4 1 3 
+	'4 3 2 1 
+	'2 4 1 3 
+	'4 3 2 1 
+	'	
 	Public Shared Sub BottomInsert(ByVal stk As Stack(Of Integer), ByVal element As Integer)
 		Dim temp As Integer
 		If stk.Count = 0 Then
@@ -485,10 +475,10 @@ End Sub
 		Console.WriteLine()
 	End Sub
 
-'	
-'	[1, 2, 3]
-'	[4, 1, 2, 3]
-'	
+	'	
+	'3 2 1
+	'3 2 1 4
+	'	
 
 	Public Shared Sub BottomInsert(Of T)(ByVal stk As Stack(Of T), ByVal value As T)
 		If stk.Count = 0 Then
@@ -513,38 +503,38 @@ End Sub
 	End Sub
 
 	Public Shared Sub ReverseStack2(ByVal stk As Stack(Of Integer))
-	Dim que As New Queue(Of Integer)()
-	Do While stk.Count > 0
-		que.Enqueue(stk.Pop())
-	Loop
+		Dim que As New Queue(Of Integer)()
+		Do While stk.Count > 0
+			que.Enqueue(stk.Pop())
+		Loop
 
-	Do While que.Count <> 0
-		stk.Push(que.Dequeue())
-	Loop
+		Do While que.Count <> 0
+			stk.Push(que.Dequeue())
+		Loop
 	End Sub
 
 	Public Shared Sub ReverseKElementInStack(ByVal stk As Stack(Of Integer), ByVal k As Integer)
-	Dim que As New Queue(Of Integer)()
-	Dim i As Integer = 0
-	Do While stk.Count > 0 AndAlso i < k
-		que.Enqueue(stk.Pop())
-		i += 1
-	Loop
-	Do While que.Count <> 0
-		stk.Push(que.Dequeue())
-	Loop
+		Dim que As New Queue(Of Integer)()
+		Dim i As Integer = 0
+		Do While stk.Count > 0 AndAlso i < k
+			que.Enqueue(stk.Pop())
+			i += 1
+		Loop
+		Do While que.Count <> 0
+			stk.Push(que.Dequeue())
+		Loop
 	End Sub
 
-Public Shared Sub reverseQueue(ByVal que As Queue(Of Integer))
-	Dim stk As New Stack(Of Integer)()
-	Do While que.Count <> 0
-		stk.Push(que.Dequeue())
-	Loop
+	Public Shared Sub ReverseQueue(ByVal que As Queue(Of Integer))
+		Dim stk As New Stack(Of Integer)()
+		Do While que.Count <> 0
+			stk.Push(que.Dequeue())
+		Loop
 
-	Do While stk.Count > 0
-		que.Enqueue(stk.Pop())
-	Loop
-End Sub
+		Do While stk.Count > 0
+			que.Enqueue(stk.Pop())
+		Loop
+	End Sub
 
 	Public Shared Sub ReverseKElementInQueue(ByVal que As Queue(Of Integer), ByVal k As Integer)
 		Dim stk As New Stack(Of Integer)()
@@ -575,7 +565,7 @@ End Sub
 		Console.WriteLine()
 	End Sub
 
-	' [1, 2, 3]
+	' 3 2 1
 
 	Public Shared Sub Main12()
 		Dim stk As New Stack(Of Integer)()
@@ -603,12 +593,12 @@ End Sub
 		Next ele
 		Console.WriteLine()
 	End Sub
-'	
-'	[1, 2, 3, 4]
-'	[4, 3, 2, 1]
-'	[1, 2, 3, 4]
-'	[1, 2, 4, 3]
-'	
+	'	
+	'4 3 2 1
+	'1 2 3 4
+	'4 3 2 1
+	'3 4 2 1
+	'	
 
 	Public Shared Sub Main13()
 		Dim que As New Queue(Of Integer)()
@@ -620,7 +610,7 @@ End Sub
 		Next ele
 		Console.WriteLine()
 
-		reverseQueue(que)
+		ReverseQueue(que)
 		For Each ele In que
 			Console.Write(ele & " ")
 		Next ele
@@ -633,11 +623,11 @@ End Sub
 		Console.WriteLine()
 	End Sub
 
-'	
-'	[1, 2, 3]
-'	[3, 2, 1]
-'	[2, 3, 1]
-'	
+	'	
+	'1 2 3
+	'3 2 1
+	'2 3 1
+	'	
 
 	Public Shared Function MaxDepthParenthesis(ByVal expn As String, ByVal size As Integer) As Integer
 		Dim stk As New Stack(Of Char)()
@@ -689,10 +679,10 @@ End Sub
 		Console.WriteLine("Max depth parenthesis is " & MaxDepthParenthesis2(expn, size))
 	End Sub
 
-'	
-'	Max depth parenthesis is 6
-'	Max depth parenthesis is 6
-'	
+	'	
+	'	Max depth parenthesis is 6
+	'	Max depth parenthesis is 6
+	'	
 
 	Public Shared Function LongestContBalParen(ByVal str As String, ByVal size As Integer) As Integer
 		Dim stk As New Stack(Of Integer)()
@@ -721,7 +711,7 @@ End Sub
 
 	' LongestContBalParen 12
 
-		Public Shared Function ReverseParenthesis(ByVal expn As String, ByVal size As Integer) As Integer
+	Public Shared Function ReverseParenthesis(ByVal expn As String, ByVal size As Integer) As Integer
 		Dim stk As New Stack(Of Char)()
 		Dim openCount As Integer = 0
 		Dim closeCount As Integer = 0
@@ -736,7 +726,7 @@ End Sub
 			If ch = "("c Then
 				stk.Push(ch)
 			ElseIf ch = ")"c Then
-				If stk.Count <> 0 AndAlso stk.Peek() = AscW("("c) Then
+				If stk.Count <> 0 AndAlso stk.Peek() = "("c Then
 					stk.Pop()
 				Else
 					stk.Push(")"c)
@@ -744,7 +734,7 @@ End Sub
 			End If
 		Next i
 		Do While stk.Count <> 0
-			If stk.Pop() = AscW("("c) Then
+			If stk.Pop() = "("c Then
 				openCount += 1
 			Else
 				closeCount += 1
@@ -752,16 +742,16 @@ End Sub
 		Loop
 		Dim reversal As Integer = CInt(Math.Truncate(Math.Ceiling(openCount / 2.0))) + CInt(Math.Truncate(Math.Ceiling(closeCount / 2.0)))
 		Return reversal
-		End Function
+	End Function
 
 	Public Shared Sub Main16()
 		Dim expn2 As String = ")(())((("
 		Dim size As Integer = expn2.Length
 		Dim value As Integer = ReverseParenthesis(expn2, size)
-		Console.WriteLine("reverse Parenthesis is : " & value)
+		Console.WriteLine("Reverse Parenthesis is : " & value)
 	End Sub
 
-	' reverse Parenthesis is : 3
+	' Reverse Parenthesis is : 3
 
 	Public Shared Function FindDuplicateParenthesis(ByVal expn As String, ByVal size As Integer) As Boolean
 		Dim stk As New Stack(Of Char)()
@@ -772,7 +762,7 @@ End Sub
 			ch = expn.Chars(i)
 			If ch = ")"c Then
 				count = 0
-				Do While stk.Count <> 0 AndAlso stk.Peek() <> AscW("("c)
+				Do While stk.Count <> 0 AndAlso stk.Peek() <> "("c
 					stk.Pop()
 					count += 1
 				Loop
@@ -823,10 +813,10 @@ End Sub
 		PrintParenthesisNumber(expn2, expn2.Length)
 	End Sub
 
-'	
-'	Parenthesis Count 1 2 3 4 4 3 5 5 2 1 
-'	Parenthesis Count 1 2 3 3 2 1 4 5 6 
-'	
+	'	
+	'	Parenthesis Count 1 2 3 4 4 3 5 5 2 1 
+	'	Parenthesis Count 1 2 3 3 2 1 4 5 6 
+	'	
 
 	Public Shared Sub NextLargerElement(ByVal arr() As Integer, ByVal size As Integer)
 		Dim output(size - 1) As Integer
@@ -841,8 +831,8 @@ End Sub
 					Exit For
 				End If
 			Next j
-'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
-'ORIGINAL LINE: output[outIndex++] = next;
+			'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
+			'ORIGINAL LINE: output[outIndex++] = next;
 			output(outIndex) = [next]
 			outIndex += 1
 		Next i
@@ -930,12 +920,12 @@ End Sub
 		NextSmallerElement2(arr, size)
 	End Sub
 
-'	
-'	21 -1 6 20 -1 -1 
-'	21 -1 6 20 -1 -1 
-'	3 3 -1 3 3 -1 
-'	3 3 -1 3 3 -1 
-'	
+	'	
+	'	21 -1 6 20 -1 -1 
+	'	21 -1 6 20 -1 -1 
+	'	3 3 -1 3 3 -1 
+	'	3 3 -1 3 3 -1 
+	'	
 
 	Public Shared Sub NextLargerElementCircular(ByVal arr() As Integer, ByVal size As Integer)
 		Dim output(size - 1) As Integer
@@ -1016,7 +1006,7 @@ End Sub
 		Return -1
 	End Function
 
-		Public Shared Function FindCelebrity2(ByVal relation(,) As Integer, ByVal count As Integer) As Integer
+	Public Shared Function FindCelebrity2(ByVal relation(,) As Integer, ByVal count As Integer) As Integer
 		Dim stk As New Stack(Of Integer)()
 		Dim first As Integer = 0, second As Integer = 0
 		For i As Integer = 0 To count - 1
@@ -1052,7 +1042,7 @@ End Sub
 			second = second + 1
 			i += 1
 		Loop
-		For i As Integer = 0 To count - 1
+		For i = 0 To count - 1
 			If first <> i AndAlso IsKnown(relation, first, i) Then
 				Return -1
 			End If
@@ -1077,12 +1067,12 @@ End Sub
 		Console.WriteLine("Celebrity : " & FindCelebrity2(arr, 5))
 	End Sub
 
-'	
-'	Celebrity : 3
-'	Celebrity : 3
-'	Celebrity : 3
-'
-'	
+	'	
+	'	Celebrity : 3
+	'	Celebrity : 3
+	'	Celebrity : 3
+	'
+	'	
 
 	Public Shared Function IsMinHeap(ByVal arr() As Integer, ByVal size As Integer) As Integer
 		Dim i As Integer = 0

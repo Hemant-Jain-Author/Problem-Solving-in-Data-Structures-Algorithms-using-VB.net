@@ -6,17 +6,17 @@ Public Class HashTableSC
 
 	Private Class Node
 		Friend value As Integer
-		Friend [next] As Node
+		Friend nextPtr As Node
 
 		Public Sub New(ByVal v As Integer, ByVal n As Node)
 			value = v
-			[next] = n
+			nextPtr = n
 		End Sub
 	End Class
 
 	Public Sub New()
 		tableSize = 512
-		listArray = New Node(tableSize - 1){}
+		listArray = New Node(tableSize - 1) {}
 		For i As Integer = 0 To tableSize - 1
 			listArray(i) = Nothing
 		Next i
@@ -34,18 +34,18 @@ Public Class HashTableSC
 
 	Public Function Remove(ByVal value As Integer) As Boolean
 		Dim index As Integer = ComputeHash(value)
-		Dim nextNode As Node, head As Node = listArray(index)
+		Dim nextPtrNode As Node, head As Node = listArray(index)
 		If head IsNot Nothing AndAlso head.value = value Then
-			listArray(index) = head.next
+			listArray(index) = head.nextPtr
 			Return True
 		End If
 		Do While head IsNot Nothing
-			nextNode = head.next
-			If nextNode IsNot Nothing AndAlso nextNode.value = value Then
-				head.next = nextNode.next
+			nextPtrNode = head.nextPtr
+			If nextPtrNode IsNot Nothing AndAlso nextPtrNode.value = value Then
+				head.nextPtr = nextPtrNode.nextPtr
 				Return True
 			Else
-				head = nextNode
+				head = nextPtrNode
 			End If
 		Loop
 		Return False
@@ -57,7 +57,7 @@ Public Class HashTableSC
 			Dim head As Node = listArray(i)
 			Do While head IsNot Nothing
 				Console.Write(head.value & " ")
-				head = head.next
+				head = head.nextPtr
 			Loop
 		Next i
 		Console.WriteLine()
@@ -70,7 +70,7 @@ Public Class HashTableSC
 			If head.value = value Then
 				Return True
 			End If
-			head = head.next
+			head = head.nextPtr
 		Loop
 		Return False
 	End Function
@@ -88,6 +88,6 @@ Public Class HashTableSC
 End Class
 '
 'Hash Table contains ::1 2 3 
-'Find key 2 : true
-'Find key 2 : false
+'Find key 2 : True
+'Find key 2 : False
 '

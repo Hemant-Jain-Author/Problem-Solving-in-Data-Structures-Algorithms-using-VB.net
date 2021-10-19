@@ -14,8 +14,8 @@ Public Class FractionalKnapsack
 			density = CDbl(cost) / wt
 		End Sub
 
-		Public Function CompareTo(ByVal s2 As Items) As Integer ' decreasing order.
-			Return CInt(Math.Truncate(s2.density - Me.density))
+		Private Function IComparable_CompareTo(other As Items) As Integer Implements IComparable(Of Items).CompareTo
+			Return CInt(Math.Truncate(other.density - Me.density))
 		End Function
 	End Class
 

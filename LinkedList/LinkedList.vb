@@ -323,7 +323,7 @@ Public Class LinkedList
 		Dim temp As Node = head
 		Do While temp IsNot Nothing
 			Console.Write(temp.value & " ")
-		temp = temp.nextPtr
+			temp = temp.nextPtr
 		Loop
 		Console.WriteLine("")
 	End Sub
@@ -444,20 +444,20 @@ Public Class LinkedList
 		Loop
 	End Sub
 
-	' Public Function LoopDetect() As Boolean
-	' 	Dim curr As Node = head
-	' 	Dim hs As New HashSet(Of Node)()
-	' 	Do While curr IsNot Nothing
-	' 		If hs.Contains(curr) Then
-	' 			Console.WriteLine("loop found")
-	' 			Return True
-	' 		End If
-	' 		hs.Add(curr)
-	' 		curr = curr.nextPtr
-	' 	Loop
-	' 	Console.WriteLine("loop not found")
-	' 	Return False
-	' End Function
+	Public Function LoopDetect() As Boolean
+		Dim curr As Node = head
+		Dim hs As New HashSet(Of Node)()
+		Do While curr IsNot Nothing
+			If hs.Contains(curr) Then
+				Console.WriteLine("loop found")
+				Return True
+			End If
+			hs.Add(curr)
+			curr = curr.nextPtr
+		Loop
+		Console.WriteLine("loop not found")
+		Return False
+	End Function
 
 	Public Function LoopDetect2() As Boolean
 		Dim slowPtr As Node
@@ -566,13 +566,13 @@ Public Class LinkedList
 		ll.Print()
 	End Sub
 
-'	
-'	3 2 1 
-'	Size : 3
-'	Size : 3
-'	Is empty : False
-'	3 2 1 4 
-'	
+	'	
+	'	3 2 1 
+	'	Size : 3
+	'	Size : 3
+	'	Is empty : False
+	'	3 2 1 4 
+	'	
 
 	Public Shared Sub Main2()
 		Dim ll As New LinkedList()
@@ -585,11 +585,11 @@ Public Class LinkedList
 		ll.Print()
 	End Sub
 
-'	
-'	3 2 1 
-'	Search : True
-'	2 1 
-'	 
+	'	
+	'	3 2 1 
+	'	Search : True
+	'	2 1 
+	'	 
 
 	Public Shared Sub Main3()
 		Dim ll As New LinkedList()
@@ -606,13 +606,13 @@ Public Class LinkedList
 		ll.Print()
 	End Sub
 
-'	
-'	3 1 2 1 2 1 
-'	DeleteNode : True
-'	3 1 1 2 1 
-'	DeleteNodes : True
-'	3 2 
-'	
+	'	
+	'	3 1 2 1 2 1 
+	'	DeleteNode : True
+	'	3 1 1 2 1 
+	'	DeleteNodes : True
+	'	3 2 
+	'	
 
 	Public Shared Sub Main4()
 		Dim ll As New LinkedList()
@@ -633,13 +633,13 @@ Public Class LinkedList
 		l3.Print()
 	End Sub
 
-'	
-'	3 2 1 
-'	1 2 3 
-'	3 2 1 
-'	3 2 1 
-'	1 2 3 
-'	
+	'	
+	'	3 2 1 
+	'	1 2 3 
+	'	3 2 1 
+	'	3 2 1 
+	'	1 2 3 
+	'	
 
 	Public Shared Sub Main5()
 		Dim ll As New LinkedList()
@@ -658,15 +658,15 @@ Public Class LinkedList
 		Console.WriteLine("CompareList : " & ll.CompareList2(l3))
 	End Sub
 
-'	
-'	3 2 1 
-'	3 2 1 
-'	1 2 3 
-'CompareList : True
-'CompareList : True
-'CompareList : False
-'CompareList : False
-'	
+	'	
+	'	3 2 1 
+	'	3 2 1 
+	'	1 2 3 
+	'CompareList : True
+	'CompareList : True
+	'CompareList : False
+	'CompareList : False
+	'	
 
 	Public Shared Sub Main6()
 		Dim ll As New LinkedList()
@@ -679,12 +679,12 @@ Public Class LinkedList
 		Console.WriteLine(ll.NthNodeFromEnd2(2))
 	End Sub
 
-'	
-'	3 2 1 
-'	2
-'	2
-'	2
-'	
+	'	
+	'	3 2 1 
+	'	2
+	'	2
+	'	2
+	'	
 	Public Shared Sub Main7()
 		Dim ll As New LinkedList()
 		ll.SortedInsert(1)
@@ -699,32 +699,33 @@ Public Class LinkedList
 		ll.Print()
 	End Sub
 
-'	
-'	1 2 3 
-'	1 1 2 2 3 3 
-'	1 2 3
-'	
+	'	
+	'	1 2 3 
+	'	1 1 2 2 3 3 
+	'	1 2 3
+	'	
 
-		Public Shared Sub Main8()
+	Public Shared Sub Main8()
 		Dim ll As New LinkedList()
 		ll.AddHead(1)
 		ll.AddHead(2)
 		ll.AddHead(3)
 		ll.Print()
 		ll.MakeLoop()
-		' ll.LoopDetect()
+		ll.LoopDetect()
 		ll.LoopDetect2()
 		ll.LoopTypeDetect()
 		ll.RemoveLoop()
 		ll.LoopDetect2()
-		End Sub
+	End Sub
 
-'	
-'	3 2 1 
-'	loop found
-'	circular list loop found
-'	loop not found
-'	
+	'	
+	'	3 2 1 
+	'	loop found
+	'	loop found
+	'	circular list loop found
+	'	loop not found
+	'	
 
 	Public Shared Sub Main9()
 		Dim ll As New LinkedList()
@@ -741,11 +742,11 @@ Public Class LinkedList
 		Console.WriteLine("Intersection:: " & val)
 	End Sub
 
-'	
-'	4 2 1 
-'	5 3 2 1 
-'	Intersection:: 2
-'	
+	'	
+	'	4 2 1 
+	'	5 3 2 1 
+	'	Intersection:: 2
+	'	
 
 	Public Shared Sub Main10()
 		Dim ll As New LinkedList()
@@ -790,11 +791,11 @@ Public Class LinkedList
 		ll.Print()
 	End Sub
 
-'
-'1 2 3 4 5 6 7 8 9 10 
-'1 2 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9 10 10 
-'1 2 2 2 3 3 3 4 4 4 5 5 5 6 6 6 7 7 7 8 8 8 9 9 9 10 10 10 
-'
+	'
+	'1 2 3 4 5 6 7 8 9 10 
+	'1 2 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9 10 10 
+	'1 2 2 2 3 3 3 4 4 4 5 5 5 6 6 6 7 7 7 8 8 8 9 9 9 10 10 10 
+	'
 
 	Public Shared Sub Main(ByVal args() As String)
 		Main1()

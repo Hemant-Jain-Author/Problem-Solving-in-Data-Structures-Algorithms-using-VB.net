@@ -402,7 +402,8 @@ Public Class StringEx
 	Public Shared Sub Main14()
 		Console.WriteLine(AddBinary("1000", "11111111"))
 	End Sub
-	' 100000111 
+	' 100000111
+
 	Public Shared Sub Main(ByVal args() As String)
 		Main2()
 		Main3()

@@ -3,22 +3,22 @@ Imports System
 
 Public Class Heap
 	Private Const CAPACITY As Integer = 32
-	Private size As Integer ' Number of elements in Heap
+	Private count As Integer ' Number of elements in Heap
 	Private arr() As Integer ' The Heap array
 	Friend isMinHeap As Boolean
 
 	Public Sub New(ByVal isMin As Boolean)
-		arr = New Integer(CAPACITY - 1){}
-		size = 0
+		arr = New Integer(CAPACITY - 1) {}
+		count = 0
 		isMinHeap = isMin
 	End Sub
 
 	Public Sub New(ByVal array() As Integer, ByVal isMin As Boolean)
-		size = array.Length
+		count = array.Length
 		arr = array
 		isMinHeap = isMin
 		' Build Heap operation over array
-		For i As Integer = (size \ 2) To 0 Step -1
+		For i As Integer = (count \ 2) To 0 Step -1
 			PercolateDown(i)
 		Next i
 	End Sub
@@ -38,10 +38,10 @@ Public Class Heap
 		Dim child As Integer = -1
 		Dim temp As Integer
 
-		If lChild < size Then
+		If lChild < count Then
 			child = lChild
 		End If
-		If rChild < size AndAlso Compare(arr, lChild, rChild) Then
+		If rChild < count AndAlso Compare(arr, lChild, rChild) Then
 			child = rChild
 		End If
 		If child <> -1 AndAlso Compare(arr, parent, child) Then
@@ -67,19 +67,19 @@ Public Class Heap
 	End Sub
 
 	Public Sub Add(ByVal value As Integer)
-		If size = arr.Length Then
+		If count = arr.Length Then
 			DoubleSize()
 		End If
 
-		arr(size) = value
-		size += 1
-		PercolateUp(size - 1)
+		arr(count) = value
+		count += 1
+		PercolateUp(count - 1)
 	End Sub
 
 	Private Sub DoubleSize()
 		Dim old() As Integer = arr
-		arr = New Integer((arr.Length * 2) - 1){}
-		Array.Copy(old, 0, arr, 0, size)
+		arr = New Integer((arr.Length * 2) - 1) {}
+		Array.Copy(old, 0, arr, 0, count)
 	End Sub
 
 	Public Function Remove() As Integer
@@ -88,24 +88,24 @@ Public Class Heap
 		End If
 
 		Dim value As Integer = arr(0)
-		arr(0) = arr(size - 1)
-		size -= 1
+		arr(0) = arr(count - 1)
+		count -= 1
 		PercolateDown(0)
 		Return value
 	End Function
 
 	Public Sub Print()
-		For i As Integer = 0 To size - 1
+		For i As Integer = 0 To count - 1
 			Console.Write(arr(i) & " ")
 		Next i
 	End Sub
 
 	Public Function Delete(ByVal value As Integer) As Boolean
 		Dim i As Integer = 0
-		Do While i < size
+		Do While i < count
 			If arr(i) = value Then
-				arr(i) = arr(size-1)
-				size -= 1
+				arr(i) = arr(count - 1)
+				count -= 1
 				PercolateDown(i)
 				Return True
 			End If
@@ -116,11 +116,11 @@ Public Class Heap
 
 
 	Public Function IsEmpty() As Boolean
-		Return (Count = 0)
+		Return count = 0
 	End Function
 
-	Public Function Length() As Integer
-		Return Count
+	Public Function Size1() As Integer
+		Return count
 	End Function
 
 	Public Function Peek() As Integer
@@ -135,15 +135,15 @@ Public Class Heap
 		Dim hp As New Heap(a, True)
 		hp.Print()
 		Console.WriteLine()
-	hp.Delete(5)
-	hp.Print()
-	Console.WriteLine()
+		hp.Delete(5)
+		hp.Print()
+		Console.WriteLine()
 	End Sub
 
-'	
-'	1 3 2 5 8 6 4 9 7 
-'	1 2 3 4 5 6 7 8 9 
-'	
+	'	
+	'	1 3 2 5 8 6 4 9 7
+	'	1 3 2 7 8 6 4 9
+	'
 
 	Public Shared Sub HeapSort(ByVal array() As Integer, ByVal inc As Boolean)
 		' Create max heap for increasing order sorting.
@@ -168,10 +168,10 @@ Public Class Heap
 		Next i
 	End Sub
 
-'	
-'	1 2 3 4 5 6 7 8 9 
-'	9 8 7 6 5 4 3 2 1
-'	
+	'	
+	'	1 2 3 4 5 6 7 8 9 
+	'	9 8 7 6 5 4 3 2 1
+	'	
 
 	Public Shared Sub Main(ByVal args() As String)
 		main1()

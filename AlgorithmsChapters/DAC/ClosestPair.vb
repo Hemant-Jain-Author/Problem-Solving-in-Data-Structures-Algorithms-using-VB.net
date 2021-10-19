@@ -34,7 +34,7 @@ Public Class ClosestPair
 	Class xComp
 		Implements IComparer(Of Point)
 
-		Public Function Compare(ByVal s1 As Point, ByVal s2 As Point) As Integer
+		Private Function IComparer_Compare(s1 As Point, s2 As Point) As Integer Implements IComparer(Of Point).Compare
 			Return (s1.x - s2.x)
 		End Function
 	End Class
@@ -42,7 +42,7 @@ Public Class ClosestPair
 	Class yComp
 		Implements IComparer(Of Point)
 
-		Public Function Compare(ByVal s1 As Point, ByVal s2 As Point) As Integer
+		Private Function IComparer_Compare(s1 As Point, s2 As Point) As Integer Implements IComparer(Of Point).Compare
 			Return (s1.y - s2.y)
 		End Function
 	End Class
@@ -56,7 +56,7 @@ Public Class ClosestPair
 		For i As Integer = 0 To n - 1
 			Dim j As Integer = i + 1
 			Do While j < n AndAlso (q(j).y - q(i).y) < min
-				d = Distance(q(i),q(j))
+				d = Distance(q(i), q(j))
 				If d < min Then
 					min = d
 				End If
@@ -99,7 +99,7 @@ Public Class ClosestPair
 
 
 	Public Function ClosestPairDC(ByVal arr(,) As Integer) As Double
-		Dim n As Integer =arr.GetLength(0)
+		Dim n As Integer = arr.GetLength(0)
 		Dim p(n - 1) As Point
 		For i As Integer = 0 To n - 1
 			p(i) = New Point(arr(i, 0), arr(i, 1))
@@ -128,6 +128,6 @@ Public Class ClosestPair
 End Class
 
 '
-'Smallest Distance is:47.0106370941726
-'Smallest Distance is:47.0106370941726
+'Smallest Distance is:47.01063709417264
+'Smallest Distance is:47.01063709417264
 '

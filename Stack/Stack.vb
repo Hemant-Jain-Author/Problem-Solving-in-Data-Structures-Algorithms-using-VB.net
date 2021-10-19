@@ -11,9 +11,10 @@ Public Class Stack
 	End Sub
 
 	Public Sub New(ByVal size As Integer)
-		data = New Integer(size - 1){}
+		data = New Integer(size - 1) {}
 		capacity = size
 	End Sub
+
 	' Other methods 
 
 	Public Function Size() As Integer

@@ -10,22 +10,23 @@ Public Class Queue
 	Public Sub New(ByVal n As Integer)
 		count = 0
 		capacity = n
-		data = New Integer(n - 1){}
+		data = New Integer(n - 1) {}
 	End Sub
 
-	Public Function add(ByVal value As Integer) As Boolean
+	Public Function Add(ByVal value As Integer) As Boolean
 		If count >= capacity Then
 			Console.WriteLine("Queue is full.")
 			Return False
 		Else
 			count += 1
 			data(back) = value
-			back = (++back) Mod capacity
+			back += 1
+			back = back Mod capacity
 		End If
 		Return True
 	End Function
 
-	Public Function remove() As Integer
+	Public Function Remove() As Integer
 		Dim value As Integer
 		If count <= 0 Then
 			Console.WriteLine("Queue is empty.")
@@ -33,12 +34,13 @@ Public Class Queue
 		Else
 			count -= 1
 			value = data(front)
-			front = (++front) Mod capacity
+			front += 1
+			front = front Mod capacity
 		End If
 		Return value
 	End Function
 
-	Friend Function isEmpty() As Boolean
+	Friend Function IsEmpty() As Boolean
 		Return count = 0
 	End Function
 
@@ -46,7 +48,7 @@ Public Class Queue
 		Return count
 	End Function
 
-	Friend Sub print()
+	Friend Sub Print()
 		If count = 0 Then
 			Console.Write("Queue is empty.")
 			Return
@@ -57,7 +59,8 @@ Public Class Queue
 		Do While s > 0
 			s -= 1
 			Console.Write(data(temp) & " ")
-			temp = (++temp) Mod capacity
+			temp += 1
+			temp = temp Mod capacity
 		Loop
 		Console.WriteLine()
 	End Sub
@@ -65,12 +68,12 @@ Public Class Queue
 	Public Shared Sub Main(ByVal args() As String)
 		Dim que As New Queue(5)
 		For i As Integer = 0 To 4
-			que.add(i)
+			que.Add(i)
 		Next i
-		que.print()
+		que.Print()
 
 		For i As Integer = 0 To 4
-			Console.Write(que.remove() & " ")
+			Console.Write(que.Remove() & " ")
 		Next i
 	End Sub
 End Class

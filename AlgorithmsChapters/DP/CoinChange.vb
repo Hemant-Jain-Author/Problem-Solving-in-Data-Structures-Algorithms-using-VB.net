@@ -1,46 +1,45 @@
 ﻿
 Imports System
 
-Namespace DP
-	Public Class CoinChange
-		Public Shared Function MinCoins(ByVal coins() As Integer, ByVal n As Integer, ByVal val As Integer) As Integer ' Greedy may be wrong.
-			If val <= 0 Then
-				Return 0
+Public Class CoinChange
+	Public Shared Function MinCoins(ByVal coins() As Integer, ByVal n As Integer, ByVal val As Integer) As Integer ' Greedy may be wrong.
+		If val <= 0 Then
+			Return 0
+		End If
+
+		Dim count As Integer = 0
+		Array.Sort(coins)
+
+		Dim i As Integer = n - 1
+		Do While i >= 0 AndAlso val > 0
+			If coins(i) <= val Then
+				count += 1
+				val -= coins(i)
+			Else
+				i -= 1
 			End If
+		Loop
+		Return If(val = 0, count, -1)
+	End Function
 
-			Dim count As Integer = 0
-			Array.Sort(coins)
+	Public Shared Function MinCoins2(ByVal coins() As Integer, ByVal n As Integer, ByVal val As Integer) As Integer ' Brute force.
+		If val = 0 Then
+			Return 0
+		End If
 
-			Dim i As Integer = n - 1
-			Do While i >= 0 AndAlso val > 0
-				If coins(i) <= val Then
-					count += 1
-					val -= coins(i)
-				Else
-					i -= 1
+		Dim count As Integer = Integer.MaxValue
+		Dim i As Integer = 0
+		Do While i < n
+			If coins(i) <= val Then
+				Dim subCount As Integer = MinCoins2(coins, n, val - coins(i))
+				If subCount >= 0 Then
+					count = Math.Min(count, subCount + 1)
 				End If
-			Loop
-			Return If(val = 0, count, -1)
-		End Function
-
-		Public Shared Function MinCoins2(ByVal coins() As Integer, ByVal n As Integer, ByVal val As Integer) As Integer ' Brute force.
-			If val = 0 Then
-				Return 0
 			End If
-
-			Dim count As Integer = Integer.MaxValue
-			Dim i As Integer = 0
-			Do While i < n
-				If coins(i) <= val Then
-					Dim subCount As Integer = MinCoins2(coins, n, val - coins(i))
-					If subCount >= 0 Then
-						count = Math.Min(count, subCount + 1)
-					End If
-				End If
-				i += 1
-			Loop
-			Return If(count <> Integer.MaxValue, count, -1)
-		End Function
+			i += 1
+		Loop
+		Return If(count <> Integer.MaxValue, count, -1)
+	End Function
 
 	Public Shared Function MinCoinsTD(ByVal coins() As Integer, ByVal n As Integer, ByVal val As Integer) As Integer
 		Dim dp(val) As Integer
@@ -120,3 +119,8 @@ Namespace DP
 		MinCoins2(coins, n, v)
 	End Sub
 End Class
+
+'Count Is: -1
+'Count Is: 3
+'Count Is: 3
+'Count Is: 3

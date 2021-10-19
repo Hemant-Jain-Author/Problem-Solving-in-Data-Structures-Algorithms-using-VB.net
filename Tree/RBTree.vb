@@ -129,7 +129,7 @@ Public Class RBTree
 
 	Public Function Search(ByVal data As Integer) As Boolean
 		Dim curr As Node = root
-		Do While curr <> NullNode
+		Do While curr IsNot NullNode
 			If curr.data = data Then
 				Return True
 			ElseIf curr.data > data Then
@@ -146,7 +146,7 @@ Public Class RBTree
 	End Sub
 
 	Private Sub PrintTree(ByVal node As Node, ByVal indent As String, ByVal isLeft As Boolean)
-		If node = NullNode Then
+		If node Is NullNode Then
 			Return
 		End If
 		If isLeft Then
@@ -156,7 +156,7 @@ Public Class RBTree
 			Console.Write(indent & "R:")
 			indent &= "   "
 		End If
-		Console.WriteLine(node.data + (If(node.colour, "(Red)", "(Black)")))
+		Console.WriteLine(node.data & "" & (If(node.colour, "(Red)", "(Black)")))
 		PrintTree(node.left, indent, True)
 		PrintTree(node.right, indent, False)
 	End Sub
@@ -168,7 +168,7 @@ Public Class RBTree
 	End Sub
 
 	Private Function Insert(ByVal node As Node, ByVal data As Integer) As Node
-		If node = NullNode Then
+		If node Is NullNode Then
 			node = New Node(data, NullNode)
 		ElseIf node.data > data Then
 			node.left = Insert(node.left, data)
@@ -182,12 +182,12 @@ Public Class RBTree
 
 	Private Sub FixRedRed(ByVal x As Node)
 		' if x is root colour it black and return
-		If x = root Then
+		If x Is root Then
 			x.colour = False
 			Return
 		End If
 
-		If x.parent = NullNode OrElse x.parent.parent = NullNode Then
+		If x.parent Is NullNode OrElse x.parent.parent Is NullNode Then
 			Return
 		End If
 		' Initialize parent, grandparent, uncle
@@ -201,7 +201,7 @@ Public Class RBTree
 		End If
 
 		' parent colour is red. gp is black.
-		If uncle <> NullNode AndAlso uncle.colour = True Then
+		If uncle IsNot NullNode AndAlso uncle.colour = True Then
 			' uncle and parent is red.
 			parent.colour = False
 			uncle.colour = False
@@ -212,13 +212,13 @@ Public Class RBTree
 
 		' parent is red, uncle is black and gp is black.
 		' Perform LR, LL, RL, RR
-		If parent = grandparent.left AndAlso x = parent.left Then ' LL
+		If parent Is grandparent.left AndAlso x Is parent.left Then ' LL
 			mid = RightRotate(grandparent)
-		ElseIf parent = grandparent.left AndAlso x = parent.right Then ' LR
+		ElseIf parent Is grandparent.left AndAlso x Is parent.right Then ' LR
 			mid = LeftRightRotate(grandparent)
-		ElseIf parent = grandparent.right AndAlso x = parent.left Then ' RL
+		ElseIf parent Is grandparent.right AndAlso x Is parent.left Then ' RL
 			mid = RightLeftRotate(grandparent)
-		ElseIf parent = grandparent.right AndAlso x = parent.right Then ' RR
+		ElseIf parent Is grandparent.right AndAlso x Is parent.right Then ' RR
 			mid = LeftRotate(grandparent)
 		End If
 
@@ -234,7 +234,7 @@ Public Class RBTree
 	Private Sub Delete(ByVal node As Node, ByVal key As Integer)
 		Dim z As Node = NullNode
 		Dim x, y As Node
-		Do While node <> NullNode
+		Do While node IsNot NullNode
 			If node.data = key Then
 				z = node
 				Exit Do
@@ -245,17 +245,17 @@ Public Class RBTree
 			End If
 		Loop
 
-		If z = NullNode Then
+		If z Is NullNode Then
 			Console.WriteLine("Couldn't FindNode key in the tree")
 			Return
 		End If
 
 		y = z
 		Dim yColour As Boolean = y.colour
-		If z.left = NullNode Then
+		If z.left Is NullNode Then
 			x = z.right
 			JoinParentChild(z, z.right)
-		ElseIf z.right = NullNode Then
+		ElseIf z.right Is NullNode Then
 			x = z.left
 			JoinParentChild(z, z.left)
 		Else
@@ -276,13 +276,13 @@ Public Class RBTree
 		End If
 	End Sub
 	Private Sub FixDoubleBlack(ByVal x As Node)
-		If x = root Then ' Root node.
+		If x Is root Then ' Root node.
 			Return
 		End If
 
 		Dim sib As Node = Sibling(x)
 		Dim parent As Node = x.parent
-		If sib = NullNode Then
+		If sib Is NullNode Then
 			' No sibling double black shifted to parent.
 			FixDoubleBlack(parent)
 		Else
@@ -290,7 +290,7 @@ Public Class RBTree
 				' Sibling colour is red.
 				parent.colour = True
 				sib.colour = False
-				If sib.parent.left = sib Then
+				If sib.parent.left Is sib Then
 					' Sibling is left child.
 					RightRotate(parent)
 				Else
@@ -302,9 +302,9 @@ Public Class RBTree
 				' Sibling colour is black
 				' At least one child is red.
 				If sib.left.colour = True OrElse sib.right.colour = True Then
-					If sib.parent.left = sib Then
+					If sib.parent.left Is sib Then
 						' Sibling is left child.
-						If sib.left <> NullNode AndAlso sib.left.colour = True Then
+						If sib.left IsNot NullNode AndAlso sib.left.colour = True Then
 							' left left case.
 							sib.left.colour = sib.colour
 							sib.colour = parent.colour
@@ -317,7 +317,7 @@ Public Class RBTree
 						End If
 					Else
 						' Sibling is right child.
-						If sib.left <> NullNode AndAlso sib.left.colour = True Then
+						If sib.left IsNot NullNode AndAlso sib.left.colour = True Then
 							' right left case.
 							sib.left.colour = parent.colour
 							RightRotate(sib)
@@ -345,11 +345,11 @@ Public Class RBTree
 
 	Private Function Sibling(ByVal node As Node) As Node
 		' sibling null if no parent
-		If node.parent = NullNode Then
+		If node.parent Is NullNode Then
 			Return Nothing
 		End If
 
-		If node.parent.left = node Then
+		If node.parent.left Is node Then
 			Return node.parent.right
 		End If
 
@@ -357,9 +357,9 @@ Public Class RBTree
 	End Function
 
 	Private Sub JoinParentChild(ByVal u As Node, ByVal v As Node)
-		If u.parent = NullNode Then
+		If u.parent Is NullNode Then
 			root = v
-		ElseIf u = u.parent.left Then
+		ElseIf u Is u.parent.left Then
 			u.parent.left = v
 		Else
 			u.parent.right = v
@@ -368,14 +368,13 @@ Public Class RBTree
 	End Sub
 
 	Private Function Minimum(ByVal node As Node) As Node
-		Do While node.left <> NullNode
+		Do While node.left IsNot NullNode
 			node = node.left
 		Loop
 		Return node
 	End Function
 
 	Public Shared Sub Main(ByVal arg() As String)
-'INSTANT VB NOTE: The variable tree was renamed since it may cause conflicts with calls to static members of the user-defined type with this name:
 		Dim tree_Conflict As New RBTree()
 		tree_Conflict.Insert(1)
 		tree_Conflict.Insert(2)

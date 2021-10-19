@@ -21,8 +21,8 @@ Public Class BTree
 		' Constructor
 		Friend Sub New(ByVal leaf As Boolean, ByVal max As Integer)
 			Me.n = 0
-			Me.keys = New Integer(max - 1){}
-			Me.arr = New Node(max){}
+			Me.keys = New Integer(max - 1) {}
+			Me.arr = New Node(max) {}
 			Me.leaf = leaf
 		End Sub
 	End Class
@@ -157,7 +157,6 @@ Public Class BTree
 
 	Private Sub Split(ByVal parent As Node, ByVal child As Node, ByVal index As Integer)
 		' Getting index of median.
-'INSTANT VB WARNING: Instant VB cannot determine whether both operands of this division are integer types - if they are then you should use the VB integer division operator:
 		Dim median As Integer = max / 2
 		' Reduce the number of keys in child
 		child.n = median
@@ -276,17 +275,17 @@ Public Class BTree
 			node.keys(index) = pred
 			Remove(node.arr(index), pred)
 
-		' If the child that succeeds key has at least min keys,
-		' Find the successor 'succ' of key in the subtree rooted at index+1.
-		' Replace key by succ and recursively delete succ in arr[ index+1].
+			' If the child that succeeds key has at least min keys,
+			' Find the successor 'succ' of key in the subtree rooted at index+1.
+			' Replace key by succ and recursively delete succ in arr[ index+1].
 		ElseIf node.arr(index + 1).n > min Then
 			Dim succ As Integer = GetSucc(node, index)
 			node.keys(index) = succ
 			Remove(node.arr(index + 1), succ)
 
-		' If both left and right subtree has min number of keys.
-		' Then merge left, right child along with parent key.
-		' Then call Remove on the merged child.
+			' If both left and right subtree has min number of keys.
+			' Then merge left, right child along with parent key.
+			' Then call Remove on the merged child.
 		Else
 			Merge(node, index)
 			Remove(node.arr(index), key)
@@ -323,12 +322,12 @@ Public Class BTree
 		' If the left sibling has more than min keys.
 		If index <> 0 AndAlso node.arr(index - 1).n > min Then
 			BorrowFromLeft(node, index)
-		' If the right sibling has more than min keys.
+			' If the right sibling has more than min keys.
 		ElseIf index <> node.n AndAlso node.arr(index + 1).n > min Then
 			BorrowFromRight(node, index)
-		' If both siblings has less than min keys.
-		' When right sibling exist always merge with the right sibling.
-		' When right sibling does not exist then merge with left sibling.
+			' If both siblings has less than min keys.
+			' When right sibling exist always merge with the right sibling.
+			' When right sibling does not exist then merge with left sibling.
 		Else
 			If index <> node.n Then
 				Merge(node, index)
@@ -338,18 +337,19 @@ Public Class BTree
 		End If
 	End Sub
 
-		' Move a key from parent to right and left to parent.
+	' Move a key from parent to right and left to parent.
 	Private Sub BorrowFromLeft(ByVal node As Node, ByVal index As Integer)
 		Dim child As Node = node.arr(index)
 		Dim sibling As Node = node.arr(index - 1)
 
 		' Moving all key in child one step forward.
-		For i As Integer = child.n - 1 To 0 Step -1
+		Dim i As Integer
+		For i = child.n - 1 To 0 Step -1
 			child.keys(i + 1) = child.keys(i)
 		Next i
 
 		' Move all its child pointers one step forward.
-		Dim i As Integer = child.n
+		i = child.n
 		Do While Not child.leaf AndAlso i >= 0
 			child.arr(i + 1) = child.arr(i)
 			i -= 1
@@ -390,12 +390,13 @@ Public Class BTree
 		node.keys(index) = sibling.keys(0)
 
 		' Moving all keys in sibling one step left
-		For i As Integer = 1 To sibling.n - 1
+		Dim i As Integer
+		For i = 1 To sibling.n - 1
 			sibling.keys(i - 1) = sibling.keys(i)
 		Next i
 
 		' Moving the child pointers one step behind
-		Dim i As Integer = 1
+		i = 1
 		Do While Not sibling.leaf AndAlso i <= sibling.n
 			sibling.arr(i - 1) = sibling.arr(i)
 			i += 1
@@ -417,12 +418,13 @@ Public Class BTree
 		left.keys(start) = node.keys(index)
 
 		' Copying the keys from right to left.
-		For i As Integer = 0 To right.n - 1
+		Dim i As Integer
+		For i = 0 To right.n - 1
 			left.keys(start + 1 + i) = right.keys(i)
 		Next i
 
 		' Copying the child pointers from right to left.
-		Dim i As Integer = 0
+		i = 0
 		Do While Not left.leaf AndAlso i <= right.n
 			left.arr(start + 1 + i) = right.arr(i)
 			i += 1
@@ -430,12 +432,12 @@ Public Class BTree
 
 
 		' Moving all keys after  index in the current node one step forward.
-		For i As Integer = index + 1 To node.n - 1
+		For i = index + 1 To node.n - 1
 			node.keys(i - 1) = node.keys(i)
 		Next i
 
 		' Moving the child pointers after (index+1) in the current node one step forward.
-		For i As Integer = index + 2 To node.n
+		For i = index + 2 To node.n
 			node.arr(i - 1) = node.arr(i)
 		Next i
 

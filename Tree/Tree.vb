@@ -86,7 +86,7 @@ Public Class Tree
 
 	Private Sub NthPreOrder(ByVal node As Node, ByVal index As Integer, ByVal counter() As Integer) ' pre order
 		If node IsNot Nothing Then
-			counter(0) =  counter(0) + 1
+			counter(0) = counter(0) + 1
 			If counter(0) = index Then
 				Console.WriteLine(node.value)
 			End If
@@ -117,7 +117,7 @@ Public Class Tree
 		If node IsNot Nothing Then
 			NthPostOrder(node.lChild, index, counter)
 			NthPostOrder(node.rChild, index, counter)
-			counter(0) =  counter(0) + 1
+			counter(0) = counter(0) + 1
 			If counter(0) = index Then
 				Console.WriteLine(node.value)
 			End If
@@ -146,7 +146,7 @@ Public Class Tree
 
 		If node IsNot Nothing Then
 			NthInOrder(node.lChild, index, counter)
-			counter(0) =  counter(0) + 1
+			counter(0) = counter(0) + 1
 			If counter(0) = index Then
 				Console.WriteLine(node.value)
 			End If
@@ -172,25 +172,26 @@ Public Class Tree
 				que.Enqueue(temp.rChild)
 			End If
 		Loop
+		Console.WriteLine()
 	End Sub
 
 	Public Sub PrintDepthFirst()
-		Dim stk As New Queue(Of Node)()
+		Dim stk As New Stack(Of Node)()
 		Dim temp As Node
 
 		If root IsNot Nothing Then
-			stk.Enqueue(root)
+			stk.Push(root)
 		End If
 
 		Do While stk.Count > 0
-			temp = stk.Dequeue()
+			temp = stk.Pop()
 			Console.Write(temp.value & " ")
 
 			If temp.lChild IsNot Nothing Then
-				stk.Enqueue(temp.lChild)
+				stk.Push(temp.lChild)
 			End If
 			If temp.rChild IsNot Nothing Then
-				stk.Enqueue(temp.rChild)
+				stk.Push(temp.rChild)
 			End If
 		Loop
 		Console.WriteLine()
@@ -287,7 +288,7 @@ Public Class Tree
 		Console.WriteLine()
 	End Sub
 
-		Public Function Find(ByVal value As Integer) As Boolean
+	Public Function Find(ByVal value As Integer) As Boolean
 		Dim curr As Node = root
 
 		Do While curr IsNot Nothing
@@ -399,7 +400,7 @@ Public Class Tree
 		Return TreeDepth(root)
 	End Function
 
-		Private Function TreeDepth(ByVal curr As Node) As Integer
+	Private Function TreeDepth(ByVal curr As Node) As Integer
 		If curr Is Nothing Then
 			Return 0
 		Else
@@ -504,7 +505,7 @@ Public Class Tree
 		Return NumFullNodesBT(root)
 	End Function
 
-		Private Function NumFullNodesBT(ByVal curr As Node) As Integer
+	Private Function NumFullNodesBT(ByVal curr As Node) As Integer
 		If curr Is Nothing Then
 			Return 0
 		End If
@@ -801,13 +802,13 @@ Public Class Tree
 		Return IsHeapUtil2(root, 0, count, parentValue)
 	End Function
 
-'	public Node TreeToListRec()
-'	{
-'		Node head = TreeToListRec(root);
-'		Node temp = head;
-'		return temp;
-'	}
-'	
+	'	public Node TreeToListRec()
+	'	{
+	'		Node head = TreeToListRec(root);
+	'		Node temp = head;
+	'		return temp;
+	'	}
+	'	
 	Private Function TreeToListRec(ByVal curr As Node) As Node
 		Dim Head As Node = Nothing, Tail As Node = Nothing
 		If curr Is Nothing Then
@@ -858,7 +859,7 @@ Public Class Tree
 		stk.Push(curr.value)
 
 		If curr.lChild Is Nothing AndAlso curr.rChild Is Nothing Then
-			Dim ele As Integer 
+			Dim ele As Integer
 			For Each ele In stk
 				Console.Write(ele & " ")
 			Next ele
@@ -937,9 +938,9 @@ Public Class Tree
 		Return Integer.MaxValue
 	End Function
 
-		Public Sub TrimOutsideRange(ByVal min As Integer, ByVal max As Integer)
+	Public Sub TrimOutsideRange(ByVal min As Integer, ByVal max As Integer)
 		TrimOutsideRange(root, min, max)
-		End Sub
+	End Sub
 
 	Private Function TrimOutsideRange(ByVal curr As Node, ByVal min As Integer, ByVal max As Integer) As Node
 		If curr Is Nothing Then
@@ -1137,43 +1138,43 @@ Public Class Tree
 		' 1 3 7 6 2 5 10 4 9 8
 
 		t.PrintLevelOrderLineByLine()
-'		
-'		1 
-'		2 3 
-'		4 5 6 7 
-'		8 9 10 
-'		
+		'		
+		'		1 
+		'		2 3 
+		'		4 5 6 7 
+		'		8 9 10 
+		'		
 
 		t.PrintLevelOrderLineByLine2()
-'		
-'		1 
-'		2 3 
-'		4 5 6 7 
-'		8 9 10 
-'		
+		'		
+		'		1 
+		'		2 3 
+		'		4 5 6 7 
+		'		8 9 10 
+		'		
 
-	   t.PrintSpiralTree()
+		t.PrintSpiralTree()
 		' 1 2 3 7 6 5 4 8 9 10 
 
 		t.NthInOrder(2)
 		t.NthPostOrder(2)
 		t.NthPreOrder(2)
 
-'		
-'		4
-'		9
-'		2
-'		
+		'		
+		'		4
+		'		9
+		'		2
+		'		
 
 		t.PrintAllPath()
 
-'		
-'7 3 1 
-'6 3 1 
-'10 5 2 1 
-'9 4 2 1 
-'8 4 2 1 
-'		
+		'		
+		'7 3 1 
+		'6 3 1 
+		'10 5 2 1 
+		'9 4 2 1 
+		'8 4 2 1 
+		'		
 	End Sub
 
 
@@ -1214,34 +1215,34 @@ Public Class Tree
 
 		Dim t2 As Tree = t.CopyTree()
 		t2.PrintLevelOrderLineByLine()
-'	
-'	1 
-'	2 3 
-'	4 5 6 7 
-'	8 9 10 
-'	
+		'	
+		'	1 
+		'	2 3 
+		'	4 5 6 7 
+		'	8 9 10 
+		'	
 		Dim t3 As Tree = t.CopyMirrorTree()
 		t3.PrintLevelOrderLineByLine()
-'	
-'	1 
-'	3 2 
-'	7 6 5 4 
-'	10 9 8
-'	
+		'	
+		'	1 
+		'	3 2 
+		'	7 6 5 4 
+		'	10 9 8
+		'	
 		Console.WriteLine(t.IsEqual(t2))
-'	
-'	True
-'	
+		'	
+		'	True
+		'	
 		Console.WriteLine(t.IsHeap())
 		Console.WriteLine(t.IsHeap2())
 		Console.WriteLine(t.IsCompleteTree())
 		Console.WriteLine(t.IsCompleteTree2())
-'	
-'True
-'True
-'True
-'True
-'	
+		'	
+		'True
+		'True
+		'True
+		'True
+		'	
 	End Sub
 
 	Public Shared Sub Main4()
@@ -1253,44 +1254,27 @@ Public Class Tree
 
 		t.PrintInOrder()
 
-'		
-'		1 2 3 4 
-'		
+		'		
+		'		1 2 3 4 
+		'		
 		Console.WriteLine(t.Find(3))
 		Console.WriteLine(t.Find(6))
-'		
-'True
-'False
-'		
+		'		
+		'True
+		'False
+		'		
 		Console.WriteLine(t.IsBST())
 		Console.WriteLine(t.IsBST2())
 		Console.WriteLine(t.IsBST3())
-'		
-'True
-'True
-'True
-'		
+		'		
+		'True
+		'True
+		'True
+		'		
 
 	End Sub
 
-	Public Shared Sub Main8()
-		Dim t As New Tree()
-		t.InsertNode(2)
-		t.InsertNode(1)
-		t.InsertNode(3)
-		t.InsertNode(4)
 
-		Console.Write("Before delete operation: ")
-		t.PrintInOrder()
-
-		t.DeleteNode(2)
-		Console.Write("After delete operation: ")
-		t.PrintInOrder()
-	End Sub
-'	
-'Before delete operation: 1 2 3 4 
-'After delete operation: 1 3 4 
-'	
 
 	Public Shared Sub Main5()
 		Dim t As New Tree()
@@ -1305,13 +1289,13 @@ Public Class Tree
 		t.LCABST(10, 4)
 	End Sub
 
-'	
-'	1
-'	4
-'	LCA is :3
-'	LCA is :2
-'	LCA does not exist
-'	
+	'	
+	'	1
+	'	4
+	'	LCA is :3
+	'	LCA is :2
+	'	LCA does not exist
+	'	
 
 	Public Shared Sub Main6()
 		Dim t As New Tree()
@@ -1323,11 +1307,11 @@ Public Class Tree
 		t.PrintInOrder()
 	End Sub
 
-'	
-'	1 2 3 4 5 6 7 8 9 10 
-'	4 5 6 7 
-'	4 5 6 7 
-'	
+	'	
+	'	1 2 3 4 5 6 7 8 9 10 
+	'	4 5 6 7 
+	'	4 5 6 7 
+	'	
 
 	Public Shared Sub Main7()
 		Dim t As New Tree()
@@ -1346,22 +1330,39 @@ Public Class Tree
 		Dim arr2() As Integer = {5, 2, 6, 4, 7, 9, 10}
 		Console.WriteLine(t.IsBSTArray(arr1))
 		Console.WriteLine(t.IsBSTArray(arr2))
-'		
-'True
-'False
-'		
 	End Sub
+	'True
+	'False
+	'
+	Public Shared Sub Main8()
+		Dim t As New Tree()
+		t.InsertNode(2)
+		t.InsertNode(1)
+		t.InsertNode(3)
+		t.InsertNode(4)
+
+		Console.Write("Before delete operation: ")
+		t.PrintInOrder()
+
+		t.DeleteNode(2)
+		Console.Write("After delete operation: ")
+		t.PrintInOrder()
+	End Sub
+	'	
+	'Before delete operation: 1 2 3 4 
+	'After delete operation: 1 3 4 
+	'			
+
 
 	Public Shared Sub Main(ByVal args() As String)
 		Main1()
-'		Main2();
-'		Main3();
-'		Main4();
-'		Main5();
-'		Main6();
-'		Main7();
-'		
-		'Main8();
+		Main2()
+		Main3()
+		Main4()
+		Main5()
+		Main6()
+		Main7()
+		Main8()
 
 	End Sub
-End Class			
+End Class

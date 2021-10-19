@@ -19,8 +19,8 @@ Friend Class ActivitySelection
 			finish = f
 		End Sub
 
-		Public Function CompareTo(ByVal s2 As Activity) As Integer
-			Return Me.stop - s2.stop
+		Private Function IComparable_CompareTo(other As Activity) As Integer Implements IComparable(Of Activity).CompareTo
+			Return Me.finish - other.finish
 		End Function
 	End Class
 
@@ -33,13 +33,13 @@ Friend Class ActivitySelection
 		Array.Sort(act) ' sort according to finish time.
 
 		i = 0 ' The first activity at index 0 is always gets selected.
-		Console.Write("Activities are : (" & act(i).start & "," & act(i).stop & ")")
+		Console.Write("Activities are : (" & act(i).start & "," & act(i).finish & ")")
 
 		For j As Integer = 1 To n - 1
 			' Find next activity whose start time is greater than or equal
 			' to the finish time of previous activity.
-			If act(j).start >= act(i).stop Then
-				Console.Write(", (" & act(j).start & "," & act(j).stop & ")")
+			If act(j).start >= act(i).finish Then
+				Console.Write(", (" & act(j).start & "," & act(j).finish & ")")
 				i = j
 			End If
 		Next j

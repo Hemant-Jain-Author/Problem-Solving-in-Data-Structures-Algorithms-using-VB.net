@@ -32,8 +32,7 @@ Public Class StringTree
 		If curr Is Nothing Then
 			curr = New Node()
 			curr.value = value
-'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
-'ORIGINAL LINE: curr.lChild = curr.rChild = null;
+
 			curr.rChild = Nothing
 			curr.lChild = curr.rChild
 			curr.count = 1

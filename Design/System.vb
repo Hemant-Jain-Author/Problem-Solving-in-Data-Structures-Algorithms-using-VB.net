@@ -4,7 +4,6 @@
 
 	Machine GetMachine(Integer machineId)
 
-'INSTANT VB TODO TASK: Local functions are not converted by Instant VB:
 '	Person GetPerson(int personId)
 '	{
 '		int machineId = personIdToMachineIdMap[personId];

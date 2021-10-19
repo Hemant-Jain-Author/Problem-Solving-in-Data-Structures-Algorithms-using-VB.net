@@ -1,9 +1,9 @@
 ﻿Imports System
 
 Public Class QuickSelect
-	Public Shared Sub FindIndex(ByVal arr() As Integer, 
-	ByVal lower As Integer, 
-	ByVal upper As Integer, 
+	Public Shared Sub FindIndex(ByVal arr() As Integer,
+	ByVal lower As Integer,
+	ByVal upper As Integer,
 	ByVal k As Integer)
 		If upper <= lower Then
 			Return
@@ -29,11 +29,11 @@ Public Class QuickSelect
 		If k < upper Then
 			FindIndex(arr, start, upper - 1, k) ' pivot -1 is the upper for
 		End If
-												   ' left sub array.
+		' left sub array.
 		If k > upper Then
 			FindIndex(arr, upper + 1, finish, k) ' pivot + 1 is the lower for
 		End If
-												  ' right sub array.
+		' right sub array.
 	End Sub
 
 	Public Shared Sub Swap(ByVal arr() As Integer, ByVal first As Integer, ByVal second As Integer)
@@ -49,8 +49,8 @@ Public Class QuickSelect
 
 	Public Shared Sub Main(ByVal args() As String)
 		Dim array() As Integer = {3, 4, 2, 1, 6, 5, 7, 8}
-		Console.Write("value at index 5 is : " & QuickSelect.FindIndex(array, 5))
+		Console.Write("Value at index 5 is : " & QuickSelect.FindIndex(array, 5))
 	End Sub
 End Class
 
-' value at index 5 is : 5
+' Value at index 5 is : 5

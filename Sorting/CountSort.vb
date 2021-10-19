@@ -16,7 +16,7 @@ Public Class CountSort
 			Do While count(i) > 0
 				arr(j) = i + lowerRange
 				j += 1
-				(count(i)) -= 1
+				count(i) -= 1
 			Loop
 		Next i
 	End Sub

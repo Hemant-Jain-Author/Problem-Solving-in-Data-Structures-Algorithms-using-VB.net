@@ -11,8 +11,8 @@ Public Class HashTableLP
 
 	Public Sub New(ByVal tSize As Integer)
 		tableSize = tSize
-		array = New Integer(tSize){}
-		flag = New Integer(tSize){}
+		array = New Integer(tSize) {}
+		flag = New Integer(tSize) {}
 		For i As Integer = 0 To tSize
 			flag(i) = EMPTY_VALUE
 		Next i
@@ -104,6 +104,6 @@ End Class
 
 '
 'Hash Table contains ::1 2 3 
-'Find key 2 : true
-'Find key 2 : false
+'Find key 2 : True
+'Find key 2 : False
 '

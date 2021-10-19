@@ -31,10 +31,10 @@ Public Class MinMaxValueTest
 End Class
 
 ' 
-'Range of byte :: -128 to 127.
-'Range of short :: -32768 to 32767.
-'Range of integer :: -2147483648 to 2147483647.
-'Range of long :: -9223372036854775808 to 9223372036854775807.
-'Range of float :: 1.401298E-45 to 3.402823E+38.
-'Range of double :: 4.94065645841247E-324 to 1.79769313486232E+308.
+'Range of byte : -128 to 127.
+'Range of short : -32768 to 32767.
+'Range of integer : -2147483648 to 2147483647.
+'Range of long : -9223372036854775808 to 9223372036854775807.
+'Range of float : 1E-45 to 3.4028235E+38.
+'Range of double : 5E-324 to 1.7976931348623157E+308.
 ' 

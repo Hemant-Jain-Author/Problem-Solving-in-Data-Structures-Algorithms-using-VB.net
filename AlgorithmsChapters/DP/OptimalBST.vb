@@ -10,13 +10,13 @@ Public Class OptimalBST
 			Return freq(i)
 		End If
 
-	Dim min As Integer = Integer.MaxValue
-	Dim r As Integer = i
-	Do While r <= j
+		Dim min As Integer = Integer.MaxValue
+		Dim r As Integer = i
+		Do While r <= j
 			min = Math.Min(min, OptCost(freq, i, r - 1) + OptCost(freq, r + 1, j))
-		r += 1
-	Loop
-	Return min + sum(freq, i, j)
+			r += 1
+		Loop
+		Return min + sum(freq, i, j)
 	End Function
 
 	Public Shared Function OptCost(ByVal keys() As Integer, ByVal freq() As Integer) As Integer
@@ -51,7 +51,7 @@ Public Class OptimalBST
 
 		Dim s As Integer = sum(freq, i, j)
 		For r As Integer = i To j
-			cost(i, j) = Math.Min(cost(i, j), OptCostTD(freq,cost, i, r - 1) + OptCostTD(freq,cost, r + 1, j) + s)
+			cost(i, j) = Math.Min(cost(i, j), OptCostTD(freq, cost, i, r - 1) + OptCostTD(freq, cost, r + 1, j) + s)
 		Next r
 		Return cost(i, j)
 	End Function
@@ -143,6 +143,8 @@ Public Class OptimalBST
 	Public Shared Sub Main(ByVal args() As String)
 		Dim keys() As Integer = {9, 15, 25}
 		Dim freq() As Integer = {30, 10, 40}
+		Console.WriteLine("OBST cost:" & OptCost(keys, freq))
+		Console.WriteLine("OBST cost:" & OptCostTD(keys, freq))
 		Console.WriteLine("OBST cost:" & OptCostBU(keys, freq))
 		Console.WriteLine("OBST cost:" & OptCostBU2(keys, freq))
 	End Sub

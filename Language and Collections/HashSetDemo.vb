@@ -16,9 +16,10 @@ Public Class HashSetDemo
 
 		Console.WriteLine("Apple present : " & hs.Contains("Apple"))
 		Console.WriteLine("Grapes present : " & hs.Contains("Grapes"))
+
 		hs.Remove("Apple")
 		Console.WriteLine("Apple present : " & hs.Contains("Apple"))
-		hs.ForEach(Console.Write)
+
 		For Each ele In hs
 			Console.Write(ele & " ")
 		Next ele

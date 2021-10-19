@@ -1,11 +1,11 @@
 ﻿Imports System
-public Class FenWickTree
+Public Class FenWickTree
 	Private size As Integer
 	Private sum() As Integer
 
 	Public Sub New(ByVal input() As Integer, ByVal n As Integer)
 		size = n
-		sum = New Integer(size){}
+		sum = New Integer(size) {}
 		For i As Integer = 0 To n - 1
 			add(i, input(i))
 		Next i
@@ -22,7 +22,7 @@ public Class FenWickTree
 	Public Function getPrefixSum(ByVal index As Integer) As Integer
 		Dim total As Integer = 0
 		index += 1
-		Do While index>0
+		Do While index > 0
 			total += sum(index)
 			index -= index And (-index)
 		Loop
@@ -30,7 +30,7 @@ public Class FenWickTree
 	End Function
 End Class
 
-public Class InventoryManager
+Public Class InventoryManager
 	Private tree As FenWickTree
 
 	Public Sub New(ByVal size As Integer)
@@ -44,7 +44,7 @@ public Class InventoryManager
 	End Sub
 
 	Public Sub AddDemand(ByVal bucket As Integer, ByVal delta As Integer)
-		tree.add(bucket, -1*delta)
+		tree.add(bucket, -1 * delta)
 	End Sub
 
 	Public Function GetInventory(ByVal bucket As Integer) As Integer
@@ -56,7 +56,6 @@ End Class
 ' 	Shared Sub Main(ByVal args() As String)
 ' 		Dim im As New InventoryManager(10)
 ' 		im.AddSupply(2, 50)
-
 ' 		Console.WriteLine(im.GetInventory(6))
 ' 		im.AddDemand(3, 25)
 ' 		Console.WriteLine(im.GetInventory(6))
@@ -65,18 +64,16 @@ End Class
 ' 	End Sub
 ' End Class
 
-public Class Program
-  	Shared Sub Main(ByVal args() As String)
+Public Class Program
+	Shared Sub Main(ByVal args() As String)
 		Dim input() As Integer = {2, 1, 1, 3, 2, 3, 4, 5, 6, 7, 8, 9}
 		Dim size As Integer = input.Length
 		Dim tree As New FenWickTree(input, size)
-
 		Console.WriteLine("Sum of elements in arr[0..5] is " & tree.getPrefixSum(5))
-
 		tree.add(3, 6)
-
 		Console.WriteLine("Sum of elements in arr[0..5] after update is " & tree.getPrefixSum(5))
-
-
-  	End Sub
+	End Sub
 End Class
+
+'Sum of elements in arr[0..5] Is 12
+'Sum of elements in arr[0..5] after update Is 18

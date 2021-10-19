@@ -58,3 +58,5 @@ Public Class Stack
 		Next i
 	End Sub
 End Class
+
+' 4 3 2 1 0

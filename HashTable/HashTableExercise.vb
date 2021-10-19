@@ -45,10 +45,10 @@ Public Class HashTableExercise
 		Console.WriteLine("IsAnagram : " & IsAnagram(first, second))
 		Console.WriteLine("IsAnagram : " & IsAnagram(first, third))
 	End Sub
-'	
-'	IsAnagram : true
-'	IsAnagram : false
-'	
+	'	
+	'	IsAnagram : True
+	'	IsAnagram : False
+	'	
 
 	Public Shared Function RemoveDuplicate(ByVal str() As Char) As String
 		Dim hs As New HashSet(Of Char)()
@@ -67,9 +67,9 @@ Public Class HashTableExercise
 		Dim first() As Char = "hello".ToCharArray()
 		Console.WriteLine(RemoveDuplicate(first))
 	End Sub
-'	
-'	helo
-'	
+	'	
+	'	helo
+	'	
 
 	Public Shared Function FindMissing(ByVal arr() As Integer, ByVal start As Integer, ByVal [end] As Integer) As Integer
 		Dim hs As HashSet(Of Integer) = New HashSet(Of Integer)()
@@ -89,9 +89,9 @@ Public Class HashTableExercise
 		Dim arr() As Integer = {1, 2, 3, 5, 6, 7, 8, 9, 10}
 		Console.WriteLine(FindMissing(arr, 1, 10))
 	End Sub
-'	
-'	4
-'	
+	'	
+	'	4
+	'	
 
 	Public Shared Sub PrintRepeating(ByVal arr() As Integer)
 		Dim hs As HashSet(Of Integer) = New HashSet(Of Integer)()
@@ -105,14 +105,14 @@ Public Class HashTableExercise
 			End If
 		Next val
 	End Sub
-	
+
 	Public Shared Sub Main4()
 		Dim arr1() As Integer = {1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 1}
 		PrintRepeating(arr1)
 	End Sub
-'	
-'	Repeating elements are: 4 1
-'	
+	'	
+	'	Repeating elements are: 4 1
+	'	
 
 	Public Shared Sub PrintFirstRepeating(ByVal arr() As Integer)
 		Dim i As Integer
@@ -131,12 +131,12 @@ Public Class HashTableExercise
 	End Sub
 
 	Public Shared Sub Main5()
-		Dim arr1() As Integer = {1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 1}
-		PrintFirstRepeating(arr1)
+		Dim arr() As Integer = {1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 1}
+		PrintFirstRepeating(arr)
 	End Sub
-'	
-'	First Repeating number is:1
-'	
+	'	
+	'	First Repeating number is:1
+	'	
 
 	Public Shared Function HornerHash(ByVal key() As Char, ByVal tableSize As Integer) As Integer
 		Dim size As Integer = key.Length

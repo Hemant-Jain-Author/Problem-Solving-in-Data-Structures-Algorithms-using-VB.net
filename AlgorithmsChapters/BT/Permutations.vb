@@ -30,13 +30,13 @@ Public Class Permutations
 		Return
 	End Sub
 
-'
-'1 2 3 4 
-'1 2 4 3 
-'.....
-'4 1 3 2 
-'4 1 2 3 
-'
+	'
+	'1 2 3 4 
+	'1 2 4 3 
+	'.....
+	'4 1 3 2 
+	'4 1 2 3 
+	'
 
 	Private Shared Function IsValid(ByVal arr() As Integer, ByVal n As Integer) As Boolean
 		For j As Integer = 1 To n - 1
@@ -65,6 +65,9 @@ Public Class Permutations
 		Return
 	End Sub
 
+	'2 4 1 3 
+	'3 1 4 2
+
 	Private Shared Function IsValid2(ByVal arr() As Integer, ByVal i As Integer) As Boolean
 		If i < 1 OrElse Math.Abs(arr(i) - arr(i - 1)) >= 2 Then
 			Return True
@@ -90,17 +93,20 @@ Public Class Permutations
 		Return
 	End Sub
 
+	'2 4 1 3 
+	'3 1 4 2
+
 	' Testing code 
 	Public Shared Sub Main(ByVal args() As String)
 		Dim arr(3) As Integer
 		For i As Integer = 0 To 3
 			arr(i) = i + 1
 		Next i
+
+		Permutation(arr, 0, 4)
+		Console.WriteLine()
+		Permutation2(arr, 0, 4)
+		Console.WriteLine()
 		Permutation3(arr, 0, 4)
 	End Sub
 End Class
-
-'
-'2 4 1 3 
-'3 1 4 2
-'

@@ -156,13 +156,13 @@ Public Class DoublyCircularLinkedList
 		Console.WriteLine(ll.Search(3))
 	End Sub
 
-'
-'3 2 1
-'3
-'False
-'3
-'True
-'
+	'
+	'3 2 1
+	'3
+	'False
+	'3
+	'True
+	'
 
 	Public Shared Sub Main2()
 		Dim ll As New DoublyCircularLinkedList()
@@ -179,12 +179,12 @@ Public Class DoublyCircularLinkedList
 		ll.Print()
 	End Sub
 
-'
-'1 2 3
-'2 3
-'2
-'Empty List.
-'
+	'
+	'1 2 3
+	'2 3
+	'2
+	'Empty List.
+	'
 
 	Public Shared Sub Main3()
 		Dim ll As New DoublyCircularLinkedList()
@@ -197,10 +197,10 @@ Public Class DoublyCircularLinkedList
 		ll.Print()
 
 	End Sub
-'
-'3 2 1
-'2 1
-'
+	'
+	'3 2 1
+	'2 1
+	'
 	Public Shared Sub Main4()
 		Dim ll As New DoublyCircularLinkedList()
 		ll.AddHead(1)
@@ -211,10 +211,10 @@ Public Class DoublyCircularLinkedList
 		ll.RemoveTail()
 		ll.Print()
 	End Sub
-'
-'3 2 1
-'3 2
-'
+	'
+	'3 2 1
+	'3 2
+	'
 	Public Shared Sub Main(ByVal args() As String)
 		Main1()
 		Main2()

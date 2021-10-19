@@ -59,10 +59,10 @@ Public Class QueueEx
 		Console.WriteLine("Circular Tour : " & CircularTour(tour, 3))
 		Console.WriteLine("Circular Tour : " & CircularTour2(tour, 3))
 	End Sub
-'	
-'Circular Tour : 2
-'Circular Tour : 2
-'	
+	'	
+	'Circular Tour : 2
+	'Circular Tour : 2
+	'	
 	Public Shared Function ConvertXY(ByVal src As Integer, ByVal dst As Integer) As Integer
 		Dim que As New Queue(Of Integer)()
 		Dim arr(99) As Integer
@@ -93,9 +93,9 @@ Public Class QueueEx
 	Public Shared Sub Main2()
 		Console.WriteLine("Steps counter :: " & ConvertXY(2, 7))
 	End Sub
-'	
-'	Steps counter :: 3
-'	
+	'	
+	'	Steps counter :: 3
+	'	
 
 	Public Shared Sub MaxSlidingWindows(ByVal arr() As Integer, ByVal size As Integer, ByVal k As Integer)
 		Dim i As Integer = 0
@@ -138,9 +138,10 @@ Public Class QueueEx
 
 	End Sub
 
-'	
-'	75 92 92 92 90 
-'	
+	'	
+	'	75 92 92 92 90 
+	'	75 92 92 92 90 
+	'	
 
 	Public Shared Function MinOfMaxSlidingWindows(ByVal arr() As Integer, ByVal size As Integer, ByVal k As Integer) As Integer
 		Dim dque As New LinkedList(Of Integer)()
@@ -168,9 +169,9 @@ Public Class QueueEx
 		Dim arr() As Integer = {11, 2, 75, 92, 59, 90, 55}
 		MinOfMaxSlidingWindows(arr, 7, 3)
 	End Sub
-'	
-'	Min of max is :: 75
-'	
+	'	
+	'	Min of max is :: 75
+	'	
 	Public Shared Sub MaxOfMinSlidingWindows(ByVal arr() As Integer, ByVal size As Integer, ByVal k As Integer)
 		Dim dque As New LinkedList(Of Integer)()
 		Dim maxVal As Integer = -999999
@@ -197,9 +198,9 @@ Public Class QueueEx
 		MaxOfMinSlidingWindows(arr, 7, 3)
 		' Output 59, as minimum values in sliding windows are [2, 2, 59, 59, 55]
 	End Sub
-'	
-'	Max of min is :: 59
-'	
+	'	
+	'	Max of min is :: 59
+	'	
 	Public Shared Sub FirstNegSlidingWindows(ByVal arr() As Integer, ByVal size As Integer, ByVal k As Integer)
 		Dim que As New Queue(Of Integer)()
 
@@ -227,9 +228,9 @@ Public Class QueueEx
 		FirstNegSlidingWindows(arr, 8, 3)
 	End Sub
 
-'	
-'	-2 -2 -6 -14 -14 NAN
-'	
+	'	
+	'	-2 -2 -6 -14 -14 NAN
+	'	
 
 	Private Shared Sub RottenFruitUtil(ByVal arr(,) As Integer, ByVal maxCol As Integer, ByVal maxRow As Integer, ByVal currCol As Integer, ByVal currRow As Integer, ByVal traversed(,) As Integer, ByVal day As Integer)
 		Dim dir(,) As Integer = {
@@ -251,28 +252,25 @@ Public Class QueueEx
 
 	Public Shared Function RottenFruit(ByVal arr(,) As Integer, ByVal maxCol As Integer, ByVal maxRow As Integer) As Integer
 		Dim traversed(maxCol - 1, maxRow - 1) As Integer
-		For i As Integer = 0 To maxCol - 1
-			For j As Integer = 0 To maxRow - 1
+		Dim i As Integer = 0, j As Integer = 0
+		For i = 0 To maxCol - 1
+			For j = 0 To maxRow - 1
 				traversed(i, j) = Integer.MaxValue
 			Next j
 		Next i
 
-		Dim i As Integer = 0
-		Do While i < maxCol
-			Dim j As Integer = 0
-			Do While j < maxRow
+		For i = 0 To maxCol - 1
+			For j = 0 To maxRow - 1
 				If arr(i, j) = 2 Then
 					traversed(i, j) = 0
 					RottenFruitUtil(arr, maxCol, maxRow, i, j, traversed, 0)
 				End If
-				j += 1
-			Loop
-			i += 1
-		Loop
+			Next j
+		Next i
 
 		Dim maxDay As Integer = 0
-		For i As Integer = 0 To maxCol - 1
-			For j As Integer = 0 To maxRow - 1
+		For i = 0 To maxCol - 1
+			For j = 0 To maxRow - 1
 				If arr(i, j) = 1 Then
 					If traversed(i, j) = Integer.MaxValue Then
 						Return -1
@@ -420,7 +418,7 @@ Public Class QueueEx
 				traversed(i, j) = Integer.MaxValue
 			Next j
 		Next i
-		que.Enqueue(New Knight(srcX - 1,srcY - 1, 0))
+		que.Enqueue(New Knight(srcX - 1, srcY - 1, 0))
 		traversed(srcX - 1, srcY - 1) = 0
 
 		Dim x, y, cost As Integer
@@ -469,27 +467,24 @@ Public Class QueueEx
 
 	Public Shared Sub DistNearestFill(ByVal arr(,) As Integer, ByVal maxCol As Integer, ByVal maxRow As Integer)
 		Dim traversed(maxCol - 1, maxRow - 1) As Integer
-		For i As Integer = 0 To maxCol - 1
-			For j As Integer = 0 To maxRow - 1
+		Dim i As Integer = 0, j As Integer = 0
+		For i = 0 To maxCol - 1
+			For j = 0 To maxRow - 1
 				traversed(i, j) = Integer.MaxValue
 			Next j
 		Next i
 
-		Dim i As Integer = 0
-		Do While i < maxCol
-			Dim j As Integer = 0
-			Do While j < maxRow
+		For i = 0 To maxCol - 1
+			For j = 0 To maxRow - 1
 				If arr(i, j) = 1 Then
 					traversed(i, j) = 0
 					DistNearestFillUtil(arr, maxCol, maxRow, i, j, traversed, 0)
 				End If
-				j += 1
-			Loop
-			i += 1
-		Loop
+			Next j
+		Next i
 
-		For i As Integer = 0 To maxCol - 1
-			For j As Integer = 0 To maxRow - 1
+		For i = 0 To maxCol - 1
+			For j = 0 To maxRow - 1
 				Console.Write(traversed(i, j) & " ")
 			Next j
 			Console.WriteLine()
@@ -520,7 +515,7 @@ Public Class QueueEx
 			For j As Integer = 0 To maxRow - 1
 				traversed(i, j) = Integer.MaxValue
 				If arr(i, j) = 1 Then
-					que.Enqueue(New Node(i,j, 0))
+					que.Enqueue(New Node(i, j, 0))
 					traversed(i, j) = 0
 				End If
 			Next j
@@ -560,19 +555,19 @@ Public Class QueueEx
 		DistNearestFill2(arr, 5, 5)
 	End Sub
 
-'	
-'	0 1 0 0 1 
-'	0 0 1 0 1 
-'	1 1 2 1 0 
-'	2 2 2 1 0 
-'	3 3 2 1 0 
-'
-'	0 1 0 0 1 
-'	0 0 1 0 1 
-'	1 1 2 1 0 	
-'	2 2 2 1 0 
-'	3 3 2 1 0 
-'	
+	'	
+	'	0 1 0 0 1 
+	'	0 0 1 0 1 
+	'	1 1 2 1 0 
+	'	2 2 2 1 0 
+	'	3 3 2 1 0 
+	'
+	'	0 1 0 0 1 
+	'	0 0 1 0 1 
+	'	1 1 2 1 0 	
+	'	2 2 2 1 0 
+	'	3 3 2 1 0 
+	'	
 
 	Private Shared Function FindLargestIslandUtil(ByVal arr(,) As Integer, ByVal maxCol As Integer, ByVal maxRow As Integer, ByVal currCol As Integer, ByVal currRow As Integer, ByVal traversed(,) As Boolean) As Integer
 		Dim dir(,) As Integer = {
@@ -602,16 +597,15 @@ Public Class QueueEx
 		Dim maxVal As Integer = 0
 		Dim currVal As Integer = 0
 		Dim traversed(maxCol - 1, maxRow - 1) As Boolean
-		For i As Integer = 0 To maxCol - 1
-			For j As Integer = 0 To maxRow - 1
+		Dim i As Integer = 0
+		For i = 0 To maxCol - 1
+			For j = 0 To maxRow - 1
 				traversed(i, j) = False
 			Next j
 		Next i
 
-		Dim i As Integer = 0
-		Do While i < maxCol
-			Dim j As Integer = 0
-			Do While j < maxRow
+		For i = 0 To maxCol - 1
+			For j = 0 To maxRow - 1
 				If arr(i, j) = 1 Then
 					traversed(i, j) = True
 					currVal = FindLargestIslandUtil(arr, maxCol, maxRow, i, j, traversed)
@@ -619,10 +613,8 @@ Public Class QueueEx
 						maxVal = currVal
 					End If
 				End If
-				j += 1
-			Loop
-			i += 1
-		Loop
+			Next j
+		Next i
 
 		Return maxVal
 	End Function
@@ -693,12 +685,12 @@ Public Class QueueEx
 		Console.WriteLine()
 	End Sub
 
-'	
-'4 3 2 1 0 
-'0 1 2 3 4 
-'0 1 2 3 4 
-'4 3 2 1 0 
-'	
+	'	
+	'4 3 2 1 0 
+	'0 1 2 3 4 
+	'0 1 2 3 4 
+	'4 3 2 1 0 
+	'	
 	Public Shared Function Josephus(ByVal n As Integer, ByVal k As Integer) As Integer
 		Dim que As New Queue(Of Integer)()
 		For i As Integer = 0 To n - 1
@@ -722,9 +714,9 @@ Public Class QueueEx
 	Public Shared Sub Main12()
 		Console.WriteLine("Position : " & Josephus(11, 5))
 	End Sub
-'
-'Position : 8
-'
+	'
+	'Position : 8
+	'
 	Public Shared Sub Main(ByVal args() As String)
 		Main1()
 		Main2()

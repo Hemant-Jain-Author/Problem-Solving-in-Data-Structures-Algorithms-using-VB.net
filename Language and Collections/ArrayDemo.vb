@@ -24,18 +24,21 @@ Public Class ArrayDemo
 			For j As Integer = 0 To 3
 				Console.Write(arr(i, j))
 			Next j
-			Console.WriteLine(" ")
+			Console.WriteLine()
 		Next i
 	End Sub
 
 	Public Shared Sub Main(ByVal args() As String)
 		oneD()
+		Console.WriteLine()
 		twoD()
 	End Sub
 End Class
 
 '
-'0 1 2 3 4 5 6 7 8 9 0123 
+'0 1 2 3 4 5 6 7 8 9
+'
+'0123 
 '1234 
 '2345 
 '3456 

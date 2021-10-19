@@ -27,4 +27,4 @@ Public Class LargestIncreasingSubseq
 	End Sub
 End Class
 
-' Length of lis is 6
+' Length of LIS is 6

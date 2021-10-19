@@ -6,7 +6,7 @@ Public Class GraphAM
 
 	Public Sub New(ByVal cnt As Integer)
 		count = cnt
-		adj = New Integer(count - 1, count - 1){}
+		adj = New Integer(count - 1, count - 1) {}
 	End Sub
 
 	Public Sub AddDirectedEdge(ByVal src As Integer, ByVal dst As Integer, ByVal cost As Integer)
@@ -26,25 +26,26 @@ Public Class GraphAM
 					Console.Write("(" & j & ", " & adj(i, j) & ") ")
 				End If
 			Next j
-			Console.WriteLine("")
+			Console.WriteLine()
 		Next i
 	End Sub
 
 	Public Shared Sub Main1()
 		Dim gph As New GraphAM(4)
-		f.AddUndirectedEdge(0, 1, 1)
+		gph.AddUndirectedEdge(0, 1, 1)
 		gph.AddUndirectedEdge(0, 2, 1)
 		gph.AddUndirectedEdge(1, 2, 1)
 		gph.AddUndirectedEdge(2, 3, 1)
 		gph.Print()
+		Console.WriteLine()
 	End Sub
 
-'
-'Vertex 0 is connected to : (1, 1) (2, 1) 
-'Vertex 1 is connected to : (0, 1) (2, 1) 
-'Vertex 2 is connected to : (0, 1) (1, 1) (3, 1) 
-'Vertex 3 is connected to : (2, 1)
-'
+	'
+	'Vertex 0 is connected to : (1, 1) (2, 1) 
+	'Vertex 1 is connected to : (0, 1) (2, 1) 
+	'Vertex 2 is connected to : (0, 1) (1, 1) (3, 1) 
+	'Vertex 3 is connected to : (2, 1)
+	'
 	Private Class Edge
 		Implements IComparable(Of Edge)
 
@@ -56,8 +57,8 @@ Public Class GraphAM
 			cost = c
 		End Sub
 
-		Public Function CompareTo(ByVal compareEdge As Edge) As Integer
-			Return Me.cost - compareEdge.cost
+		Private Function IComparable_CompareTo(other As Edge) As Integer Implements IComparable(Of Edge).CompareTo
+			Return Me.cost - other.cost
 		End Function
 	End Class
 
@@ -73,11 +74,11 @@ Public Class GraphAM
 
 		Dim queue As New PriorityQueue(Of Edge)()
 		Dim node As New Edge(source, source, 0)
-		queue.Add(node)
+		queue.add(node)
 
-		Do While queue.IsEmpty() <> True
-			node = queue.Peek()
-			queue.Remove()
+		Do While queue.isEmpty() <> True
+			node = queue.peek()
+			queue.remove()
 			source = node.dest
 			visited(source) = True
 			For dest As Integer = 0 To gph.count - 1
@@ -89,7 +90,7 @@ Public Class GraphAM
 						dist(dest) = alt
 						previous(dest) = source
 						node = New Edge(source, dest, alt)
-						queue.Add(node)
+						queue.add(node)
 					End If
 				End If
 			Next dest
@@ -118,11 +119,11 @@ Public Class GraphAM
 		previous(source) = -1
 		Dim queue As New PriorityQueue(Of Edge)()
 		Dim node As New Edge(source, source, 0)
-		queue.Add(node)
+		queue.add(node)
 
-		Do While queue.IsEmpty() <> True
-			node = queue.Peek()
-			queue.Remove()
+		Do While queue.isEmpty() <> True
+			node = queue.peek()
+			queue.remove()
 			source = node.dest
 			visited(source) = True
 			For dest As Integer = 0 To gph.count - 1
@@ -132,7 +133,7 @@ Public Class GraphAM
 						dist(dest) = cost
 						previous(dest) = source
 						node = New Edge(source, dest, cost)
-						queue.Add(node)
+						queue.add(node)
 					End If
 				End If
 			Next dest
@@ -164,43 +165,46 @@ Public Class GraphAM
 		gph.AddUndirectedEdge(6, 7, 1)
 		gph.AddUndirectedEdge(6, 8, 6)
 		gph.AddUndirectedEdge(7, 8, 7)
-		'gph.Print();
+		gph.Print()
+		Console.WriteLine()
 		Prims(gph)
-		'Dijkstra(gph, 0);
+		Console.WriteLine()
+		Dijkstra(gph, 0)
+		Console.WriteLine()
 	End Sub
-'
-'Vertex 0 is connected to : (1, 4) (7, 8) 
-'Vertex 1 is connected to : (0, 4) (2, 8) (7, 11) 
-'Vertex 2 is connected to : (1, 8) (3, 7) (5, 4) (8, 2) 
-'Vertex 3 is connected to : (2, 7) (4, 9) (5, 14) 
-'Vertex 4 is connected to : (3, 9) (5, 10) 
-'Vertex 5 is connected to : (2, 4) (3, 14) (4, 10) (6, 2) 
-'Vertex 6 is connected to : (5, 2) (7, 1) (8, 6) 
-'Vertex 7 is connected to : (0, 8) (1, 11) (6, 1) (8, 7) 
-'Vertex 8 is connected to : (2, 2) (6, 6) (7, 7)  
-'
-'
-'node id 0  prev -1 distance : 0
-'node id 1  prev 0 distance : 4
-'node id 2  prev 5 distance : 4
-'node id 3  prev 2 distance : 7
-'node id 4  prev 3 distance : 9
-'node id 5  prev 6 distance : 2
-'node id 6  prev 7 distance : 1
-'node id 7  prev 0 distance : 8
-'node id 8  prev 2 distance : 2
-'
-'node id 0  prev -1 distance : 0
-'node id 1  prev 0 distance : 4
-'node id 2  prev 1 distance : 12
-'node id 3  prev 2 distance : 19
-'node id 4  prev 5 distance : 21
-'node id 5  prev 6 distance : 11
-'node id 6  prev 7 distance : 9
-'node id 7  prev 0 distance : 8
-'node id 8  prev 2 distance : 14
-'
-'
+	'
+	'Vertex 0 is connected to : (1, 4) (7, 8) 
+	'Vertex 1 is connected to : (0, 4) (2, 8) (7, 11) 
+	'Vertex 2 is connected to : (1, 8) (3, 7) (5, 4) (8, 2) 
+	'Vertex 3 is connected to : (2, 7) (4, 9) (5, 14) 
+	'Vertex 4 is connected to : (3, 9) (5, 10) 
+	'Vertex 5 is connected to : (2, 4) (3, 14) (4, 10) (6, 2) 
+	'Vertex 6 is connected to : (5, 2) (7, 1) (8, 6) 
+	'Vertex 7 is connected to : (0, 8) (1, 11) (6, 1) (8, 7) 
+	'Vertex 8 is connected to : (2, 2) (6, 6) (7, 7)  
+	'
+	'
+	'node id 0  prev -1 distance : 0
+	'node id 1  prev 0 distance : 4
+	'node id 2  prev 5 distance : 4
+	'node id 3  prev 2 distance : 7
+	'node id 4  prev 3 distance : 9
+	'node id 5  prev 6 distance : 2
+	'node id 6  prev 7 distance : 1
+	'node id 7  prev 0 distance : 8
+	'node id 8  prev 2 distance : 2
+	'
+	'node id 0  prev -1 distance : 0
+	'node id 1  prev 0 distance : 4
+	'node id 2  prev 1 distance : 12
+	'node id 3  prev 2 distance : 19
+	'node id 4  prev 5 distance : 21
+	'node id 5  prev 6 distance : 11
+	'node id 6  prev 7 distance : 9
+	'node id 7  prev 0 distance : 8
+	'node id 8  prev 2 distance : 14
+	'
+	'
 
 	Public Shared Sub Main3()
 		Dim gph As New GraphAM(9)
@@ -216,40 +220,43 @@ Public Class GraphAM
 		gph.AddUndirectedEdge(6, 7, 7)
 		gph.AddUndirectedEdge(7, 8, 17)
 		gph.Print()
+		Console.WriteLine()
 		Prims(gph)
+		Console.WriteLine()
 		Dijkstra(gph, 1)
+		Console.WriteLine()
 	End Sub
-'
-'Vertex 0 is connected to : (2, 1) 
-'Vertex 1 is connected to : (2, 5) (3, 7) (4, 9) 
-'Vertex 2 is connected to : (0, 1) (1, 5) (3, 2) 
-'Vertex 3 is connected to : (1, 7) (2, 2) (5, 4) 
-'Vertex 4 is connected to : (1, 9) (5, 6) (6, 3) 
-'Vertex 5 is connected to : (3, 4) (4, 6) (7, 1) 
-'Vertex 6 is connected to : (4, 3) (7, 7) 
-'Vertex 7 is connected to : (5, 1) (6, 7) (8, 17) 
-'Vertex 8 is connected to : (7, 17)
-'
-'node id 0  prev -1 distance : 0
-'node id 1  prev 2 distance : 5
-'node id 2  prev 0 distance : 1
-'node id 3  prev 2 distance : 2
-'node id 4  prev 5 distance : 6
-'node id 5  prev 3 distance : 4
-'node id 6  prev 4 distance : 3
-'node id 7  prev 5 distance : 1
-'node id 8  prev 7 distance : 17
-'
-'node id 0  prev 2 distance : 6
-'node id 1  prev -1 distance : 0
-'node id 2  prev 1 distance : 5
-'node id 3  prev 1 distance : 7
-'node id 4  prev 1 distance : 9
-'node id 5  prev 3 distance : 11
-'node id 6  prev 4 distance : 12
-'node id 7  prev 5 distance : 12
-'node id 8  prev 7 distance : 29
-'
+	'
+	'Vertex 0 is connected to : (2, 1) 
+	'Vertex 1 is connected to : (2, 5) (3, 7) (4, 9) 
+	'Vertex 2 is connected to : (0, 1) (1, 5) (3, 2) 
+	'Vertex 3 is connected to : (1, 7) (2, 2) (5, 4) 
+	'Vertex 4 is connected to : (1, 9) (5, 6) (6, 3) 
+	'Vertex 5 is connected to : (3, 4) (4, 6) (7, 1) 
+	'Vertex 6 is connected to : (4, 3) (7, 7) 
+	'Vertex 7 is connected to : (5, 1) (6, 7) (8, 17) 
+	'Vertex 8 is connected to : (7, 17)
+	'
+	'node id 0  prev -1 distance : 0
+	'node id 1  prev 2 distance : 5
+	'node id 2  prev 0 distance : 1
+	'node id 3  prev 2 distance : 2
+	'node id 4  prev 5 distance : 6
+	'node id 5  prev 3 distance : 4
+	'node id 6  prev 4 distance : 3
+	'node id 7  prev 5 distance : 1
+	'node id 8  prev 7 distance : 17
+	'
+	'node id 0  prev 2 distance : 6
+	'node id 1  prev -1 distance : 0
+	'node id 2  prev 1 distance : 5
+	'node id 3  prev 1 distance : 7
+	'node id 4  prev 1 distance : 9
+	'node id 5  prev 3 distance : 11
+	'node id 6  prev 4 distance : 12
+	'node id 7  prev 5 distance : 12
+	'node id 8  prev 7 distance : 29
+	'
 	Public Shared Function HamiltonianPathUtil(ByVal gph As GraphAM, ByVal path() As Integer, ByVal pSize As Integer, ByVal added() As Integer) As Boolean
 		' Base case full length path is found
 		If pSize = gph.count Then
@@ -335,7 +342,7 @@ Public Class GraphAM
 		Return False
 	End Function
 
-		Public Shared Sub Main4()
+	Public Shared Sub Main4()
 		Dim count As Integer = 5
 		Dim gph As New GraphAM(count)
 		Dim adj(,) As Integer = {
@@ -372,13 +379,13 @@ Public Class GraphAM
 		Next i
 
 		Console.WriteLine("HamiltonianPath :  " & HamiltonianPath(graph2))
-		End Sub
-'
-'Hamiltonian Path found ::  0 1 2 4 3
-'HamiltonianPath : true
-'
-'Hamiltonian Path found ::  0 3 1 2 4
-'HamiltonianPath :  true
+	End Sub
+	'
+	'Hamiltonian Path found ::  0 1 2 4 3
+	'HamiltonianPath : True
+	'
+	'Hamiltonian Path found ::  0 3 1 2 4
+	'HamiltonianPath :  True
 
 
 	Public Shared Sub Main5()
@@ -420,18 +427,150 @@ Public Class GraphAM
 		Console.WriteLine("HamiltonianCycle :  " & HamiltonianCycle(graph2))
 	End Sub
 
-'
-'Hamiltonian Cycle found ::  0 1 2 4 3 0
-'HamiltonianCycle : true
-'
-'Hamiltonian Cycle not found
-'HamiltonianCycle :  false
-'
+	'
+	'Hamiltonian Cycle found ::  0 1 2 4 3 0
+	'HamiltonianCycle : True
+	'
+	'Hamiltonian Cycle not found
+	'HamiltonianCycle :  False
+	'
 	Public Shared Sub Main(ByVal args() As String)
-			Main1()
-			Main2()
-			Main3()
-			Main4()
+		Main1()
+		Main2()
+		Main3()
+		Main4()
 	End Sub
 End Class
 
+
+Public Class PriorityQueue(Of T As IComparable(Of T))
+	Private CAPACITY As Integer = 100
+	Private Count As Integer ' Number of elements in Heap
+	Private arr() As T ' The Heap array
+	Private isMinHeap As Boolean
+
+	Public Sub New(Optional ByVal isMin As Boolean = True)
+		arr = New T(CAPACITY) {}
+		Count = 0
+		isMinHeap = isMin
+	End Sub
+
+	Public Sub New(ByVal array() As T, Optional ByVal isMin As Boolean = True)
+		CAPACITY = array.Length
+		Count = array.Length
+		arr = array
+		isMinHeap = isMin
+		For i As Integer = (Count \ 2) To 0 Step -1
+			proclateDown(i)
+		Next i
+	End Sub
+
+	' Other Methods.
+	Private Function compare(ByVal arr() As T, ByVal first As Integer, ByVal second As Integer) As Boolean
+		If isMinHeap Then
+			Return arr(first).CompareTo(arr(second)) > 0
+		Else
+			Return arr(first).CompareTo(arr(second)) < 0
+		End If
+	End Function
+
+	Private Sub proclateDown(ByVal parent As Integer)
+		Dim lChild As Integer = 2 * parent + 1
+		Dim rChild As Integer = lChild + 1
+		Dim child As Integer = -1
+		Dim temp As T
+
+		If lChild < Count Then
+			child = lChild
+		End If
+
+		If rChild < Count AndAlso compare(arr, lChild, rChild) Then
+			child = rChild
+		End If
+
+		If child <> -1 AndAlso compare(arr, parent, child) Then
+			temp = arr(parent)
+			arr(parent) = arr(child)
+			arr(child) = temp
+			proclateDown(child)
+		End If
+	End Sub
+
+	Private Sub proclateUp(ByVal child As Integer)
+		Dim parent As Integer = (child - 1) \ 2
+		Dim temp As T
+		If parent < 0 Then
+			Return
+		End If
+
+		If compare(arr, parent, child) Then
+			temp = arr(child)
+			arr(child) = arr(parent)
+			arr(parent) = temp
+			proclateUp(parent)
+		End If
+	End Sub
+
+	Public Sub add(ByVal value As T)
+		If Count = CAPACITY Then
+			doubleSize()
+		End If
+
+		arr(Count) = value
+		Count += 1
+		proclateUp(Count - 1)
+	End Sub
+
+	Private Sub doubleSize()
+		Dim old() As T = arr
+		arr = New T(CAPACITY * 2) {}
+		CAPACITY = CAPACITY * 2
+		For i As Integer = 0 To Count - 1
+			arr(i) = old(i)
+		Next i
+		' Array.Copy(old, 0, arr, 0, Count)
+	End Sub
+
+	Public Function remove() As T
+		If Count = 0 Then
+			Throw New System.InvalidOperationException()
+		End If
+
+		Dim value As T = arr(0)
+		arr(0) = arr(Count - 1)
+		Count -= 1
+		proclateDown(0)
+		Return value
+	End Function
+
+	Public Sub print()
+		For i As Integer = 0 To Count - 1
+			Console.Write(arr(i))
+			Console.Write(" ")
+		Next i
+		Console.WriteLine()
+	End Sub
+
+	Public Function isEmpty() As Boolean
+		Return (Count = 0)
+	End Function
+
+	Public Function size() As Integer
+		Return Count
+	End Function
+
+	Public Function peek() As T
+		If Count = 0 Then
+			Throw New System.InvalidOperationException()
+		End If
+		Return arr(0)
+	End Function
+
+	Friend Shared Sub HeapSort(ByVal array() As Integer, ByVal inc As Boolean)
+		' Create max heap for increasing order sorting.
+		Dim hp As New PriorityQueue(Of Integer)(array, Not inc)
+		For i As Integer = 0 To array.Length - 1
+			array(array.Length - i - 1) = hp.remove()
+		Next i
+	End Sub
+End Class

@@ -398,7 +398,7 @@ Public Class SortingEx
 		Loop
 		Return True
 	End Function
-	
+
 	Public Shared Sub Main9()
 		Dim arr1() As Integer = {1, 2, 6, 5, 4, 7}
 		Console.WriteLine(CheckReverse(arr1, arr1.Length))
@@ -415,7 +415,7 @@ Public Class SortingEx
 	Public Shared Sub UnionIntersectionSorted(ByVal arr1() As Integer, ByVal size1 As Integer, ByVal arr2() As Integer, ByVal size2 As Integer)
 		Dim first As Integer = 0, second As Integer = 0
 		Dim unionArr((size1 + size2) - 1) As Integer
-		Dim interArr(min(size1, size2) - 1) As Integer
+		Dim interArr(Min(size1, size2) - 1) As Integer
 		Dim uIndex As Integer = 0
 		Dim iIndex As Integer = 0
 

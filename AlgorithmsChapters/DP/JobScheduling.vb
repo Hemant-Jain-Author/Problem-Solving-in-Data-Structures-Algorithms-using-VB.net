@@ -5,16 +5,16 @@ Public Class JobScheduling
 	Public Class Job
 		Implements IComparable(Of Job)
 
-		Friend start, stop1, value As Integer
+		Friend start, finish, value As Integer
 
 		Friend Sub New(ByVal s As Integer, ByVal f As Integer, ByVal v As Integer)
 			start = s
-			stop1 = f
+			finish = f
 			value = v
 		End Sub
 
-		Public Function CompareTo(ByVal j2 As Job) As Integer
-			Return Me.stop1 - j2.stop1
+		Private Function IComparable_CompareTo(other As Job) As Integer Implements IComparable(Of Job).CompareTo
+			Return Me.finish - other.finish
 		End Function
 	End Class
 
@@ -27,7 +27,7 @@ Public Class JobScheduling
 		' Find Value when current job is included
 		Dim incl As Integer = arr(n - 1).value
 		For j As Integer = n - 1 To 0 Step -1
-			If arr(j).stop1 <= arr(n - 1).start Then
+			If arr(j).finish <= arr(n - 1).start Then
 				incl += MaxValueJobsUtil(arr, j + 1)
 				Exit For
 			End If
@@ -62,7 +62,7 @@ Public Class JobScheduling
 		' Find Value when current job is included
 		Dim incl As Integer = arr(n - 1).value
 		For j As Integer = n - 2 To 0 Step -1
-			If arr(j).stop1 <= arr(n - 1).start Then
+			If arr(j).finish <= arr(n - 1).start Then
 				incl += MaxValueJobsUtilTD(dp, arr, j + 1)
 				Exit For
 			End If
@@ -98,7 +98,7 @@ Public Class JobScheduling
 		For i As Integer = 1 To n - 1
 			Dim incl As Integer = act(i).value
 			For j As Integer = i - 1 To 0 Step -1
-				If act(j).stop1 <= act(i).start Then
+				If act(j).finish <= act(i).start Then
 					incl += dp(j)
 					Exit For
 				End If
