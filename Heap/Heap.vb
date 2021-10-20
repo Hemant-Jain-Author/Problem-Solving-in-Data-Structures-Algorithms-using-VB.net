@@ -2,18 +2,19 @@
 Imports System
 
 Public Class Heap
-	Private Const CAPACITY As Integer = 32
+	Private Capacity As Integer = 32
 	Private count As Integer ' Number of elements in Heap
 	Private arr() As Integer ' The Heap array
 	Friend isMinHeap As Boolean
 
 	Public Sub New(ByVal isMin As Boolean)
-		arr = New Integer(CAPACITY - 1) {}
+		arr = New Integer(Capacity) {}
 		count = 0
 		isMinHeap = isMin
 	End Sub
 
 	Public Sub New(ByVal array() As Integer, ByVal isMin As Boolean)
+		Capacity = array.Length
 		count = array.Length
 		arr = array
 		isMinHeap = isMin
@@ -67,7 +68,7 @@ Public Class Heap
 	End Sub
 
 	Public Sub Add(ByVal value As Integer)
-		If count = arr.Length Then
+		If count = Capacity Then
 			DoubleSize()
 		End If
 
@@ -78,7 +79,8 @@ Public Class Heap
 
 	Private Sub DoubleSize()
 		Dim old() As Integer = arr
-		arr = New Integer((arr.Length * 2) - 1) {}
+		arr = New Integer(arr.Length * 2) {}
+		Capacity = Capacity * 2
 		Array.Copy(old, 0, arr, 0, count)
 	End Sub
 
@@ -98,6 +100,7 @@ Public Class Heap
 		For i As Integer = 0 To count - 1
 			Console.Write(arr(i) & " ")
 		Next i
+		Console.WriteLine()
 	End Sub
 
 	Public Function Delete(ByVal value As Integer) As Boolean
@@ -130,7 +133,7 @@ Public Class Heap
 		Return arr(0)
 	End Function
 
-	Public Shared Sub main1()
+	Public Shared Sub Main1()
 		Dim a() As Integer = {1, 9, 6, 7, 8, 2, 4, 5, 3}
 		Dim hp As New Heap(a, True)
 		hp.Print()
@@ -153,7 +156,7 @@ Public Class Heap
 		Next i
 	End Sub
 
-	Public Shared Sub main2()
+	Public Shared Sub Main2()
 		Dim a2() As Integer = {1, 9, 6, 7, 8, 2, 4, 5, 3}
 		Heap.HeapSort(a2, True)
 		For i As Integer = 0 To a2.Length - 1
@@ -173,8 +176,38 @@ Public Class Heap
 	'	9 8 7 6 5 4 3 2 1
 	'	
 
+	Public Shared Sub Main3()
+
+		Dim hp As New Heap(True)
+		Dim arr() As Integer = {1, 2, 10, 8, 7, 3, 4, 6, 5, 9}
+		For Each i As Integer In arr
+			hp.Add(i)
+		Next i
+
+		Console.Write("Heap Array: ")
+		hp.Print()
+		Do While hp.IsEmpty() = False
+			Console.Write(hp.Remove() & " ")
+		Loop
+		Console.WriteLine()
+
+		hp = New Heap(False)
+		For Each i As Integer In arr
+			hp.Add(i)
+		Next i
+
+		Console.Write("Heap Array: ")
+		hp.Print()
+		Do While hp.IsEmpty() = False
+			Console.Write(hp.Remove() & " ")
+		Loop
+	End Sub
+
+
 	Public Shared Sub Main(ByVal args() As String)
-		main1()
-		main2()
+		Main1()
+		Main2()
+		Main3()
+
 	End Sub
 End Class

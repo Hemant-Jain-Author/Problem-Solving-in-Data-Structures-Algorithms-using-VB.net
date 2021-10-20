@@ -32,7 +32,6 @@ Public Class StringTree
 		If curr Is Nothing Then
 			curr = New Node()
 			curr.value = value
-
 			curr.rChild = Nothing
 			curr.lChild = curr.rChild
 			curr.count = 1

@@ -5,8 +5,8 @@
 
 ' Prints a maximum set of activities that can be done by a 
 ' single person performing one task at a time.
-' s[] is an array that contains start time of all activities
-' f[] is an array that contains finish time of all activities
+' s() is an array that contains start time of all activities
+' f() is an array that contains finish time of all activities
 
 Friend Class ActivitySelection
 	Friend Class Activity
