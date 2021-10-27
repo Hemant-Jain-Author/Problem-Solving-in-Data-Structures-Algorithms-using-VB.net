@@ -4,6 +4,7 @@ Public Class ChotaBhim
 	Public Shared Function TotalQuantity(ByVal cups() As Integer, ByVal size As Integer) As Integer
 		Dim time As Integer = 60
 		Array.Sort(cups)
+		Array.Reverse(cups)
 		Dim total As Integer = 0
 		Dim index, temp As Integer
 		Do While time > 0

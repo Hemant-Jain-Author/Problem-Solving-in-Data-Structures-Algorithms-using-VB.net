@@ -14,7 +14,7 @@ Public Class LargestPalindromicSubstr
 
 		For l As Integer = 1 To n - 1
 			Dim i As Integer = 0
-			Dim j As Integer = i + l
+			Dim j As Integer = l
 			Do While j < n
 				If str.Chars(i) = str.Chars(j) AndAlso dp(i + 1, j - 1) = j - i - 1 Then
 					dp(i, j) = dp(i + 1, j - 1) + 2
