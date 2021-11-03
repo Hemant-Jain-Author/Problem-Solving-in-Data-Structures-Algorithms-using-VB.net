@@ -296,7 +296,7 @@ Public Class HeapEx
 			index += 1
 		Loop
 
-		For i = k To size - 1
+		For i = 0 To size - 1
 			arr(i) = output(i)
 		Next i
 	End Sub
