@@ -6,7 +6,7 @@ Public Class IsPrime
 		Dim i As Integer = 2
 		Do While i * i <= n
 			If n Mod i = 0 Then
-				answer = True
+				answer = False
 				Exit Do
 			End If
 			i += 1

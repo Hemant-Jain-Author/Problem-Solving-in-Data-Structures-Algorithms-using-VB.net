@@ -7,16 +7,12 @@ Public Class GridMinCost
 	End Function
 
 	Public Shared Function MinCost(ByVal cost(,) As Integer, ByVal m As Integer, ByVal n As Integer) As Integer
-		If m = 0 AndAlso n = 0 Then
-			Return 0
+		If m = 0 Or n = 0 Then
+			Return 99999
 		End If
 
-		If m = 0 Then
-			Return cost(0, n - 1) + MinCost(cost, 0, n - 1)
-		End If
-
-		If n = 0 Then
-			Return cost(m - 1, 0) + MinCost(cost, m - 1, 0)
+		If m = 1 AndAlso n = 1 Then
+			Return cost(0, 0)
 		End If
 
 		Return cost(m - 1, n - 1) + Min(MinCost(cost, m - 1, n - 1), MinCost(cost, m - 1, n), MinCost(cost, m, n - 1))

@@ -379,12 +379,16 @@ Public Class Searching
 	Public Shared Function FindMissingNumber6(ByVal arr() As Integer, ByVal size As Integer) As Integer
 		Dim i As Integer = 0
 		Do While i < size
-			arr((arr(i)-1) Mod size) += size
+			' length of arr + 1 value should be ignored.
+			If arr(i) != (size+1) AndAlso  arr(i) != (size*3+1) Then
+				' 1 should not become (len(arr)+1) so multiplied by 2
+				arr((arr(i)-1) Mod size) += (size*2)
+			End If
 			i += 1
 		Loop
 
 		For i = 0 To size - 1
-			If arr(i) < size + 1 Then
+			If arr(i) < (size*2) Then
 				Return i + 1
 			End If
 		Next i
