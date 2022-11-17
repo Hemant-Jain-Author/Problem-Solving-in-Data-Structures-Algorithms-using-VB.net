@@ -23,20 +23,20 @@ Public Class SortingEx
 		Dim left As Integer = 0
 		Dim right As Integer = size - 1
 		Dim count As Integer = 0
-		Do While left < right
-			Do While arr(left) = 0
+		While left < right
+			While arr(left) = 0
 				left += 1
-			Loop
+			End While
 
-			Do While arr(right) = 1
+			While arr(right) = 1
 				right -= 1
-			Loop
+			End While
 
 			If left < right Then
 				Swap(arr, left, right)
 				count += 1
 			End If
-		Loop
+		End While
 		Return count
 	End Function
 
@@ -53,28 +53,28 @@ Public Class SortingEx
 			End If
 		Next i
 		Dim index As Integer = 0
-		Do While zero > 0
+		While zero > 0
 			arr(index) = 0
 			index += 1
 			zero -= 1
-		Loop
-		Do While one > 0
+		End While
+		While one > 0
 			arr(index) = 1
 			index += 1
 			one -= 1
-		Loop
-		Do While two > 0
+		End While
+		While two > 0
 			arr(index) = 2
 			index += 1
 			two -= 1
-		Loop
+		End While
 	End Sub
 
 	Public Shared Sub Partition012(ByVal arr() As Integer, ByVal size As Integer)
 		Dim left As Integer = 0
 		Dim right As Integer = size - 1
 		Dim i As Integer = 0
-		Do While i <= right
+		While i <= right
 			If arr(i) = 0 Then
 				Swap(arr, i, left)
 				i += 1
@@ -85,7 +85,7 @@ Public Class SortingEx
 			Else
 				i += 1
 			End If
-		Loop
+		End While
 	End Sub
 
 	' Testing code
@@ -110,7 +110,7 @@ Public Class SortingEx
 		Dim start As Integer = 0
 		Dim [end] As Integer = size - 1
 		Dim i As Integer = 0
-		Do While i <= [end]
+		While i <= [end]
 			If arr(i) < lower Then
 				Swap(arr, i, start)
 				i += 1
@@ -121,7 +121,7 @@ Public Class SortingEx
 			Else
 				i += 1
 			End If
-		Loop
+		End While
 	End Sub
 
 	' Testing code
@@ -140,7 +140,7 @@ Public Class SortingEx
 		Dim first As Integer = 0
 		Dim second As Integer = size - 1
 		Dim temp As Integer
-		Do While first < second
+		While first < second
 			If arr(first) <= val Then
 				first += 1
 			ElseIf arr(second) > val Then
@@ -151,7 +151,7 @@ Public Class SortingEx
 				arr(second) = temp
 				SwapCount += 1
 			End If
-		Loop
+		End While
 		Return SwapCount
 	End Function
 
@@ -182,7 +182,7 @@ Public Class SortingEx
 
 	Public Shared Sub SeparateEvenAndOdd2(ByVal data() As Integer, ByVal size As Integer)
 		Dim left As Integer = 0, right As Integer = size - 1
-		Do While left < right
+		While left < right
 			If data(left) Mod 2 = 0 Then
 				left += 1
 			ElseIf data(right) Mod 2 = 1 Then
@@ -192,7 +192,7 @@ Public Class SortingEx
 				left += 1
 				right -= 1
 			End If
-		Loop
+		End While
 	End Sub
 
 	' Testing code
@@ -213,16 +213,16 @@ Public Class SortingEx
 
 	Public Shared Sub AbsBubbleSort(ByVal arr() As Integer, ByVal size As Integer, ByVal ref As Integer)
 		Dim i As Integer = 0
-		Do While i < (size - 1)
+		While i < (size - 1)
 			Dim j As Integer = 0
-			Do While j < (size - i - 1)
+			While j < (size - i - 1)
 				If AbsMore(arr(j), arr(j + 1), ref) Then
 					Swap(arr, j, j + 1)
 				End If
 				j += 1
-			Loop
+			End While
 			i += 1
-		Loop
+		End While
 	End Sub
 
 	' Testing code
@@ -316,7 +316,7 @@ Public Class SortingEx
 	Public Shared Sub Merge(ByVal arr1() As Integer, ByVal size1 As Integer, ByVal arr2() As Integer, ByVal size2 As Integer)
 		Dim index As Integer = 0
 		Dim temp As Integer
-		Do While index < size1
+		While index < size1
 			If arr1(index) <= arr2(0) Then
 				index += 1
 			Else
@@ -328,17 +328,17 @@ Public Class SortingEx
 				' After Swap arr2 may be unsorted.
 				' Insertion of the element in proper sorted position.
 				Dim i As Integer = 0
-				Do While i < (size2 - 1)
+				While i < (size2 - 1)
 					If arr2(i) < arr2(i + 1) Then
-						Exit Do
+						Exit While
 					End If
 					temp = arr2(i)
 					arr2(i) = arr2(i + 1)
 					arr2(i + 1) = temp
 					i += 1
-				Loop
+				End While
 			End If
-		Loop
+		End While
 	End Sub
 
 	' Testing code.
@@ -358,26 +358,26 @@ Public Class SortingEx
 		Dim start As Integer = -1
 		Dim finish As Integer = -1
 		Dim i As Integer = 0
-		Do While i < (size - 1)
+		While i < (size - 1)
 			If arr(i) > arr(i + 1) Then
 				start = i
-				Exit Do
+				Exit While
 			End If
 			i += 1
-		Loop
+		End While
 
 		If start = -1 Then
 			Return True
 		End If
 
 		i = start
-		Do While i < (size - 1)
+		While i < (size - 1)
 			If arr(i) < arr(i + 1) Then
 				finish = i
-				Exit Do
+				Exit While
 			End If
 			i += 1
-		Loop
+		End While
 
 		If finish = -1 Then
 			Return True
@@ -390,12 +390,12 @@ Public Class SortingEx
 		End If
 
 		i = finish + 1
-		Do While i < size - 1
+		While i < size - 1
 			If arr(i) > arr(i + 1) Then
 				Return False
 			End If
 			i += 1
-		Loop
+		End While
 		Return True
 	End Function
 
@@ -419,7 +419,7 @@ Public Class SortingEx
 		Dim uIndex As Integer = 0
 		Dim iIndex As Integer = 0
 
-		Do While first < size1 AndAlso second < size2
+		While first < size1 AndAlso second < size2
 			If arr1(first) = arr2(second) Then
 				unionArr(uIndex) = arr1(first)
 				uIndex += 1
@@ -436,17 +436,17 @@ Public Class SortingEx
 				uIndex += 1
 				second += 1
 			End If
-		Loop
-		Do While first < size1
+		End While
+		While first < size1
 			unionArr(uIndex) = arr1(first)
 			uIndex += 1
 			first += 1
-		Loop
-		Do While second < size2
+		End While
+		While second < size2
 			unionArr(uIndex) = arr2(second)
 			uIndex += 1
 			second += 1
-		Loop
+		End While
 		PrintArray(unionArr, uIndex)
 		PrintArray(interArr, iIndex)
 	End Sub

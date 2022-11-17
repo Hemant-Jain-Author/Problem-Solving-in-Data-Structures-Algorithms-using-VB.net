@@ -75,7 +75,7 @@ Public Module Program
 		Dim mid As Integer
 		Dim low As Integer = 0
 		Dim high As Integer = size - 1
-		Do While low <= high
+		While low <= high
 			mid = (low + high) \ 2
 			If arr(mid) = value Then
 				Return mid
@@ -86,7 +86,7 @@ Public Module Program
 					high = mid - 1
 				End If
 			End If
-		Loop
+		End While
 		Return -1
 	End Function
 
@@ -108,13 +108,13 @@ Public Module Program
 	Sub ReverseArray(ByVal a() As Integer, ByVal start As Integer, ByVal finish As Integer)
 		Dim i As Integer = start
 		Dim j As Integer = finish
-		Do While i < j
+		While i < j
 			Dim temp As Integer = a(i)
 			a(i) = a(j)
 			a(j) = temp
 			i += 1
 			j -= 1
-		Loop
+		End While
 	End Sub
 
 	Sub ReverseArray2(ByVal a() As Integer)
@@ -122,13 +122,13 @@ Public Module Program
 		Dim finish As Integer = a.Length - 1
 		Dim i As Integer = start
 		Dim j As Integer = finish
-		Do While i < j
+		While i < j
 			Dim temp As Integer = a(i)
 			a(i) = a(j)
 			a(j) = temp
 			i += 1
 			j -= 1
-		Loop
+		End While
 	End Sub
 
 	' Testing code 
@@ -180,10 +180,10 @@ Public Module Program
 		Dim size As Integer = arr.Length
 		Array.Sort(arr)
 		Dim i As Integer = 0
-		Do While i < size - 1
+		While i < size - 1
 			Swap(arr, i, i + 1)
 			i += 2
-		Loop
+		End While
 	End Sub
 
 
@@ -206,12 +206,12 @@ Public Module Program
 			Dim value As Integer = -1
 
 			' Swaps to move elements in proper position. 
-			Do While arr(curr) <> -1 AndAlso arr(curr) <> curr
+			While arr(curr) <> -1 AndAlso arr(curr) <> curr
 				Dim temp As Integer = arr(curr)
 				arr(curr) = value
 				curr = temp
 				value = curr
-			Loop
+			End While
 
 			' check if some Swaps happened. 
 			If value <> -1 Then
@@ -223,12 +223,12 @@ Public Module Program
 	Sub IndexArray2(ByVal arr() As Integer, ByVal size As Integer)
 		Dim temp As Integer
 		For i As Integer = 0 To size - 1
-			Do While arr(i) <> -1 AndAlso arr(i) <> i
+			While arr(i) <> -1 AndAlso arr(i) <> i
 				' Swap arr[i] and arr[arr[i]] 
 				temp = arr(i)
 				arr(i) = arr(temp)
 				arr(temp) = temp
-			Loop
+			End While
 		Next i
 	End Sub
 
@@ -254,23 +254,23 @@ Public Module Program
 			curr = i
 			value = -1
 			' Swaps to move elements in proper position. 
-			Do While curr >= 0 AndAlso curr < size AndAlso arr(curr) <> curr + 1
+			While curr >= 0 AndAlso curr < size AndAlso arr(curr) <> curr + 1
 				nextValue = arr(curr)
 				arr(curr) = value
 				value = nextValue
 				curr = nextValue - 1
-			Loop
+			End While
 		Next i
 	End Sub
 
 	Sub Sort1toN2(ByVal arr() As Integer, ByVal size As Integer)
 		Dim temp As Integer
 		For i As Integer = 0 To size - 1
-			Do While arr(i) <> i + 1 AndAlso arr(i) > 1
+			While arr(i) <> i + 1 AndAlso arr(i) > 1
 				temp = arr(i)
 				arr(i) = arr(temp - 1)
 				arr(temp - 1) = temp
-			Loop
+			End While
 		Next i
 	End Sub
 
@@ -293,7 +293,7 @@ Public Module Program
 	Function SmallestPositiveMissingNumber(ByVal arr() As Integer, ByVal size As Integer) As Integer
 		Dim found As Integer
 		Dim i As Integer = 1
-		Do While i < size + 1
+		While i < size + 1
 			found = 0
 			For j As Integer = 0 To size - 1
 				If arr(j) = i Then
@@ -305,7 +305,7 @@ Public Module Program
 				Return i
 			End If
 			i += 1
-		Loop
+		End While
 		Return -1
 	End Function
 
@@ -315,12 +315,12 @@ Public Module Program
 			hs(arr(j)) = 1
 		Next j
 		Dim i As Integer = 1
-		Do While i < size + 1
+		While i < size + 1
 			If hs.ContainsKey(i) = False Then
 				Return i
 			End If
 			i += 1
-		Loop
+		End While
 		Return -1
 	End Function
 
@@ -347,11 +347,11 @@ Public Module Program
 	Function SmallestPositiveMissingNumber4(ByVal arr() As Integer, ByVal size As Integer) As Integer
 		Dim temp As Integer
 		For i As Integer = 0 To size - 1
-			Do While arr(i) <> i + 1 AndAlso arr(i) > 0 AndAlso arr(i) <= size
+			While arr(i) <> i + 1 AndAlso arr(i) > 0 AndAlso arr(i) <= size
 				temp = arr(i)
 				arr(i) = arr(temp - 1)
 				arr(temp - 1) = temp
-			Loop
+			End While
 		Next i
 		For i As Integer = 0 To size - 1
 			If arr(i) <> i + 1 Then
@@ -395,19 +395,19 @@ Public Module Program
 	End Sub
 
 	Sub ReverseArr(ByVal arr() As Integer, ByVal start As Integer, ByVal finish As Integer)
-		Do While start < finish
+		While start < finish
 			Swap(arr, start, finish)
 			start += 1
 			finish -= 1
-		Loop
+		End While
 	End Sub
 
 	Sub MaxMinArr2(ByVal arr() As Integer, ByVal size As Integer)
 		Dim i As Integer = 0
-		Do While i < (size - 1)
+		While i < (size - 1)
 			ReverseArr(arr, i, size - 1)
 			i += 1
-		Loop
+		End While
 	End Sub
 
 	' Testing code 
@@ -458,13 +458,13 @@ Public Module Program
 		Dim j As Integer
 		For i As Integer = 0 To size - 1
 			j = size - 1
-			Do While i < j
+			While i < j
 				If arr(i) <= arr(j) Then
 					maxDiff = Math.Max(maxDiff, j - i)
-					Exit Do
+					Exit While
 				End If
 				j -= 1
-			Loop
+			End While
 		Next i
 		Return maxDiff
 	End Function
@@ -479,7 +479,7 @@ Public Module Program
 		Dim maxDiff As Integer = -1
 		Dim i As Integer = 0
 		Dim j As Integer = 1
-		Do While i < size AndAlso j < size
+		While i < size AndAlso j < size
 			If arr(i) <= rightMax(j) Then
 				If i < j Then
 					maxDiff = Math.Max(maxDiff, j - i)
@@ -488,7 +488,7 @@ Public Module Program
 			Else
 				i = i + 1
 			End If
-		Loop
+		End While
 		Return maxDiff
 	End Function
 
@@ -506,7 +506,7 @@ Public Module Program
 	Function MaxPathSum(ByVal arr1() As Integer, ByVal size1 As Integer, ByVal arr2() As Integer, ByVal size2 As Integer) As Integer
 		Dim i As Integer = 0, j As Integer = 0, result As Integer = 0, sum1 As Integer = 0, sum2 As Integer = 0
 
-		Do While i < size1 AndAlso j < size2
+		While i < size1 AndAlso j < size2
 			If arr1(i) < arr2(j) Then
 				sum1 += arr1(i)
 				i += 1
@@ -521,16 +521,16 @@ Public Module Program
 				i += 1
 				j += 1
 			End If
-		Loop
-		Do While i < size1
+		End While
+		While i < size1
 			sum1 += arr1(i)
 			i += 1
-		Loop
+		End While
 
-		Do While j < size2
+		While j < size2
 			sum2 += arr2(j)
 			j += 1
-		Loop
+		End While
 
 		result += Math.Max(sum1, sum2)
 		Return result
@@ -665,12 +665,12 @@ Public Module Program
 		End If
 		Dim j As Integer = i
 		j = i
-		Do While j < length
+		While j < length
 			Swap(arr, i, j)
 			Permutation(arr, i + 1, length)
 			Swap(arr, i, j)
 			j += 1
-		Loop
+		End While
 		Return
 	End Sub
 

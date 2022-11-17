@@ -7,7 +7,7 @@ Public Class MergeSort
 		Dim upperStart As Integer = middleIndex + 1
 		Dim upperStop As Integer = upperIndex
 		Dim count As Integer = lowerIndex
-		Do While lowerStart <= lowerStop AndAlso upperStart <= upperStop
+		While lowerStart <= lowerStop AndAlso upperStart <= upperStop
 			If arr(lowerStart) < arr(upperStart) Then
 				tempArray(count) = arr(lowerStart)
 				lowerStart += 1
@@ -17,17 +17,17 @@ Public Class MergeSort
 				upperStart += 1
 				count += 1
 			End If
-		Loop
-		Do While lowerStart <= lowerStop
+		End While
+		While lowerStart <= lowerStop
 			tempArray(count) = arr(lowerStart)
 			lowerStart += 1
 			count += 1
-		Loop
-		Do While upperStart <= upperStop
+		End While
+		While upperStart <= upperStop
 			tempArray(count) = arr(upperStart)
 			upperStart += 1
 			count += 1
-		Loop
+		End While
 		For i As Integer = lowerIndex To upperIndex
 			arr(i) = tempArray(i)
 		Next i

@@ -1,93 +1,124 @@
 ﻿Imports System
 
 Public Class HashTableSC
-	Private tableSize As Integer
-	Private listArray() As Node
+    Private tableSize As Integer
+    Private listArray As Node()
 
-	Private Class Node
-		Friend value As Integer
-		Friend nextPtr As Node
+    Private Class Node
+        Friend key As Integer
+        Friend value As Integer
+        Friend nextPtr As Node
 
-		Public Sub New(ByVal v As Integer, ByVal n As Node)
-			value = v
-			nextPtr = n
-		End Sub
-	End Class
+        Public Sub New(ByVal k As Integer, ByVal v As Integer, ByVal n As Node)
+            key = k
+            value = v
+            nextPtr = n
+        End Sub
+    End Class
 
-	Public Sub New()
-		tableSize = 512
-		listArray = New Node(tableSize - 1) {}
+    Public Sub New()
+        tableSize = 512
+        listArray = New Node(tableSize - 1) {}
 		For i As Integer = 0 To tableSize - 1
 			listArray(i) = Nothing
 		Next i
-	End Sub
+    End Sub
 
-	Private Function ComputeHash(ByVal key As Integer) As Integer ' division method
-		Dim hashValue As Integer = key
-		Return hashValue Mod tableSize
-	End Function
+    Private Function ComputeHash(ByVal key As Integer) As Integer ' division method
+        Dim hashValue As Integer = key
+        Return hashValue Mod tableSize
+    End Function
 
-	Public Sub Add(ByVal value As Integer)
-		Dim index As Integer = ComputeHash(value)
-		listArray(index) = New Node(value, listArray(index))
-	End Sub
+    Public Sub Add(ByVal key As Integer, ByVal value As Integer)
+        Dim index As Integer = ComputeHash(key)
+        listArray(index) = New Node(key, value, listArray(index))
+    End Sub
 
-	Public Function Remove(ByVal value As Integer) As Boolean
-		Dim index As Integer = ComputeHash(value)
-		Dim nextPtrNode As Node, head As Node = listArray(index)
-		If head IsNot Nothing AndAlso head.value = value Then
-			listArray(index) = head.nextPtr
-			Return True
-		End If
-		Do While head IsNot Nothing
-			nextPtrNode = head.nextPtr
-			If nextPtrNode IsNot Nothing AndAlso nextPtrNode.value = value Then
-				head.nextPtr = nextPtrNode.nextPtr
-				Return True
-			Else
-				head = nextPtrNode
-			End If
-		Loop
-		Return False
-	End Function
+    Public Sub Add(ByVal value As Integer)
+        Add(value, value)
+    End Sub
 
-	Public Sub Print()
-		Console.Write("Hash Table contains ::")
-		For i As Integer = 0 To tableSize - 1
-			Dim head As Node = listArray(i)
-			Do While head IsNot Nothing
-				Console.Write(head.value & " ")
-				head = head.nextPtr
-			Loop
-		Next i
-		Console.WriteLine()
-	End Sub
+    Public Function Remove(ByVal key As Integer) As Boolean
+        Dim index As Integer = ComputeHash(key)
+        Dim nextNode As Node, head As Node = listArray(index)
 
-	Public Function Find(ByVal value As Integer) As Boolean
-		Dim index As Integer = ComputeHash(value)
-		Dim head As Node = listArray(index)
-		Do While head IsNot Nothing
-			If head.value = value Then
-				Return True
-			End If
-			head = head.nextPtr
-		Loop
-		Return False
-	End Function
+        If head IsNot Nothing AndAlso head.key = key Then
+            listArray(index) = head.nextPtr
+            Return True
+        End If
 
-	Public Shared Sub Main(ByVal args() As String)
-		Dim ht As New HashTableSC()
-		ht.Add(1)
-		ht.Add(2)
-		ht.Add(3)
-		ht.Print()
-		Console.WriteLine("Find key 2 : " & ht.Find(2))
-		ht.Remove(2)
-		Console.WriteLine("Find key 2 : " & ht.Find(2))
-	End Sub
+        While head IsNot Nothing
+            nextNode = head.nextPtr
+
+            If nextNode IsNot Nothing AndAlso nextNode.key = key Then
+                head.nextPtr = nextNode.nextPtr
+                Return True
+            Else
+                head = nextNode
+            End If
+        End While
+
+        Return False
+    End Function
+
+    Public Sub Print()
+        Console.Write("Hash Table contains ::")
+
+        For i As Integer = 0 To tableSize - 1
+            Dim head As Node = listArray(i)
+
+            While head IsNot Nothing
+                Console.Write("(" & head.key & "=>" & head.value & ") ")
+                head = head.nextPtr
+            End While
+        Next
+
+        Console.WriteLine()
+    End Sub
+
+    Public Function Find(ByVal key As Integer) As Boolean
+        Dim index As Integer = ComputeHash(key)
+        Dim head As Node = listArray(index)
+
+        While head IsNot Nothing
+            If head.key = key Then
+                Return True
+            End If
+            head = head.nextPtr
+        End While
+
+        Return False
+    End Function
+
+    Public Function [Get](ByVal key As Integer) As Integer
+        Dim index As Integer = ComputeHash(key)
+        Dim head As Node = listArray(index)
+        While head IsNot Nothing
+            If head.key = key Then
+                Return head.value
+            End If
+            head = head.nextPtr
+        End While
+
+        Return -1
+    End Function
+
+    Public Shared Sub Main(ByVal args As String())
+        Dim ht As HashTableSC = New HashTableSC()
+        ht.Add(1, 10)
+        ht.Add(2, 20)
+        ht.Add(3, 30)
+        ht.Print()
+        Console.WriteLine("Find key 2 : " & ht.Find(2))
+        Console.WriteLine("Value at  key 2 : " & ht.[Get](2))
+        ht.Remove(2)
+        Console.WriteLine("Find key 2 : " & ht.Find(2))
+        ht.Print()
+    End Sub
 End Class
-'
-'Hash Table contains ::1 2 3 
-'Find key 2 : True
-'Find key 2 : False
-'
+
+' Hash Table contains ::(1=>10) (2=>20) (3=>30) 
+' Find key 2 : True
+' Value at  key 2 : 20
+' Find key 2 : False
+' Hash Table contains ::(1=>10) (3=>30) 

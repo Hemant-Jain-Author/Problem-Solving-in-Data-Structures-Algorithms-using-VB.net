@@ -21,10 +21,10 @@ Public Class QueueUsingStack
 			Return stk2.Pop()
 		End If
 
-		Do While stk1.Count > 0
+		While stk1.Count > 0
 			value = stk1.Pop()
 			stk2.Push(value)
-		Loop
+		End While
 		Return stk2.Pop()
 	End Function
 

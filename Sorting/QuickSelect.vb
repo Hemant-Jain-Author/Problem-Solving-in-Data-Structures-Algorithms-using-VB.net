@@ -13,17 +13,17 @@ Public Class QuickSelect
 		Dim start As Integer = lower
 		Dim finish As Integer = upper
 
-		Do While lower < upper
-			Do While arr(lower) <= pivot AndAlso lower < upper
+		While lower < upper
+			While arr(lower) <= pivot AndAlso lower < upper
 				lower += 1
-			Loop
-			Do While arr(upper) > pivot AndAlso lower <= upper
+			End While
+			While arr(upper) > pivot AndAlso lower <= upper
 				upper -= 1
-			Loop
+			End While
 			If lower < upper Then
 				Swap(arr, upper, lower)
 			End If
-		Loop
+		End While
 
 		Swap(arr, upper, start) ' upper is the pivot position
 		If k < upper Then

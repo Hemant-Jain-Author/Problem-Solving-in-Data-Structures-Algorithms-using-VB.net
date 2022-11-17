@@ -63,7 +63,7 @@ Public Class MinCostBinaryTree
 		For l As Integer = 1 To n - 1 ' l is length of range.
 			Dim i As Integer = 0
 			Dim j As Integer = i + l
-			Do While j < n
+			While j < n
 				dp(i, j) = Integer.MaxValue
 				For k As Integer = i To j - 1
 					dp(i, j) = Math.Min(dp(i, j), dp(i, k) + dp(k + 1, j) + max(i, k) * max(k + 1, j))
@@ -71,7 +71,7 @@ Public Class MinCostBinaryTree
 				Next k
 				i += 1
 				j += 1
-			Loop
+			End While
 		Next l
 		Return dp(0, n - 1)
 	End Function

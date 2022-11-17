@@ -15,7 +15,7 @@ Public Class LargestPalindromicSubstr
 		For l As Integer = 1 To n - 1
 			Dim i As Integer = 0
 			Dim j As Integer = l
-			Do While j < n
+			While j < n
 				If str.Chars(i) = str.Chars(j) AndAlso dp(i + 1, j - 1) = j - i - 1 Then
 					dp(i, j) = dp(i + 1, j - 1) + 2
 					If dp(i, j) > max Then
@@ -27,7 +27,7 @@ Public Class LargestPalindromicSubstr
 				End If
 				i += 1
 				j += 1
-			Loop
+			End While
 		Next l
 		Console.WriteLine("Max Length Palindromic Substrings : " & str.Substring(start, max))
 		Return max

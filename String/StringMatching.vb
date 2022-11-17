@@ -9,16 +9,16 @@ Public Class StringMatching
 		Dim i As Integer = 0, j As Integer = 0
 		Dim n As Integer = text.Length
 		Dim m As Integer = pattern.Length
-		Do While i <= n - m
+		While i <= n - m
 			j = 0
-			Do While j < m AndAlso pattern(j) = text(i + j)
+			While j < m AndAlso pattern(j) = text(i + j)
 				j += 1
-			Loop
+			End While
 			If j = m Then
 				Return (i)
 			End If
 			i += 1
-		Loop
+		End While
 		Return -1
 	End Function
 
@@ -38,10 +38,10 @@ Public Class StringMatching
 		End If
 
 		i = 0
-		Do While i < m - 1
+		While i < m - 1
 			powm = (powm << 1) Mod prime
 			i += 1
-		Loop
+		End While
 
 		For i = 0 To m - 1
 			PatternHash = ((PatternHash << 1) + AscW(pattern(i))) Mod prime
@@ -49,7 +49,7 @@ Public Class StringMatching
 		Next i
 
 		i = 0
-		Do While i <= (n - m)
+		While i <= (n - m)
 			If TextHash = PatternHash Then
 				For j = 0 To m - 1
 					If text(i + j) <> pattern(j) Then
@@ -65,7 +65,7 @@ Public Class StringMatching
 				TextHash = (TextHash + prime)
 			End If
 			i += 1
-		Loop
+		End While
 		Return -1
 	End Function
 
@@ -73,14 +73,14 @@ Public Class StringMatching
 		Dim m As Integer = pattern.Length
 		Dim i As Integer = 0, j As Integer = -1
 		ShiftArr(i) = -1
-		Do While i < m
-			Do While j >= 0 AndAlso pattern(i) <> pattern(j)
+		While i < m
+			While j >= 0 AndAlso pattern(i) <> pattern(j)
 				j = ShiftArr(j)
-			Loop
+			End While
 			i += 1
 			j += 1
 			ShiftArr(i) = j
-		Loop
+		End While
 	End Sub
 
 	Public Shared Function KMP(ByVal text As String, ByVal pattern As String) As Integer
@@ -93,16 +93,16 @@ Public Class StringMatching
 		Dim m As Integer = pattern.Length
 		Dim ShiftArr(m) As Integer
 		KMPPreprocess(pattern, ShiftArr)
-		Do While i < n
-			Do While j >= 0 AndAlso text(i) <> pattern(j)
+		While i < n
+			While j >= 0 AndAlso text(i) <> pattern(j)
 				j = ShiftArr(j)
-			Loop
+			End While
 			i += 1
 			j += 1
 			If j = m Then
 				Return (i - m)
 			End If
-		Loop
+		End While
 		Return -1
 	End Function
 
@@ -116,17 +116,17 @@ Public Class StringMatching
 		Dim m As Integer = pattern.Length
 		Dim ShiftArr(m) As Integer
 		KMPPreprocess(pattern, ShiftArr)
-		Do While i < n
-			Do While j >= 0 AndAlso text(i) <> pattern(j)
+		While i < n
+			While j >= 0 AndAlso text(i) <> pattern(j)
 				j = ShiftArr(j)
-			Loop
+			End While
 			i += 1
 			j += 1
 			If j = m Then
 				count += 1
 				j = ShiftArr(j)
 			End If
-		Loop
+		End While
 		Return count
 	End Function
 

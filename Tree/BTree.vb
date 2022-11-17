@@ -68,9 +68,9 @@ Public Class BTree
 
 	Private Function Search(ByVal node As Node, ByVal key As Integer) As Boolean
 		Dim i As Integer = 0
-		Do While i < node.n AndAlso node.keys(i) < key
+		While i < node.n AndAlso node.keys(i) < key
 			i += 1
-		Loop
+		End While
 
 		' If the found key is equal to key, return this node
 		If node.keys(i) = key Then
@@ -100,19 +100,19 @@ Public Class BTree
 			' Finds the location where new key can be Inserted.
 			' By moving all keys greater than key to one place forward.
 			Dim i As Integer = root.n - 1
-			Do While i >= 0 AndAlso root.keys(i) > key
+			While i >= 0 AndAlso root.keys(i) > key
 				root.keys(i + 1) = root.keys(i)
 				i -= 1
-			Loop
+			End While
 
 			' Insert the new key at found location
 			root.keys(i + 1) = key
 			root.n = root.n + 1
 		Else
 			Dim i As Integer = 0
-			Do While i < root.n AndAlso root.keys(i) < key
+			While i < root.n AndAlso root.keys(i) < key
 				i += 1
-			Loop
+			End While
 			Insert(root, root.arr(i), i, key)
 		End If
 		If root.n = max Then
@@ -132,10 +132,10 @@ Public Class BTree
 			' Finds the location where new key will be Inserted 
 			' by moving all keys greater than key to one place forward.
 			Dim i As Integer = child.n - 1
-			Do While i >= 0 AndAlso child.keys(i) > key
+			While i >= 0 AndAlso child.keys(i) > key
 				child.keys(i + 1) = child.keys(i)
 				i -= 1
-			Loop
+			End While
 
 			' Insert the new key at found location
 			child.keys(i + 1) = key
@@ -143,9 +143,9 @@ Public Class BTree
 		Else
 			Dim i As Integer = 0
 			' Insert the node to the proper child.
-			Do While i < child.n AndAlso child.keys(i) < key
+			While i < child.n AndAlso child.keys(i) < key
 				i += 1
-			Loop
+			End While
 			Insert(child, child.arr(i), i, key) ' parent, child and index of child.
 		End If
 
@@ -164,26 +164,26 @@ Public Class BTree
 		Dim node As New Node(child.leaf, max)
 		' Copy the second half keys of child to node
 		Dim j As Integer = 0
-		Do While median + 1 + j < max
+		While median + 1 + j < max
 			node.keys(j) = child.keys(median + 1 + j)
 			j += 1
-		Loop
+		End While
 		node.n = j
 
 		' Copy the second half children of child to node
 		j = 0
-		Do While child.leaf = False AndAlso median + j <= max - 1
+		While child.leaf = False AndAlso median + j <= max - 1
 			node.arr(j) = child.arr(median + 1 + j)
 			j += 1
-		Loop
+		End While
 
 		' parent is going to have a new child,
 		' create space of new child
 		j = parent.n
-		Do While j >= index + 1
+		While j >= index + 1
 			parent.arr(j + 1) = parent.arr(j)
 			j -= 1
-		Loop
+		End While
 
 		' Link the new child to the parent node
 		parent.arr(index + 1) = node
@@ -245,9 +245,9 @@ Public Class BTree
 	' Returns the index of first key which is greater than or equal to key.
 	Private Function findKey(ByVal node As Node, ByVal key As Integer) As Integer
 		Dim index As Integer = 0
-		Do While index < node.n AndAlso node.keys(index) < key
+		While index < node.n AndAlso node.keys(index) < key
 			index += 1
-		Loop
+		End While
 		Return index
 	End Function
 
@@ -297,9 +297,9 @@ Public Class BTree
 	Private Function GetPred(ByVal node As Node, ByVal index As Integer) As Integer
 		' Keep moving to the right most node of left subtree until we reach a leaf.
 		Dim cur As Node = node.arr(index)
-		Do While Not cur.leaf
+		While Not cur.leaf
 			cur = cur.arr(cur.n)
-		Loop
+		End While
 
 		' Return the last key of the leaf
 		Return cur.keys(cur.n - 1)
@@ -309,9 +309,9 @@ Public Class BTree
 	Private Function GetSucc(ByVal node As Node, ByVal index As Integer) As Integer
 		' Keep moving to the left most node of right subtree until we reach a leaf
 		Dim cur As Node = node.arr(index + 1)
-		Do While Not cur.leaf
+		While Not cur.leaf
 			cur = cur.arr(0)
-		Loop
+		End While
 
 		' Return the first key of the leaf
 		Return cur.keys(0)
@@ -350,10 +350,10 @@ Public Class BTree
 
 		' Move all its child pointers one step forward.
 		i = child.n
-		Do While Not child.leaf AndAlso i >= 0
+		While Not child.leaf AndAlso i >= 0
 			child.arr(i + 1) = child.arr(i)
 			i -= 1
-		Loop
+		End While
 
 		' Setting child's first key equal to of the current node.
 		child.keys(0) = node.keys(index - 1)
@@ -397,10 +397,10 @@ Public Class BTree
 
 		' Moving the child pointers one step behind
 		i = 1
-		Do While Not sibling.leaf AndAlso i <= sibling.n
+		While Not sibling.leaf AndAlso i <= sibling.n
 			sibling.arr(i - 1) = sibling.arr(i)
 			i += 1
-		Loop
+		End While
 
 		' Increase child key count and decrease sibling key count.
 		child.n += 1
@@ -425,10 +425,10 @@ Public Class BTree
 
 		' Copying the child pointers from right to left.
 		i = 0
-		Do While Not left.leaf AndAlso i <= right.n
+		While Not left.leaf AndAlso i <= right.n
 			left.arr(start + 1 + i) = right.arr(i)
 			i += 1
-		Loop
+		End While
 
 
 		' Moving all keys after  index in the current node one step forward.

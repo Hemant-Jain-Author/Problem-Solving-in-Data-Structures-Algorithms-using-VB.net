@@ -9,27 +9,27 @@ Public Class SelectionSort
 		Dim size As Integer = arr.Length
 		Dim i, j, max, temp As Integer
 		i = 0
-		Do While i < size - 1
+		While i < size - 1
 			max = 0
 			j = 1
-			Do While j < size - i
+			While j < size - i
 				If arr(j) > arr(max) Then
 					max = j
 				End If
 				j += 1
-			Loop
+			End While
 			temp = arr(size - 1 - i)
 			arr(size - 1 - i) = arr(max)
 			arr(max) = temp
 			i += 1
-		Loop
+		End While
 	End Sub
 
 	Public Sub Sort2(ByVal arr() As Integer) ' Sorted array created in forward direction
 		Dim size As Integer = arr.Length
 		Dim i, j, min, temp As Integer
 		i = 0
-		Do While i < size - 1
+		While i < size - 1
 			min = i
 			For j = i + 1 To size - 1
 				If arr(j) < arr(min) Then
@@ -40,7 +40,7 @@ Public Class SelectionSort
 			arr(i) = arr(min)
 			arr(min) = temp
 			i += 1
-		Loop
+		End While
 	End Sub
 
 	Public Shared Sub Main(ByVal args() As String)

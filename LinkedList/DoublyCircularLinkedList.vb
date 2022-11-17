@@ -137,10 +137,10 @@ Public Class DoublyCircularLinkedList
 			Return
 		End If
 		Dim temp As Node = head
-		Do While temp IsNot tail
+		While temp IsNot tail
 			Console.Write(temp.value & " ")
 			temp = temp.nextPtr
-		Loop
+		End While
 		Console.WriteLine(temp.value)
 	End Sub
 

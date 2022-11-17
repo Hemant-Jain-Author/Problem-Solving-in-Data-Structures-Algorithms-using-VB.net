@@ -177,9 +177,9 @@ Public Class AVLTree
 			Return Nothing
 		End If
 
-		Do While node.left IsNot Nothing
+		While node.left IsNot Nothing
 			node = node.left
-		Loop
+		End While
 		Return node
 	End Function
 

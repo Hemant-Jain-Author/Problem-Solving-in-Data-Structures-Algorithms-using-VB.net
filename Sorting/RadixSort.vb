@@ -43,10 +43,10 @@ Public Class RadixSort
 		' Counting Sort for every digit.
 		' The dividend passed is used to calculate current working digit.
 		Dim div As Integer = 1
-		Do While m \ div > 0
+		While m \ div > 0
 			CountSort(arr, n, div)
 			div *= 10
-		Loop
+		End While
 	End Sub
 
 	Public Shared Sub Main(ByVal args() As String)

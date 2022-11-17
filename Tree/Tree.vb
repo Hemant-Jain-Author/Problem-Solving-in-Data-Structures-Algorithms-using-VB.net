@@ -161,7 +161,7 @@ Public Class Tree
 			que.Enqueue(root)
 		End If
 
-		Do While que.Count > 0
+		While que.Count > 0
 			temp = que.Dequeue()
 			Console.Write(temp.value & " ")
 
@@ -171,7 +171,7 @@ Public Class Tree
 			If temp.rChild IsNot Nothing Then
 				que.Enqueue(temp.rChild)
 			End If
-		Loop
+		End While
 		Console.WriteLine()
 	End Sub
 
@@ -183,7 +183,7 @@ Public Class Tree
 			stk.Push(root)
 		End If
 
-		Do While stk.Count > 0
+		While stk.Count > 0
 			temp = stk.Pop()
 			Console.Write(temp.value & " ")
 
@@ -193,7 +193,7 @@ Public Class Tree
 			If temp.rChild IsNot Nothing Then
 				stk.Push(temp.rChild)
 			End If
-		Loop
+		End While
 		Console.WriteLine()
 	End Sub
 
@@ -204,8 +204,8 @@ Public Class Tree
 		If root IsNot Nothing Then
 			que1.Enqueue(root)
 		End If
-		Do While que1.Count <> 0 OrElse que2.Count <> 0
-			Do While que1.Count <> 0
+		While que1.Count <> 0 OrElse que2.Count <> 0
+			While que1.Count <> 0
 				temp = que1.Dequeue()
 				Console.Write(temp.value & " ")
 				If temp.lChild IsNot Nothing Then
@@ -214,10 +214,10 @@ Public Class Tree
 				If temp.rChild IsNot Nothing Then
 					que2.Enqueue(temp.rChild)
 				End If
-			Loop
+			End While
 			Console.WriteLine("")
 
-			Do While que2.Count <> 0
+			While que2.Count <> 0
 				temp = que2.Dequeue()
 				Console.Write(temp.value & " ")
 				If temp.lChild IsNot Nothing Then
@@ -226,9 +226,9 @@ Public Class Tree
 				If temp.rChild IsNot Nothing Then
 					que1.Enqueue(temp.rChild)
 				End If
-			Loop
+			End While
 			Console.WriteLine("")
-		Loop
+		End While
 	End Sub
 
 	Friend Sub PrintLevelOrderLineByLine2()
@@ -239,9 +239,9 @@ Public Class Tree
 		If root IsNot Nothing Then
 			que.Enqueue(root)
 		End If
-		Do While que.Count <> 0
+		While que.Count <> 0
 			count = que.Count
-			Do While count > 0
+			While count > 0
 				temp = que.Dequeue()
 				Console.Write(temp.value & " ")
 				If temp.lChild IsNot Nothing Then
@@ -251,9 +251,9 @@ Public Class Tree
 					que.Enqueue(temp.rChild)
 				End If
 				count -= 1
-			Loop
+			End While
 			Console.WriteLine("")
-		Loop
+		End While
 	End Sub
 	Friend Sub PrintSpiralTree()
 		Dim stk1 As New Stack(Of Node)()
@@ -263,8 +263,8 @@ Public Class Tree
 		If root IsNot Nothing Then
 			stk1.Push(root)
 		End If
-		Do While stk1.Count <> 0 OrElse stk2.Count <> 0
-			Do While stk1.Count <> 0
+		While stk1.Count <> 0 OrElse stk2.Count <> 0
+			While stk1.Count <> 0
 				temp = stk1.Pop()
 				Console.Write(temp.value & " ")
 				If temp.rChild IsNot Nothing Then
@@ -273,8 +273,8 @@ Public Class Tree
 				If temp.lChild IsNot Nothing Then
 					stk2.Push(temp.lChild)
 				End If
-			Loop
-			Do While stk2.Count <> 0
+			End While
+			While stk2.Count <> 0
 				temp = stk2.Pop()
 				Console.Write(temp.value & " ")
 				If temp.lChild IsNot Nothing Then
@@ -283,15 +283,15 @@ Public Class Tree
 				If temp.rChild IsNot Nothing Then
 					stk1.Push(temp.rChild)
 				End If
-			Loop
-		Loop
+			End While
+		End While
 		Console.WriteLine()
 	End Sub
 
 	Public Function Find(ByVal value As Integer) As Boolean
 		Dim curr As Node = root
 
-		Do While curr IsNot Nothing
+		While curr IsNot Nothing
 			If curr.value = value Then
 				Return True
 			ElseIf curr.value > value Then
@@ -299,15 +299,15 @@ Public Class Tree
 			Else
 				curr = curr.rChild
 			End If
-		Loop
+		End While
 		Return False
 	End Function
 
 	Public Function Find2(ByVal value As Integer) As Boolean
 		Dim curr As Node = root
-		Do While curr IsNot Nothing AndAlso curr.value <> value
+		While curr IsNot Nothing AndAlso curr.value <> value
 			curr = If(curr.value > value, curr.lChild, curr.rChild)
-		Loop
+		End While
 		Return curr IsNot Nothing
 	End Function
 
@@ -317,9 +317,9 @@ Public Class Tree
 			Return Integer.MaxValue
 		End If
 
-		Do While node.lChild IsNot Nothing
+		While node.lChild IsNot Nothing
 			node = node.lChild
-		Loop
+		End While
 		Return node.value
 	End Function
 
@@ -329,9 +329,9 @@ Public Class Tree
 			Return Integer.MinValue
 		End If
 
-		Do While node.rChild IsNot Nothing
+		While node.rChild IsNot Nothing
 			node = node.rChild
-		Loop
+		End While
 		Return node.value
 	End Function
 
@@ -341,9 +341,9 @@ Public Class Tree
 			Return Nothing
 		End If
 
-		Do While node.rChild IsNot Nothing
+		While node.rChild IsNot Nothing
 			node = node.rChild
-		Loop
+		End While
 		Return node
 	End Function
 
@@ -353,9 +353,9 @@ Public Class Tree
 			Return Nothing
 		End If
 
-		Do While node.lChild IsNot Nothing
+		While node.lChild IsNot Nothing
 			node = node.lChild
-		Loop
+		End While
 		Return node
 	End Function
 
@@ -584,7 +584,7 @@ Public Class Tree
 			stk.Push(root)
 		End If
 
-		Do While stk.Count > 0
+		While stk.Count > 0
 			curr = stk.Pop()
 			Console.Write(curr.value & " ")
 
@@ -595,7 +595,7 @@ Public Class Tree
 			If curr.lChild IsNot Nothing Then
 				stk.Push(curr.lChild)
 			End If
-		Loop
+		End While
 		Console.WriteLine()
 	End Sub
 
@@ -610,7 +610,7 @@ Public Class Tree
 			visited.Push(0)
 		End If
 
-		Do While stk.Count > 0
+		While stk.Count > 0
 			curr = stk.Pop()
 			vtd = visited.Pop()
 			If vtd = 1 Then
@@ -627,7 +627,7 @@ Public Class Tree
 					visited.Push(0)
 				End If
 			End If
-		Loop
+		End While
 		Console.WriteLine()
 	End Sub
 
@@ -642,7 +642,7 @@ Public Class Tree
 			visited.Push(0)
 		End If
 
-		Do While stk.Count > 0
+		While stk.Count > 0
 			curr = stk.Pop()
 			vtd = visited.Pop()
 			If vtd = 1 Then
@@ -659,7 +659,7 @@ Public Class Tree
 					visited.Push(0)
 				End If
 			End If
-		Loop
+		End While
 		Console.WriteLine()
 	End Sub
 
@@ -729,7 +729,7 @@ Public Class Tree
 		If root IsNot Nothing Then
 			que.Enqueue(root)
 		End If
-		Do While que.Count <> 0
+		While que.Count <> 0
 			temp = que.Dequeue()
 			If temp.lChild IsNot Nothing Then
 				If noChild = 1 Then
@@ -748,7 +748,7 @@ Public Class Tree
 			Else
 				noChild = 1
 			End If
-		Loop
+		End While
 		Return True
 	End Function
 
@@ -984,17 +984,17 @@ Public Class Tree
 		Dim curr As Node = root
 		Dim floor As Integer = Integer.MaxValue
 
-		Do While curr IsNot Nothing
+		While curr IsNot Nothing
 			If curr.value = val Then
 				floor = curr.value
-				Exit Do
+				Exit While
 			ElseIf curr.value > val Then
 				curr = curr.lChild
 			Else
 				floor = curr.value
 				curr = curr.rChild
 			End If
-		Loop
+		End While
 		Return floor
 	End Function
 
@@ -1002,17 +1002,17 @@ Public Class Tree
 		Dim curr As Node = root
 		Dim ceil As Integer = Integer.MinValue
 
-		Do While curr IsNot Nothing
+		While curr IsNot Nothing
 			If curr.value = val Then
 				ceil = curr.value
-				Exit Do
+				Exit While
 			ElseIf curr.value > val Then
 				ceil = curr.value
 				curr = curr.lChild
 			Else
 				curr = curr.rChild
 			End If
-		Loop
+		End While
 		Return ceil
 	End Function
 
@@ -1100,9 +1100,9 @@ Public Class Tree
 			End If
 			' First left child values will be popped
 			' Last popped value will be the root.
-			Do While stk.Count > 0 AndAlso stk.Peek() < value
+			While stk.Count > 0 AndAlso stk.Peek() < value
 				root = stk.Pop()
-			Loop
+			End While
 			' add current value to the stack.
 			stk.Push(value)
 		Next i

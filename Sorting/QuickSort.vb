@@ -9,17 +9,17 @@ Public Class QuickSort
         Dim start As Integer = lower
         Dim finish As Integer = upper
 
-        Do While lower < upper
-            Do While arr(lower) <= pivot AndAlso lower < upper
+        While lower < upper
+            While arr(lower) <= pivot AndAlso lower < upper
                 lower += 1
-            Loop
-            Do While arr(upper) > pivot AndAlso lower <= upper
+            End While
+            While arr(upper) > pivot AndAlso lower <= upper
                 upper -= 1
-            Loop
+            End While
             If lower < upper Then
                 swap(arr, upper, lower)
             End If
-        Loop
+        End While
         swap(arr, upper, start) ' upper is the pivot position
         SortUtil(arr, start, upper - 1) ' pivot -1 is the upper for left sub array.
         SortUtil(arr, upper + 1, finish) ' pivot + 1 is the lower for right sub array

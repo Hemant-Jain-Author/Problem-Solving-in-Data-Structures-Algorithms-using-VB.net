@@ -46,9 +46,9 @@ Public Class LinkedList
 			head = newNode
 		End If
 
-		Do While curr.nextPtr IsNot Nothing
+		While curr.nextPtr IsNot Nothing
 			curr = curr.nextPtr
-		Loop
+		End While
 		curr.nextPtr = newNode
 	End Sub
 
@@ -64,12 +64,12 @@ Public Class LinkedList
 
 	Public Function Search(ByVal data As Integer) As Boolean
 		Dim temp As Node = head
-		Do While temp IsNot Nothing
+		While temp IsNot Nothing
 			If temp.value = data Then
 				Return True
 			End If
 			temp = temp.nextPtr
-		Loop
+		End While
 		Return False
 	End Function
 
@@ -86,14 +86,14 @@ Public Class LinkedList
 			Return True
 		End If
 
-		Do While temp.nextPtr IsNot Nothing
+		While temp.nextPtr IsNot Nothing
 			If temp.nextPtr.value = delValue Then
 				temp.nextPtr = temp.nextPtr.nextPtr
 				count -= 1
 				Return True
 			End If
 			temp = temp.nextPtr
-		Loop
+		End While
 		Return False
 	End Function
 
@@ -101,13 +101,13 @@ Public Class LinkedList
 		Dim currNode As Node = head
 		Dim nextPtrNode As Node
 		Dim found As Boolean = False
-		Do While currNode IsNot Nothing AndAlso currNode.value = delValue ' first node
+		While currNode IsNot Nothing AndAlso currNode.value = delValue ' first node
 			head = currNode.nextPtr
 			currNode = head
 			found = True
-		Loop
+		End While
 
-		Do While currNode IsNot Nothing
+		While currNode IsNot Nothing
 			nextPtrNode = currNode.nextPtr
 			If nextPtrNode IsNot Nothing AndAlso nextPtrNode.value = delValue Then
 				currNode.nextPtr = nextPtrNode.nextPtr
@@ -115,7 +115,7 @@ Public Class LinkedList
 			Else
 				currNode = nextPtrNode
 			End If
-		Loop
+		End While
 		Return found
 	End Function
 
@@ -142,12 +142,12 @@ Public Class LinkedList
 		Dim curr As Node = head
 		Dim prev As Node = Nothing
 		Dim nextPtr As Node = Nothing
-		Do While curr IsNot Nothing
+		While curr IsNot Nothing
 			nextPtr = curr.nextPtr
 			curr.nextPtr = prev
 			prev = curr
 			curr = nextPtr
-		Loop
+		End While
 		head = prev
 	End Sub
 
@@ -155,11 +155,11 @@ Public Class LinkedList
 		Dim tempNode As Node = Nothing
 		Dim tempNode2 As Node = Nothing
 		Dim curr As Node = head
-		Do While curr IsNot Nothing
+		While curr IsNot Nothing
 			tempNode2 = New Node(curr.value, tempNode)
 			curr = curr.nextPtr
 			tempNode = tempNode2
-		Loop
+		End While
 		Dim ll2 As New LinkedList()
 		ll2.head = tempNode
 		Return ll2
@@ -179,12 +179,12 @@ Public Class LinkedList
 		tailNode = headNode
 		curr = curr.nextPtr
 
-		Do While curr IsNot Nothing
+		While curr IsNot Nothing
 			tempNode = New Node(curr.value, Nothing)
 			tailNode.nextPtr = tempNode
 			tailNode = tempNode
 			curr = curr.nextPtr
-		Loop
+		End While
 		Dim ll2 As New LinkedList()
 		ll2.head = headNode
 		Return ll2
@@ -208,13 +208,13 @@ Public Class LinkedList
 		Dim head1 As Node = head
 		Dim head2 As Node = ll2.head
 
-		Do While head1 IsNot Nothing AndAlso head2 IsNot Nothing
+		While head1 IsNot Nothing AndAlso head2 IsNot Nothing
 			If head1.value <> head2.value Then
 				Return False
 			End If
 			head1 = head1.nextPtr
 			head2 = head2.nextPtr
-		Loop
+		End While
 
 		If head1 Is Nothing AndAlso head2 Is Nothing Then
 			Return True
@@ -225,10 +225,10 @@ Public Class LinkedList
 	Public Function FindLength() As Integer
 		Dim curr As Node = head
 		Dim count As Integer = 0
-		Do While curr IsNot Nothing
+		While curr IsNot Nothing
 			count += 1
 			curr = curr.nextPtr
-		Loop
+		End While
 		Return count
 	End Function
 
@@ -238,10 +238,10 @@ Public Class LinkedList
 		End If
 		Dim count As Integer = 0
 		Dim curr As Node = head
-		Do While curr IsNot Nothing AndAlso count < index - 1
+		While curr IsNot Nothing AndAlso count < index - 1
 			count += 1
 			curr = curr.nextPtr
-		Loop
+		End While
 		Return curr.value
 	End Function
 
@@ -259,19 +259,19 @@ Public Class LinkedList
 		Dim count As Integer = 1
 		Dim forward As Node = head
 		Dim curr As Node = head
-		Do While forward IsNot Nothing AndAlso count <= index
+		While forward IsNot Nothing AndAlso count <= index
 			count += 1
 			forward = forward.nextPtr
-		Loop
+		End While
 
 		If forward Is Nothing Then
 			Return Integer.MaxValue
 		End If
 
-		Do While forward IsNot Nothing
+		While forward IsNot Nothing
 			forward = forward.nextPtr
 			curr = curr.nextPtr
-		Loop
+		End While
 		Return curr.value
 	End Function
 
@@ -282,14 +282,14 @@ Public Class LinkedList
 		Dim l2 As Integer = 0
 		Dim tempHead As Node = Me.head
 		Dim tempHead2 As Node = head2
-		Do While tempHead IsNot Nothing
+		While tempHead IsNot Nothing
 			l1 += 1
 			tempHead = tempHead.nextPtr
-		Loop
-		Do While tempHead2 IsNot Nothing
+		End While
+		While tempHead2 IsNot Nothing
 			l2 += 1
 			tempHead2 = tempHead2.nextPtr
-		Loop
+		End While
 
 		Dim diff As Integer
 		tempHead = Me.head
@@ -303,14 +303,14 @@ Public Class LinkedList
 			diff = l1 - l2
 		End If
 
-		Do While diff > 0
+		While diff > 0
 			tempHead = tempHead.nextPtr
 			diff -= 1
-		Loop
-		Do While tempHead IsNot tempHead2
+		End While
+		While tempHead IsNot tempHead2
 			tempHead = tempHead.nextPtr
 			tempHead2 = tempHead2.nextPtr
-		Loop
+		End While
 		Return If(tempHead IsNot Nothing, tempHead.value, -1)
 	End Function
 
@@ -321,10 +321,10 @@ Public Class LinkedList
 
 	Public Sub Print()
 		Dim temp As Node = head
-		Do While temp IsNot Nothing
+		While temp IsNot Nothing
 			Console.Write(temp.value & " ")
 			temp = temp.nextPtr
-		Loop
+		End While
 		Console.WriteLine("")
 	End Sub
 
@@ -338,9 +338,9 @@ Public Class LinkedList
 			head = newNode
 			Return
 		End If
-		Do While curr.nextPtr IsNot Nothing AndAlso curr.nextPtr.value < value
+		While curr.nextPtr IsNot Nothing AndAlso curr.nextPtr.value < value
 			curr = curr.nextPtr
-		Loop
+		End While
 
 		newNode.nextPtr = curr.nextPtr
 		curr.nextPtr = newNode
@@ -355,10 +355,10 @@ Public Class LinkedList
 		End If
 
 		Dim flag As Boolean = True
-		Do While flag
+		While flag
 			flag = False
 			curr = head
-			Do While curr.nextPtr IsNot last
+			While curr.nextPtr IsNot last
 				If curr.value > curr.nextPtr.value Then
 					flag = True
 					temp = curr.value
@@ -366,9 +366,9 @@ Public Class LinkedList
 					curr.nextPtr.value = temp
 				End If
 				curr = curr.nextPtr
-			Loop
+			End While
 			last = curr
-		Loop
+		End While
 	End Sub
 
 	Public Sub SelectionSort()
@@ -379,24 +379,24 @@ Public Class LinkedList
 			Return
 		End If
 
-		Do While head IsNot last
+		While head IsNot last
 			curr = head
 			max = curr.value
 			maxNode = curr
-			Do While curr.nextPtr IsNot last
+			While curr.nextPtr IsNot last
 				If max < curr.nextPtr.value Then
 					maxNode = curr.nextPtr
 					max = curr.nextPtr.value
 				End If
 				curr = curr.nextPtr
-			Loop
+			End While
 			last = curr
 			If curr.value < max Then
 				temp = curr.value
 				curr.value = max
 				maxNode.value = temp
 			End If
-		Loop
+		End While
 	End Sub
 
 	Public Sub InsertionSort()
@@ -408,54 +408,54 @@ Public Class LinkedList
 		End If
 
 		last = head.nextPtr
-		Do While last IsNot Nothing
+		While last IsNot Nothing
 			curr = head
-			Do While curr IsNot last
+			While curr IsNot last
 				If curr.value > last.value Then
 					temp = curr.value
 					curr.value = last.value
 					last.value = temp
 				End If
 				curr = curr.nextPtr
-			Loop
+			End While
 			last = last.nextPtr
-		Loop
+		End While
 	End Sub
 
 	Public Sub RemoveDuplicate()
 		Dim curr As Node = head
-		Do While curr IsNot Nothing
+		While curr IsNot Nothing
 			If curr.nextPtr IsNot Nothing AndAlso curr.value = curr.nextPtr.value Then
 				curr.nextPtr = curr.nextPtr.nextPtr
 			Else
 				curr = curr.nextPtr
 			End If
-		Loop
+		End While
 	End Sub
 
 	Public Sub MakeLoop()
 		Dim temp As Node = head
-		Do While temp IsNot Nothing
+		While temp IsNot Nothing
 			If temp.nextPtr Is Nothing Then
 				temp.nextPtr = head
 				Return
 			End If
 			temp = temp.nextPtr
-		Loop
+		End While
 	End Sub
 
 	Public Function LoopDetect() As Boolean
 		Dim curr As Node = head
 		Dim hs As New HashSet(Of Node)()
-		Do While curr IsNot Nothing
+		While curr IsNot Nothing
 			If hs.Contains(curr) Then
-				Console.WriteLine("loop found")
+				Console.WriteLine("Loop found")
 				Return True
 			End If
 			hs.Add(curr)
 			curr = curr.nextPtr
-		Loop
-		Console.WriteLine("loop not found")
+		End While
+		Console.WriteLine("Loop not found")
 		Return False
 	End Function
 
@@ -465,15 +465,15 @@ Public Class LinkedList
 		fastPtr = head
 		slowPtr = fastPtr
 
-		Do While fastPtr.nextPtr IsNot Nothing AndAlso fastPtr.nextPtr.nextPtr IsNot Nothing
+		While fastPtr.nextPtr IsNot Nothing AndAlso fastPtr.nextPtr.nextPtr IsNot Nothing
 			slowPtr = slowPtr.nextPtr
 			fastPtr = fastPtr.nextPtr.nextPtr
 			If slowPtr Is fastPtr Then
-				Console.WriteLine("loop found")
+				Console.WriteLine("Loop found")
 				Return True
 			End If
-		Loop
-		Console.WriteLine("loop not found")
+		End While
+		Console.WriteLine("Loop not found")
 		Return False
 	End Function
 
@@ -482,11 +482,11 @@ Public Class LinkedList
 		Reverse()
 		If tempHead Is head Then
 			Reverse()
-			Console.WriteLine("loop found")
+			Console.WriteLine("Loop found")
 			Return True
 		Else
 			Reverse()
-			Console.WriteLine("loop not found")
+			Console.WriteLine("Loop not found")
 			Return False
 		End If
 	End Function
@@ -497,19 +497,19 @@ Public Class LinkedList
 		fastPtr = head
 		slowPtr = fastPtr
 
-		Do While fastPtr.nextPtr IsNot Nothing AndAlso fastPtr.nextPtr.nextPtr IsNot Nothing
+		While fastPtr.nextPtr IsNot Nothing AndAlso fastPtr.nextPtr.nextPtr IsNot Nothing
 			If head Is fastPtr.nextPtr OrElse head Is fastPtr.nextPtr.nextPtr Then
-				Console.WriteLine("circular list loop found")
+				Console.WriteLine("Circular list loop found")
 				Return 2
 			End If
 			slowPtr = slowPtr.nextPtr
 			fastPtr = fastPtr.nextPtr.nextPtr
 			If slowPtr Is fastPtr Then
-				Console.WriteLine("loop found")
+				Console.WriteLine("Loop found")
 				Return 1
 			End If
-		Loop
-		Console.WriteLine("loop not found")
+		End While
+		Console.WriteLine("Loop not found")
 		Return 0
 	End Function
 
@@ -520,13 +520,13 @@ Public Class LinkedList
 		fastPtr = head
 		slowPtr = fastPtr
 
-		Do While fastPtr.nextPtr IsNot Nothing AndAlso fastPtr.nextPtr.nextPtr IsNot Nothing
+		While fastPtr.nextPtr IsNot Nothing AndAlso fastPtr.nextPtr.nextPtr IsNot Nothing
 			slowPtr = slowPtr.nextPtr
 			fastPtr = fastPtr.nextPtr.nextPtr
 			If slowPtr Is fastPtr Then
 				Return slowPtr
 			End If
-		Loop
+		End While
 		Return Nothing
 	End Function
 
@@ -538,18 +538,18 @@ Public Class LinkedList
 
 		Dim firstPtr As Node = head
 		If LoopPoint Is head Then
-			Do While firstPtr.nextPtr IsNot head
+			While firstPtr.nextPtr IsNot head
 				firstPtr = firstPtr.nextPtr
-			Loop
+			End While
 			firstPtr.nextPtr = Nothing
 			Return
 		End If
 
 		Dim secondPtr As Node = LoopPoint
-		Do While firstPtr.nextPtr IsNot secondPtr.nextPtr
+		While firstPtr.nextPtr IsNot secondPtr.nextPtr
 			firstPtr = firstPtr.nextPtr
 			secondPtr = secondPtr.nextPtr
-		Loop
+		End While
 		secondPtr.nextPtr = Nothing
 	End Sub
 
@@ -721,10 +721,10 @@ Public Class LinkedList
 
 	'	
 	'	3 2 1 
-	'	loop found
-	'	loop found
+	'	Loop found
+	'	Loop found
 	'	circular list loop found
-	'	loop not found
+	'	Loop not found
 	'	
 
 	Public Shared Sub Main9()

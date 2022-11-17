@@ -31,20 +31,20 @@ Public Module Program
     Function Fun4(ByVal n As Integer) As Integer
         Dim i As Integer, m As Integer = 0
         i = 1
-        Do While i < n
+        While i < n
             m += 1
             i = i * 2
-        Loop
+        End While
         Return m
     End Function
 
     Function Fun5(ByVal n As Integer) As Integer
         Dim i As Integer, m As Integer = 0
         i = n
-        Do While i > 0
+        While i > 0
             m += 1
             i = i \ 2
-        Loop
+        End While
         Return m
     End Function
 
@@ -78,26 +78,26 @@ Public Module Program
     Function Fun8(ByVal n As Integer) As Integer
         Dim i As Integer, j As Integer, m As Integer = 0
         i = 0
-        Do While i < n
+        While i < n
             j = 0
-            Do While j < Math.Sqrt(n)
+            While j < Math.Sqrt(n)
                 m += 1
                 j += 1
-            Loop
+            End While
             i += 1
-        Loop
+        End While
         Return m
     End Function
 
     Function Fun9(ByVal n As Integer) As Integer
         Dim i As Integer, j As Integer, m As Integer = 0
         i = n
-        Do While i > 0
+        While i > 0
             For j = 0 To i - 1
                 m += 1
             Next j
             i \= 2
-        Loop
+        End While
         Return m
     End Function
 
@@ -126,10 +126,10 @@ Public Module Program
     Function Fun12(ByVal n As Integer) As Integer
         Dim i As Integer = 0, j As Integer = 0, m As Integer = 0
         For i = 0 To n - 1
-            Do While j < n
+            While j < n
                 m += 1
                 j += 1
-            Loop
+            End While
         Next i
         Return m
     End Function
@@ -137,12 +137,12 @@ Public Module Program
     Function Fun13(ByVal n As Integer) As Integer
         Dim i As Integer, j As Integer = 0, m As Integer = 0
         i = 1
-        Do While i <= n
+        While i <= n
             For j = 0 To i
                 m += 1
             Next j
             i *= 2
-        Loop
+        End While
         Return m
     End Function
     Sub Main()

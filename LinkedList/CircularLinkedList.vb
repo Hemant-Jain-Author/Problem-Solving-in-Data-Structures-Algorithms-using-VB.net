@@ -92,7 +92,7 @@ Public Class CircularLinkedList
 		prev = curr
 		curr = curr.nextPtr
 
-		Do While curr IsNot head
+		While curr IsNot head
 			If curr.value = key Then
 				If curr Is tail Then
 					tail = prev
@@ -102,7 +102,7 @@ Public Class CircularLinkedList
 			End If
 			prev = curr
 			curr = curr.nextPtr
-		Loop
+		End While
 
 		Return False
 	End Function
@@ -119,10 +119,10 @@ Public Class CircularLinkedList
 			cl.AddHead(curr.value)
 			curr = curr.nextPtr
 		End If
-		Do While curr IsNot head
+		While curr IsNot head
 			cl.AddHead(curr.value)
 			curr = curr.nextPtr
-		Loop
+		End While
 		Return cl
 	End Function
 
@@ -138,10 +138,10 @@ Public Class CircularLinkedList
 			cl.AddTail(curr.value)
 			curr = curr.nextPtr
 		End If
-		Do While curr IsNot head
+		While curr IsNot head
 			cl.AddTail(curr.value)
 			curr = curr.nextPtr
-		Loop
+		End While
 		Return cl
 	End Function
 
@@ -167,10 +167,10 @@ Public Class CircularLinkedList
 			Return
 		End If
 		Dim temp As Node = tail.nextPtr
-		Do While temp IsNot tail
+		While temp IsNot tail
 			Console.Write(temp.value & " ")
 			temp = temp.nextPtr
-		Loop
+		End While
 		Console.WriteLine(temp.value)
 	End Sub
 

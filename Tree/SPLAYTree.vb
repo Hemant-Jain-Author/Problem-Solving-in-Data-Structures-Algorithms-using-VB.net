@@ -96,7 +96,7 @@ Public Class SPLAYTree
 
 	Private Sub Splay(ByVal node As Node)
 		Dim parent, grand As Node
-		Do While node IsNot root
+		While node IsNot root
 			parent = Me.Parent(node)
 			grand = Me.Parent(parent)
 			If parent Is Nothing Then ' rotations had created new root, always last condition.
@@ -120,12 +120,12 @@ Public Class SPLAYTree
 				RightRotate(parent)
 				node = LeftRotate(grand)
 			End If
-		Loop
+		End While
 	End Sub
 
 	Public Function Find(ByVal data As Integer) As Boolean
 		Dim curr As Node = root
-		Do While curr IsNot Nothing
+		While curr IsNot Nothing
 			If curr.data = data Then
 				Splay(curr)
 				Return True
@@ -134,7 +134,7 @@ Public Class SPLAYTree
 			Else
 				curr = curr.right
 			End If
-		Loop
+		End While
 		Return False
 	End Function
 
@@ -147,7 +147,7 @@ Public Class SPLAYTree
 
 		Dim node As Node = root
 		Dim parent As Node = Nothing
-		Do While node IsNot Nothing
+		While node IsNot Nothing
 			parent = node
 			If node.data > data Then
 				node = node.left
@@ -157,7 +157,7 @@ Public Class SPLAYTree
 				Splay(node) ' duplicate Insertion not allowed but splaying for it.
 				Return
 			End If
-		Loop
+		End While
 
 		newNode.parent = parent
 		If parent.data > data Then
@@ -173,9 +173,9 @@ Public Class SPLAYTree
 		If node Is Nothing Then
 			Return Nothing
 		End If
-		Do While node.left IsNot Nothing
+		While node.left IsNot Nothing
 			node = node.left
-		Loop
+		End While
 		Return node
 	End Function
 
@@ -183,7 +183,7 @@ Public Class SPLAYTree
 		Dim node As Node = root
 		Dim parent As Node = Nothing
 		Dim nextNode As Node = Nothing
-		Do While node IsNot Nothing
+		While node IsNot Nothing
 			If node.data = data Then
 				parent = node.parent
 				If node.left Is Nothing AndAlso node.right Is Nothing Then
@@ -207,7 +207,7 @@ Public Class SPLAYTree
 					If nextNode IsNot Nothing Then
 						nextNode.parent = parent
 					End If
-					Exit Do
+					Exit While
 				End If
 
 				Dim minNode As Node = FindMinNode(node.right)
@@ -222,7 +222,7 @@ Public Class SPLAYTree
 				parent = node
 				node = node.right
 			End If
-		Loop
+		End While
 		Splay(parent) ' Splaying for the parent of the node deleted.
 	End Sub
 
