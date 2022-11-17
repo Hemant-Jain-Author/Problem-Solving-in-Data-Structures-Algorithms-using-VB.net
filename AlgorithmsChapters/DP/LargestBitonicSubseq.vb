@@ -4,9 +4,12 @@ Public Class LargestBitonicSubseq
 	Public Shared Function LBS(ByVal arr() As Integer) As Integer
 		Dim n As Integer = arr.Length
 		Dim lis(n - 1) As Integer
-		Array.Fill(lis, 1) ' Initialize LIS values for all indexes as 1.
 		Dim lds(n - 1) As Integer
-		Array.Fill(lds, 1) ' Initialize LDS values for all indexes as 1.
+		For i As Integer = 0 To (n - 1) ' Initialize LIS and LDS values for all indexes as 1.
+			lis(i)= 1
+			lds(i)= 1
+		Next i
+
 		Dim max As Integer = 0
 
 		' Populating LIS values in bottom up manner.

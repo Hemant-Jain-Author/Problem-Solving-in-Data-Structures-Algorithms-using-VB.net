@@ -43,7 +43,9 @@ Public Class CoinChange
 
 	Public Shared Function MinCoinsTD(ByVal coins() As Integer, ByVal n As Integer, ByVal val As Integer) As Integer
 		Dim dp(val) As Integer
-		Array.Fill(dp, Integer.MaxValue)
+		For i As Integer = 0 To val
+			dp(i)= Integer.MaxValue
+		Next i
 		Return MinCoinsTD(dp, coins, n, val)
 	End Function
 
@@ -73,8 +75,10 @@ Public Class CoinChange
 
 
 	Public Shared Function MinCoinsBU(ByVal coins() As Integer, ByVal n As Integer, ByVal val As Integer) As Integer ' DP bottom up approach.
-		Dim dp(val) As Integer
-		Array.Fill(dp, Integer.MaxValue)
+		Dim dp(val) As Integer 
+		For i As Integer = 0 To val
+			dp(i)= Integer.MaxValue
+		Next
 		dp(0) = 0 ' Base value.
 
 		For i As Integer = 1 To val

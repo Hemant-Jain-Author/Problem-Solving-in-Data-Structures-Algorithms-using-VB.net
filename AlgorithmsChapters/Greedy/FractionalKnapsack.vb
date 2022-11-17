@@ -52,5 +52,5 @@ Public Class FractionalKnapsack
 End Class
 
 '
-'Maximum cost obtained = 230.0
+'Maximum cost obtained = 230
 '

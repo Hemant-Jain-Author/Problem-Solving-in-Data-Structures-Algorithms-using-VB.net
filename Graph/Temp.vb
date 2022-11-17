@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 Imports System.Collections.Generic
 
 Public Class Graph
@@ -16,9 +16,9 @@ Public Class Graph
             cost = c
         End Sub
 
-        Private Function IComparable_CompareTo(other As Edge) As Integer Implements IComparable(Of Edge).CompareTo
-            Return Me.cost - other.cost
-        End Function
+		Private Function IComparable_CompareTo(other As Edge) As Integer Implements IComparable(Of Edge).CompareTo
+			Return Me.cost - other.cost
+		End Function
     End Class
 
     Public Sub New(ByVal cnt As Integer)
@@ -459,8 +459,8 @@ Public Class Graph
     Public Function IsCyclePresentUndirected2() As Boolean
         Dim parent As Integer() = New Integer(count - 1) {}
         For i As Integer = 0 To (count - 1)
-            parent(i) = -1
-        Next
+			parent(i)= -1
+		Next
         Dim edge As List(Of Edge) = New List(Of Edge)()
         Dim flags As Boolean(,) = New Boolean(count - 1, count - 1) {}
 
@@ -741,8 +741,8 @@ Public Class Graph
 
         Dim gReversed As Graph = TransposeGraph()
         For i As Integer = 0 To (count - 1)
-            visited(i) = False
-        Next i
+			visited(i)= False
+		Next i
         Dim stk2 As Stack(Of Integer) = New Stack(Of Integer)()
 
         While stk.Count > 0
@@ -775,12 +775,12 @@ Public Class Graph
     End Sub
 
     Public Sub PrimsMST()
-        Dim previous(count - 1) As Integer
-        Dim dist(count - 1) As Integer
-        For i As Integer = 0 To (count - 1)
-            previous(i) = -1
-            dist(i) = 9999 ' infinite
-        Next i
+		Dim previous(count - 1) As Integer
+		Dim dist(count - 1) As Integer
+		For i As Integer = 0 To (count - 1)
+			previous(i)= -1
+			dist(i)= 9999 ' infinite
+		Next i
         Dim visited As Boolean() = New Boolean(count - 1) {}
         Dim source As Integer = 0
         dist(source) = 0
@@ -929,10 +929,10 @@ Public Class Graph
         Dim distance As Integer() = New Integer(count - 1) {}
         Dim previous As Integer() = New Integer(count - 1) {}
         For i As Integer = 0 To count - 1
-            distance(i) = -1
+			distance(i) = -1
             previous(i) = -1
-        Next i
-
+		Next i
+        
         Dim que As Queue(Of Integer) = New Queue(Of Integer)()
         que.Enqueue(source)
         distance(source) = 0
@@ -959,10 +959,10 @@ Public Class Graph
         Dim previous As Integer() = New Integer(count - 1) {}
         Dim dist As Integer() = New Integer(count - 1) {}
         For i As Integer = 0 To (count - 1)
-            previous(i) = -1
-            dist(i) = Integer.MaxValue ' infinite
-        Next i
-
+			previous(i)= -1
+			dist(i)= Integer.MaxValue ' infinite
+		Next i
+        
         Dim visited As Boolean() = New Boolean(count - 1) {}
         dist(source) = 0
         previous(source) = source
@@ -998,10 +998,11 @@ Public Class Graph
         Dim path As String = ""
 
         If dest = source Then
-            path = source
+            path += source
         Else
             path += PrintPathUtil(previous, source, previous(dest))
-            path += "->" + CStr(dest)
+            path += "->" 
+            path += dest
         End If
 
         Return path
@@ -1010,16 +1011,16 @@ Public Class Graph
     Public Sub PrintPath(ByVal previous As Integer(), ByVal dist As Integer(), ByVal count As Integer, ByVal source As Integer)
         Dim output As String = "Shortest Paths: "
 
-        For i As Integer = 0 To count - 1
+         For i As Integer = 0 To count - 1
 
-            If dist(i) = 99999 Then
-                output += ("(" & source & "->" & i & " @ Unreachable) ")
-            ElseIf i <> previous(i) Then
-                output += "("
-                output += PrintPathUtil(previous, source, i)
-                output += (" @ " & dist(i) & ") ")
-            End If
-        Next
+             If dist(i) = 99999 Then
+                 output += ("(" & source & "->" & i & " @ Unreachable) ")
+             ElseIf i <> previous(i) Then
+                 output += "("
+                 output += PrintPathUtil(previous, source, i)
+                 output += (" @ " & dist(i) & ") ")
+             End If
+         Next
 
         Console.WriteLine(output)
     End Sub
@@ -1028,9 +1029,9 @@ Public Class Graph
         Dim distance As Integer() = New Integer(count - 1) {}
         Dim path As Integer() = New Integer(count - 1) {}
         For i = 0 To count - 1
-            distance(i) = 99999 ' infinite
-            path(i) = -1
-        Next i
+			distance(i) = 99999 ' infinite
+			path(i) = -1
+		Next i
 
         distance(source) = 0
         path(source) = source
@@ -1471,17 +1472,17 @@ Public Class Graph
 
     Public Shared Sub Main(ByVal args As String())
         Main1()
-        Main2()
-        Main3()
-        Main4()
-        Main5()
-        Main6()
-        Main7()
-        Main8()
-        Main9()
-        Main10()
-        Main11()
-        Main12()
+		Main2()
+		Main3()
+		Main4()
+		Main5()
+		Main6()
+		Main7()
+		Main8()
+		Main9()
+		Main10()
+		Main11()
+		Main12()
         Main13()
         Main14()
         Main16()
@@ -1495,133 +1496,132 @@ End Class
 
 
 Public Class PriorityQueue(Of T As IComparable(Of T))
-    Private Capacity As Integer = 100
-    Private count As Integer ' Number of elements in Heap
-    Private arr() As T ' The Heap array
-    Private isMinHeap As Boolean
+	Private Capacity As Integer = 100
+	Private count As Integer ' Number of elements in Heap
+	Private arr() As T ' The Heap array
+	Private isMinHeap As Boolean
 
-    Public Sub New(Optional ByVal isMin As Boolean = True)
-        arr = New T(Capacity) {}
-        count = 0
-        isMinHeap = isMin
-    End Sub
+	Public Sub New(Optional ByVal isMin As Boolean = True)
+		arr = New T(Capacity) {}
+		count = 0
+		isMinHeap = isMin
+	End Sub
 
-    Public Sub New(ByVal array() As T, Optional ByVal isMin As Boolean = True)
-        Capacity = array.Length
-        count = array.Length
-        arr = array
-        isMinHeap = isMin
-        For i As Integer = (count \ 2) To 0 Step -1
-            PercolateDown(i)
-        Next i
-    End Sub
+	Public Sub New(ByVal array() As T, Optional ByVal isMin As Boolean = True)
+		Capacity = array.Length
+		count = array.Length
+		arr = array
+		isMinHeap = isMin
+		For i As Integer = (count \ 2) To 0 Step -1
+			PercolateDown(i)
+		Next i
+	End Sub
 
-    ' Other Methods.
-    Private Function Compare(ByVal arr() As T, ByVal first As Integer, ByVal second As Integer) As Boolean
-        If isMinHeap Then
-            Return arr(first).CompareTo(arr(second)) > 0
-        Else
-            Return arr(first).CompareTo(arr(second)) < 0
-        End If
-    End Function
+	' Other Methods.
+	Private Function Compare(ByVal arr() As T, ByVal first As Integer, ByVal second As Integer) As Boolean
+		If isMinHeap Then
+			Return arr(first).CompareTo(arr(second)) > 0
+		Else
+			Return arr(first).CompareTo(arr(second)) < 0
+		End If
+	End Function
 
-    Private Sub PercolateDown(ByVal parent As Integer)
-        Dim lChild As Integer = 2 * parent + 1
-        Dim rChild As Integer = lChild + 1
-        Dim child As Integer = -1
-        Dim temp As T
+	Private Sub PercolateDown(ByVal parent As Integer)
+		Dim lChild As Integer = 2 * parent + 1
+		Dim rChild As Integer = lChild + 1
+		Dim child As Integer = -1
+		Dim temp As T
 
-        If lChild < count Then
-            child = lChild
-        End If
+		If lChild < count Then
+			child = lChild
+		End If
 
-        If rChild < count AndAlso Compare(arr, lChild, rChild) Then
-            child = rChild
-        End If
+		If rChild < count AndAlso Compare(arr, lChild, rChild) Then
+			child = rChild
+		End If
 
-        If child <> -1 AndAlso Compare(arr, parent, child) Then
-            temp = arr(parent)
-            arr(parent) = arr(child)
-            arr(child) = temp
-            PercolateDown(child)
-        End If
-    End Sub
+		If child <> -1 AndAlso Compare(arr, parent, child) Then
+			temp = arr(parent)
+			arr(parent) = arr(child)
+			arr(child) = temp
+			PercolateDown(child)
+		End If
+	End Sub
 
-    Private Sub PercolateUp(ByVal child As Integer)
-        Dim parent As Integer = (child - 1) \ 2
-        Dim temp As T
-        If parent < 0 Then
-            Return
-        End If
+	Private Sub PercolateUp(ByVal child As Integer)
+		Dim parent As Integer = (child - 1) \ 2
+		Dim temp As T
+		If parent < 0 Then
+			Return
+		End If
 
-        If Compare(arr, parent, child) Then
-            temp = arr(child)
-            arr(child) = arr(parent)
-            arr(parent) = temp
-            PercolateUp(parent)
-        End If
-    End Sub
+		If Compare(arr, parent, child) Then
+			temp = arr(child)
+			arr(child) = arr(parent)
+			arr(parent) = temp
+			PercolateUp(parent)
+		End If
+	End Sub
 
-    Public Sub Enqueue(ByVal value As T)
-        If count = Capacity Then
-            DoubleSize()
-        End If
+	Public Sub Enqueue(ByVal value As T)
+		If count = Capacity Then
+			DoubleSize()
+		End If
 
-        arr(count) = value
-        count += 1
-        PercolateUp(count - 1)
-    End Sub
+		arr(count) = value
+		count += 1
+		PercolateUp(count - 1)
+	End Sub
 
-    Private Sub DoubleSize()
-        Dim old() As T = arr
-        arr = New T(Capacity * 2) {}
-        Capacity = Capacity * 2
-        For i As Integer = 0 To count - 1
-            arr(i) = old(i)
-        Next i
-    End Sub
+	Private Sub DoubleSize()
+		Dim old() As T = arr
+		arr = New T(Capacity * 2) {}
+		Capacity = Capacity * 2
+		For i As Integer = 0 To count - 1
+			arr(i) = old(i)
+		Next i
+	End Sub
 
-    Public Function Dequeue() As T
-        If count = 0 Then
-            Throw New System.InvalidOperationException()
-        End If
+	Public Function Dequeue() As T
+		If count = 0 Then
+			Throw New System.InvalidOperationException()
+		End If
 
-        Dim value As T = arr(0)
-        arr(0) = arr(count - 1)
-        count -= 1
-        PercolateDown(0)
-        Return value
-    End Function
+		Dim value As T = arr(0)
+		arr(0) = arr(count - 1)
+		count -= 1
+		PercolateDown(0)
+		Return value
+	End Function
 
-    Public Sub Print()
-        For i As Integer = 0 To count - 1
-            Console.Write(arr(i))
-            Console.Write(" ")
-        Next i
-        Console.WriteLine()
-    End Sub
+	Public Sub Print()
+		For i As Integer = 0 To count - 1
+			Console.Write(arr(i))
+			Console.Write(" ")
+		Next i
+		Console.WriteLine()
+	End Sub
 
-    Public Function IsEmpty() As Boolean
-        Return (count = 0)
-    End Function
+	Public Function IsEmpty() As Boolean
+		Return (count = 0)
+	End Function
 
-    Public Function Size() As Integer
-        Return count
-    End Function
+	Public Function Size() As Integer
+		Return count
+	End Function
 
-    Public Function Peek() As T
-        If count = 0 Then
-            Throw New System.InvalidOperationException()
-        End If
-        Return arr(0)
-    End Function
+	Public Function Peek() As T
+		If count = 0 Then
+			Throw New System.InvalidOperationException()
+		End If
+		Return arr(0)
+	End Function
 
-    Friend Shared Sub HeapSort(ByVal array() As Integer, ByVal inc As Boolean)
-        ' Create max heap for increasing order sorting.
-        Dim hp As New PriorityQueue(Of Integer)(array, Not inc)
-        For i As Integer = 0 To array.Length - 1
-            array(array.Length - i - 1) = hp.Dequeue()
-        Next i
-    End Sub
+	Friend Shared Sub HeapSort(ByVal array() As Integer, ByVal inc As Boolean)
+		' Create max heap for increasing order sorting.
+		Dim hp As New PriorityQueue(Of Integer)(array, Not inc)
+		For i As Integer = 0 To array.Length - 1
+			array(array.Length - i - 1) = hp.Dequeue()
+		Next i
+	End Sub
 End Class
-

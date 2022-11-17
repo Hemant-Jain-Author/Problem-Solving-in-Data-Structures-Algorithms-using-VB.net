@@ -8,7 +8,9 @@ Public Class MultipleStageGraph
 		' dist[i] is going to store shortest
 		' distance from node i to node n-1.
 		Dim dist(n - 1) As Integer
-		Array.Fill(dist, INF)
+		For i As Integer = 0 To (n - 1)
+			dist(i)= INF
+		Next i
 		Dim path(n - 1) As Integer
 		Dim value As Integer
 		dist(0) = 0

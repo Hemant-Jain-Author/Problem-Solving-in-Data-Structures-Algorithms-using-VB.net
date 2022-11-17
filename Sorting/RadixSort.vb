@@ -12,10 +12,11 @@ Public Class RadixSort
 	End Function
 
 	Private Sub CountSort(ByVal arr() As Integer, ByVal n As Integer, ByVal dividend As Integer)
-		Dim temp() As Integer = DirectCast(arr.Clone(), Integer())
+		Dim temp As Integer() = CType(arr.Clone(), Integer())
 		Dim count(9) As Integer
-		Array.Fill(count, 0)
-
+		For i As Integer = 0 To 9
+			count(i) = 0
+		Next i
 		' Store count of occurrences in count array.
 		' (number / dividend) % 10 is used to find the working digit.
 		For i As Integer = 0 To n - 1
