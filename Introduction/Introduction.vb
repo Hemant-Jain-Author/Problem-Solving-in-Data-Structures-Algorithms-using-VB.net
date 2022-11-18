@@ -326,7 +326,9 @@ Public Module Program
 
 	Function SmallestPositiveMissingNumber3(ByVal arr() As Integer, ByVal size As Integer) As Integer
 		Dim aux(size - 1) As Integer
-		Array.Fill(aux, -1)
+		For i As Integer = 0 To size - 1
+			aux(i)= -1
+		Next i
 
 		For i As Integer = 0 To size - 1
 			If arr(i) > 0 AndAlso arr(i) <= size Then

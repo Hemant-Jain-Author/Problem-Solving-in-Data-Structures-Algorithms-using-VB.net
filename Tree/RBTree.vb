@@ -115,7 +115,7 @@ Public Class RBTree
 
 	Private Function FindNode(ByVal data As Integer) As Node
 		Dim curr As Node = root
-		Do While curr IsNot NullNode
+		While curr IsNot NullNode
 			If curr.data = data Then
 				Return curr
 			ElseIf curr.data > data Then
@@ -123,13 +123,13 @@ Public Class RBTree
 			Else
 				curr = curr.right
 			End If
-		Loop
+		End While
 		Return Nothing
 	End Function
 
 	Public Function Search(ByVal data As Integer) As Boolean
 		Dim curr As Node = root
-		Do While curr IsNot NullNode
+		While curr IsNot NullNode
 			If curr.data = data Then
 				Return True
 			ElseIf curr.data > data Then
@@ -137,7 +137,7 @@ Public Class RBTree
 			Else
 				curr = curr.right
 			End If
-		Loop
+		End While
 		Return False
 	End Function
 	Public Sub PrintTree()
@@ -234,16 +234,16 @@ Public Class RBTree
 	Private Sub Delete(ByVal node As Node, ByVal key As Integer)
 		Dim z As Node = NullNode
 		Dim x, y As Node
-		Do While node IsNot NullNode
+		While node IsNot NullNode
 			If node.data = key Then
 				z = node
-				Exit Do
+				Exit While
 			ElseIf node.data <= key Then
 				node = node.right
 			Else
 				node = node.left
 			End If
-		Loop
+		End While
 
 		If z Is NullNode Then
 			Console.WriteLine("Couldn't FindNode key in the tree")
@@ -368,9 +368,9 @@ Public Class RBTree
 	End Sub
 
 	Private Function Minimum(ByVal node As Node) As Node
-		Do While node.left IsNot NullNode
+		While node.left IsNot NullNode
 			node = node.left
-		Loop
+		End While
 		Return node
 	End Function
 

@@ -7,7 +7,9 @@ Public Class BinaryIndexTree
 	Public Sub New(ByVal arr() As Integer)
 		size = arr.Length
 		BIT = New Integer(size) {}
-		Array.Fill(BIT, 0)
+		For i As Integer = 0 To size
+			BIT(i) = 0
+		Next i
 
 		' Populating bit. 
 		For i As Integer = 0 To size - 1

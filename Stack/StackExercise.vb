@@ -870,7 +870,10 @@ Public Class StackExercise
 
 	Public Shared Sub NextSmallerElement(ByVal arr() As Integer, ByVal size As Integer)
 		Dim output(size - 1) As Integer
-		Array.Fill(output, -1)
+		For i As Integer = 0 To size - 1
+			output(i) = -1
+		Next i
+
 		For i As Integer = 0 To size - 1
 			For j As Integer = i + 1 To size - 1
 				If arr(j) < arr(i) Then
@@ -929,7 +932,9 @@ Public Class StackExercise
 
 	Public Shared Sub NextLargerElementCircular(ByVal arr() As Integer, ByVal size As Integer)
 		Dim output(size - 1) As Integer
-		Array.Fill(output, -1)
+		For i As Integer = 0 To size - 1
+			output(i) = -1
+		Next i
 		For i As Integer = 0 To size - 1
 			For j As Integer = 1 To size - 1
 				If arr(i) < arr((i + j) Mod size) Then
