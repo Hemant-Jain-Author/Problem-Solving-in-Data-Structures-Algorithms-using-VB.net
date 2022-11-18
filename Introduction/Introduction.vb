@@ -2,8 +2,9 @@
 Imports System
 Imports System.Collections.Generic
 
-Public Class Introduction
-	Public Shared Sub PrintArray(ByVal arr() As Integer, ByVal count As Integer)
+Public Module Program
+
+	Sub PrintArray(ByVal arr() As Integer, ByVal count As Integer)
 		Console.Write("[")
 		For i As Integer = 0 To count - 1
 			Console.Write(" " & arr(i))
@@ -11,14 +12,14 @@ Public Class Introduction
 		Console.WriteLine(" ]")
 	End Sub
 
-	Public Shared Sub Swap(ByVal arr() As Integer, ByVal x As Integer, ByVal y As Integer)
+	Sub Swap(ByVal arr() As Integer, ByVal x As Integer, ByVal y As Integer)
 		Dim temp As Integer = arr(x)
 		arr(x) = arr(y)
 		arr(y) = temp
 		Return
 	End Sub
 
-	Public Shared Function SumArray(ByVal arr() As Integer) As Integer
+	Function SumArray(ByVal arr() As Integer) As Integer
 		Dim size As Integer = arr.Length
 		Dim total As Integer = 0
 		For index As Integer = 0 To size - 1
@@ -28,7 +29,7 @@ Public Class Introduction
 	End Function
 
 	' Testing code 
-	Public Shared Sub Main1()
+	Sub Main1()
 		Dim arr() As Integer = {1, 2, 3, 4, 5, 6, 7, 8, 9}
 		Console.WriteLine("Sum of values in array:" & SumArray(arr))
 	End Sub
@@ -59,7 +60,7 @@ Public Class Introduction
 	'	Fun1 line 2
 	'	Main line 2
 	'	
-	Public Shared Function SequentialSearch(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Integer
+	Function SequentialSearch(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Integer
 		For i As Integer = 0 To size - 1
 			If value = arr(i) Then
 				If True Then
@@ -70,7 +71,7 @@ Public Class Introduction
 		Return -1
 	End Function
 
-	Public Shared Function BinarySearch(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Integer
+	Function BinarySearch(ByVal arr() As Integer, ByVal size As Integer, ByVal value As Integer) As Integer
 		Dim mid As Integer
 		Dim low As Integer = 0
 		Dim high As Integer = size - 1
@@ -89,7 +90,7 @@ Public Class Introduction
 		Return -1
 	End Function
 
-	Public Shared Sub Main3()
+	Sub Main3()
 		Dim arr() As Integer = {1, 2, 3, 4, 5, 6, 7, 8, 9}
 		Console.WriteLine("SequentialSearch:" & SequentialSearch(arr, arr.Length, 7))
 		Console.WriteLine("BinarySearch:" & BinarySearch(arr, arr.Length, 7))
@@ -98,13 +99,13 @@ Public Class Introduction
 	'	SequentialSearch:6
 	'	BinarySearch:6
 	'	
-	Public Shared Sub RotateArray(ByVal a() As Integer, ByVal n As Integer, ByVal k As Integer)
+	Sub RotateArray(ByVal a() As Integer, ByVal n As Integer, ByVal k As Integer)
 		ReverseArray(a, 0, k - 1)
 		ReverseArray(a, k, n - 1)
 		ReverseArray(a, 0, n - 1)
 	End Sub
 
-	Public Shared Sub ReverseArray(ByVal a() As Integer, ByVal start As Integer, ByVal finish As Integer)
+	Sub ReverseArray(ByVal a() As Integer, ByVal start As Integer, ByVal finish As Integer)
 		Dim i As Integer = start
 		Dim j As Integer = finish
 		Do While i < j
@@ -116,7 +117,7 @@ Public Class Introduction
 		Loop
 	End Sub
 
-	Public Shared Sub ReverseArray2(ByVal a() As Integer)
+	Sub ReverseArray2(ByVal a() As Integer)
 		Dim start As Integer = 0
 		Dim finish As Integer = a.Length - 1
 		Dim i As Integer = start
@@ -131,7 +132,7 @@ Public Class Introduction
 	End Sub
 
 	' Testing code 
-	Public Shared Sub Main4()
+	Sub Main4()
 		Dim arr() As Integer = {1, 2, 3, 4, 5, 6}
 		RotateArray(arr, arr.Length, 2)
 		PrintArray(arr, arr.Length)
@@ -139,7 +140,7 @@ Public Class Introduction
 	'	
 	'	[ 3 4 5 6 1 2 ]
 	'	
-	Public Shared Function MaxSubArraySum(ByVal a() As Integer, ByVal size As Integer) As Integer
+	Function MaxSubArraySum(ByVal a() As Integer, ByVal size As Integer) As Integer
 		Dim maxSoFar As Integer = 0, maxEndingHere As Integer = 0
 
 		For i As Integer = 0 To size - 1
@@ -155,14 +156,14 @@ Public Class Introduction
 	End Function
 
 	' Testing code 
-	Public Shared Sub Main5()
+	Sub Main5()
 		Dim arr() As Integer = {1, -2, 3, 4, -4, 6, -4, 3, 2}
 		Console.WriteLine("Max sub array sum :" & MaxSubArraySum(arr, 9))
 	End Sub
 	'	
 	'	Max sub array sum :10
 	'	
-	Public Shared Sub WaveArray2(ByVal arr() As Integer)
+	Sub WaveArray2(ByVal arr() As Integer)
 		Dim size As Integer = arr.Length
 		' Odd elements are lesser then even elements. 
 		For i As Integer = 1 To size - 1 Step 2
@@ -175,7 +176,7 @@ Public Class Introduction
 		Next i
 	End Sub
 
-	Public Shared Sub WaveArray(ByVal arr() As Integer)
+	Sub WaveArray(ByVal arr() As Integer)
 		Dim size As Integer = arr.Length
 		Array.Sort(arr)
 		Dim i As Integer = 0
@@ -187,7 +188,7 @@ Public Class Introduction
 
 
 	' Testing code 
-	Public Shared Sub Main6()
+	Sub Main6()
 		Dim arr() As Integer = {8, 1, 2, 3, 4, 5, 6, 4, 2}
 		WaveArray(arr)
 		PrintArray(arr, arr.Length)
@@ -199,7 +200,7 @@ Public Class Introduction
 	'	[ 2 1 3 2 4 4 6 5 8 ]
 	'	[ 8 1 3 2 5 4 6 2 4 ]
 	'	
-	Public Shared Sub IndexArray(ByVal arr() As Integer, ByVal size As Integer)
+	Sub IndexArray(ByVal arr() As Integer, ByVal size As Integer)
 		For i As Integer = 0 To size - 1
 			Dim curr As Integer = i
 			Dim value As Integer = -1
@@ -219,7 +220,7 @@ Public Class Introduction
 		Next i
 	End Sub
 
-	Public Shared Sub IndexArray2(ByVal arr() As Integer, ByVal size As Integer)
+	Sub IndexArray2(ByVal arr() As Integer, ByVal size As Integer)
 		Dim temp As Integer
 		For i As Integer = 0 To size - 1
 			Do While arr(i) <> -1 AndAlso arr(i) <> i
@@ -232,7 +233,7 @@ Public Class Introduction
 	End Sub
 
 	' Testing code 
-	Public Shared Sub Main7()
+	Sub Main7()
 		Dim arr() As Integer = {8, -1, 6, 1, 9, 3, 2, 7, 4, -1}
 		Dim size As Integer = arr.Length
 		IndexArray2(arr, size)
@@ -247,7 +248,7 @@ Public Class Introduction
 	'	[ -1 1 2 3 4 -1 6 7 8 9 ]
 	'	
 
-	Public Shared Sub Sort1toN(ByVal arr() As Integer, ByVal size As Integer)
+	Sub Sort1toN(ByVal arr() As Integer, ByVal size As Integer)
 		Dim curr, value, nextValue As Integer
 		For i As Integer = 0 To size - 1
 			curr = i
@@ -262,7 +263,7 @@ Public Class Introduction
 		Next i
 	End Sub
 
-	Public Shared Sub Sort1toN2(ByVal arr() As Integer, ByVal size As Integer)
+	Sub Sort1toN2(ByVal arr() As Integer, ByVal size As Integer)
 		Dim temp As Integer
 		For i As Integer = 0 To size - 1
 			Do While arr(i) <> i + 1 AndAlso arr(i) > 1
@@ -274,7 +275,7 @@ Public Class Introduction
 	End Sub
 
 	' Testing code 
-	Public Shared Sub Main8()
+	Sub Main8()
 		Dim arr() As Integer = {8, 5, 6, 1, 9, 3, 2, 7, 4, 10}
 		Dim size As Integer = arr.Length
 		Sort1toN2(arr, size)
@@ -289,7 +290,7 @@ Public Class Introduction
 	'	[ 1 2 3 4 5 6 7 8 9 10 ]
 	'	[ 1 2 3 4 5 6 7 8 9 10 ]
 	'	
-	Public Shared Function SmallestPositiveMissingNumber(ByVal arr() As Integer, ByVal size As Integer) As Integer
+	Function SmallestPositiveMissingNumber(ByVal arr() As Integer, ByVal size As Integer) As Integer
 		Dim found As Integer
 		Dim i As Integer = 1
 		Do While i < size + 1
@@ -308,7 +309,7 @@ Public Class Introduction
 		Return -1
 	End Function
 
-	Public Shared Function SmallestPositiveMissingNumber2(ByVal arr() As Integer, ByVal size As Integer) As Integer
+	Function SmallestPositiveMissingNumber2(ByVal arr() As Integer, ByVal size As Integer) As Integer
 		Dim hs As New Dictionary(Of Integer, Integer)()
 		For j As Integer = 0 To size - 1
 			hs(arr(j)) = 1
@@ -323,7 +324,7 @@ Public Class Introduction
 		Return -1
 	End Function
 
-	Public Shared Function SmallestPositiveMissingNumber3(ByVal arr() As Integer, ByVal size As Integer) As Integer
+	Function SmallestPositiveMissingNumber3(ByVal arr() As Integer, ByVal size As Integer) As Integer
 		Dim aux(size - 1) As Integer
 		Array.Fill(aux, -1)
 
@@ -341,7 +342,7 @@ Public Class Introduction
 	End Function
 
 
-	Public Shared Function SmallestPositiveMissingNumber4(ByVal arr() As Integer, ByVal size As Integer) As Integer
+	Function SmallestPositiveMissingNumber4(ByVal arr() As Integer, ByVal size As Integer) As Integer
 		Dim temp As Integer
 		For i As Integer = 0 To size - 1
 			Do While arr(i) <> i + 1 AndAlso arr(i) > 0 AndAlso arr(i) <= size
@@ -359,7 +360,7 @@ Public Class Introduction
 	End Function
 
 	' Testing code 
-	Public Shared Sub Main9()
+	Sub Main9()
 		Dim arr() As Integer = {8, 5, 6, 1, 9, 11, 2, 7, 4, 10}
 		Dim size As Integer = arr.Length
 
@@ -375,7 +376,7 @@ Public Class Introduction
 	'	SmallestPositiveMissingNumber :3
 	'	SmallestPositiveMissingNumber :3
 	'	
-	Public Shared Sub MaxMinArr(ByVal arr() As Integer, ByVal size As Integer)
+	Sub MaxMinArr(ByVal arr() As Integer, ByVal size As Integer)
 		Dim aux(size - 1) As Integer
 		Array.Copy(arr, aux, size)
 		Dim start As Integer = 0
@@ -391,7 +392,7 @@ Public Class Introduction
 		Next i
 	End Sub
 
-	Public Shared Sub ReverseArr(ByVal arr() As Integer, ByVal start As Integer, ByVal finish As Integer)
+	Sub ReverseArr(ByVal arr() As Integer, ByVal start As Integer, ByVal finish As Integer)
 		Do While start < finish
 			Swap(arr, start, finish)
 			start += 1
@@ -399,7 +400,7 @@ Public Class Introduction
 		Loop
 	End Sub
 
-	Public Shared Sub MaxMinArr2(ByVal arr() As Integer, ByVal size As Integer)
+	Sub MaxMinArr2(ByVal arr() As Integer, ByVal size As Integer)
 		Dim i As Integer = 0
 		Do While i < (size - 1)
 			ReverseArr(arr, i, size - 1)
@@ -408,7 +409,7 @@ Public Class Introduction
 	End Sub
 
 	' Testing code 
-	Public Shared Sub Main10()
+	Sub Main10()
 		Dim arr() As Integer = {1, 2, 3, 4, 5, 6, 7}
 		Dim size As Integer = arr.Length
 		MaxMinArr(arr, size)
@@ -422,7 +423,7 @@ Public Class Introduction
 	'	[ 7 1 6 2 5 3 4 ]
 	'	[ 7 1 6 2 5 3 4 ]
 	'	
-	Public Shared Function MaxCircularSum(ByVal arr() As Integer, ByVal size As Integer) As Integer
+	Function MaxCircularSum(ByVal arr() As Integer, ByVal size As Integer) As Integer
 		Dim sumAll As Integer = 0
 		Dim currVal As Integer = 0
 		Dim maxVal As Integer
@@ -442,7 +443,7 @@ Public Class Introduction
 	End Function
 
 	' Testing code 
-	Public Shared Sub Main11()
+	Sub Main11()
 		Dim arr() As Integer = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1}
 		Console.WriteLine("MaxCircularSum: " & MaxCircularSum(arr, arr.Length))
 	End Sub
@@ -450,7 +451,7 @@ Public Class Introduction
 	'	MaxCircularSum: 290
 	'	
 
-	Public Shared Function ArrayIndexMaxDiff(ByVal arr() As Integer, ByVal size As Integer) As Integer
+	Function ArrayIndexMaxDiff(ByVal arr() As Integer, ByVal size As Integer) As Integer
 		Dim maxDiff As Integer = -1
 		Dim j As Integer
 		For i As Integer = 0 To size - 1
@@ -466,7 +467,7 @@ Public Class Introduction
 		Return maxDiff
 	End Function
 
-	Public Shared Function ArrayIndexMaxDiff2(ByVal arr() As Integer, ByVal size As Integer) As Integer
+	Function ArrayIndexMaxDiff2(ByVal arr() As Integer, ByVal size As Integer) As Integer
 		Dim rightMax(size - 1) As Integer
 		rightMax(size - 1) = arr(size - 1)
 		For k As Integer = size - 2 To 0 Step -1
@@ -490,7 +491,7 @@ Public Class Introduction
 	End Function
 
 	' Testing code 
-	Public Shared Sub Main12()
+	Sub Main12()
 		Dim arr() As Integer = {33, 9, 10, 3, 2, 60, 30, 33, 1} ' {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
 		Console.WriteLine("ArrayIndexMaxDiff : " & ArrayIndexMaxDiff(arr, arr.Length))
 		Console.WriteLine("ArrayIndexMaxDiff : " & ArrayIndexMaxDiff2(arr, arr.Length))
@@ -500,7 +501,7 @@ Public Class Introduction
 	'	ArrayIndexMaxDiff : 7
 	'	
 
-	Public Shared Function MaxPathSum(ByVal arr1() As Integer, ByVal size1 As Integer, ByVal arr2() As Integer, ByVal size2 As Integer) As Integer
+	Function MaxPathSum(ByVal arr1() As Integer, ByVal size1 As Integer, ByVal arr2() As Integer, ByVal size2 As Integer) As Integer
 		Dim i As Integer = 0, j As Integer = 0, result As Integer = 0, sum1 As Integer = 0, sum2 As Integer = 0
 
 		Do While i < size1 AndAlso j < size2
@@ -534,7 +535,7 @@ Public Class Introduction
 	End Function
 
 	' Testing code 
-	Public Shared Sub Main13()
+	Sub Main13()
 		Dim arr1() As Integer = {12, 13, 18, 20, 22, 26, 70}
 		Dim arr2() As Integer = {11, 15, 18, 19, 20, 26, 30, 31}
 		Console.WriteLine("Max Path Sum :: " & MaxPathSum(arr1, arr1.Length, arr2, arr2.Length))
@@ -542,7 +543,7 @@ Public Class Introduction
 	'	
 	'	Max Path Sum :: 201
 	'	
-	Public Shared Function Factorial(ByVal i As Integer) As Integer
+	Function Factorial(ByVal i As Integer) As Integer
 		' Termination Condition
 		If i <= 1 Then
 			Return 1
@@ -552,13 +553,13 @@ Public Class Introduction
 	End Function
 
 	' Testing code 
-	Public Shared Sub Main14()
+	Sub Main14()
 		Console.WriteLine("Factorial:" & Factorial(5))
 	End Sub
 
 	' Factorial:120
 
-	Public Shared Sub PrintInt10(ByVal number As Integer)
+	Sub PrintInt10(ByVal number As Integer)
 		Dim digit As Char = ChrW(number Mod 10 + AscW("0"c))
 		number = number \ 10
 		If number <> 0 Then
@@ -568,7 +569,7 @@ Public Class Introduction
 	End Sub
 
 
-	Public Shared Sub PrintInt(ByVal number As Integer, ByVal outputbase As Integer)
+	Sub PrintInt(ByVal number As Integer, ByVal outputbase As Integer)
 		Dim conversion As String = "0123456789ABCDEF"
 		Dim digit As Char = ChrW(number Mod outputbase)
 		number = number \ outputbase
@@ -579,7 +580,7 @@ Public Class Introduction
 	End Sub
 
 	' Testing code 
-	Public Shared Sub Main15()
+	Sub Main15()
 		PrintInt10(50)
 		Console.WriteLine()
 		PrintInt(500, 16)
@@ -591,7 +592,7 @@ Public Class Introduction
 	'	
 
 
-	Public Shared Sub TowerOfHanoi(ByVal num As Integer, ByVal src As Char, ByVal dst As Char, ByVal temp As Char)
+	Sub TowerOfHanoi(ByVal num As Integer, ByVal src As Char, ByVal dst As Char, ByVal temp As Char)
 		If num < 1 Then
 			Return
 		End If
@@ -602,7 +603,7 @@ Public Class Introduction
 	End Sub
 
 	' Testing code 
-	Public Shared Sub Main16()
+	Sub Main16()
 		Dim num As Integer = 3
 		Console.WriteLine("Moves involved in the Tower of Hanoi are:")
 		TowerOfHanoi(num, "A"c, "C"c, "B"c)
@@ -617,7 +618,7 @@ Public Class Introduction
 	'	Move 2 disk  from peg B to peg C
 	'	Move 1 disk  from peg A to peg C
 	'	
-	Public Shared Function GCD(ByVal m As Integer, ByVal n As Integer) As Integer
+	Function GCD(ByVal m As Integer, ByVal n As Integer) As Integer
 		If m < n Then
 			Return (GCD(n, m))
 		End If
@@ -628,7 +629,7 @@ Public Class Introduction
 	End Function
 
 	' Testing code 
-	Public Shared Sub Main17()
+	Sub Main17()
 		Console.WriteLine("GCD is:: " & GCD(5, 2))
 	End Sub
 
@@ -636,7 +637,7 @@ Public Class Introduction
 	'	GCD is:: 1
 	'	
 
-	Public Shared Function Fibonacci(ByVal n As Integer) As Integer
+	Function Fibonacci(ByVal n As Integer) As Integer
 		If n <= 1 Then
 			Return n
 		End If
@@ -644,7 +645,7 @@ Public Class Introduction
 	End Function
 
 	' Testing code 
-	Public Shared Sub Main18()
+	Sub Main18()
 		For i As Integer = 0 To 9
 			Console.Write(Fibonacci(i) & " ")
 		Next i
@@ -655,7 +656,7 @@ Public Class Introduction
 	'	0 1 1 2 3 5 8 13 21 34 
 	'	
 
-	Public Shared Sub Permutation(ByVal arr() As Integer, ByVal i As Integer, ByVal length As Integer)
+	Sub Permutation(ByVal arr() As Integer, ByVal i As Integer, ByVal length As Integer)
 		If length = i Then
 			PrintArray(arr, length)
 			Return
@@ -672,7 +673,7 @@ Public Class Introduction
 	End Sub
 
 	' Testing code 
-	Public Shared Sub Main19()
+	Sub Main19()
 		Dim arr(2) As Integer
 		For i As Integer = 0 To 2
 			arr(i) = i
@@ -688,7 +689,7 @@ Public Class Introduction
 	'	[ 2 0 1 ]
 	'	
 	' Binary Search Algorithm - Recursive
-	Public Shared Function BinarySearchRecursive(ByVal arr() As Integer, ByVal low As Integer, ByVal high As Integer, ByVal value As Integer) As Integer
+	Function BinarySearchRecursive(ByVal arr() As Integer, ByVal low As Integer, ByVal high As Integer, ByVal value As Integer) As Integer
 		If low > high Then
 			Return -1
 		End If
@@ -703,7 +704,7 @@ Public Class Introduction
 	End Function
 
 	' Testing code 
-	Public Shared Sub Main20()
+	Sub Main20()
 		Dim arr() As Integer = {1, 2, 3, 4, 5, 6, 7, 8, 9}
 		Console.WriteLine(BinarySearchRecursive(arr, 0, arr.Length - 1, 6))
 		Console.WriteLine(BinarySearchRecursive(arr, 0, arr.Length - 1, 16))
@@ -712,11 +713,10 @@ Public Class Introduction
 	'	5
 	'	-1
 	'	
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 
-		Main1()
-		Dim i As New Introduction()
-		i.Main2()
+		Main1()		
+		Main2()
 		Main3()
 		Main4()
 		Main5()
@@ -736,4 +736,54 @@ Public Class Introduction
 		Main19()
 		Main20()
 	End Sub
-End Class
+End Module
+
+
+' Sum of values in array:45
+' Main line 1
+' Fun1 line 1
+' Fun2 line 1
+' Fun1 line 2
+' Main line 2
+' SequentialSearch:6
+' BinarySearch:6
+' [ 3 4 5 6 1 2 ]
+' Max sub array sum :10
+' [ 2 1 3 2 4 4 6 5 8 ]
+' [ 8 1 3 2 5 4 6 2 4 ]
+' [ -1 1 2 3 4 -1 6 7 8 9 ]
+' [ -1 1 2 3 4 -1 6 7 8 9 ]
+' [ 1 2 3 4 5 6 7 8 9 10 ]
+' [ 1 2 3 4 5 6 7 8 9 10 ]
+' SmallestPositiveMissingNumber :3
+' SmallestPositiveMissingNumber :3
+' SmallestPositiveMissingNumber :3
+' SmallestPositiveMissingNumber :3
+' [ 7 1 6 2 5 3 4 ]
+' [ 7 1 6 2 5 3 4 ]
+' MaxCircularSum: 290
+' ArrayIndexMaxDiff : 7
+' ArrayIndexMaxDiff : 7
+' Max Path Sum :: 201
+' Factorial:120
+' 50
+' 1F4
+' Moves involved in the Tower of Hanoi are:
+' Move 1 disk  from peg A to peg C
+' Move 2 disk  from peg A to peg B
+' Move 1 disk  from peg C to peg B
+' Move 3 disk  from peg A to peg C
+' Move 1 disk  from peg B to peg A
+' Move 2 disk  from peg B to peg C
+' Move 1 disk  from peg A to peg C
+' GCD is:: 1
+' 0 1 1 2 3 5 8 13 21 34 
+' [ 0 1 2 ]
+' [ 0 2 1 ]
+' [ 1 0 2 ]
+' [ 1 2 0 ]
+' [ 2 1 0 ]
+' [ 2 0 1 ]
+' 5
+' -1
+' "

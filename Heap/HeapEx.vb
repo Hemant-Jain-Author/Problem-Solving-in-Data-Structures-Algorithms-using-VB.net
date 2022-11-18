@@ -276,29 +276,25 @@ Public Class HeapEx
 
 	Public Shared Sub SortK(ByVal arr() As Integer, ByVal size As Integer, ByVal k As Integer)
 		Dim pq As New PriorityQueue(Of Integer)()
+
 		Dim i As Integer = 0
 		For i = 0 To k - 1
 			pq.Enqueue(arr(i))
 		Next i
 
-		Dim output(size - 1) As Integer
 		Dim index As Integer = 0
-
 		For i = k To size - 1
 
-			output(index) = pq.Dequeue()
+			arr(index) = pq.Dequeue()
 			index += 1
 			pq.Enqueue(arr(i))
 		Next i
+
 		Do While pq.Size() > 0
 
-			output(index) = pq.Dequeue()
+			arr(index) = pq.Dequeue()
 			index += 1
 		Loop
-
-		For i = 0 To size - 1
-			arr(i) = output(i)
-		Next i
 	End Sub
 
 	' Testing Code
