@@ -11,14 +11,14 @@ Public Class CoinChange
 		Array.Sort(coins)
 
 		Dim i As Integer = n - 1
-		Do While i >= 0 AndAlso val > 0
+		While i >= 0 AndAlso val > 0
 			If coins(i) <= val Then
 				count += 1
 				val -= coins(i)
 			Else
 				i -= 1
 			End If
-		Loop
+		End While
 		Return If(val = 0, count, -1)
 	End Function
 
@@ -29,7 +29,7 @@ Public Class CoinChange
 
 		Dim count As Integer = Integer.MaxValue
 		Dim i As Integer = 0
-		Do While i < n
+		While i < n
 			If coins(i) <= val Then
 				Dim subCount As Integer = MinCoins2(coins, n, val - coins(i))
 				If subCount >= 0 Then
@@ -37,7 +37,7 @@ Public Class CoinChange
 				End If
 			End If
 			i += 1
-		Loop
+		End While
 		Return If(count <> Integer.MaxValue, count, -1)
 	End Function
 
@@ -61,7 +61,7 @@ Public Class CoinChange
 
 		' Recursion
 		Dim i As Integer = 0
-		Do While i < n
+		While i < n
 			If coins(i) <= val Then ' check validity of a sub-problem
 				Dim subCount As Integer = MinCoinsTD(dp, coins, n, val - coins(i))
 				If subCount <> Integer.MaxValue Then
@@ -69,7 +69,7 @@ Public Class CoinChange
 				End If
 			End If
 			i += 1
-		Loop
+		End While
 		Return dp(val)
 	End Function
 

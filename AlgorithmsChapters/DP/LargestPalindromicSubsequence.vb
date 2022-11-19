@@ -13,7 +13,7 @@ Public Class LargestPalindromicSubsequence
 		For l As Integer = 1 To n - 1
 			Dim i As Integer = 0
 			Dim j As Integer = l
-			Do While j < n
+			While j < n
 				If str.Chars(i) = str.Chars(j) Then
 					dp(i, j) = dp(i + 1, j - 1) + 2
 				Else
@@ -21,7 +21,7 @@ Public Class LargestPalindromicSubsequence
 				End If
 				i += 1
 				j += 1
-			Loop
+			End While
 		Next l
 		Return dp(0, n - 1)
 	End Function

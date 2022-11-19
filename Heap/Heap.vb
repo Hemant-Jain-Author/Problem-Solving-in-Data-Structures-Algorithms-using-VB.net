@@ -105,7 +105,7 @@ Public Class Heap
 
 	Public Function Delete(ByVal value As Integer) As Boolean
 		Dim i As Integer = 0
-		Do While i < count
+		While i < count
 			If arr(i) = value Then
 				arr(i) = arr(count - 1)
 				count -= 1
@@ -113,7 +113,7 @@ Public Class Heap
 				Return True
 			End If
 			i += 1
-		Loop
+		End While
 		Return False
 	End Function
 
@@ -186,9 +186,9 @@ Public Class Heap
 
 		Console.Write("Heap Array: ")
 		hp.Print()
-		Do While hp.IsEmpty() = False
+		While hp.IsEmpty() = False
 			Console.Write(hp.Remove() & " ")
-		Loop
+		End While
 		Console.WriteLine()
 
 		hp = New Heap(False)
@@ -198,9 +198,9 @@ Public Class Heap
 
 		Console.Write("Heap Array: ")
 		hp.Print()
-		Do While hp.IsEmpty() = False
+		While hp.IsEmpty() = False
 			Console.Write(hp.Remove() & " ")
-		Loop
+		End While
 	End Sub
 
 

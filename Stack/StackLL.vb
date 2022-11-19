@@ -56,10 +56,10 @@ Public Class StackLL
 
 	Public Sub Print()
 		Dim temp As Node = head
-		Do While temp IsNot Nothing
+		While temp IsNot Nothing
 			Console.Write(temp.value & " ")
 			temp = temp.nextPtr
-		Loop
+		End While
 		Console.WriteLine()
 	End Sub
 

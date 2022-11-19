@@ -14,7 +14,7 @@ Public Class ClosestPair
 		Dim n As Integer = arr.GetLength(0)
 		Dim dmin As Double = Double.MaxValue, d As Double
 		Dim i As Integer = 0
-		Do While i < n - 1
+		While i < n - 1
 			For j As Integer = i + 1 To n - 1
 				d = Math.Sqrt((arr(i, 0) - arr(j, 0)) * (arr(i, 0) - arr(j, 0)) + (arr(i, 1) - arr(j, 1)) * (arr(i, 1) - arr(j, 1)))
 				If d < dmin Then
@@ -22,7 +22,7 @@ Public Class ClosestPair
 				End If
 			Next j
 			i += 1
-		Loop
+		End While
 		Return dmin
 	End Function
 	

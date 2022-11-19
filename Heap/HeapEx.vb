@@ -14,9 +14,9 @@ Public Class HeapEx
 		pq.Print()
 
 		Console.Write("Dequeue elements of Priority Queue ::")
-		Do While pq.IsEmpty() = False
+		While pq.IsEmpty() = False
 			Console.Write(" " & pq.Dequeue())
-		Loop
+		End While
 	End Sub
 
 	Public Shared Function KthSmallest(ByVal arr() As Integer, ByVal size As Integer, ByVal k As Integer) As Integer
@@ -32,10 +32,10 @@ Public Class HeapEx
 		Next i
 
 		i = 0
-		Do While i < k - 1
+		While i < k - 1
 			pq.Dequeue()
 			i += 1
-		Loop
+		End While
 		Return pq.Peek()
 	End Function
 
@@ -70,7 +70,7 @@ Public Class HeapEx
 		Dim lchild, rchild As Integer
 		' last element index size - 1
 		Dim parent As Integer = 0
-		Do While parent < (size \ 2 + 1)
+		While parent < (size \ 2 + 1)
 			lchild = parent * 2 + 1
 			rchild = parent * 2 + 2
 			' heap property check.
@@ -78,7 +78,7 @@ Public Class HeapEx
 				Return False
 			End If
 			parent += 1
-		Loop
+		End While
 		Return True
 	End Function
 
@@ -86,7 +86,7 @@ Public Class HeapEx
 		Dim lchild, rchild As Integer
 		' last element index size - 1
 		Dim parent As Integer = 0
-		Do While parent < (size \ 2 + 1)
+		While parent < (size \ 2 + 1)
 			lchild = parent * 2 + 1
 			rchild = lchild + 1
 			' heap property check.
@@ -94,7 +94,7 @@ Public Class HeapEx
 				Return False
 			End If
 			parent += 1
-		Loop
+		End While
 		Return True
 	End Function
 
@@ -144,17 +144,17 @@ Public Class HeapEx
 		Dim start As Integer = lower
 		Dim finish As Integer = upper
 
-		Do While lower < upper
-			Do While lower < upper AndAlso arr(lower) <= pivot
+		While lower < upper
+			While lower < upper AndAlso arr(lower) <= pivot
 				lower += 1
-			Loop
-			Do While lower <= upper AndAlso arr(upper) > pivot
+			End While
+			While lower <= upper AndAlso arr(upper) > pivot
 				upper -= 1
-			Loop
+			End While
 			If lower < upper Then
 				Swap(arr, upper, lower)
 			End If
-		Loop
+		End While
 
 		Swap(arr, upper, start) ' upper is the pivot position
 		If k < upper Then
@@ -182,10 +182,10 @@ Public Class HeapEx
 			pq.Enqueue(arr(i))
 		Next i
 		i = 0
-		Do While i < size AndAlso i < k
+		While i < size AndAlso i < k
 			product *= pq.Dequeue()
 			i += 1
-		Loop
+		End While
 		Return product
 	End Function
 
@@ -244,10 +244,10 @@ Public Class HeapEx
 		Next i
 
 		i = 0
-		Do While i < size \ 2
+		While i < size \ 2
 			pq.Dequeue()
 			i += 1
-		Loop
+		End While
 		pq.Print()
 	End Sub
 
@@ -290,11 +290,11 @@ Public Class HeapEx
 			pq.Enqueue(arr(i))
 		Next i
 
-		Do While pq.Size() > 0
+		While pq.Size() > 0
 
 			arr(index) = pq.Dequeue()
 			index += 1
-		Loop
+		End While
 	End Sub
 
 	' Testing Code

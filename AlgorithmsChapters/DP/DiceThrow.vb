@@ -13,10 +13,10 @@ Public Class DiceThrow
 		For i As Integer = 2 To n
 			For j As Integer = 1 To V
 				Dim k As Integer = 1
-				Do While k <= j AndAlso k <= m
+				While k <= j AndAlso k <= m
 					dp(i, j) += dp(i - 1, j - k)
 					k += 1
-				Loop
+				End While
 			Next j
 		Next i
 		Return dp(n, V)

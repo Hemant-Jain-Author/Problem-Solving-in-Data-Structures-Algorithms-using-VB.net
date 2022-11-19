@@ -75,7 +75,7 @@ Function BinarySearch(ByVal arr() As Integer, ByVal size As Integer, ByVal value
     Dim mid As Integer
     Dim low As Integer = 0
     Dim high As Integer = size - 1
-    Do While low <= high
+    While low <= high
         mid = (low + high) \ 2
         If arr(mid) = value Then
             Return mid
@@ -86,7 +86,7 @@ Function BinarySearch(ByVal arr() As Integer, ByVal size As Integer, ByVal value
                 high = mid - 1
             End If
         End If
-    Loop
+    End While
     Return -1
 End Function
 
@@ -105,31 +105,31 @@ Sub RotateArray(ByVal a() As Integer, ByVal n As Integer, ByVal k As Integer)
     ReverseArray(a, 0, n - 1)
 End Sub
 
-Sub ReverseArray(ByVal a() As Integer, ByVal start As Integer, ByVal finish As Integer)
-    Dim i As Integer = start
-    Dim j As Integer = finish
-    Do While i < j
-        Dim temp As Integer = a(i)
-        a(i) = a(j)
-        a(j) = temp
-        i += 1
-        j -= 1
-    Loop
-End Sub
+	Sub ReverseArray(ByVal a() As Integer, ByVal start As Integer, ByVal finish As Integer)
+		Dim i As Integer = start
+		Dim j As Integer = finish
+		While i < j
+			Dim temp As Integer = a(i)
+			a(i) = a(j)
+			a(j) = temp
+			i += 1
+			j -= 1
+		End While
+	End Sub
 
-Sub ReverseArray2(ByVal a() As Integer)
-    Dim start As Integer = 0
-    Dim finish As Integer = a.Length - 1
-    Dim i As Integer = start
-    Dim j As Integer = finish
-    Do While i < j
-        Dim temp As Integer = a(i)
-        a(i) = a(j)
-        a(j) = temp
-        i += 1
-        j -= 1
-    Loop
-End Sub
+	Sub ReverseArray2(ByVal a() As Integer)
+		Dim start As Integer = 0
+		Dim finish As Integer = a.Length - 1
+		Dim i As Integer = start
+		Dim j As Integer = finish
+		While i < j
+			Dim temp As Integer = a(i)
+			a(i) = a(j)
+			a(j) = temp
+			i += 1
+			j -= 1
+		End While
+	End Sub
 
 ' Testing code
 Sub Main4()
@@ -176,15 +176,15 @@ Sub WaveArray2(ByVal arr() As Integer)
     Next i
 End Sub
 
-Sub WaveArray(ByVal arr() As Integer)
-    Dim size As Integer = arr.Length
-    Array.Sort(arr)
-    Dim i As Integer = 0
-    Do While i < size - 1
-        Swap(arr, i, i + 1)
-        i += 2
-    Loop
-End Sub
+	Sub WaveArray(ByVal arr() As Integer)
+		Dim size As Integer = arr.Length
+		Array.Sort(arr)
+		Dim i As Integer = 0
+		While i < size - 1
+			Swap(arr, i, i + 1)
+			i += 2
+		End While
+	End Sub
 
 
 ' Testing code
@@ -205,13 +205,13 @@ Sub IndexArray(ByVal arr() As Integer, ByVal size As Integer)
         Dim curr As Integer = i
         Dim value As Integer = -1
 
-        ' Swaps to move elements in proper position.
-        Do While arr(curr) <> -1 AndAlso arr(curr) <> curr
-            Dim temp As Integer = arr(curr)
-            arr(curr) = value
-            curr = temp
-            value = curr
-        Loop
+			' Swaps to move elements in proper position. 
+			While arr(curr) <> -1 AndAlso arr(curr) <> curr
+				Dim temp As Integer = arr(curr)
+				arr(curr) = value
+				curr = temp
+				value = curr
+			End While
 
         ' check if some Swaps happened.
         If value <> -1 Then
@@ -220,17 +220,17 @@ Sub IndexArray(ByVal arr() As Integer, ByVal size As Integer)
     Next i
 End Sub
 
-Sub IndexArray2(ByVal arr() As Integer, ByVal size As Integer)
-    Dim temp As Integer
-    For i As Integer = 0 To size - 1
-        Do While arr(i) <> -1 AndAlso arr(i) <> i
-            ' Swap arr[i] and arr[arr[i]]
-            temp = arr(i)
-            arr(i) = arr(temp)
-            arr(temp) = temp
-        Loop
-    Next i
-End Sub
+	Sub IndexArray2(ByVal arr() As Integer, ByVal size As Integer)
+		Dim temp As Integer
+		For i As Integer = 0 To size - 1
+			While arr(i) <> -1 AndAlso arr(i) <> i
+				' Swap arr[i] and arr[arr[i]] 
+				temp = arr(i)
+				arr(i) = arr(temp)
+				arr(temp) = temp
+			End While
+		Next i
+	End Sub
 
 ' Testing code
 Sub Main7()
@@ -248,31 +248,31 @@ End Sub
 '	[ -1 1 2 3 4 -1 6 7 8 9 ]
 '
 
-Sub Sort1toN(ByVal arr() As Integer, ByVal size As Integer)
-    Dim curr, value, nextValue As Integer
-    For i As Integer = 0 To size - 1
-        curr = i
-        value = -1
-        ' Swaps to move elements in proper position.
-        Do While curr >= 0 AndAlso curr < size AndAlso arr(curr) <> curr + 1
-            nextValue = arr(curr)
-            arr(curr) = value
-            value = nextValue
-            curr = nextValue - 1
-        Loop
-    Next i
-End Sub
+	Sub Sort1toN(ByVal arr() As Integer, ByVal size As Integer)
+		Dim curr, value, nextValue As Integer
+		For i As Integer = 0 To size - 1
+			curr = i
+			value = -1
+			' Swaps to move elements in proper position. 
+			While curr >= 0 AndAlso curr < size AndAlso arr(curr) <> curr + 1
+				nextValue = arr(curr)
+				arr(curr) = value
+				value = nextValue
+				curr = nextValue - 1
+			End While
+		Next i
+	End Sub
 
-Sub Sort1toN2(ByVal arr() As Integer, ByVal size As Integer)
-    Dim temp As Integer
-    For i As Integer = 0 To size - 1
-        Do While arr(i) <> i + 1 AndAlso arr(i) > 1
-            temp = arr(i)
-            arr(i) = arr(temp - 1)
-            arr(temp - 1) = temp
-        Loop
-    Next i
-End Sub
+	Sub Sort1toN2(ByVal arr() As Integer, ByVal size As Integer)
+		Dim temp As Integer
+		For i As Integer = 0 To size - 1
+			While arr(i) <> i + 1 AndAlso arr(i) > 1
+				temp = arr(i)
+				arr(i) = arr(temp - 1)
+				arr(temp - 1) = temp
+			End While
+		Next i
+	End Sub
 
 ' Testing code
 Sub Main8()
@@ -285,44 +285,44 @@ Sub Main8()
     Sort1toN(arr2, size)
     PrintArray(arr2, size)
 
-End Sub
-'
-'	[ 1 2 3 4 5 6 7 8 9 10 ]
-'	[ 1 2 3 4 5 6 7 8 9 10 ]
-'
-Function SmallestPositiveMissingNumber(ByVal arr() As Integer, ByVal size As Integer) As Integer
-    Dim found As Integer
-    Dim i As Integer = 1
-    Do While i < size + 1
-        found = 0
-        For j As Integer = 0 To size - 1
-            If arr(j) = i Then
-                found = 1
-                Exit For
-            End If
-        Next j
-        If found = 0 Then
-            Return i
-        End If
-        i += 1
-    Loop
-    Return -1
-End Function
+	End Sub
+	'	
+	'	[ 1 2 3 4 5 6 7 8 9 10 ]
+	'	[ 1 2 3 4 5 6 7 8 9 10 ]
+	'	
+	Function SmallestPositiveMissingNumber(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim found As Integer
+		Dim i As Integer = 1
+		While i < size + 1
+			found = 0
+			For j As Integer = 0 To size - 1
+				If arr(j) = i Then
+					found = 1
+					Exit For
+				End If
+			Next j
+			If found = 0 Then
+				Return i
+			End If
+			i += 1
+		End While
+		Return -1
+	End Function
 
-Function SmallestPositiveMissingNumber2(ByVal arr() As Integer, ByVal size As Integer) As Integer
-    Dim hs As New Dictionary(Of Integer, Integer)()
-    For j As Integer = 0 To size - 1
-        hs(arr(j)) = 1
-    Next j
-    Dim i As Integer = 1
-    Do While i < size + 1
-        If hs.ContainsKey(i) = False Then
-            Return i
-        End If
-        i += 1
-    Loop
-    Return -1
-End Function
+	Function SmallestPositiveMissingNumber2(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim hs As New Dictionary(Of Integer, Integer)()
+		For j As Integer = 0 To size - 1
+			hs(arr(j)) = 1
+		Next j
+		Dim i As Integer = 1
+		While i < size + 1
+			If hs.ContainsKey(i) = False Then
+				Return i
+			End If
+			i += 1
+		End While
+		Return -1
+	End Function
 
 Function SmallestPositiveMissingNumber3(ByVal arr() As Integer, ByVal size As Integer) As Integer
     Dim aux(size - 1) As Integer
@@ -344,22 +344,22 @@ Function SmallestPositiveMissingNumber3(ByVal arr() As Integer, ByVal size As In
 End Function
 
 
-Function SmallestPositiveMissingNumber4(ByVal arr() As Integer, ByVal size As Integer) As Integer
-    Dim temp As Integer
-    For i As Integer = 0 To size - 1
-        Do While arr(i) <> i + 1 AndAlso arr(i) > 0 AndAlso arr(i) <= size
-            temp = arr(i)
-            arr(i) = arr(temp - 1)
-            arr(temp - 1) = temp
-        Loop
-    Next i
-    For i As Integer = 0 To size - 1
-        If arr(i) <> i + 1 Then
-            Return i + 1
-        End If
-    Next i
-    Return -1
-End Function
+	Function SmallestPositiveMissingNumber4(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim temp As Integer
+		For i As Integer = 0 To size - 1
+			While arr(i) <> i + 1 AndAlso arr(i) > 0 AndAlso arr(i) <= size
+				temp = arr(i)
+				arr(i) = arr(temp - 1)
+				arr(temp - 1) = temp
+			End While
+		Next i
+		For i As Integer = 0 To size - 1
+			If arr(i) <> i + 1 Then
+				Return i + 1
+			End If
+		Next i
+		Return -1
+	End Function
 
 ' Testing code
 Sub Main9()
@@ -394,21 +394,21 @@ Sub MaxMinArr(ByVal arr() As Integer, ByVal size As Integer)
     Next i
 End Sub
 
-Sub ReverseArr(ByVal arr() As Integer, ByVal start As Integer, ByVal finish As Integer)
-    Do While start < finish
-        Swap(arr, start, finish)
-        start += 1
-        finish -= 1
-    Loop
-End Sub
+	Sub ReverseArr(ByVal arr() As Integer, ByVal start As Integer, ByVal finish As Integer)
+		While start < finish
+			Swap(arr, start, finish)
+			start += 1
+			finish -= 1
+		End While
+	End Sub
 
-Sub MaxMinArr2(ByVal arr() As Integer, ByVal size As Integer)
-    Dim i As Integer = 0
-    Do While i < (size - 1)
-        ReverseArr(arr, i, size - 1)
-        i += 1
-    Loop
-End Sub
+	Sub MaxMinArr2(ByVal arr() As Integer, ByVal size As Integer)
+		Dim i As Integer = 0
+		While i < (size - 1)
+			ReverseArr(arr, i, size - 1)
+			i += 1
+		End While
+	End Sub
 
 ' Testing code
 Sub Main10()
@@ -453,21 +453,21 @@ End Sub
 '	MaxCircularSum: 290
 '
 
-Function ArrayIndexMaxDiff(ByVal arr() As Integer, ByVal size As Integer) As Integer
-    Dim maxDiff As Integer = -1
-    Dim j As Integer
-    For i As Integer = 0 To size - 1
-        j = size - 1
-        Do While i < j
-            If arr(i) <= arr(j) Then
-                maxDiff = Math.Max(maxDiff, j - i)
-                Exit Do
-            End If
-            j -= 1
-        Loop
-    Next i
-    Return maxDiff
-End Function
+	Function ArrayIndexMaxDiff(ByVal arr() As Integer, ByVal size As Integer) As Integer
+		Dim maxDiff As Integer = -1
+		Dim j As Integer
+		For i As Integer = 0 To size - 1
+			j = size - 1
+			While i < j
+				If arr(i) <= arr(j) Then
+					maxDiff = Math.Max(maxDiff, j - i)
+					Exit While
+				End If
+				j -= 1
+			End While
+		Next i
+		Return maxDiff
+	End Function
 
 Function ArrayIndexMaxDiff2(ByVal arr() As Integer, ByVal size As Integer) As Integer
     Dim rightMax(size - 1) As Integer
@@ -476,21 +476,21 @@ Function ArrayIndexMaxDiff2(ByVal arr() As Integer, ByVal size As Integer) As In
         rightMax(k) = Math.Max(rightMax(k + 1), arr(k))
     Next k
 
-    Dim maxDiff As Integer = -1
-    Dim i As Integer = 0
-    Dim j As Integer = 1
-    Do While i < size AndAlso j < size
-        If arr(i) <= rightMax(j) Then
-            If i < j Then
-                maxDiff = Math.Max(maxDiff, j - i)
-            End If
-            j = j + 1
-        Else
-            i = i + 1
-        End If
-    Loop
-    Return maxDiff
-End Function
+		Dim maxDiff As Integer = -1
+		Dim i As Integer = 0
+		Dim j As Integer = 1
+		While i < size AndAlso j < size
+			If arr(i) <= rightMax(j) Then
+				If i < j Then
+					maxDiff = Math.Max(maxDiff, j - i)
+				End If
+				j = j + 1
+			Else
+				i = i + 1
+			End If
+		End While
+		Return maxDiff
+	End Function
 
 ' Testing code
 Sub Main12()
@@ -506,31 +506,31 @@ End Sub
 Function MaxPathSum(ByVal arr1() As Integer, ByVal size1 As Integer, ByVal arr2() As Integer, ByVal size2 As Integer) As Integer
     Dim i As Integer = 0, j As Integer = 0, result As Integer = 0, sum1 As Integer = 0, sum2 As Integer = 0
 
-    Do While i < size1 AndAlso j < size2
-        If arr1(i) < arr2(j) Then
-            sum1 += arr1(i)
-            i += 1
-        ElseIf arr1(i) > arr2(j) Then
-            sum2 += arr2(j)
-            j += 1
-        Else
-            result += Math.Max(sum1, sum2)
-            result = result + arr1(i)
-            sum1 = 0
-            sum2 = 0
-            i += 1
-            j += 1
-        End If
-    Loop
-    Do While i < size1
-        sum1 += arr1(i)
-        i += 1
-    Loop
+		While i < size1 AndAlso j < size2
+			If arr1(i) < arr2(j) Then
+				sum1 += arr1(i)
+				i += 1
+			ElseIf arr1(i) > arr2(j) Then
+				sum2 += arr2(j)
+				j += 1
+			Else
+				result += Math.Max(sum1, sum2)
+				result = result + arr1(i)
+				sum1 = 0
+				sum2 = 0
+				i += 1
+				j += 1
+			End If
+		End While
+		While i < size1
+			sum1 += arr1(i)
+			i += 1
+		End While
 
-    Do While j < size2
-        sum2 += arr2(j)
-        j += 1
-    Loop
+		While j < size2
+			sum2 += arr2(j)
+			j += 1
+		End While
 
     result += Math.Max(sum1, sum2)
     Return result
@@ -655,21 +655,21 @@ End Sub
 '	55
 '
 
-Sub Permutation(ByVal arr() As Integer, ByVal i As Integer, ByVal length As Integer)
-    If length = i Then
-        PrintArray(arr, length)
-        Return
-    End If
-    Dim j As Integer = i
-    j = i
-    Do While j < length
-        Swap(arr, i, j)
-        Permutation(arr, i + 1, length)
-        Swap(arr, i, j)
-        j += 1
-    Loop
-    Return
-End Sub
+	Sub Permutation(ByVal arr() As Integer, ByVal i As Integer, ByVal length As Integer)
+		If length = i Then
+			PrintArray(arr, length)
+			Return
+		End If
+		Dim j As Integer = i
+		j = i
+		While j < length
+			Swap(arr, i, j)
+			Permutation(arr, i + 1, length)
+			Swap(arr, i, j)
+			j += 1
+		End While
+		Return
+	End Sub
 
 ' Testing code
 Sub Main19()

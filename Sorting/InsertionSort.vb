@@ -11,10 +11,10 @@ Public Class InsertionSort
 		For i As Integer = 1 To size - 1
 			temp = arr(i)
 			j = i
-			Do While j > 0 AndAlso Greater(arr(j - 1), temp)
+			While j > 0 AndAlso Greater(arr(j - 1), temp)
 				arr(j) = arr(j - 1)
 				j -= 1
-			Loop
+			End While
 			arr(j) = temp
 		Next i
 	End Sub

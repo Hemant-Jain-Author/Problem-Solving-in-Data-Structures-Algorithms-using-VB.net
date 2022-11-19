@@ -63,10 +63,10 @@ Public Class BitManipulation
 
 	Public Shared Function CountBits(ByVal a As Integer) As Integer
 		Dim count As Integer = 0
-		Do While a > 0
+		While a > 0
 			count += 1
 			a = a And (a - 1) ' reset least significant bit.
-		Loop
+		End While
 		Return count
 	End Function
 

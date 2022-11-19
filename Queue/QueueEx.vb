@@ -27,21 +27,21 @@ Public Class QueueEx
 		Dim count As Integer = 0
 		Dim petrol As Integer = 0
 
-		Do While que.Count <> n
-			Do While petrol >= 0 AndAlso que.Count <> n
+		While que.Count <> n
+			While petrol >= 0 AndAlso que.Count <> n
 				que.Enqueue(nextPump)
 				petrol += (arr(nextPump, 0) - arr(nextPump, 1))
 				nextPump = (nextPump + 1) Mod n
-			Loop
-			Do While petrol < 0 AndAlso que.Count > 0
+			End While
+			While petrol < 0 AndAlso que.Count > 0
 				prevPump = que.Dequeue()
 				petrol -= (arr(prevPump, 0) - arr(prevPump, 1))
-			Loop
+			End While
 			count += 1
 			If count = n Then
 				Return -1
 			End If
-		Loop
+		End While
 		If petrol >= 0 Then
 			Return que.Dequeue()
 		Else
@@ -71,7 +71,7 @@ Public Class QueueEx
 		Dim value As Integer
 
 		que.Enqueue(src)
-		Do While que.Count <> 0
+		While que.Count <> 0
 			value = que.Dequeue()
 
 			arr(index) = value
@@ -86,7 +86,7 @@ Public Class QueueEx
 			Else
 				que.Enqueue(value - 1)
 			End If
-		Loop
+		End While
 		Return -1
 	End Function
 
@@ -99,14 +99,14 @@ Public Class QueueEx
 
 	Public Shared Sub MaxSlidingWindows(ByVal arr() As Integer, ByVal size As Integer, ByVal k As Integer)
 		Dim i As Integer = 0
-		Do While i < size - k + 1
+		While i < size - k + 1
 			Dim max As Integer = arr(i)
 			For j As Integer = 1 To k - 1
 				max = Math.Max(max, arr(i + j))
 			Next j
 			Console.Write(max & " ")
 			i += 1
-		Loop
+		End While
 		Console.WriteLine()
 	End Sub
 
@@ -118,9 +118,9 @@ Public Class QueueEx
 				dque.RemoveFirst()
 			End If
 			' Remove smaller values at left.
-			Do While dque.Count > 0 AndAlso arr(dque.Last.Value) <= arr(i)
+			While dque.Count > 0 AndAlso arr(dque.Last.Value) <= arr(i)
 				dque.RemoveLast()
-			Loop
+			End While
 
 			dque.AddLast(i)
 			' Largest value in window of size k is at index que[0]
@@ -152,9 +152,9 @@ Public Class QueueEx
 				dque.RemoveFirst()
 			End If
 			' Remove smaller values at left.
-			Do While dque.Count > 0 AndAlso arr(dque.Last.Value) <= arr(i)
+			While dque.Count > 0 AndAlso arr(dque.Last.Value) <= arr(i)
 				dque.RemoveLast()
-			Loop
+			End While
 			dque.AddLast(i)
 			' window of size k
 			If i >= (k - 1) AndAlso minVal > arr(dque.First.Value) Then
@@ -181,9 +181,9 @@ Public Class QueueEx
 				dque.RemoveFirst()
 			End If
 			' Remove smaller values at left.
-			Do While dque.Count > 0 AndAlso arr(dque.Last.Value) >= arr(i)
+			While dque.Count > 0 AndAlso arr(dque.Last.Value) >= arr(i)
 				dque.RemoveLast()
-			Loop
+			End While
 			dque.AddLast(i)
 			' window of size k
 			If i >= (k - 1) AndAlso maxVal < arr(dque.First.Value) Then
@@ -315,7 +315,7 @@ Public Class QueueEx
 		Next i
 		Dim max As Integer = 0, x As Integer, y As Integer, day As Integer
 		Dim temp As Fruit
-		Do While que.Count > 0
+		While que.Count > 0
 			temp = que.Peek()
 			que.Dequeue()
 			For i As Integer = 0 To 3
@@ -328,7 +328,7 @@ Public Class QueueEx
 					traversed(x, y) = True
 				End If
 			Next i
-		Loop
+		End While
 		For i As Integer = 0 To maxCol - 1
 			For j As Integer = 0 To maxRow - 1
 				If arr(i, j) = 1 AndAlso traversed(i, j) = False Then
@@ -423,7 +423,7 @@ Public Class QueueEx
 
 		Dim x, y, cost As Integer
 		Dim temp As Knight
-		Do While que.Count > 0
+		While que.Count > 0
 			temp = que.Peek()
 			que.Dequeue()
 			For i As Integer = 0 To 7
@@ -435,7 +435,7 @@ Public Class QueueEx
 					traversed(x, y) = cost
 				End If
 			Next i
-		Loop
+		End While
 		Return traversed(dstX - 1, dstY - 1)
 	End Function
 
@@ -522,7 +522,7 @@ Public Class QueueEx
 		Next i
 		Dim x, y, dist As Integer
 		Dim temp As Node
-		Do While que.Count > 0
+		While que.Count > 0
 			temp = que.Peek()
 			que.Dequeue()
 			For i As Integer = 0 To 3
@@ -534,7 +534,7 @@ Public Class QueueEx
 					traversed(x, y) = dist
 				End If
 			Next i
-		Loop
+		End While
 		For i As Integer = 0 To maxCol - 1
 			For j As Integer = 0 To maxRow - 1
 				Console.Write(traversed(i, j) & " ")
@@ -634,26 +634,26 @@ Public Class QueueEx
 
 	Public Shared Sub ReverseStack(ByVal stk As Stack(Of Integer))
 		Dim que As New Queue(Of Integer)()
-		Do While stk.Count > 0
+		While stk.Count > 0
 			que.Enqueue(stk.Peek())
 			stk.Pop()
-		Loop
-		Do While que.Count > 0
+		End While
+		While que.Count > 0
 			stk.Push(que.Peek())
 			que.Dequeue()
-		Loop
+		End While
 	End Sub
 
 	Public Shared Sub ReverseQueue(ByVal que As Queue(Of Integer))
 		Dim stk As New Stack(Of Integer)()
-		Do While que.Count > 0
+		While que.Count > 0
 			stk.Push(que.Peek())
 			que.Dequeue()
-		Loop
-		Do While stk.Count > 0
+		End While
+		While stk.Count > 0
 			que.Enqueue(stk.Peek())
 			stk.Pop()
-		Loop
+		End While
 	End Sub
 	Public Shared Sub Main11()
 		Dim stk As New Stack(Of Integer)()
@@ -697,15 +697,15 @@ Public Class QueueEx
 			que.Enqueue(i + 1)
 		Next i
 
-		Do While que.Count > 1
+		While que.Count > 1
 			Dim i As Integer = 0
-			Do While i < k - 1
+			While i < k - 1
 				que.Enqueue(que.Peek())
 				que.Dequeue()
 				i += 1
-			Loop
+			End While
 			que.Dequeue() ' Kth person executed.
-		Loop
+		End While
 		Return que.Peek()
 	End Function
 

@@ -12,14 +12,14 @@ Public Class Stack
 
 	Public Function Pop() As Integer
 		Dim value As Integer = 0, s As Integer = size
-		Do While s > 0
+		While s > 0
 			value = que1.Peek()
 			que1.Dequeue()
 			If s > 1 Then
 				que2.Enqueue(value)
 			End If
 			s -= 1
-		Loop
+		End While
 		Dim temp As Queue(Of Integer) = que1
 		que1 = que2
 		que2 = temp
@@ -34,14 +34,14 @@ Public Class Stack
 
 	Public Function Pop2() As Integer
 		Dim value As Integer = 0, s As Integer = size
-		Do While s > 0
+		While s > 0
 			value = que1.Peek()
 			que1.Dequeue()
 			If s > 1 Then
 				que1.Enqueue(value)
 			End If
 			s -= 1
-		Loop
+		End While
 		size -= 1
 		Return value
 	End Function

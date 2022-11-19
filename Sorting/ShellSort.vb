@@ -10,7 +10,7 @@ Public Class ShellSort
 
 		' Gap starts with n/2 and half in each iteration.
 		Dim gap As Integer = n \ 2
-		Do While gap > 0
+		While gap > 0
 			' Do a gapped insertion Sort.
 			For i As Integer = gap To n - 1
 				Dim curr As Integer = arr(i)
@@ -19,16 +19,16 @@ Public Class ShellSort
 				' to find right position for curr value.
 				Dim j As Integer
 				j = i
-				Do While j >= gap AndAlso Greater(arr(j - gap), curr)
+				While j >= gap AndAlso Greater(arr(j - gap), curr)
 					arr(j) = arr(j - gap)
 					j -= gap
-				Loop
+				End While
 
 				' Put current value in its correct location
 				arr(j) = curr
 			Next i
 			gap \= 2
-		Loop
+		End While
 	End Sub
 
 	Public Shared Sub Main(ByVal args() As String)

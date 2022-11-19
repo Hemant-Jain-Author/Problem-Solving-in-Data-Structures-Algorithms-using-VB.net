@@ -12,10 +12,10 @@ Public Class OptimalBST
 
 		Dim min As Integer = Integer.MaxValue
 		Dim r As Integer = i
-		Do While r <= j
+		While r <= j
 			min = Math.Min(min, OptCost(freq, i, r - 1) + OptCost(freq, r + 1, j))
 			r += 1
-		Loop
+		End While
 		Return min + sum(freq, i, j)
 	End Function
 
@@ -98,14 +98,14 @@ Public Class OptimalBST
 		For l As Integer = 1 To n - 1 ' l is length of range.
 			Dim i As Integer = 0
 			Dim j As Integer = i + l
-			Do While j < n
+			While j < n
 				sm = sum(freq, i, j)
 				For r As Integer = i To j
 					cost(i, j) = Math.Min(cost(i, j), sm + (If(r - 1 >= i, cost(i, r - 1), 0)) + (If(r + 1 <= j, cost(r + 1, j), 0)))
 				Next r
 				i += 1
 				j += 1
-			Loop
+			End While
 		Next l
 		Return cost(0, n - 1)
 	End Function
@@ -128,14 +128,14 @@ Public Class OptimalBST
 		For l As Integer = 1 To n - 1 ' l is length of range.
 			Dim i As Integer = 0
 			Dim j As Integer = i + l
-			Do While j < n
+			While j < n
 				sm = SumRange(sumArr, i, j)
 				For r As Integer = i To j
 					cost(i, j) = Math.Min(cost(i, j), sm + (If(r - 1 >= i, cost(i, r - 1), 0)) + (If(r + 1 <= j, cost(r + 1, j), 0)))
 				Next r
 				i += 1
 				j += 1
-			Loop
+			End While
 		Next l
 		Return cost(0, n - 1)
 	End Function

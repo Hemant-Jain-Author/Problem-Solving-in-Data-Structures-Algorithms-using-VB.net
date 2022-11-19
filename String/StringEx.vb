@@ -36,13 +36,13 @@ Public Class StringEx
 	Public Shared Function IsPrime(ByVal n As Integer) As Boolean
 		Dim answer As Boolean = If(n > 1, True, False)
 		Dim i As Integer = 2
-		Do While i * i <= n
+		While i * i <= n
 			If n Mod i = 0 Then
 				answer = False
-				Exit Do
+				Exit While
 			End If
 			i += 1
-		Loop
+		End While
 		Return answer
 	End Function
 
@@ -177,10 +177,10 @@ Public Class StringEx
 
 	Public Shared Function IsPalindrome(ByVal str As String) As Boolean
 		Dim i As Integer = 0, j As Integer = str.Length - 1
-		Do While i < j AndAlso str.Chars(i) = str.Chars(j)
+		While i < j AndAlso str.Chars(i) = str.Chars(j)
 			i += 1
 			j -= 1
-		Loop
+		End While
 		If i < j Then
 			Console.WriteLine("String is not a Palindrome")
 			Return False
@@ -223,9 +223,9 @@ Public Class StringEx
 		Dim len2 As Integer = b.Length
 		Dim minlen As Integer = If(len1 < len2, len1, len2)
 
-		Do While index < minlen AndAlso a.Chars(index) = b.Chars(index)
+		While index < minlen AndAlso a.Chars(index) = b.Chars(index)
 			index += 1
-		Loop
+		End While
 
 		If index = len1 AndAlso index = len2 Then
 			Return 0
@@ -255,24 +255,24 @@ Public Class StringEx
 		Dim lower As Integer = 0
 		Dim upper As Integer = a.Length - 1
 		Dim tempChar As Char
-		Do While lower < upper
+		While lower < upper
 			tempChar = a(lower)
 			a(lower) = a(upper)
 			a(upper) = tempChar
 			lower += 1
 			upper -= 1
-		Loop
+		End While
 	End Sub
 
 	Public Shared Sub ReverseStringUtil(ByVal a() As Char, ByVal lower As Integer, ByVal upper As Integer)
 		Dim tempChar As Char
-		Do While lower < upper
+		While lower < upper
 			tempChar = a(lower)
 			a(lower) = a(upper)
 			a(upper) = tempChar
 			lower += 1
 			upper -= 1
-		Loop
+		End While
 	End Sub
 
 	Public Shared Function ReverseWords(ByVal str As String) As String
@@ -312,12 +312,12 @@ Public Class StringEx
 		End If
 
 		Dim j As Integer = i
-		Do While j < length
+		While j < length
 			Swap(arr, i, j)
 			PrintAnagram(arr, i + 1, length)
 			Swap(arr, i, j)
 			j += 1
-		Loop
+		End While
 		Return
 	End Sub
 
@@ -384,7 +384,7 @@ Public Class StringEx
 		Dim total(max) As Char
 		Dim first As Integer = 0, second As Integer = 0, sum As Integer = 0, carry As Integer = 0
 		Dim index As Integer = max
-		Do While index > 0
+		While index > 0
 			first = If(size1 <= 0, 0, AscW(str1(size1 - 1)) - AscW("0"c))
 			second = If(size2 <= 0, 0, AscW(str2(size2 - 1)) - AscW("0"c))
 			sum = first + second + carry
@@ -394,7 +394,7 @@ Public Class StringEx
 			index -= 1
 			size1 -= 1
 			size2 -= 1
-		Loop
+		End While
 		total(0) = If(carry = 0, "0"c, "1"c)
 		Return New String(total)
 	End Function

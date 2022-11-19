@@ -14,7 +14,7 @@ Public Class Polynomial
 
 	Public Shared Function add(ByVal p1 As Node, ByVal p2 As Node) As Node
 		Dim head As Node = Nothing, tail As Node = Nothing, temp As Node = Nothing
-		Do While p1 IsNot Nothing OrElse p2 IsNot Nothing
+		While p1 IsNot Nothing OrElse p2 IsNot Nothing
 			If p1 Is Nothing OrElse p1.pow < p2.pow Then
 				temp = New Node(p2.coeff, p2.pow)
 				p2 = p2.nextPtr
@@ -34,7 +34,7 @@ Public Class Polynomial
 				tail.nextPtr = temp
 				tail = tail.nextPtr
 			End If
-		Loop
+		End While
 		Return head
 	End Function
 
@@ -54,13 +54,13 @@ Public Class Polynomial
 	End Function
 
 	Public Shared Sub print(ByVal head As Node)
-		Do While head IsNot Nothing
+		While head IsNot Nothing
 			Console.Write(head.coeff & "x^" & head.pow)
 			If head.nextPtr IsNot Nothing Then
 				Console.Write(" + ")
 			End If
 			head = head.nextPtr
-		Loop
+		End While
 		Console.WriteLine()
 	End Sub
 

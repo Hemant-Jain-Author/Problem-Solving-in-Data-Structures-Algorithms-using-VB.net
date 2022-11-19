@@ -56,12 +56,12 @@ Public Class Queue
 		Dim temp As Integer = front
 		Dim s As Integer = count
 		Console.Write("Queue is : ")
-		Do While s > 0
+		While s > 0
 			s -= 1
 			Console.Write(data(temp) & " ")
 			temp += 1
 			temp = temp Mod capacity
-		Loop
+		End While
 		Console.WriteLine()
 	End Sub
 

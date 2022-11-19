@@ -135,10 +135,10 @@ Public Class StackExercise
 			Else
 				Select Case ch
 					Case "+"c, "-"c, "*"c, "/"c, "%"c, "^"c
-						Do While stk.Count > 0 AndAlso precedence(ch) <= precedence(stk.Peek())
+						While stk.Count > 0 AndAlso precedence(ch) <= precedence(stk.Peek())
 							outVr = stk.Pop()
 							output = output & " " & outVr
-						Loop
+						End While
 						stk.Push(ch)
 						output = output & " "
 					Case "("c
@@ -147,18 +147,18 @@ Public Class StackExercise
 						outVr = stk.Pop()
 						'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
 						'ORIGINAL LINE: while (stk.Count > 0 && (outVr = stk.Pop()) != "("c)
-						Do While stk.Count > 0 AndAlso outVr <> "("c
+						While stk.Count > 0 AndAlso outVr <> "("c
 							output = output & " " & outVr & " "
 							outVr = stk.Pop()
-						Loop
+						End While
 				End Select
 			End If
 		Next ch
 
-		Do While stk.Count > 0
+		While stk.Count > 0
 			outVr = stk.Pop()
 			output = output & outVr & " "
-		Loop
+		End While
 		Return output.ToCharArray()
 	End Function
 
@@ -187,27 +187,27 @@ Public Class StackExercise
 	Public Shared Sub ReplaceParenthesis(ByVal a() As Char)
 		Dim lower As Integer = 0
 		Dim upper As Integer = a.Length - 1
-		Do While lower <= upper
+		While lower <= upper
 			If a(lower) = "("c Then
 				a(lower) = ")"c
 			ElseIf a(lower) = ")"c Then
 				a(lower) = "("c
 			End If
 			lower += 1
-		Loop
+		End While
 	End Sub
 
 	Public Shared Sub ReverseString(ByVal expn() As Char)
 		Dim lower As Integer = 0
 		Dim upper As Integer = expn.Length - 1
 		Dim tempChar As Char
-		Do While lower < upper
+		While lower < upper
 			tempChar = expn(lower)
 			expn(lower) = expn(upper)
 			expn(upper) = tempChar
 			lower += 1
 			upper -= 1
-		Loop
+		End While
 	End Sub
 
 	Public Shared Sub Main5()
@@ -228,10 +228,10 @@ Public Class StackExercise
 		For i As Integer = 1 To arr.Length - 1
 			SR(i) = 1
 			Dim j As Integer = i - 1
-			Do While (j >= 0) AndAlso (arr(i) >= arr(j))
+			While (j >= 0) AndAlso (arr(i) >= arr(j))
 				SR(i) += 1
 				j -= 1
-			Loop
+			End While
 		Next i
 		Return SR
 	End Function
@@ -243,9 +243,9 @@ Public Class StackExercise
 		stk.Push(0)
 		SR(0) = 1
 		For i As Integer = 1 To arr.Length - 1
-			Do While stk.Count > 0 AndAlso arr(stk.Peek()) <= arr(i)
+			While stk.Count > 0 AndAlso arr(stk.Peek()) <= arr(i)
 				stk.Pop()
-			Loop
+			End While
 			SR(i) = If(stk.Count = 0, (i + 1), (i - stk.Peek()))
 			stk.Push(i)
 		Next i
@@ -302,20 +302,20 @@ Public Class StackExercise
 		Dim top As Integer
 		Dim topArea As Integer
 		Dim i As Integer = 0
-		Do While i < size
-			Do While (i < size) AndAlso (stk.Count = 0 OrElse arr(stk.Peek()) <= arr(i))
+		While i < size
+			While (i < size) AndAlso (stk.Count = 0 OrElse arr(stk.Peek()) <= arr(i))
 				stk.Push(i)
 				i += 1
-			Loop
-			Do While stk.Count > 0 AndAlso (i = size OrElse arr(stk.Peek()) > arr(i))
+			End While
+			While stk.Count > 0 AndAlso (i = size OrElse arr(stk.Peek()) > arr(i))
 				top = stk.Peek()
 				stk.Pop()
 				topArea = arr(top) * (If(stk.Count = 0, i, i - stk.Peek() - 1))
 				If maxArea < topArea Then
 					maxArea = topArea
 				End If
-			Loop
-		Loop
+			End While
+		End While
 		Return maxArea
 	End Function
 
@@ -334,9 +334,9 @@ Public Class StackExercise
 
 
 	Public Shared Sub StockAnalystAdd(ByVal stk As Stack(Of Integer), ByVal value As Integer)
-		Do While stk.Count > 0 AndAlso stk.Peek() <= value
+		While stk.Count > 0 AndAlso stk.Peek() <= value
 			stk.Pop()
-		Loop
+		End While
 		stk.Push(value)
 	End Sub
 
@@ -397,16 +397,16 @@ Public Class StackExercise
 	Public Shared Sub SortStack2(ByVal stk As Stack(Of Integer))
 		Dim temp As Integer
 		Dim stk2 As New Stack(Of Integer)()
-		Do While stk.Count > 0
+		While stk.Count > 0
 			temp = stk.Pop()
-			Do While (stk2.Count > 0) AndAlso (stk2.Peek() < temp)
+			While (stk2.Count > 0) AndAlso (stk2.Peek() < temp)
 				stk.Push(stk2.Pop())
-			Loop
+			End While
 			stk2.Push(temp)
-		Loop
-		Do While stk2.Count > 0
+		End While
+		While stk2.Count > 0
 			stk.Push(stk2.Pop())
-		Loop
+		End While
 	End Sub
 
 
@@ -504,54 +504,54 @@ Public Class StackExercise
 
 	Public Shared Sub ReverseStack2(ByVal stk As Stack(Of Integer))
 		Dim que As New Queue(Of Integer)()
-		Do While stk.Count > 0
+		While stk.Count > 0
 			que.Enqueue(stk.Pop())
-		Loop
+		End While
 
-		Do While que.Count <> 0
+		While que.Count <> 0
 			stk.Push(que.Dequeue())
-		Loop
+		End While
 	End Sub
 
 	Public Shared Sub ReverseKElementInStack(ByVal stk As Stack(Of Integer), ByVal k As Integer)
 		Dim que As New Queue(Of Integer)()
 		Dim i As Integer = 0
-		Do While stk.Count > 0 AndAlso i < k
+		While stk.Count > 0 AndAlso i < k
 			que.Enqueue(stk.Pop())
 			i += 1
-		Loop
-		Do While que.Count <> 0
+		End While
+		While que.Count <> 0
 			stk.Push(que.Dequeue())
-		Loop
+		End While
 	End Sub
 
 	Public Shared Sub ReverseQueue(ByVal que As Queue(Of Integer))
 		Dim stk As New Stack(Of Integer)()
-		Do While que.Count <> 0
+		While que.Count <> 0
 			stk.Push(que.Dequeue())
-		Loop
+		End While
 
-		Do While stk.Count > 0
+		While stk.Count > 0
 			que.Enqueue(stk.Pop())
-		Loop
+		End While
 	End Sub
 
 	Public Shared Sub ReverseKElementInQueue(ByVal que As Queue(Of Integer), ByVal k As Integer)
 		Dim stk As New Stack(Of Integer)()
 		Dim i As Integer = 0, diff As Integer, temp As Integer
-		Do While que.Count > 0 AndAlso i < k
+		While que.Count > 0 AndAlso i < k
 			stk.Push(que.Dequeue())
 			i += 1
-		Loop
-		Do While stk.Count > 0
+		End While
+		While stk.Count > 0
 			que.Enqueue(stk.Pop())
-		Loop
+		End While
 		diff = que.Count - k
-		Do While diff > 0
+		While diff > 0
 			temp = que.Dequeue()
 			que.Enqueue(temp)
 			diff -= 1
-		Loop
+		End While
 	End Sub
 
 	Public Shared Sub Main11()
@@ -733,13 +733,13 @@ Public Class StackExercise
 				End If
 			End If
 		Next i
-		Do While stk.Count <> 0
+		While stk.Count <> 0
 			If stk.Pop() = "("c Then
 				openCount += 1
 			Else
 				closeCount += 1
 			End If
-		Loop
+		End While
 		Dim reversal As Integer = CInt(Math.Truncate(Math.Ceiling(openCount / 2.0))) + CInt(Math.Truncate(Math.Ceiling(closeCount / 2.0)))
 		Return reversal
 	End Function
@@ -762,10 +762,10 @@ Public Class StackExercise
 			ch = expn.Chars(i)
 			If ch = ")"c Then
 				count = 0
-				Do While stk.Count <> 0 AndAlso stk.Peek() <> "("c
+				While stk.Count <> 0 AndAlso stk.Peek() <> "("c
 					stk.Pop()
 					count += 1
-				Loop
+				End While
 				If count <= 1 Then
 					Return True
 				End If
@@ -851,17 +851,17 @@ Public Class StackExercise
 		For i As Integer = 0 To size - 1
 			curr = arr(i)
 			' stack always have values in decreasing order.
-			Do While stk.Count > 0 AndAlso arr(stk.Peek()) <= curr
+			While stk.Count > 0 AndAlso arr(stk.Peek()) <= curr
 				index = stk.Pop()
 				output(index) = curr
-			Loop
+			End While
 			stk.Push(i)
 		Next i
 		' index which don't have any next Larger.
-		Do While stk.Count > 0
+		While stk.Count > 0
 			index = stk.Pop()
 			output(index) = -1
-		Loop
+		End While
 		For Each val As Integer In output
 			Console.Write(val & " ")
 		Next val
@@ -897,17 +897,17 @@ Public Class StackExercise
 		For i As Integer = 0 To size - 1
 			curr = arr(i)
 			' stack always have values in increasing order.
-			Do While stk.Count > 0 AndAlso arr(stk.Peek()) > curr
+			While stk.Count > 0 AndAlso arr(stk.Peek()) > curr
 				index = stk.Pop()
 				output(index) = curr
-			Loop
+			End While
 			stk.Push(i)
 		Next i
 		' index which don't have any next Smaller.
-		Do While stk.Count > 0
+		While stk.Count > 0
 			index = stk.Pop()
 			output(index) = -1
-		Loop
+		End While
 		For Each val As Integer In output
 			Console.Write(val & " ")
 		Next val
@@ -956,21 +956,21 @@ Public Class StackExercise
 		Dim curr, index As Integer
 		Dim output(size - 1) As Integer
 		Dim i As Integer = 0
-		Do While i < (2 * size - 1)
+		While i < (2 * size - 1)
 			curr = arr(i Mod size)
 			' stack always have values in decreasing order.
-			Do While stk.Count > 0 AndAlso arr(stk.Peek()) <= curr
+			While stk.Count > 0 AndAlso arr(stk.Peek()) <= curr
 				index = stk.Pop()
 				output(index) = curr
-			Loop
+			End While
 			stk.Push(i Mod size)
 			i += 1
-		Loop
+		End While
 		' index which don't have any next Larger.
-		Do While stk.Count > 0
+		While stk.Count > 0
 			index = stk.Pop()
 			output(index) = -1
-		Loop
+		End While
 		For Each val As Integer In output
 			Console.Write(val & " ")
 		Next val
@@ -1018,12 +1018,12 @@ Public Class StackExercise
 			stk.Push(i)
 		Next i
 		first = stk.Pop()
-		Do While stk.Count <> 0
+		While stk.Count <> 0
 			second = stk.Pop()
 			If IsKnown(relation, first, second) Then
 				first = second
 			End If
-		Loop
+		End While
 		For i As Integer = 0 To count - 1
 			If first <> i AndAlso IsKnown(relation, first, i) Then
 				Return -1
@@ -1040,13 +1040,13 @@ Public Class StackExercise
 		Dim second As Integer = 1
 
 		Dim i As Integer = 0
-		Do While i < (count - 1)
+		While i < (count - 1)
 			If IsKnown(relation, first, second) Then
 				first = second
 			End If
 			second = second + 1
 			i += 1
-		Loop
+		End While
 		For i = 0 To count - 1
 			If first <> i AndAlso IsKnown(relation, first, i) Then
 				Return -1
@@ -1081,7 +1081,7 @@ Public Class StackExercise
 
 	Public Shared Function IsMinHeap(ByVal arr() As Integer, ByVal size As Integer) As Integer
 		Dim i As Integer = 0
-		Do While i <= (size - 2) \ 2
+		While i <= (size - 2) \ 2
 			If 2 * i + 1 < size Then
 				If arr(i) > arr(2 * i + 1) Then
 					Return 0
@@ -1093,13 +1093,13 @@ Public Class StackExercise
 				End If
 			End If
 			i += 1
-		Loop
+		End While
 		Return 1
 	End Function
 
 	Public Shared Function IsMaxHeap(ByVal arr() As Integer, ByVal size As Integer) As Integer
 		Dim i As Integer = 0
-		Do While i <= (size - 2) \ 2
+		While i <= (size - 2) \ 2
 			If 2 * i + 1 < size Then
 				If arr(i) < arr(2 * i + 1) Then
 					Return 0
@@ -1111,7 +1111,7 @@ Public Class StackExercise
 				End If
 			End If
 			i += 1
-		Loop
+		End While
 		Return 1
 	End Function
 

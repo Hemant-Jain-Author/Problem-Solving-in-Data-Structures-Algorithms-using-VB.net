@@ -30,13 +30,13 @@ Public Class BinaryIndexTree
 		index = index + 1
 
 		' Traverse to ancestors of nodes.
-		Do While index <= size
+		While index <= size
 			' Add val to current node of Binary Index Tree.
 			BIT(index) += val
 
 			' Next element which need to store val.
 			index += index And (-index)
-		Loop
+		End While
 	End Sub
 
 	' Range sum in the range start to end.
@@ -56,13 +56,13 @@ Public Class BinaryIndexTree
 		index = index + 1
 
 		' Traverse ancestors of Binary Index Tree nodes.
-		Do While index > 0
+		While index > 0
 			' Add current element to sum.
 			sum += BIT(index)
 
 			' Parent index calculation.
 			index -= index And (-index)
-		Loop
+		End While
 		Return sum
 	End Function
 

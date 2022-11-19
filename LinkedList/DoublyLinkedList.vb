@@ -97,7 +97,7 @@ Public Class DoublyLinkedList
 			Return True
 		End If
 
-		Do While curr.nextPtr IsNot Nothing
+		While curr.nextPtr IsNot Nothing
 			If curr.nextPtr.value = key Then
 				curr.nextPtr = curr.nextPtr.nextPtr
 				If curr.nextPtr Is Nothing Then ' last element case.
@@ -109,18 +109,18 @@ Public Class DoublyLinkedList
 				Return True
 			End If
 			curr = curr.nextPtr
-		Loop
+		End While
 		Return False
 	End Function
 
 	Public Function Search(ByVal key As Integer) As Boolean
 		Dim temp As Node = head
-		Do While temp IsNot Nothing
+		While temp IsNot Nothing
 			If temp.value = key Then
 				Return True
 			End If
 			temp = temp.nextPtr
-		Loop
+		End While
 		Return False
 	End Function
 
@@ -132,10 +132,10 @@ Public Class DoublyLinkedList
 
 	Public Sub Print()
 		Dim temp As Node = head
-		Do While temp IsNot Nothing
+		While temp IsNot Nothing
 			Console.Write(temp.value & " ")
 			temp = temp.nextPtr
-		Loop
+		End While
 		Console.WriteLine("")
 	End Sub
 
@@ -157,9 +157,9 @@ Public Class DoublyLinkedList
 			Return
 		End If
 
-		Do While curr.nextPtr IsNot Nothing AndAlso curr.nextPtr.value < value ' traversal
+		While curr.nextPtr IsNot Nothing AndAlso curr.nextPtr.value < value ' traversal
 			curr = curr.nextPtr
-		Loop
+		End While
 
 		If curr.nextPtr Is Nothing Then ' at the end
 			tail = temp
@@ -180,7 +180,7 @@ Public Class DoublyLinkedList
 	Public Sub ReverseList()
 		Dim curr As Node = head
 		Dim tempNode As Node
-		Do While curr IsNot Nothing
+		While curr IsNot Nothing
 			tempNode = curr.nextPtr
 			curr.nextPtr = curr.prev
 			curr.prev = tempNode
@@ -192,14 +192,14 @@ Public Class DoublyLinkedList
 			End If
 
 			curr = curr.prev
-		Loop
+		End While
 		Return
 	End Sub
 
 	' Remove Duplicate 
 	Public Sub RemoveDuplicate()
 		Dim curr As Node = head
-		Do While curr IsNot Nothing
+		While curr IsNot Nothing
 			If (curr.nextPtr IsNot Nothing) AndAlso curr.value = curr.nextPtr.value Then
 				curr.nextPtr = curr.nextPtr.nextPtr
 				If curr.nextPtr IsNot Nothing Then
@@ -211,17 +211,17 @@ Public Class DoublyLinkedList
 			Else
 				curr = curr.nextPtr
 			End If
-		Loop
+		End While
 	End Sub
 
 	Public Function CopyListReversed() As DoublyLinkedList
 		Dim dll As New DoublyLinkedList()
 		Dim curr As Node = head
 
-		Do While curr IsNot Nothing
+		While curr IsNot Nothing
 			dll.AddHead(curr.value)
 			curr = curr.nextPtr
-		Loop
+		End While
 		Return dll
 	End Function
 
@@ -229,10 +229,10 @@ Public Class DoublyLinkedList
 		Dim dll As New DoublyLinkedList()
 		Dim curr As Node = head
 
-		Do While curr IsNot Nothing
+		While curr IsNot Nothing
 			dll.AddTail(curr.value)
 			curr = curr.nextPtr
-		Loop
+		End While
 		Return dll
 	End Function
 

@@ -16,7 +16,7 @@ Public Class HashTableLP
         flag = New Integer(tSize + 1 - 1) {}
         For i As Integer = 0 To tSize
 			flag(i) = EMPTY_VALUE
-		Next i
+		Next i    
     End Sub
 
     Private Function ComputeHash(ByVal key As Integer) As Integer
@@ -74,7 +74,7 @@ Public Class HashTableLP
         Return False
     End Function
 
-    Public Function [Get](ByVal ky As Integer) As Integer
+    Public Function GetVal(ByVal ky As Integer) As Integer
         Dim hashValue As Integer = ComputeHash(ky)
 
         For i As Integer = 0 To tableSize - 1
@@ -135,7 +135,7 @@ Public Class HashTableLP
         ht.Add(3, 30)
         ht.Print()
         Console.WriteLine("Find key 2 : " & ht.Find(2))
-        Console.WriteLine("Value at key 2 : " & ht.[Get](2))
+        Console.WriteLine("Value at key 2 : " & ht.GetVal(2))
         ht.Remove(2)
         ht.Print()
         Console.WriteLine("Find key 2 : " & ht.Find(2))
