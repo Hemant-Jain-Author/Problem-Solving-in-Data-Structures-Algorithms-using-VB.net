@@ -7,23 +7,23 @@ Imports System.Collections.Generic
 '
 
 Public Class DictionaryDemo
-	Public Shared Sub Main(ByVal args() As String)
-		' Create a dictionary.
-		Dim hm As New Dictionary(Of String, Integer)()
+Public Shared Sub Main(ByVal args() As String)
+    ' Create a dictionary.
+    Dim hm As New Dictionary(Of String, Integer)()
 
-		' Add elements into the dictionary.
-		hm("Apple") = 40
-		hm("Banana") = 10
-		hm("Mango") = 20
+    ' Add elements into the dictionary.
+    hm("Apple") = 40
+    hm("Banana") = 10
+    hm("Mango") = 20
 
-		Console.WriteLine("Size :: " & hm.Count)
-		For Each key As String In hm.Keys
-			Console.WriteLine(key & " cost :" & hm(key))
-		Next key
+    Console.WriteLine("Size :: " & hm.Count)
+    For Each key As String In hm.Keys
+        Console.WriteLine(key & " cost :" & hm(key))
+    Next key
 
-		Console.WriteLine("Apple present ::" & hm.ContainsKey("Apple"))
-		Console.WriteLine("Grapes present :: " & hm.ContainsKey("Grapes"))
-	End Sub
+    Console.WriteLine("Apple present ::" & hm.ContainsKey("Apple"))
+    Console.WriteLine("Grapes present :: " & hm.ContainsKey("Grapes"))
+End Sub
 End Class
 
 '

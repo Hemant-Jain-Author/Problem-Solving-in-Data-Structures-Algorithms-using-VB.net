@@ -1,7 +1,7 @@
 ﻿Imports System
 
 Public Class SelectionSort
-	 Private Function more(ByVal value1 As Integer, ByVal value2 As Integer) As Boolean
+	 Private Function Greater(ByVal value1 As Integer, ByVal value2 As Integer) As Boolean
 		Return value1 > value2
 	 End Function
 

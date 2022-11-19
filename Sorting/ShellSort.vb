@@ -1,7 +1,7 @@
 ﻿Imports System
 
 Public Class ShellSort
-	Private Function more(ByVal value1 As Integer, ByVal value2 As Integer) As Boolean
+	Private Function Greater(ByVal value1 As Integer, ByVal value2 As Integer) As Boolean
 		Return value1 > value2
 	End Function
 
@@ -19,7 +19,7 @@ Public Class ShellSort
 				' to find right position for curr value.
 				Dim j As Integer
 				j = i
-				Do While j >= gap AndAlso more(arr(j - gap), curr)
+				Do While j >= gap AndAlso Greater(arr(j - gap), curr)
 					arr(j) = arr(j - gap)
 					j -= gap
 				Loop

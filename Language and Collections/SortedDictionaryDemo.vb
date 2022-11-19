@@ -2,21 +2,21 @@
 Imports System.Collections.Generic
 
 Public Class TreeMapDemo
-	Public Shared Sub Main(ByVal args() As String)
-		' create a tree map.
-		Dim tm As New SortedDictionary(Of String, Integer)()
-		' Put elements into the map
-		tm("Apple") = 40
-		tm("Banana") = 10
-		tm("Mango") = 20
+Public Shared Sub Main(ByVal args() As String)
+    ' create a tree map.
+    Dim tm As New SortedDictionary(Of String, Integer)()
+    ' Put elements into the map
+    tm("Apple") = 40
+    tm("Banana") = 10
+    tm("Mango") = 20
 
-		Console.WriteLine("Size :: " & tm.Count)
-		For Each key As String In tm.Keys
-			Console.WriteLine(key & " cost :" & tm(key))
-		Next key
-		Console.WriteLine("Apple present ::" & tm.ContainsKey("Apple"))
-		Console.WriteLine("Grapes present :: " & tm.ContainsKey("Grapes"))
-	End Sub
+    Console.WriteLine("Size :: " & tm.Count)
+    For Each key As String In tm.Keys
+        Console.WriteLine(key & " cost :" & tm(key))
+    Next key
+    Console.WriteLine("Apple present ::" & tm.ContainsKey("Apple"))
+    Console.WriteLine("Grapes present :: " & tm.ContainsKey("Grapes"))
+End Sub
 End Class
 
 '

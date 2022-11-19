@@ -28,11 +28,20 @@ Public Class ArrayDemo
 		Next i
 	End Sub
 
-	Public Shared Sub Main(ByVal args() As String)
-		oneD()
-		Console.WriteLine()
-		twoD()
-	End Sub
+Public Shared Sub Main(ByVal args() As String)
+    Dim arr(9) As Integer
+    For i As Integer = 0 To 9
+        arr(i) = i
+    Next i
+    For i As Integer = 0 To 9
+        Console.Write(arr(i) & " ")
+    Next i
+
+
+    oneD()
+    Console.WriteLine()
+    twoD()
+End Sub
 End Class
 
 '

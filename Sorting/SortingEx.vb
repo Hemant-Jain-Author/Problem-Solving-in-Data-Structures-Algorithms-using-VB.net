@@ -207,7 +207,7 @@ Public Class SortingEx
 	' [ 8 2 6 4 5 3 7 1 9 ]
 	' [ 4 6 8 2 7 3 1 9 5 ]
 
-	Public Shared Function AbsMore(ByVal value1 As Integer, ByVal value2 As Integer, ByVal ref As Integer) As Boolean
+	Public Shared Function AbsGreater(ByVal value1 As Integer, ByVal value2 As Integer, ByVal ref As Integer) As Boolean
 		Return (Math.Abs(value1 - ref) > Math.Abs(value2 - ref))
 	End Function
 
@@ -216,7 +216,7 @@ Public Class SortingEx
 		Do While i < (size - 1)
 			Dim j As Integer = 0
 			Do While j < (size - i - 1)
-				If AbsMore(arr(j), arr(j + 1), ref) Then
+				If AbsGreater(arr(j), arr(j + 1), ref) Then
 					Swap(arr, j, j + 1)
 				End If
 				j += 1
@@ -235,7 +235,7 @@ Public Class SortingEx
 	'
 	'[ 5 6 4 7 3 8 2 9 1 ]
 	'
-	Public Shared Function EqMore(ByVal value1 As Integer, ByVal value2 As Integer, ByVal A As Integer) As Boolean
+	Public Shared Function EqGreater(ByVal value1 As Integer, ByVal value2 As Integer, ByVal A As Integer) As Boolean
 		value1 = A * value1 * value1
 		value2 = A * value2 * value2
 		Return value1 > value2

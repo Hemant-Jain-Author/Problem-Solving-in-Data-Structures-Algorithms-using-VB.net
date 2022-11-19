@@ -4,7 +4,7 @@ Imports System.Collections.Generic
 Public Class Graph
     Private count As Integer
     Private Adj As List(Of List(Of Edge))
-
+    
     Private Class Edge
         Implements IComparable(Of Edge)
 

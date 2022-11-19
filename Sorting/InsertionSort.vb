@@ -1,7 +1,7 @@
 ﻿Imports System
 
 Public Class InsertionSort
-	Private Function more(ByVal value1 As Integer, ByVal value2 As Integer) As Boolean
+	Private Function Greater(ByVal value1 As Integer, ByVal value2 As Integer) As Boolean
 		Return value1 > value2
 	End Function
 
@@ -11,7 +11,7 @@ Public Class InsertionSort
 		For i As Integer = 1 To size - 1
 			temp = arr(i)
 			j = i
-			Do While j > 0 AndAlso more(arr(j - 1), temp)
+			Do While j > 0 AndAlso Greater(arr(j - 1), temp)
 				arr(j) = arr(j - 1)
 				j -= 1
 			Loop
@@ -25,7 +25,6 @@ Public Class InsertionSort
 		srt.Sort(array)
 		For i As Integer = 0 To array.Length - 1
 			Console.Write(array(i) & " ")
-
 		Next i
 	End Sub
 End Class
