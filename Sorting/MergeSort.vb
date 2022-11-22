@@ -49,6 +49,7 @@ Public Class MergeSort
 		MergeSrt(arr, tempArray, 0, size - 1)
 	End Sub
 
+    ' Testing code.
 	Public Shared Sub Main(ByVal args() As String)
 		Dim array() As Integer = {3, 4, 2, 1, 6, 5, 7, 8}
 		Dim m As New MergeSort()

@@ -31,6 +31,7 @@ Public Class ShellSort
 		End While
 	End Sub
 
+    ' Testing code.
 	Public Shared Sub Main(ByVal args() As String)
 		Dim array() As Integer = {36, 32, 11, 6, 19, 31, 17, 3}
 

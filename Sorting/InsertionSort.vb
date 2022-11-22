@@ -19,6 +19,7 @@ Public Class InsertionSort
 		Next i
 	End Sub
 
+    ' Testing code.
 	Public Shared Sub Main(ByVal args() As String)
 		Dim array() As Integer = {9, 1, 8, 2, 7, 3, 6, 4, 5}
 		Dim srt As New InsertionSort()

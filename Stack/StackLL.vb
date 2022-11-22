@@ -71,10 +71,11 @@ Public Class StackLL
 		s.Print()
 		Console.WriteLine(s.Pop())
 		Console.WriteLine(s.Pop())
+		Console.WriteLine(s.Pop())
 	End Sub
 End Class
 '
 '3 2 1 
 '3
 '2
-'
+'1

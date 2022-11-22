@@ -25,23 +25,23 @@ Public Class SelectionSort
 		End While
 	End Sub
 
-	Public Sub Sort2(ByVal arr() As Integer) ' Sorted array created in forward direction
-		Dim size As Integer = arr.Length
-		Dim i, j, min, temp As Integer
-		i = 0
-		While i < size - 1
-			min = i
-			For j = i + 1 To size - 1
-				If arr(j) < arr(min) Then
-					min = j
-				End If
-			Next j
-			temp = arr(i)
-			arr(i) = arr(min)
-			arr(min) = temp
-			i += 1
-		End While
-	End Sub
+Public Sub Sort2(ByVal arr() As Integer) ' Sorted array created in forward direction
+    Dim size As Integer = arr.Length
+    Dim i, j, min, temp As Integer
+    i = 0
+    While i < size - 1
+        min = i
+        For j = i + 1 To size - 1
+            If arr(j) < arr(min) Then
+                min = j
+            End If
+        Next j
+        temp = arr(i)
+        arr(i) = arr(min)
+        arr(min) = temp
+        i += 1
+    End While
+End Sub
 
 	Public Shared Sub Main(ByVal args() As String)
 		Dim array() As Integer = {9, 1, 8, 2, 7, 3, 6, 4, 5}

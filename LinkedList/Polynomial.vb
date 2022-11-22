@@ -64,6 +64,7 @@ Public Class Polynomial
 		Console.WriteLine()
 	End Sub
 
+	' Testing code.
 	Public Shared Sub Main(ByVal args() As String)
 		Dim c1() As Integer = {6, 5, 4}
 		Dim p1() As Integer = {2, 1, 0}

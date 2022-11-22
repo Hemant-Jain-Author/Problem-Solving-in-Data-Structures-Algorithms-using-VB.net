@@ -21,6 +21,7 @@ Public Class CountSort
         Next
     End Sub
 
+    ' Testing code.
     Public Shared Sub Main(ByVal args As String())
         Dim array As Integer() = New Integer() {23, 24, 22, 21, 26, 25, 27, 28, 21, 21}
         Dim b As CountSort = New CountSort()

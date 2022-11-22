@@ -47,6 +47,7 @@ Public Class QuickSelect
 		Return arr(k - 1)
 	End Function
 
+    ' Testing code.
 	Public Shared Sub Main(ByVal args() As String)
 		Dim array() As Integer = {3, 4, 2, 1, 6, 5, 7, 8}
 		Console.Write("Value at index 5 is : " & QuickSelect.FindIndex(array, 5))

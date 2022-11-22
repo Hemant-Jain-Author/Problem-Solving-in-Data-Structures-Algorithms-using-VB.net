@@ -12,11 +12,8 @@ Public Class BubbleSort
     Public Sub Sort(ByVal arr As Integer())
         Dim size As Integer = arr.Length
         Dim i, j, temp As Integer
-
         For i = 0 To (size - 2)
-
             For j = 0 To size - i - 2
-
                 If Greater(arr(j), arr(j + 1)) Then
                     temp = arr(j)
                     arr(j) = arr(j + 1)
@@ -26,27 +23,27 @@ Public Class BubbleSort
         Next
     End Sub
 
-    Public Sub Sort2(ByVal arr As Integer())
-        Dim size As Integer = arr.Length
-        Dim i, j, temp As Integer, swapped As Integer = 1
-        i = 0
+Public Sub Sort2(ByVal arr As Integer())
+    Dim size As Integer = arr.Length
+    Dim i, j, temp As Integer, swapped As Integer = 1
+    i = 0
 
-        While i < (size - 1) AndAlso swapped = 1
-            swapped = 0
+    While i < (size - 1) AndAlso swapped = 1
+        swapped = 0
 
-            For j = 0 To size - i - 2
+        For j = 0 To size - i - 2
 
-                If Greater(arr(j), arr(j + 1)) Then
-                    temp = arr(j)
-                    arr(j) = arr(j + 1)
-                    arr(j + 1) = temp
-                    swapped = 1
-                End If
-            Next
+            If Greater(arr(j), arr(j + 1)) Then
+                temp = arr(j)
+                arr(j) = arr(j + 1)
+                arr(j + 1) = temp
+                swapped = 1
+            End If
+        Next
 
-            i += 1
-        End While
-    End Sub
+        i += 1
+    End While
+End Sub
 
     Public Shared Sub Main(ByVal args As String())
         Dim array As Integer() = New Integer() {9, 1, 8, 2, 7, 3, 6, 4, 5}

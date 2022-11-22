@@ -35,17 +35,16 @@ Public Class QuickSort
         arr(first) = arr(second)
         arr(second) = temp
     End Sub
+
+    ' Testing code.
+    Public Shared Sub Main(ByVal args() As String)
+        Dim array() As Integer = {3, 4, 2, 1, 6, 5, 7, 8, 10, 9}
+        Dim srt As New QuickSort()
+        srt.Sort(array)
+        For i As Integer = 0 To array.Length - 1
+            Console.Write(array(i) & " ")
+        Next i
+    End Sub
 End Class
 
-Module Module1
-    Public Sub Main(ByVal args() As String)
-        Dim array() As Integer = {3, 4, 2, 1, 6, 5, 7, 8, 1, 1}
-		Dim srt As New QuickSort()
-		srt.Sort(array)
-		For i As Integer = 0 To array.Length - 1
-			Console.Write(array(i) & " ")
-		Next i
-    End Sub
-End Module
-
-' 1 1 1 2 3 4 5 6 7 8 
+' 1 1 1 2 3 4 5 6 7 8

@@ -26,41 +26,41 @@ Public Class Stack2
 		Return (top = -1)
 	End Function
 
-	Public Sub Push(ByVal value As Integer)
-		If Size() = capacity Then
-			Console.WriteLine("size doubled")
-			Dim newData((capacity * 2) - 1) As Integer
-			Array.Copy(data, 0, newData, 0, capacity)
-			data = newData
-			capacity = capacity * 2
-		End If
-		top += 1
-		data(top) = value
-	End Sub
+Public Sub Push(ByVal value As Integer)
+    If Size() = capacity Then
+        Console.WriteLine("size doubled")
+        Dim newData((capacity * 2) - 1) As Integer
+        Array.Copy(data, 0, newData, 0, capacity)
+        data = newData
+        capacity = capacity * 2
+    End If
+    top += 1
+    data(top) = value
+End Sub
 
-	Public Function Peek() As Integer
-		If IsEmpty() Then
-			Throw New System.InvalidOperationException("StackEmptyException")
-		End If
-		Return data(top)
-	End Function
+Public Function Peek() As Integer
+    If IsEmpty() Then
+        Throw New System.InvalidOperationException("StackEmptyException")
+    End If
+    Return data(top)
+End Function
 
-	Public Function Pop() As Integer
-		If IsEmpty() Then
-			Throw New System.InvalidOperationException("StackEmptyException")
-		End If
+Public Function Pop() As Integer
+    If IsEmpty() Then
+        Throw New System.InvalidOperationException("StackEmptyException")
+    End If
 
-		Dim topVal As Integer = data(top)
-		top -= 1
-		If Size() = capacity \ 2 AndAlso capacity > minCapacity Then
-			Console.WriteLine("size halved")
-			capacity = capacity \ 2
-			Dim newData(capacity - 1) As Integer
-			Array.Copy(data, 0, newData, 0, capacity)
-			data = newData
-		End If
-		Return topVal
-	End Function
+    Dim topVal As Integer = data(top)
+    top -= 1
+    If Size() = capacity \ 2 AndAlso capacity > minCapacity Then
+        Console.WriteLine("size halved")
+        capacity = capacity \ 2
+        Dim newData(capacity - 1) As Integer
+        Array.Copy(data, 0, newData, 0, capacity)
+        data = newData
+    End If
+    Return topVal
+End Function
 
 	Public Sub Print()
 		For i As Integer = top To 0 Step -1

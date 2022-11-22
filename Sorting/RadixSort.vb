@@ -49,6 +49,7 @@ Public Class RadixSort
 		End While
 	End Sub
 
+    ' Testing code.
 	Public Shared Sub Main(ByVal args() As String)
 		Dim array() As Integer = {100, 49, 65, 91, 702, 29, 4, 55}
 		Dim b As New RadixSort()

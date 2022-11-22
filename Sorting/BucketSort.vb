@@ -16,7 +16,6 @@ Public Class BucketSort
 		End If
 
 		Dim bucket As New List(Of List(Of Integer))(numBucket)
-
 		' Create empty buckets
 		For i As Integer = 0 To numBucket - 1
 			bucket.Add(New List(Of Integer)())
@@ -58,6 +57,7 @@ Public Class BucketSort
 		Next i
 	End Sub
 
+    ' Testing code.
 	Public Shared Sub Main(ByVal args() As String)
 		Dim array() As Integer = {1, 34, 7, 99, 5, 23, 45, 88, 77, 19, 91, 100}
 		Dim maxValue As Integer = 100
