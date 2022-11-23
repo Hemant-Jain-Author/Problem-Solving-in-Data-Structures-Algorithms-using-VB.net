@@ -514,11 +514,11 @@ Private Function MaxLengthPathBT(ByVal curr As Node) As Integer
         Return 0
     End If
 
-    // Max when current node included.
+    ' Max when current node included.
     Dim max As Integer = TreeDepth(curr.lChild) + TreeDepth(curr.rChild) + 1
-    // Max of left subtree.
+    ' Max of left subtree.
     Dim leftMax As Integer = MaxLengthPathBT(curr.lChild)
-    // Max of right subtree.
+    ' Max of right subtree.
     Dim rightMax As Integer = MaxLengthPathBT(curr.rChild)
     max = Math.Max(max, leftMax)
     max = Math.Max(max, rightMax)

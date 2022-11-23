@@ -3,7 +3,7 @@
 Public Class Queue
     Private capacity As Integer
     Private data As Integer()
-    Private size As Integer = 0
+    Private count As Integer = 0
     Private front As Integer = 0
     Private back As Integer = 0
 
@@ -14,11 +14,11 @@ Public Class Queue
 
 
     Public Function Add(ByVal value As Integer) As Boolean
-        If size >= capacity Then
+        If count >= capacity Then
             Console.WriteLine("Queue is full.")
             Return False
         Else
-            size += 1
+            count += 1
             data(back) = value
             back += 1
 			back = back Mod capacity
@@ -30,11 +30,11 @@ Public Class Queue
     Public Function Remove() As Integer
         Dim value As Integer
 
-        If size <= 0 Then
+        If count <= 0 Then
             Console.WriteLine("Queue is empty.")
             Return -999
         Else
-            size -= 1
+            count -= 1
             front += 1
 			front = front Mod capacity
         End If
@@ -43,21 +43,21 @@ Public Class Queue
     End Function
 
     Public Function IsEmpty() As Boolean
-        Return size = 0
+        Return count = 0
     End Function
 
     Public Function Size() As Integer
-        Return size
+        Return count
     End Function
 
     Public Sub Print()
-        If size = 0 Then
+        If count = 0 Then
             Console.Write("Queue is empty.")
             Return
         End If
 
         Dim temp As Integer = front
-        Dim s As Integer = size
+        Dim s As Integer = count
         Console.Write("Queue is : ")
 
         While s > 0

@@ -2,7 +2,7 @@
 
 Public Class QueueLL
     Private tail As Node = Nothing
-    Private size As Integer = 0
+    Private count As Integer = 0
 
     Private Class Node
         Friend value As Integer
@@ -15,11 +15,11 @@ Public Class QueueLL
     End Class
 
     Public Function Size() As Integer
-        Return size
+        Return count
     End Function
 
     Public Function IsEmpty() As Boolean
-        Return size = 0
+        Return count = 0
     End Function
 
     Public Function Peek() As Integer
@@ -29,7 +29,7 @@ Public Class QueueLL
 
         Dim value As Integer
 
-        If tail = tail.nextPtr Then
+        If tail Is tail.nextPtr Then
             value = tail.value
         Else
             value = tail.nextPtr.value
@@ -50,29 +50,29 @@ Public Class QueueLL
             tail = temp
         End If
 
-        size += 1
+        count += 1
     End Sub
 
     Public Function Remove() As Integer
-        If size = 0 Then
+        If count = 0 Then
             Throw New System.InvalidOperationException("StackEmptyException")
         End If
 
         Dim value As Integer = 0
 
-        If tail = tail.nextPtr Then
+        If tail Is tail.nextPtr Then
             value = tail.value
             tail = Nothing
         Else
             value = tail.nextPtr.value
             tail.nextPtr = tail.nextPtr.nextPtr
         End If
-        size -= 1
+        count -= 1
         Return value
     End Function
 
     Public Sub Print()
-        If size = 0 Then
+        If count = 0 Then
             Console.Write("Queue is empty.")
             Return
         End If
@@ -80,7 +80,7 @@ Public Class QueueLL
         Dim temp As Node = tail.nextPtr
         Console.Write("Queue is : ")
 
-        For i As Integer = 0 To size - 1
+        For i As Integer = 0 To count - 1
             Console.Write(temp.value & " ")
             temp = temp.nextPtr
         Next

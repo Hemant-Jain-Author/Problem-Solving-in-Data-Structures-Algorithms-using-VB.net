@@ -1,11 +1,11 @@
 ﻿Imports System
 
-Public Class StringMatching
-	Public Shared Function BruteForceSearch(ByVal text As String, ByVal pattern As String) As Integer
+Public Module StringMatching
+	Function BruteForceSearch(ByVal text As String, ByVal pattern As String) As Integer
 		Return BruteForceSearch(text.ToCharArray(), pattern.ToCharArray())
 	End Function
 
-	Public Shared Function BruteForceSearch(ByVal text() As Char, ByVal pattern() As Char) As Integer
+	Function BruteForceSearch(ByVal text() As Char, ByVal pattern() As Char) As Integer
 		Dim i As Integer = 0, j As Integer = 0
 		Dim n As Integer = text.Length
 		Dim m As Integer = pattern.Length
@@ -22,11 +22,11 @@ Public Class StringMatching
 		Return -1
 	End Function
 
-	Public Shared Function RobinKarp(ByVal text As String, ByVal pattern As String) As Integer
+	Function RobinKarp(ByVal text As String, ByVal pattern As String) As Integer
 		Return RobinKarp(text.ToCharArray(), pattern.ToCharArray())
 	End Function
 
-	Public Shared Function RobinKarp(ByVal text() As Char, ByVal pattern() As Char) As Integer
+	Function RobinKarp(ByVal text() As Char, ByVal pattern() As Char) As Integer
 		Dim n As Integer = text.Length
 		Dim m As Integer = pattern.Length
 		Dim i, j As Integer
@@ -69,7 +69,7 @@ Public Class StringMatching
 		Return -1
 	End Function
 
-	Public Shared Sub KMPPreprocess(ByVal pattern() As Char, ByVal ShiftArr() As Integer)
+	Sub KMPPreprocess(ByVal pattern() As Char, ByVal ShiftArr() As Integer)
 		Dim m As Integer = pattern.Length
 		Dim i As Integer = 0, j As Integer = -1
 		ShiftArr(i) = -1
@@ -83,11 +83,11 @@ Public Class StringMatching
 		End While
 	End Sub
 
-	Public Shared Function KMP(ByVal text As String, ByVal pattern As String) As Integer
+	Function KMP(ByVal text As String, ByVal pattern As String) As Integer
 		Return KMP(text.ToCharArray(), pattern.ToCharArray())
 	End Function
 
-	Public Shared Function KMP(ByVal text() As Char, ByVal pattern() As Char) As Integer
+	Function KMP(ByVal text() As Char, ByVal pattern() As Char) As Integer
 		Dim i As Integer = 0, j As Integer = 0
 		Dim n As Integer = text.Length
 		Dim m As Integer = pattern.Length
@@ -106,11 +106,11 @@ Public Class StringMatching
 		Return -1
 	End Function
 
-	Public Shared Function KMPFindCount(ByVal text As String, ByVal pattern As String) As Integer
+	Function KMPFindCount(ByVal text As String, ByVal pattern As String) As Integer
 		Return KMPFindCount(text.ToCharArray(), pattern.ToCharArray())
 	End Function
 
-	Public Shared Function KMPFindCount(ByVal text() As Char, ByVal pattern() As Char) As Integer
+	Function KMPFindCount(ByVal text() As Char, ByVal pattern() As Char) As Integer
 		Dim i As Integer = 0, j As Integer = 0, count As Integer = 0
 		Dim n As Integer = text.Length
 		Dim m As Integer = pattern.Length
@@ -130,7 +130,7 @@ Public Class StringMatching
 		Return count
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim st1 As String = "hello, world!"
 		Dim st2 As String = "world"
 		Console.WriteLine("BruteForceSearch return : " & BruteForceSearch(st1, st2))
@@ -146,4 +146,4 @@ Public Class StringMatching
 '	KMP return : 7
 '	Frequency of 'time' is: 2
 '	
-End Class
+End Module

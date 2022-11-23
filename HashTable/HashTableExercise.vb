@@ -102,7 +102,7 @@ Public Module HashTableExercise
         PrintRepeating(arr1)
     End Sub
 	'	
-	'	Repeating elements are: 4 1
+	'	Repeating elements are : 4 1
 	'
 
     Sub PrintFirstRepeating(ByVal arr As Integer())
@@ -111,12 +111,12 @@ Public Module HashTableExercise
         Dim hs As HashSet(Of Integer) = New HashSet(Of Integer)()
         Dim firstRepeating As Integer = Integer.MaxValue
 
-        For i = size - 1 To 0
+        For i = (size - 1) To 0 Step -1
             If hs.Contains(arr(i)) Then
                 firstRepeating = arr(i)
             End If
             hs.Add(arr(i))
-        Next
+        Next i
         Console.WriteLine("First Repeating number is : " & firstRepeating)
     End Sub
 
@@ -125,10 +125,10 @@ Public Module HashTableExercise
         PrintFirstRepeating(arr1)
     End Sub
 	'	
-	'	First Repeating number is:1
+	'	First Repeating number is : 1
 	'
 
-    Function HornerHash(ByVal key As Char(), ByVal tableSize As Integer) As Integer
+    Function HornerHash(ByVal key As Integer(), ByVal tableSize As Integer) As Integer
         Dim size As Integer = key.Length
         Dim h As Integer = 0
         Dim i As Integer

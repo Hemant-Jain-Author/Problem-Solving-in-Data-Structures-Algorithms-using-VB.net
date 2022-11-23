@@ -2,23 +2,23 @@
 Imports System.Collections.Generic
 
 Public Class Heap(Of T As IComparable(Of T))
-    Private size As Integer ' Number of elements in Heap
+    Private count As Integer ' Number of elements in Heap
     Private arr As T() ' The Heap array
     Private isMinHeap As Boolean
 
     Public Sub New(ByVal Optional isMin As Boolean = True)
         Dim CAPACITY As Integer = 32
         arr = New T(CAPACITY - 1) {}
-        size = 0
+        count = 0
         isMinHeap = isMin
     End Sub
 
     Public Sub New(ByVal array As T(), ByVal Optional isMin As Boolean = True)
-        size = array.Length
+        count = array.Length
         arr = array
         isMinHeap = isMin
 
-        For i As Integer = (size / 2) To 0
+        For i As Integer = (count / 2) To 0
             PercolateDown(i)
         Next
     End Sub
@@ -35,8 +35,8 @@ Public Class Heap(Of T As IComparable(Of T))
         Dim lChild As Integer = 2 * parent + 1
         Dim rChild As Integer = lChild + 1
         Dim child As Integer = -1
-        If lChild < size Then child = lChild
-        If rChild < size AndAlso Compare(arr, lChild, rChild) Then child = rChild
+        If lChild < count Then child = lChild
+        If rChild < count AndAlso Compare(arr, lChild, rChild) Then child = rChild
 
         If child <> -1 AndAlso Compare(arr, parent, child) Then
             Dim temp As T = arr(parent)
@@ -58,64 +58,56 @@ Public Class Heap(Of T As IComparable(Of T))
     End Sub
 
     Public Sub Enqueue(ByVal value As T)
-        If size = arr.Length Then DoubleSize()
-        arr(Math.Min(System.Threading.Interlocked.Increment(size), size - 1)) = value
-        PercolateUp(size - 1)
+        If count = arr.Length Then DoubleSize()
+        arr(Math.Min(System.Threading.Interlocked.Increment(count), count - 1)) = value
+        PercolateUp(count - 1)
     End Sub
 
     Private Sub DoubleSize()
         Dim old As T() = arr
         arr = New T(old.Length * 2 - 1) {}
-        Array.Copy(old, 0, arr, 0, size)
+        Array.Copy(old, 0, arr, 0, count)
     End Sub
 
     Public Function Dequeue() As T
-        If size = 0 Then
+        If count = 0 Then
             Throw New System.InvalidOperationException()
         End If
 
         Dim value As T = arr(0)
-        arr(0) = arr(size - 1)
-        size -= 1
+        arr(0) = arr(count - 1)
+        count -= 1
         PercolateDown(0)
         Return value
     End Function
 
     Public Sub Print()
-        For i As Integer = 0 To size - 1
-            Console.Write(arr(i) & " ")
+        For i As Integer = 0 To count - 1
+            Console.Write(arr(i))
+            Console.Write(" ")
         Next
-
         Console.WriteLine()
     End Sub
 
     Public Function IsEmpty() As Boolean
-        Return (size = 0)
+        Return (count = 0)
     End Function
 
     Public Function Size() As Integer
-        Return size
+        Return count
     End Function
 
     Public Function Peek() As T
-        If size = 0 Then
+        If count = 0 Then
             Throw New System.InvalidOperationException()
         End If
 
         Return arr(0)
     End Function
-
-    Public Shared Sub HeapSort(ByVal array As Integer(), ByVal inc As Boolean)
-        Dim hp As Heap(Of Integer) = New Heap(Of Integer)(array, Not inc)
-
-        For i As Integer = 0 To array.Length - 1
-            array(array.Length - i - 1) = hp.Dequeue()
-        Next
-    End Sub
 End Class
 
 Public Module HeapEx
-    Public Shared Sub Main1()
+    Sub Main1()
         Dim hp As Heap(Of Integer) = New Heap(Of Integer)(True)
         hp.Enqueue(1)
         hp.Enqueue(6)
@@ -133,9 +125,18 @@ Public Module HeapEx
         Console.WriteLine()
     End Sub
 
-    Public Shared Sub Main2()
+
+    Sub HeapSort(ByVal array As Integer(), ByVal inc As Boolean)
+        Dim hp As Heap(Of Integer) = New Heap(Of Integer)(array, Not inc)
+
+        For i As Integer = 0 To array.Length - 1
+            array(array.Length - i - 1) = hp.Dequeue()
+        Next
+    End Sub
+
+    Sub Main2()
         Dim a2 As Integer() = New Integer() {1, 9, 6, 7, 8, 2, 4, 5, 3}
-        Heap(Of Integer).HeapSort(a2, True)
+        HeapSort(a2, True)
 
         For i As Integer = 0 To a2.Length - 1
             Console.Write(a2(i) & " ")
@@ -143,7 +144,7 @@ Public Module HeapEx
 
         Console.WriteLine()
         Dim a3 As Integer() = New Integer() {1, 9, 6, 7, 8, 2, 4, 5, 3}
-        Heap(Of Integer).HeapSort(a3, False)
+        HeapSort(a3, False)
 
         For i As Integer = 0 To a3.Length - 1
             Console.Write(a3(i) & " ")
@@ -152,12 +153,12 @@ Public Module HeapEx
         Console.WriteLine()
     End Sub
 
-    Public Shared Function KthSmallest(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer) As Integer
+    Function KthSmallest(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer) As Integer
         Array.Sort(arr)
         Return arr(k - 1)
     End Function
 
-    Public Shared Function KthSmallest2(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer) As Integer
+    Function KthSmallest2(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer) As Integer
         Dim hp As Heap(Of Integer) = New Heap(Of Integer)()
 
         For i As Integer = 0 To size - 1
@@ -171,7 +172,7 @@ Public Module HeapEx
         Return hp.Peek()
     End Function
 
-    Public Shared Function KthSmallest3(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer) As Integer
+    Function KthSmallest3(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer) As Integer
         Dim hp As Heap(Of Integer) = New Heap(Of Integer)(False)
 
         For i As Integer = 0 To size - 1
@@ -190,7 +191,7 @@ Public Module HeapEx
         Return hp.Peek()
     End Function
 
-    Public Shared Function KthLargest(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer) As Integer
+    Function KthLargest(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer) As Integer
         Dim value As Integer = 0
         Dim hp As Heap(Of Integer) = New Heap(Of Integer)(False)
 
@@ -205,7 +206,7 @@ Public Module HeapEx
         Return value
     End Function
 
-    Public Shared Sub Main3()
+    Sub Main3()
         Dim arr As Integer() = New Integer() {8, 7, 6, 5, 7, 5, 2, 1}
         Console.WriteLine("Kth Smallest :: " & KthSmallest(arr, arr.Length, 3))
         Dim arr2 As Integer() = New Integer() {8, 7, 6, 5, 7, 5, 2, 1}
@@ -216,7 +217,7 @@ Public Module HeapEx
         Console.WriteLine("Kth Largest :: " & KthLargest(arr4, arr4.Length, 3))
     End Sub
 
-    Public Shared Function IsMinHeap(ByVal arr As Integer(), ByVal size As Integer) As Boolean
+    Function IsMinHeap(ByVal arr As Integer(), ByVal size As Integer) As Boolean
         Dim lchild, rchild As Integer
 
         For parent As Integer = 0 To (size / 2 + 1) - 1
@@ -228,7 +229,7 @@ Public Module HeapEx
         Return True
     End Function
 
-    Public Shared Function IsMaxHeap(ByVal arr As Integer(), ByVal size As Integer) As Boolean
+    Function IsMaxHeap(ByVal arr As Integer(), ByVal size As Integer) As Boolean
         Dim lchild, rchild As Integer
 
         For parent As Integer = 0 To (size / 2 + 1) - 1
@@ -240,14 +241,14 @@ Public Module HeapEx
         Return True
     End Function
 
-    Public Shared Sub Main4()
+    Sub Main4()
         Dim arr3 As Integer() = New Integer() {8, 7, 6, 5, 7, 5, 2, 1}
         Console.WriteLine("IsMaxHeap :: " & IsMaxHeap(arr3, arr3.Length))
         Dim arr4 As Integer() = New Integer() {1, 2, 3, 4, 5, 6, 7, 8}
         Console.WriteLine("IsMinHeap :: " & IsMinHeap(arr4, arr4.Length))
     End Sub
 
-    Public Shared Function KSmallestProduct(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer) As Integer
+    Function KSmallestProduct(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer) As Integer
         Array.Sort(arr)
         Dim product As Integer = 1
 
@@ -257,13 +258,13 @@ Public Module HeapEx
         Return product
     End Function
 
-    Public Shared Sub Swap(ByVal arr As Integer(), ByVal i As Integer, ByVal j As Integer)
+    Sub Swap(ByVal arr As Integer(), ByVal i As Integer, ByVal j As Integer)
         Dim temp As Integer = arr(i)
         arr(i) = arr(j)
         arr(j) = temp
     End Sub
 
-    Public Shared Sub QuickSelectUtil(ByVal arr As Integer(), ByVal lower As Integer, ByVal upper As Integer, ByVal k As Integer)
+    Sub QuickSelectUtil(ByVal arr As Integer(), ByVal lower As Integer, ByVal upper As Integer, ByVal k As Integer)
         If upper <= lower Then Return
         Dim pivot As Integer = arr(lower)
         Dim start As Integer = lower
@@ -289,7 +290,7 @@ Public Module HeapEx
         If k > upper Then QuickSelectUtil(arr, upper + 1, [stop], k)
     End Sub
 
-    Public Shared Function KSmallestProduct3(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer) As Integer
+    Function KSmallestProduct3(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer) As Integer
         QuickSelectUtil(arr, 0, size - 1, k)
         Dim product As Integer = 1
 
@@ -300,7 +301,7 @@ Public Module HeapEx
         Return product
     End Function
 
-    Public Shared Function KSmallestProduct2(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer) As Integer
+    Function KSmallestProduct2(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer) As Integer
         Dim hp As Heap(Of Integer) = New Heap(Of Integer)()
         Dim i As Integer = 0
         Dim product As Integer = 1
@@ -319,7 +320,7 @@ Public Module HeapEx
         Return product
     End Function
 
-    Public Shared Function KSmallestProduct4(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer) As Integer
+    Function KSmallestProduct4(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer) As Integer
         Dim hp As Heap(Of Integer) = New Heap(Of Integer)(False)
 
         For i As Integer = 0 To size - 1
@@ -338,13 +339,13 @@ Public Module HeapEx
         Dim product As Integer = 1
 
         For i As Integer = 0 To k - 1
-			product *= pq.Dequeue()
+			product *= hp.Dequeue()
         Next
 
         Return product
     End Function
 
-    Public Shared Sub Main5()
+    Sub Main5()
         Dim arr As Integer() = New Integer() {8, 7, 6, 5, 7, 5, 2, 1}
         Console.WriteLine("Kth Smallest product:: " & KSmallestProduct(arr, 8, 3))
         Dim arr2 As Integer() = New Integer() {8, 7, 6, 5, 7, 5, 2, 1}
@@ -355,7 +356,7 @@ Public Module HeapEx
         Console.WriteLine("Kth Smallest product:: " & KSmallestProduct4(arr4, 8, 3))
     End Sub
 
-    Public Shared Sub PrintLargerHalf(ByVal arr As Integer(), ByVal size As Integer)
+    Sub PrintLargerHalf(ByVal arr As Integer(), ByVal size As Integer)
         Array.Sort(arr)
 
         For i As Integer = size / 2 To size - 1
@@ -365,7 +366,7 @@ Public Module HeapEx
         Console.WriteLine()
     End Sub
 
-    Public Shared Sub PrintLargerHalf2(ByVal arr As Integer(), ByVal size As Integer)
+    Sub PrintLargerHalf2(ByVal arr As Integer(), ByVal size As Integer)
         Dim hp As Heap(Of Integer) = New Heap(Of Integer)()
 
         For i As Integer = 0 To size - 1
@@ -379,7 +380,7 @@ Public Module HeapEx
         hp.Print()
     End Sub
 
-    Public Shared Sub PrintLargerHalf3(ByVal arr As Integer(), ByVal size As Integer)
+    Sub PrintLargerHalf3(ByVal arr As Integer(), ByVal size As Integer)
         QuickSelectUtil(arr, 0, size - 1, size / 2)
 
         For i As Integer = size / 2 To size - 1
@@ -389,7 +390,7 @@ Public Module HeapEx
         Console.WriteLine()
     End Sub
 
-    Public Shared Sub Main6()
+    Sub Main6()
         Dim arr As Integer() = New Integer() {8, 7, 6, 5, 7, 5, 2, 1}
         PrintLargerHalf(arr, 8)
         Dim arr2 As Integer() = New Integer() {8, 7, 6, 5, 7, 5, 2, 1}
@@ -398,7 +399,7 @@ Public Module HeapEx
         PrintLargerHalf3(arr3, 8)
     End Sub
 
-    Public Shared Sub SortK(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer)
+    Sub SortK(ByVal arr As Integer(), ByVal size As Integer, ByVal k As Integer)
         Dim hp As Heap(Of Integer) = New Heap(Of Integer)()
         Dim i As Integer = 0
 
@@ -418,7 +419,7 @@ Public Module HeapEx
         End While
     End Sub
 
-    Public Shared Sub Main7()
+    Sub Main7()
         Dim k As Integer = 3
         Dim arr As Integer() = New Integer() {1, 5, 4, 10, 50, 9}
         Dim size As Integer = arr.Length
@@ -429,7 +430,7 @@ Public Module HeapEx
         Next
     End Sub
 
-    Public Shared Sub Main(ByVal args As String())
+    Sub Main(ByVal args As String())
         Main1()
         Main2()
         Main3()

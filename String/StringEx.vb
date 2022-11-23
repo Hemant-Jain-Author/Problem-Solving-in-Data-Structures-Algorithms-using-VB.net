@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class StringEx
-	Public Shared Function Match(ByVal src As String, ByVal ptn As String) As Boolean
+Public Module StringEx
+	Function Match(ByVal src As String, ByVal ptn As String) As Boolean
 		Dim source() As Char = src.ToCharArray()
 		Dim pattern() As Char = ptn.ToCharArray()
 		Dim iSource As Integer = 0
@@ -19,12 +19,12 @@ Public Class StringEx
 		Return False
 	End Function
 
-	Public Shared Sub Main2()
+	Sub Main2()
 		Console.WriteLine(Match("harrypottermustnotgotoschool", "pottergo"))
 	End Sub
 	' True
 
-	Public Shared Function MyStrdup(ByVal src() As Char) As Char()
+	Function MyStrdup(ByVal src() As Char) As Char()
 		Dim index As Integer = 0
 		Dim dst(src.Length - 1) As Char
 		For Each ch As Char In src
@@ -33,7 +33,7 @@ Public Class StringEx
 		Return dst
 	End Function
 
-	Public Shared Function IsPrime(ByVal n As Integer) As Boolean
+	Function IsPrime(ByVal n As Integer) As Boolean
 		Dim answer As Boolean = If(n > 1, True, False)
 		Dim i As Integer = 2
 		While i * i <= n
@@ -46,7 +46,7 @@ Public Class StringEx
 		Return answer
 	End Function
 
-	Public Shared Sub Main3()
+	Sub Main3()
 		Console.Write("Prime numbers under 10 :: ")
 		For i As Integer = 0 To 9
 			If IsPrime(i) Then
@@ -57,7 +57,7 @@ Public Class StringEx
 	End Sub
 	' Prime numbers under 10 :: 2 3 5 7 
 
-	Public Shared Function MyAtoi(ByVal str As String) As Integer
+	Function MyAtoi(ByVal str As String) As Integer
 		Dim value As Integer = 0
 		Dim size As Integer = str.Length
 		For i As Integer = 0 To size - 1
@@ -67,12 +67,12 @@ Public Class StringEx
 		Return value
 	End Function
 
-	Public Shared Sub Main4()
+	Sub Main4()
 		Console.WriteLine(MyAtoi("1000"))
 	End Sub
 	' 1000
 
-	Public Shared Function IsUniqueChar(ByVal str As String) As Boolean
+	Function IsUniqueChar(ByVal str As String) As Boolean
 		Dim bitarr(25) As Boolean
 		For i As Integer = 0 To 25
 			bitarr(i) = False
@@ -100,7 +100,7 @@ Public Class StringEx
 		Return True
 	End Function
 
-	Public Shared Sub Main5()
+	Sub Main5()
 		IsUniqueChar("aple")
 		IsUniqueChar("apple")
 	End Sub
@@ -108,21 +108,21 @@ Public Class StringEx
 '	No duplicate detected!
 '	Duplicate detected!
 '	
-	Public Shared Function ToUpper(ByVal s As Char) As Char
+	Function ToUpper(ByVal s As Char) As Char
 		If s >= ChrW(97) AndAlso s <= ChrW(97 + 25) Then
 			s = ChrW(AscW(s) - 32)
 		End If
 		Return s
 	End Function
 
-	Public Shared Function ToLower(ByVal s As Char) As Char
+	Function ToLower(ByVal s As Char) As Char
 		If s >= ChrW(65) AndAlso s <= ChrW(65 + 25) Then
 			s = ChrW(AscW(s) + 32)
 		End If
 		Return s
 	End Function
 
-	Public Shared Function LowerUpper(ByVal s As Char) As Char
+	Function LowerUpper(ByVal s As Char) As Char
 		If s >= ChrW(97) AndAlso s <= ChrW(97 + 25) Then
 			s = ChrW(AscW(s) - 32)
 		ElseIf s >= ChrW(65) AndAlso s <= ChrW(65 + 25) Then
@@ -131,7 +131,7 @@ Public Class StringEx
 		Return s
 	End Function
 
-	Public Shared Sub Main6()
+	Sub Main6()
 		Console.WriteLine(ToLower("A"c))
 		Console.WriteLine(ToUpper("a"c))
 		Console.WriteLine(LowerUpper("s"c))
@@ -144,7 +144,7 @@ Public Class StringEx
 '	s
 '	
 
-	Public Shared Function IsPermutation(ByVal s1 As String, ByVal s2 As String) As Boolean
+	Function IsPermutation(ByVal s1 As String, ByVal s2 As String) As Boolean
 		Dim count(255) As Integer
 		Dim length As Integer = s1.Length
 		If s2.Length <> length Then
@@ -167,7 +167,7 @@ Public Class StringEx
 		Return True
 	End Function
 
-	Public Shared Sub Main7()
+	Sub Main7()
 		Console.WriteLine(IsPermutation("apple", "plepa"))
 	End Sub
 '	
@@ -175,7 +175,7 @@ Public Class StringEx
 '	True
 '	
 
-	Public Shared Function IsPalindrome(ByVal str As String) As Boolean
+	Function IsPalindrome(ByVal str As String) As Boolean
 		Dim i As Integer = 0, j As Integer = str.Length - 1
 		While i < j AndAlso str.Chars(i) = str.Chars(j)
 			i += 1
@@ -190,7 +190,7 @@ Public Class StringEx
 		End If
 	End Function
 
-	Public Shared Sub Main8()
+	Sub Main8()
 		IsPalindrome("hello")
 		IsPalindrome("oyo")
 	End Sub
@@ -199,7 +199,7 @@ Public Class StringEx
 '	String is a Palindrome
 '	
 
-	Public Shared Function Pow(ByVal x As Integer, ByVal n As Integer) As Integer
+	Function Pow(ByVal x As Integer, ByVal n As Integer) As Integer
 		Dim value As Integer
 		If n = 0 Then
 			Return (1)
@@ -212,12 +212,12 @@ Public Class StringEx
 		End If
 	End Function
 
-	Public Shared Sub Main9()
+	Sub Main9()
 		Console.WriteLine(Pow(5, 2))
 	End Sub
 	' 25
 
-	Public Shared Function MyStrcmp(ByVal a As String, ByVal b As String) As Integer
+	Function MyStrcmp(ByVal a As String, ByVal b As String) As Integer
 		Dim index As Integer = 0
 		Dim len1 As Integer = a.Length
 		Dim len2 As Integer = b.Length
@@ -239,19 +239,19 @@ Public Class StringEx
 	End Function
 
 
-		Public Shared Sub Main10()
+		Sub Main10()
 		Console.WriteLine(MyStrcmp("abs", "abs"))
 	End Sub
 	' 0
 
-	Public Shared Function ReverseString(ByVal str As String) As String
+	Function ReverseString(ByVal str As String) As String
 		Dim a() As Char = str.ToCharArray()
 		ReverseStringUtil(a)
 		Dim expn As New String(a)
 		Return expn
 	End Function
 
-	Public Shared Sub ReverseStringUtil(ByVal a() As Char)
+	Sub ReverseStringUtil(ByVal a() As Char)
 		Dim lower As Integer = 0
 		Dim upper As Integer = a.Length - 1
 		Dim tempChar As Char
@@ -264,7 +264,7 @@ Public Class StringEx
 		End While
 	End Sub
 
-	Public Shared Sub ReverseStringUtil(ByVal a() As Char, ByVal lower As Integer, ByVal upper As Integer)
+	Sub ReverseStringUtil(ByVal a() As Char, ByVal lower As Integer, ByVal upper As Integer)
 		Dim tempChar As Char
 		While lower < upper
 			tempChar = a(lower)
@@ -275,7 +275,7 @@ Public Class StringEx
 		End While
 	End Sub
 
-	Public Shared Function ReverseWords(ByVal str As String) As String
+	Function ReverseWords(ByVal str As String) As String
 		Dim a() As Char = str.ToCharArray()
 		Dim length As Integer = a.Length
 		Dim lower As Integer = 0, upper As Integer = -1
@@ -293,7 +293,7 @@ Public Class StringEx
 		Return expn
 	End Function
 
-	Public Shared Sub Main11()
+	Sub Main11()
 		Console.WriteLine(ReverseString("apple"))
 		Console.WriteLine(ReverseWords("hello world"))
 	End Sub
@@ -301,11 +301,11 @@ Public Class StringEx
 '	elppa
 '	world hello
 '	
-	Public Shared Sub PrintAnagram(ByVal str As String)
+	Sub PrintAnagram(ByVal str As String)
 		PrintAnagram(str.ToCharArray(), 0, str.Length)
 	End Sub
 
-	Public Shared Sub PrintAnagram(ByVal arr() As Char, ByVal i As Integer, ByVal length As Integer)
+	Sub PrintAnagram(ByVal arr() As Char, ByVal i As Integer, ByVal length As Integer)
 		If length = i Then
 			PrintArray(arr, length)
 			Return
@@ -321,20 +321,20 @@ Public Class StringEx
 		Return
 	End Sub
 
-	Private Shared Sub PrintArray(ByVal arr() As Char, ByVal n As Integer)
+	Sub PrintArray(ByVal arr() As Char, ByVal n As Integer)
 		For i As Integer = 0 To n - 1
 			Console.Write(arr(i))
 		Next i
 		Console.WriteLine()
 	End Sub
 
-	Private Shared Sub Swap(ByVal arr() As Char, ByVal i As Integer, ByVal j As Integer)
+	Sub Swap(ByVal arr() As Char, ByVal i As Integer, ByVal j As Integer)
 		Dim temp As Char = arr(i)
 		arr(i) = arr(j)
 		arr(j) = temp
 	End Sub
 
-	Public Shared Sub Main12()
+	Sub Main12()
 		PrintAnagram("123")
 	End Sub
 
@@ -347,7 +347,7 @@ Public Class StringEx
 '	312
 
 
-	Public Shared Sub Shuffle(ByVal str As String)
+	Sub Shuffle(ByVal str As String)
 		Dim ar() As Char = str.ToCharArray()
 		Dim n As Integer = ar.Length \ 2
 		Dim count As Integer = 0
@@ -370,12 +370,12 @@ Public Class StringEx
 		Console.WriteLine(ar)
 	End Sub
 
-	Public Shared Sub Main13()
+	Sub Main13()
 		Shuffle("ABCDE12345")
 	End Sub
 	' A1B2C3D4E5
 
-	Public Shared Function AddBinary(ByVal st1 As String, ByVal st2 As String) As String
+	Function AddBinary(ByVal st1 As String, ByVal st2 As String) As String
 		Dim str1() As Char = st1.ToCharArray()
 		Dim str2() As Char = st2.ToCharArray()
 		Dim size1 As Integer = str1.Length
@@ -399,12 +399,12 @@ Public Class StringEx
 		Return New String(total)
 	End Function
 
-	Public Shared Sub Main14()
+	Sub Main14()
 		Console.WriteLine(AddBinary("1000", "11111111"))
 	End Sub
 	' 100000111
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Main2()
 		Main3()
 		Main4()
@@ -419,4 +419,4 @@ Public Class StringEx
 		Main13()
 		Main14()
 	End Sub
-End Class
+End Module

@@ -1,12 +1,12 @@
 ﻿Imports System
 
 Public Class MedianHeap
-	Friend minHeap As PriorityQueue(Of Integer)
-	Friend maxHeap As PriorityQueue(Of Integer)
+	Friend minHeap As Heap(Of Integer)
+	Friend maxHeap As Heap(Of Integer)
 
 	Public Sub New()
-		minHeap = New PriorityQueue(Of Integer)()
-		maxHeap = New PriorityQueue(Of Integer)(False)
+		minHeap = New Heap(Of Integer)()
+		maxHeap = New Heap(Of Integer)(False)
 	End Sub
 
 	' Other Methods.
@@ -64,135 +64,107 @@ End Class
 ' 
 
 
-Public Class PriorityQueue(Of T As IComparable(Of T))
-	Private Capacity As Integer = 100
-	Private count As Integer ' Number of elements in Heap
-	Private arr() As T ' The Heap array
-	Private isMinHeap As Boolean
+Public Class Heap(Of T As IComparable(Of T))
+    Private count As Integer ' Number of elements in Heap
+    Private arr As T() ' The Heap array
+    Private isMinHeap As Boolean
 
-	Public Sub New(Optional ByVal isMin As Boolean = True)
-		arr = New T(Capacity) {}
-		count = 0
-		isMinHeap = isMin
-	End Sub
+    Public Sub New(ByVal Optional isMin As Boolean = True)
+        Dim CAPACITY As Integer = 32
+        arr = New T(CAPACITY - 1) {}
+        count = 0
+        isMinHeap = isMin
+    End Sub
 
-	Public Sub New(ByVal array() As T, Optional ByVal isMin As Boolean = True)
-		Capacity = array.Length
-		count = array.Length
-		arr = array
-		isMinHeap = isMin
-		For i As Integer = (count \ 2) To 0 Step -1
-			PercolateDown(i)
-		Next i
-	End Sub
+    Public Sub New(ByVal array As T(), ByVal Optional isMin As Boolean = True)
+        count = array.Length
+        arr = array
+        isMinHeap = isMin
 
-	' Other Methods.
-	Private Function Compare(ByVal arr() As T, ByVal first As Integer, ByVal second As Integer) As Boolean
-		If isMinHeap Then
-			Return arr(first).CompareTo(arr(second)) > 0
-		Else
-			Return arr(first).CompareTo(arr(second)) < 0
-		End If
-	End Function
+        For i As Integer = (count / 2) To 0
+            PercolateDown(i)
+        Next
+    End Sub
 
-	Private Sub PercolateDown(ByVal parent As Integer)
-		Dim lChild As Integer = 2 * parent + 1
-		Dim rChild As Integer = lChild + 1
-		Dim child As Integer = -1
-		Dim temp As T
+    Private Function Compare(ByVal arr As T(), ByVal first As Integer, ByVal second As Integer) As Boolean
+        If isMinHeap Then
+            Return arr(first).CompareTo(arr(second)) > 0
+        Else
+            Return arr(first).CompareTo(arr(second)) < 0
+        End If
+    End Function
 
-		If lChild < count Then
-			child = lChild
-		End If
+    Private Sub PercolateDown(ByVal parent As Integer)
+        Dim lChild As Integer = 2 * parent + 1
+        Dim rChild As Integer = lChild + 1
+        Dim child As Integer = -1
+        If lChild < count Then child = lChild
+        If rChild < count AndAlso Compare(arr, lChild, rChild) Then child = rChild
 
-		If rChild < count AndAlso Compare(arr, lChild, rChild) Then
-			child = rChild
-		End If
+        If child <> -1 AndAlso Compare(arr, parent, child) Then
+            Dim temp As T = arr(parent)
+            arr(parent) = arr(child)
+            arr(child) = temp
+            PercolateDown(child)
+        End If
+    End Sub
 
-		If child <> -1 AndAlso Compare(arr, parent, child) Then
-			temp = arr(parent)
-			arr(parent) = arr(child)
-			arr(child) = temp
-			PercolateDown(child)
-		End If
-	End Sub
+    Private Sub PercolateUp(ByVal child As Integer)
+        Dim parent As Integer = (child - 1) / 2
 
-	Private Sub PercolateUp(ByVal child As Integer)
-		Dim parent As Integer = (child - 1) \ 2
-		Dim temp As T
-		If parent < 0 Then
-			Return
-		End If
+        If parent >= 0 AndAlso Compare(arr, parent, child) Then
+            Dim temp As T = arr(child)
+            arr(child) = arr(parent)
+            arr(parent) = temp
+            PercolateUp(parent)
+        End If
+    End Sub
 
-		If Compare(arr, parent, child) Then
-			temp = arr(child)
-			arr(child) = arr(parent)
-			arr(parent) = temp
-			PercolateUp(parent)
-		End If
-	End Sub
+    Public Sub Enqueue(ByVal value As T)
+        If count = arr.Length Then DoubleSize()
+        arr(Math.Min(System.Threading.Interlocked.Increment(count), count - 1)) = value
+        PercolateUp(count - 1)
+    End Sub
 
-	Public Sub Enqueue(ByVal value As T)
-		If count = Capacity Then
-			DoubleSize()
-		End If
+    Private Sub DoubleSize()
+        Dim old As T() = arr
+        arr = New T(old.Length * 2 - 1) {}
+        Array.Copy(old, 0, arr, 0, count)
+    End Sub
 
-		arr(count) = value
-		count += 1
-		PercolateUp(count - 1)
-	End Sub
+    Public Function Dequeue() As T
+        If count = 0 Then
+            Throw New System.InvalidOperationException()
+        End If
 
-	Private Sub DoubleSize()
-		Dim old() As T = arr
-		arr = New T(Capacity * 2) {}
-		Capacity = Capacity * 2
-		For i As Integer = 0 To count - 1
-			arr(i) = old(i)
-		Next i
-	End Sub
+        Dim value As T = arr(0)
+        arr(0) = arr(count - 1)
+        count -= 1
+        PercolateDown(0)
+        Return value
+    End Function
 
-	Public Function Dequeue() As T
-		If count = 0 Then
-			Throw New System.InvalidOperationException()
-		End If
+    Public Sub Print()
+        For i As Integer = 0 To count - 1
+            Console.Write(arr(i))
+            Console.Write(" ")
+        Next
+        Console.WriteLine()
+    End Sub
 
-		Dim value As T = arr(0)
-		arr(0) = arr(count - 1)
-		count -= 1
-		PercolateDown(0)
-		Return value
-	End Function
+    Public Function IsEmpty() As Boolean
+        Return (count = 0)
+    End Function
 
-	Public Sub Print()
-		For i As Integer = 0 To count - 1
-			Console.Write(arr(i))
-			Console.Write(" ")
-		Next i
-		Console.WriteLine()
-	End Sub
+    Public Function Size() As Integer
+        Return count
+    End Function
 
-	Public Function IsEmpty() As Boolean
-		Return (count = 0)
-	End Function
+    Public Function Peek() As T
+        If count = 0 Then
+            Throw New System.InvalidOperationException()
+        End If
 
-	Public Function Size() As Integer
-		Return count
-	End Function
-
-	Public Function Peek() As T
-		If count = 0 Then
-			Throw New System.InvalidOperationException()
-		End If
-		Return arr(0)
-	End Function
-
-	Friend Shared Sub HeapSort(ByVal array() As Integer, ByVal inc As Boolean)
-		' Create max heap for increasing order sorting.
-		Dim hp As New PriorityQueue(Of Integer)(array, Not inc)
-		For i As Integer = 0 To array.Length - 1
-			array(array.Length - i - 1) = hp.Dequeue()
-		Next i
-	End Sub
+        Return arr(0)
+    End Function
 End Class
-
-
