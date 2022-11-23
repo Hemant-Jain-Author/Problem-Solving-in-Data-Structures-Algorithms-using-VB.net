@@ -31,6 +31,7 @@ Public Class RangeMaxST
 		 Return segArr(index)
 	End Function
 
+
 	Private Function Max(ByVal first As Integer, ByVal second As Integer) As Integer
 		If first > second Then
 			Return first
@@ -95,7 +96,7 @@ Public Class RangeMaxST
 
 		Dim mid As Integer = (segStart + segEnd) \ 2
 
-		' Current node value is updated with min. 
+		' Current node value is updated with min.
 		segArr(index) = Max(UpdateUtil(segStart, mid, ind, val, 2 * index + 1), UpdateUtil(mid + 1, segEnd, ind, val, 2 * index + 2))
 
 		' Value of diff is propagated to the parent node.
