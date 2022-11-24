@@ -53,25 +53,31 @@ Public Class Graph
         Next
     End Sub
 
+    ' Testing code.
+    Public Shared Sub Main1()
+        Dim gph As Graph = New Graph(4)
+        gph.AddUndirectedEdge(0, 1)
+        gph.AddUndirectedEdge(0, 2)
+        gph.AddUndirectedEdge(1, 2)
+        gph.AddUndirectedEdge(2, 3)
+        gph.Print()
+    End Sub
+
     Public Function DFSStack(ByVal source As Integer, ByVal target As Integer) As Boolean
         Dim visited As Boolean() = New Boolean(count - 1) {}
         Dim stk As Stack(Of Integer) = New Stack(Of Integer)()
         stk.Push(source)
         visited(source) = True
-
         While stk.Count > 0
             Dim curr As Integer = stk.Pop()
             Dim adl As List(Of Edge) = Adj(curr)
-
             For Each adn As Edge In adl
-
                 If visited(adn.dest) = False Then
                     visited(adn.dest) = True
                     stk.Push(adn.dest)
                 End If
             Next
         End While
-
         Return visited(target)
     End Function
 
@@ -84,9 +90,7 @@ Public Class Graph
     Private Sub DFSUtil(ByVal index As Integer, ByVal visited As Boolean())
         visited(index) = True
         Dim adl As List(Of Edge) = Adj(index)
-
         For Each adn As Edge In adl
-
             If visited(adn.dest) = False Then
                 DFSUtil(adn.dest, visited)
             End If
@@ -96,9 +100,7 @@ Public Class Graph
     Public Sub DFSUtil2(ByVal index As Integer, ByVal visited As Boolean(), ByVal stk As Stack(Of Integer))
         visited(index) = True
         Dim adl As List(Of Edge) = Adj(index)
-
         For Each adn As Edge In adl
-
             If visited(adn.dest) = False Then
                 DFSUtil2(adn.dest, visited, stk)
             End If
@@ -112,32 +114,20 @@ Public Class Graph
         Dim que As Queue(Of Integer) = New Queue(Of Integer)()
         que.Enqueue(source)
         visited(source) = True
-
         While que.Count > 0
             Dim curr As Integer = que.Dequeue()
             Dim adl As List(Of Edge) = Adj(curr)
-
             For Each adn As Edge In adl
-
                 If visited(adn.dest) = False Then
                     visited(adn.dest) = True
                     que.Enqueue(adn.dest)
                 End If
             Next
         End While
-
         Return visited(target)
     End Function
 
-    Public Shared Sub Main1()
-        Dim gph As Graph = New Graph(4)
-        gph.AddUndirectedEdge(0, 1)
-        gph.AddUndirectedEdge(0, 2)
-        gph.AddUndirectedEdge(1, 2)
-        gph.AddUndirectedEdge(2, 3)
-        gph.Print()
-    End Sub
-
+    ' Testing code.
     Public Shared Sub Main2()
         Dim gph As Graph = New Graph(8)
         gph.AddUndirectedEdge(0, 3)
@@ -157,21 +147,18 @@ Public Class Graph
     Public Sub TopologicalSort()
         Dim stk As Stack(Of Integer) = New Stack(Of Integer)()
         Dim visited As Boolean() = New Boolean(count - 1) {}
-
         For i As Integer = 0 To count - 1
-
             If visited(i) = False Then
                 DFSUtil2(i, visited, stk)
             End If
         Next
-
         Console.Write("Topological Sort::")
-
         While stk.Count = 0 <> True
             Console.Write(" " & stk.Pop())
         End While
     End Sub
 
+    ' Testing code.
     Public Shared Sub Main3()
         Dim gph As Graph = New Graph(9)
         gph.AddDirectedEdge(0, 2)
@@ -202,14 +189,11 @@ Public Class Graph
         Dim count As Integer = 0
         visited(source) = True
         Dim adl As List(Of Edge) = Adj(source)
-
         For Each adn As Edge In adl
-
             If visited(adn.dest) = False Then
                 count += CountAllPathDFS(visited, adn.dest, dest)
             End If
         Next
-
         visited(source) = False
         Return count
     End Function
@@ -221,13 +205,10 @@ Public Class Graph
 
     Public Sub PrintAllPathDFS(ByVal visited As Boolean(), ByVal source As Integer, ByVal dest As Integer, ByVal path As Stack(Of Integer))
         path.Push(source)
-
         If source = dest Then
-
             For Each item As Integer In path
                 Console.Write(item & " ")
             Next
-
             Console.WriteLine()
             path.Pop()
             Return
@@ -235,14 +216,11 @@ Public Class Graph
 
         visited(source) = True
         Dim adl As List(Of Edge) = Adj(source)
-
         For Each adn As Edge In adl
-
             If visited(adn.dest) = False Then
                 PrintAllPathDFS(visited, adn.dest, dest, path)
             End If
         Next
-
         visited(source) = False
         path.Pop()
     End Sub
@@ -253,6 +231,7 @@ Public Class Graph
         PrintAllPathDFS(visited, src, dest, path)
     End Sub
 
+    ' Testing code.
     Public Shared Sub Main4()
         Dim gph As Graph = New Graph(5)
         gph.AddDirectedEdge(0, 1)
@@ -269,19 +248,17 @@ Public Class Graph
     Public Function RootVertex() As Integer
         Dim visited As Boolean() = New Boolean(count - 1) {}
         Dim retVal As Integer = -1
-
         For i As Integer = 0 To count - 1
-
             If visited(i) = False Then
                 DFSUtil(i, visited)
                 retVal = i
             End If
         Next
-
         Console.Write("Root vertex is :: " & retVal)
         Return retVal
     End Function
 
+    ' Testing code.
     Public Shared Sub Main5()
         Dim gph As Graph = New Graph(7)
         gph.AddDirectedEdge(0, 1)
@@ -298,9 +275,7 @@ Public Class Graph
     Public Sub TransitiveClosureUtil(ByVal source As Integer, ByVal dest As Integer, ByVal tc As Integer(,))
         tc(source, dest) = 1
         Dim adl As List(Of Edge) = Adj(dest)
-
         For Each adn As Edge In adl
-
             If tc(source, adn.dest) = 0 Then
                 TransitiveClosureUtil(source, adn.dest, tc)
             End If
@@ -309,14 +284,13 @@ Public Class Graph
 
     Public Function TransitiveClosure() As Integer(,)
         Dim tc As Integer(,) = New Integer(count - 1, count - 1) {}
-
         For i As Integer = 0 To count - 1
             TransitiveClosureUtil(i, i, tc)
         Next
-
         Return tc
     End Function
 
+    ' Testing code.
     Public Shared Sub Main6()
         Dim gph As Graph = New Graph(4)
         gph.AddDirectedEdge(0, 1)
@@ -326,13 +300,10 @@ Public Class Graph
         gph.AddDirectedEdge(2, 3)
         gph.AddDirectedEdge(3, 3)
         Dim tc As Integer(,) = gph.TransitiveClosure()
-
         For i As Integer = 0 To 4 - 1
-
             For j As Integer = 0 To 4 - 1
                 Console.Write(tc(i, j) & " ")
             Next
-
             Console.WriteLine()
         Next
     End Sub
@@ -345,15 +316,12 @@ Public Class Graph
         que.Enqueue(source)
         level(source) = 0
         Console.WriteLine("Node  - Level")
-
         While que.Count > 0
             Dim curr As Integer = que.Dequeue()
             Dim depth As Integer = level(curr)
             Dim adl As List(Of Edge) = Adj(curr)
             Console.WriteLine(curr & " - " & depth)
-
             For Each adn As Edge In adl
-
                 If visited(adn.dest) = False Then
                     visited(adn.dest) = True
                     que.Enqueue(adn.dest)
@@ -370,14 +338,11 @@ Public Class Graph
         visited(source) = True
         Dim level As Integer() = New Integer(count - 1) {}
         level(source) = 0
-
         While que.Count > 0
             Dim curr As Integer = que.Dequeue()
             Dim depth As Integer = level(curr)
             Dim adl As List(Of Edge) = Adj(curr)
-
             For Each adn As Edge In adl
-
                 If adn.dest = dest Then
                     Return depth + 1
                 End If
@@ -389,10 +354,10 @@ Public Class Graph
                 End If
             Next
         End While
-
         Return -1
     End Function
 
+    ' Testing code.
     Public Shared Sub Main7()
         Dim gph As Graph = New Graph(7)
         gph.AddUndirectedEdge(0, 1)
@@ -411,12 +376,9 @@ Public Class Graph
         visited(index) = True
         Dim dest As Integer
         Dim adl As List(Of Edge) = Adj(index)
-
         For Each adn As Edge In adl
             dest = adn.dest
-
             If visited(dest) = False Then
-
                 If IsCyclePresentUndirectedDFS(dest, index, visited) Then
                     Return True
                 End If
@@ -424,31 +386,25 @@ Public Class Graph
                 Return True
             End If
         Next
-
         Return False
     End Function
 
     Public Function IsCyclePresentUndirected() As Boolean
         Dim visited As Boolean() = New Boolean(count - 1) {}
-
         For i As Integer = 0 To count - 1
-
             If visited(i) = False AndAlso IsCyclePresentUndirectedDFS(i, -1, visited) Then
                 Return True
             End If
         Next
-
         Return False
     End Function
 
     Public Function Find(ByVal parent As Integer(), ByVal index As Integer) As Integer
         Dim p As Integer = parent(index)
-
         While p <> -1
             index = p
             p = parent(index)
         End While
-
         Return index
     End Function
 
@@ -466,9 +422,7 @@ Public Class Graph
 
         For i As Integer = 0 To count - 1
             Dim ad As List(Of Edge) = Adj(i)
-
             For Each adn As Edge In ad
-
                 If flags(adn.dest, adn.src) = False Then
                     edge.Add(adn)
                     flags(adn.src, adn.dest) = True
@@ -479,32 +433,24 @@ Public Class Graph
         For Each e As Edge In edge
             Dim x As Integer = Find(parent, e.src)
             Dim y As Integer = Find(parent, e.dest)
-
             If x = y Then
                 Return True
             End If
-
             union(parent, x, y)
         Next
-
         Return False
     End Function
 
     Public Function IsCyclePresentUndirected3() As Boolean
         Dim sets As Sets() = New Sets(count - 1) {}
-
         For i As Integer = 0 To count - 1
             sets(i) = New Sets(i, 0)
         Next
-
         Dim edge As List(Of Edge) = New List(Of Edge)()
         Dim flags As Boolean(,) = New Boolean(count - 1, count - 1) {}
-
         For i As Integer = 0 To count - 1
             Dim ad As List(Of Edge) = Adj(i)
-
             For Each adn As Edge In ad
-
                 If flags(adn.dest, adn.src) = False Then
                     edge.Add(adn)
                     flags(adn.src, adn.dest) = True
@@ -515,17 +461,15 @@ Public Class Graph
         For Each e As Edge In edge
             Dim x As Integer = Find(sets, e.src)
             Dim y As Integer = Find(sets, e.dest)
-
             If x = y Then
                 Return True
             End If
-
             union(sets, x, y)
         Next
-
         Return False
     End Function
 
+    ' Testing code.
     Public Shared Sub Main8()
         Dim gph As Graph = New Graph(6)
         gph.AddUndirectedEdge(0, 1)
@@ -546,22 +490,17 @@ Public Class Graph
         visited(index) = True
         marked(index) = 1
         Dim adl As List(Of Edge) = Adj(index)
-
         For Each adn As Edge In adl
             Dim dest As Integer = adn.dest
-
             If marked(dest) = 1 Then
                 Return True
             End If
-
             If visited(dest) = False Then
-
                 If IsCyclePresentDFS(dest, visited, marked) Then
                     Return True
                 End If
             End If
         Next
-
         marked(index) = 0
         Return False
     End Function
@@ -569,17 +508,13 @@ Public Class Graph
     Public Function IsCyclePresent() As Boolean
         Dim visited As Boolean() = New Boolean(count - 1) {}
         Dim marked As Integer() = New Integer(count - 1) {}
-
         For index As Integer = 0 To count - 1
-
             If Not visited(index) Then
-
                 If IsCyclePresentDFS(index, visited, marked) Then
                     Return True
                 End If
             End If
         Next
-
         Return False
     End Function
 
@@ -587,42 +522,34 @@ Public Class Graph
         visited(index) = 1
         Dim dest As Integer
         Dim adl As List(Of Edge) = Adj(index)
-
         For Each adn As Edge In adl
             dest = adn.dest
-
             If visited(dest) = 1 Then
                 Return True
             End If
-
             If visited(dest) = 0 Then
-
                 If IsCyclePresentDFSColour(dest, visited) Then
                     Return True
                 End If
             End If
         Next
-
         visited(index) = 2
         Return False
     End Function
 
     Public Function IsCyclePresentColour() As Boolean
         Dim visited As Integer() = New Integer(count - 1) {}
-
         For i As Integer = 0 To count - 1
-
             If visited(i) = 0 Then
-
                 If IsCyclePresentDFSColour(i, visited) Then
                     Return True
                 End If
             End If
         Next
-
         Return False
     End Function
 
+    ' Testing code.
     Public Shared Sub Main9()
         Dim gph As Graph = New Graph(5)
         gph.AddDirectedEdge(0, 1)
@@ -639,19 +566,17 @@ Public Class Graph
 
     Public Function TransposeGraph() As Graph
         Dim g As Graph = New Graph(count)
-
         For i As Integer = 0 To count - 1
             Dim adl As List(Of Edge) = Adj(i)
-
             For Each adn As Edge In adl
                 Dim dest As Integer = adn.dest
                 g.AddDirectedEdge(dest, i)
             Next
         Next
-
         Return g
     End Function
 
+    ' Testing code.
     Public Shared Sub Main10()
         Dim gph As Graph = New Graph(5)
         gph.AddDirectedEdge(0, 1)
@@ -667,17 +592,15 @@ Public Class Graph
     Public Function IsConnectedUndirected() As Boolean
         Dim visited As Boolean() = New Boolean(count - 1) {}
         DFSUtil(0, visited)
-
         For i As Integer = 0 To count - 1
-
             If visited(i) = False Then
                 Return False
             End If
         Next
-
         Return True
     End Function
 
+    ' Testing code.
     Public Shared Sub Main11()
         Dim gph As Graph = New Graph(6)
         gph.AddUndirectedEdge(0, 1)
@@ -691,32 +614,26 @@ Public Class Graph
     Public Function IsStronglyConnected() As Boolean
         Dim visited As Boolean() = New Boolean(count - 1) {}
         DFSUtil(0, visited)
-
         For i As Integer = 0 To count - 1
-
             If visited(i) = False Then
                 Return False
             End If
         Next
-
         Dim gReversed As Graph = TransposeGraph()
-
         For i As Integer = 0 To count - 1
             visited(i) = False
         Next
 
         gReversed.DFSUtil(0, visited)
-
         For i As Integer = 0 To count - 1
-
             If visited(i) = False Then
                 Return False
             End If
         Next
-
         Return True
     End Function
 
+    ' Testing code.
     Public Shared Sub Main12()
         Dim gph As Graph = New Graph(5)
         gph.AddDirectedEdge(0, 1)
@@ -731,9 +648,7 @@ Public Class Graph
     Public Sub stronglyConnectedComponent()
         Dim visited As Boolean() = New Boolean(count - 1) {}
         Dim stk As Stack(Of Integer) = New Stack(Of Integer)()
-
         For i As Integer = 0 To count - 1
-
             If visited(i) = False Then
                 DFSUtil2(i, visited, stk)
             End If
@@ -744,23 +659,20 @@ Public Class Graph
             visited(i) = False
         Next i
         Dim stk2 As Stack(Of Integer) = New Stack(Of Integer)()
-
         While stk.Count > 0
             Dim index As Integer = stk.Pop()
-
             If visited(index) = False Then
                 stk2.Clear()
                 gReversed.DFSUtil2(index, visited, stk2)
-
                 For Each ele In stk2
                     Console.Write(ele & " ")
                 Next
-
                 Console.WriteLine()
             End If
         End While
     End Sub
 
+    ' Testing code.
     Public Shared Sub Main13()
         Dim gph As Graph = New Graph(7)
         gph.AddDirectedEdge(0, 1)
@@ -785,26 +697,24 @@ Public Class Graph
         Dim source As Integer = 0
         dist(source) = 0
         previous(source) = source
-        Dim pq As PriorityQueue(Of Edge) = New PriorityQueue(Of Edge)()
+        Dim hp As Heap(Of Edge) = New Heap(Of Edge)()
         Dim node As Edge = New Edge(source, source, 0)
-        pq.Enqueue(node)
+        hp.Enqueue(node)
 
-        While pq.IsEmpty() <> True
-            node = pq.Peek()
-            pq.Dequeue()
+        While hp.IsEmpty() <> True
+            node = hp.Peek()
+            hp.Dequeue()
             visited(source) = True
             source = node.dest
             Dim adl As List(Of Edge) = Adj(source)
-
             For Each adn As Edge In adl
                 Dim dest As Integer = adn.dest
                 Dim alt As Integer = adn.cost
-
                 If dist(dest) > alt AndAlso visited(dest) = False Then
                     dist(dest) = alt
                     previous(dest) = source
                     node = New Edge(source, dest, alt)
-                    pq.Enqueue(node)
+                    hp.Enqueue(node)
                 End If
             Next
         End While
@@ -812,9 +722,7 @@ Public Class Graph
         Dim sum As Integer = 0
         Dim isMst As Boolean = True
         Dim output As String = "Edges are "
-
         For i As Integer = 0 To count - 1
-
             If dist(i) = 99999 Then
                 output += ("(" & i & ", Unreachable) ")
                 isMst = False
@@ -835,7 +743,6 @@ Public Class Graph
     Public Class Sets
         Friend parent As Integer
         Friend rank As Integer
-
         Friend Sub New(ByVal p As Integer, ByVal r As Integer)
             parent = p
             rank = r
@@ -844,12 +751,10 @@ Public Class Graph
 
     Public Function Find(ByVal sets As Sets(), ByVal index As Integer) As Integer
         Dim p As Integer = sets(index).parent
-
         While p <> index
             index = p
             p = sets(index).parent
         End While
-
         Return index
     End Function
 
@@ -866,19 +771,17 @@ Public Class Graph
 
     Public Sub KruskalMST()
         Dim sets As Sets() = New Sets(count - 1) {}
-
         For i As Integer = 0 To count - 1
             sets(i) = New Sets(i, 0)
         Next
 
         Dim E As Integer = 0
         Dim edge As Edge() = New Edge(99) {}
-
         For i As Integer = 0 To count - 1
             Dim ad As List(Of Edge) = Adj(i)
-
             For Each adn As Edge In ad
-                edge(Math.Min(System.Threading.Interlocked.Increment(E), E - 1)) = adn
+                edge(E) = adn
+                E += 1
             Next
         Next
 
@@ -889,18 +792,17 @@ Public Class Graph
         For i As Integer = 0 To E - 1
             Dim x As Integer = Find(sets, edge(i).src)
             Dim y As Integer = Find(sets, edge(i).dest)
-
             If x <> y Then
                 output += ("(" & edge(i).src & "->" & edge(i).dest & " @ " & edge(i).cost & ") ")
                 sum += edge(i).cost
                 union(sets, x, y)
             End If
         Next
-
         Console.WriteLine(output)
         Console.WriteLine("Total MST cost: " & sum)
     End Sub
 
+    ' Testing code.
     Public Shared Sub Main14()
         Dim gph As Graph = New Graph(9)
         gph.AddUndirectedEdge(0, 1, 4)
@@ -941,9 +843,7 @@ Public Class Graph
         While que.Count > 0
             curr = que.Dequeue()
             Dim adl As List(Of Edge) = Adj(curr)
-
             For Each adn As Edge In adl
-
                 If distance(adn.dest) = -1 Then
                     distance(adn.dest) = distance(curr) + 1
                     previous(adn.dest) = curr
@@ -951,7 +851,6 @@ Public Class Graph
                 End If
             Next
         End While
-
         PrintPath(previous, distance, count, source)
     End Sub
 
@@ -966,18 +865,17 @@ Public Class Graph
         Dim visited As Boolean() = New Boolean(count - 1) {}
         dist(source) = 0
         previous(source) = source
-        Dim pq As PriorityQueue(Of Edge) = New PriorityQueue(Of Edge)()
+        Dim hp As Heap(Of Edge) = New Heap(Of Edge)()
         Dim node As Edge = New Edge(source, source, 0)
-        pq.Enqueue(node)
+        hp.Enqueue(node)
         Dim curr As Integer
 
-        While pq.IsEmpty() <> True
-            node = pq.Peek()
-            pq.Dequeue()
+        While hp.IsEmpty() <> True
+            node = hp.Peek()
+            hp.Dequeue()
             curr = node.dest
             visited(curr) = True
             Dim adl As List(Of Edge) = Adj(curr)
-
             For Each adn As Edge In adl
                 Dim dest As Integer = adn.dest
                 Dim alt As Integer = adn.cost + dist(curr)
@@ -986,32 +884,27 @@ Public Class Graph
                     dist(dest) = alt
                     previous(dest) = curr
                     node = New Edge(curr, dest, alt)
-                    pq.Enqueue(node)
+                    hp.Enqueue(node)
                 End If
             Next
         End While
-
         PrintPath(previous, dist, count, source)
     End Sub
 
     Private Function PrintPathUtil(ByVal previous As Integer(), ByVal source As Integer, ByVal dest As Integer) As String
         Dim path As String = ""
-
         If dest = source Then
             path = source
         Else
             path += PrintPathUtil(previous, source, previous(dest))
             path += "->" + CStr(dest)
         End If
-
         Return path
     End Function
 
     Public Sub PrintPath(ByVal previous As Integer(), ByVal dist As Integer(), ByVal count As Integer, ByVal source As Integer)
         Dim output As String = "Shortest Paths: "
-
         For i As Integer = 0 To count - 1
-
             If dist(i) = 99999 Then
                 output += ("(" & source & "->" & i & " @ Unreachable) ")
             ElseIf i <> previous(i) Then
@@ -1020,7 +913,6 @@ Public Class Graph
                 output += (" @ " & dist(i) & ") ")
             End If
         Next
-
         Console.WriteLine(output)
     End Sub
 
@@ -1034,14 +926,11 @@ Public Class Graph
 
         distance(source) = 0
         path(source) = source
-
         For i As Integer = 0 To count - 1 - 1
             For j As Integer = 0 To count - 1
                 Dim adl As List(Of Edge) = Adj(j)
-
                 For Each adn As Edge In adl
                     Dim newDistance As Integer = distance(j) + adn.cost
-
                     If distance(adn.dest) > newDistance Then
                         distance(adn.dest) = newDistance
                         path(adn.dest) = j
@@ -1049,10 +938,10 @@ Public Class Graph
                 Next
             Next
         Next
-
         PrintPath(path, distance, count, source)
     End Sub
 
+    ' Testing code.
     Public Shared Sub Main16()
         Dim gph As Graph = New Graph(5)
         gph.AddDirectedEdge(0, 1, 3)
@@ -1069,9 +958,7 @@ Public Class Graph
         Dim heightArr As Integer() = New Integer(count - 1) {}
         Dim gph As Graph = New Graph(count)
         Dim source As Integer = 0
-
         For i As Integer = 0 To count - 1
-
             If arr(i) <> -1 Then
                 gph.AddDirectedEdge(arr(i), i)
             Else
@@ -1085,19 +972,15 @@ Public Class Graph
         que.Enqueue(source)
         heightArr(source) = 0
         Dim maxHight As Integer = 0
-
         While que.Count > 0
             Dim curr As Integer = que.Dequeue()
             Dim height As Integer = heightArr(curr)
-
             If height > maxHight Then
                 maxHight = height
             End If
 
             Dim adl As List(Of Edge) = gph.Adj(curr)
-
             For Each adn As Edge In adl
-
                 If visited(adn.dest) = False Then
                     visited(adn.dest) = True
                     que.Enqueue(adn.dest)
@@ -1105,7 +988,6 @@ Public Class Graph
                 End If
             Next
         End While
-
         Return maxHight
     End Function
 
@@ -1121,15 +1003,14 @@ Public Class Graph
         Dim count As Integer = arr.Length
         Dim height As Integer() = New Integer(count - 1) {}
         Dim maxHeight As Integer = -1
-
         For i As Integer = 0 To count - 1
             height(i) = GetHeight(arr, height, i)
             maxHeight = Math.Max(maxHeight, height(i))
         Next
-
         Return maxHeight
     End Function
 
+    ' Testing code.
     Public Shared Sub Main17()
         Dim parentArray As Integer() = New Integer() {-1, 0, 1, 2, 3}
         Console.WriteLine(HeightTreeParentArr(parentArray))
@@ -1140,54 +1021,46 @@ Public Class Graph
         Dim previous As Integer() = New Integer(count - 1) {}
         Dim dist As Integer() = New Integer(count - 1) {}
         Dim visited As Boolean() = New Boolean(count - 1) {}
-
         For i As Integer = 0 To count - 1
             previous(i) = -1
             dist(i) = Integer.MaxValue
         Next
 
-        Dim pq As PriorityQueue(Of Edge) = New PriorityQueue(Of Edge)()
+        Dim hp As Heap(Of Edge) = New Heap(Of Edge)()
         dist(source) = 0
         previous(source) = -1
         Dim node As Edge = New Edge(source, source, 0)
-        pq.Enqueue(node)
+        hp.Enqueue(node)
 
-        While pq.IsEmpty() <> True
-            node = pq.Peek()
-            pq.Dequeue()
+        While hp.IsEmpty() <> True
+            node = hp.Peek()
+            hp.Dequeue()
             source = node.dest
-
             If source = dest Then
                 Return node.cost
             End If
-
             visited(source) = True
             Dim adl As List(Of Edge) = Adj(source)
-
             For Each adn As Edge In adl
                 Dim curr As Integer = adn.dest
                 Dim cost As Integer = adn.cost
                 Dim alt As Integer = cost + dist(source)
-
                 If dist(curr) > alt AndAlso visited(curr) = False Then
                     dist(curr) = alt
                     previous(curr) = source
                     node = New Edge(source, curr, alt)
-                    pq.Enqueue(node)
+                    hp.Enqueue(node)
                 End If
             Next
         End While
-
         Return -1
     End Function
 
     Public Function IsConnected() As Boolean
         Dim visited As Boolean() = New Boolean(count - 1) {}
         Dim adl As List(Of Edge)
-
         For i As Integer = 0 To count - 1
             adl = Adj(i)
-
             If adl.Count > 0 Then
                 DFSUtil(i, visited)
                 Exit For
@@ -1196,9 +1069,7 @@ Public Class Graph
 
         For i As Integer = 0 To count - 1
             adl = Adj(i)
-
             If adl.Count > 0 Then
-
                 If visited(i) = False Then
                     Return False
                 End If
@@ -1213,7 +1084,6 @@ Public Class Graph
         Dim inDegree As Integer()
         Dim outDegree As Integer()
         Dim adl As List(Of Edge)
-
         If IsConnected() = False Then
             Console.WriteLine("graph is not Eulerian")
             Return 0
@@ -1224,7 +1094,6 @@ Public Class Graph
 
             For i As Integer = 0 To count - 1
                 adl = Adj(i)
-
                 For Each adn As Edge In adl
                     outDegree(i) += 1
                     inDegree(adn.dest) += 1
@@ -1232,7 +1101,6 @@ Public Class Graph
             Next
 
             For i As Integer = 0 To count - 1
-
                 If (inDegree(i) + outDegree(i)) Mod 2 <> 0 Then
                     odd += 1
                 End If
@@ -1251,6 +1119,7 @@ Public Class Graph
         End If
     End Function
 
+    ' Testing code.
     Public Shared Sub Main18()
         Dim gph As Graph = New Graph(5)
         gph.AddDirectedEdge(1, 0)
@@ -1268,7 +1137,6 @@ Public Class Graph
         Dim gReversed As Graph
         Dim index As Integer
         Dim adl As List(Of Edge)
-
         For index = 0 To count - 1
             adl = Adj(index)
 
@@ -1278,45 +1146,37 @@ Public Class Graph
         Next
 
         DFSUtil(index, visited)
-
         For i As Integer = 0 To count - 1
             adl = Adj(i)
-
             If visited(i) = False AndAlso adl.Count > 0 Then
                 Return False
             End If
         Next
 
         gReversed = TransposeGraph()
-
         For i As Integer = 0 To count - 1
             visited(i) = False
         Next
 
         gReversed.DFSUtil(index, visited)
-
         For i As Integer = 0 To count - 1
             adl = Adj(i)
-
             If visited(i) = False AndAlso adl.Count > 0 Then
                 Return False
             End If
         Next
-
         Return True
     End Function
 
     Public Function IsEulerianCycle() As Boolean
         Dim inDegree As Integer() = New Integer(count - 1) {}
         Dim outDegree As Integer() = New Integer(count - 1) {}
-
         If Not IsStronglyConnected2() Then
             Return False
         End If
 
         For i As Integer = 0 To count - 1
             Dim adl As List(Of Edge) = Adj(i)
-
             For Each adn As Edge In adl
                 outDegree(i) += 1
                 inDegree(adn.dest) += 1
@@ -1324,15 +1184,14 @@ Public Class Graph
         Next
 
         For i As Integer = 0 To count - 1
-
             If inDegree(i) <> outDegree(i) Then
                 Return False
             End If
         Next
-
         Return True
     End Function
 
+    ' Testing code.
     Public Shared Sub Main19()
         Dim gph As Graph = New Graph(5)
         gph.AddDirectedEdge(0, 1)
@@ -1344,6 +1203,7 @@ Public Class Graph
         Console.WriteLine(gph.IsEulerianCycle())
     End Sub
 
+    ' Testing code.
     Public Shared Sub Main20()
         Dim gph As Graph = New Graph(9)
         gph.AddUndirectedEdge(0, 1)
@@ -1367,12 +1227,9 @@ Public Class Graph
         Dim V As Integer = count
         Dim dist As Integer(,) = New Integer(V - 1, V - 1) {}
         Dim path As Integer(,) = New Integer(V - 1, V - 1) {}
-
         For i As Integer = 0 To V - 1
-
             For j As Integer = 0 To V - 1
                 dist(i, j) = 99999
-
                 If i = j Then
                     path(i, j) = 0
                 Else
@@ -1383,7 +1240,6 @@ Public Class Graph
 
         For i As Integer = 0 To V - 1
             Dim adl As List(Of Edge) = Adj(i)
-
             For Each adn As Edge In adl
                 path(adn.src, adn.dest) = adn.src
                 dist(adn.src, adn.dest) = adn.cost
@@ -1391,11 +1247,8 @@ Public Class Graph
         Next
 
         For k As Integer = 0 To V - 1
-
             For i As Integer = 0 To V - 1
-
                 For j As Integer = 0 To V - 1
-
                     If dist(i, k) + dist(k, j) < dist(i, j) Then
                         dist(i, j) = dist(i, k) + dist(k, j)
                         path(i, j) = path(k, j)
@@ -1414,11 +1267,8 @@ Public Class Graph
 
     Private Sub PrintSolution(ByVal cost As Integer(,), ByVal path As Integer(,), ByVal V As Integer)
         Console.Write("Shortest Paths : ")
-
         For i As Integer = 0 To V - 1
-
             For j As Integer = 0 To V - 1
-
                 If i <> j AndAlso path(i, j) <> -1 Then
                     Console.Write("(")
                     PrintPath(path, i, j)
@@ -1426,7 +1276,6 @@ Public Class Graph
                 End If
             Next
         Next
-
         Console.WriteLine()
     End Sub
 
@@ -1435,11 +1284,11 @@ Public Class Graph
             Console.Write(u & "->" & v)
             Return
         End If
-
         PrintPath(path, u, path(u, v))
         Console.Write("->" & v)
     End Sub
 
+    ' Testing code.
     Public Shared Sub Main21()
         Dim gph As Graph = New Graph(4)
         gph.AddDirectedEdge(0, 0, 0)
@@ -1455,16 +1304,13 @@ Public Class Graph
 
     Friend Sub PrintSolution(ByVal dist As Integer(,), ByVal V As Integer)
         For i As Integer = 0 To V - 1
-
             For j As Integer = 0 To V - 1
-
                 If dist(i, j) = Integer.MaxValue Then
                     Console.Write("INF ")
                 Else
                     Console.Write(dist(i, j) & "   ")
                 End If
             Next
-
             Console.WriteLine()
         Next
     End Sub
@@ -1494,7 +1340,7 @@ Public Class Graph
 End Class
 
 
-Public Class PriorityQueue(Of T As IComparable(Of T))
+Public Class Heap(Of T As IComparable(Of T))
     Private Capacity As Integer = 100
     Private count As Integer ' Number of elements in Heap
     Private arr() As T ' The Heap array
@@ -1618,7 +1464,7 @@ Public Class PriorityQueue(Of T As IComparable(Of T))
 
     Friend Shared Sub HeapSort(ByVal array() As Integer, ByVal inc As Boolean)
         ' Create max heap for increasing order sorting.
-        Dim hp As New PriorityQueue(Of Integer)(array, Not inc)
+        Dim hp As New Heap(Of Integer)(array, Not inc)
         For i As Integer = 0 To array.Length - 1
             array(array.Length - i - 1) = hp.Dequeue()
         Next i

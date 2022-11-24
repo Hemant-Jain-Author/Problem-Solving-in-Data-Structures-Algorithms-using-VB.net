@@ -38,39 +38,6 @@ Public Class QueueLL
         Return value
     End Function
 
-    Public Sub Add(ByVal value As Integer)
-        Dim temp As Node = New Node(value, Nothing)
-
-        If tail Is Nothing Then
-            tail = temp
-            tail.nextPtr = tail
-        Else
-            temp.nextPtr = tail.nextPtr
-            tail.nextPtr = temp
-            tail = temp
-        End If
-
-        count += 1
-    End Sub
-
-    Public Function Remove() As Integer
-        If count = 0 Then
-            Throw New System.InvalidOperationException("StackEmptyException")
-        End If
-
-        Dim value As Integer = 0
-
-        If tail Is tail.nextPtr Then
-            value = tail.value
-            tail = Nothing
-        Else
-            value = tail.nextPtr.value
-            tail.nextPtr = tail.nextPtr.nextPtr
-        End If
-        count -= 1
-        Return value
-    End Function
-
     Public Sub Print()
         If count = 0 Then
             Console.Write("Queue is empty.")
@@ -88,16 +55,49 @@ Public Class QueueLL
         Console.WriteLine()
     End Sub
 
-    Public Shared Sub Main(ByVal args As String())
-        Dim que As QueueLL = New QueueLL()
-        que.Add(1)
-        que.Add(2)
-        que.Add(3)
-        Console.WriteLine("IsEmpty : " & que.IsEmpty())
-        Console.WriteLine("Size : " & que.Size())
-        Console.WriteLine("Queue remove : " & que.Remove())
-        Console.WriteLine("Queue remove : " & que.Remove())
-    End Sub
+Public Sub Add(ByVal value As Integer)
+    Dim temp As Node = New Node(value, Nothing)
+
+    If tail Is Nothing Then
+        tail = temp
+        tail.nextPtr = tail
+    Else
+        temp.nextPtr = tail.nextPtr
+        tail.nextPtr = temp
+        tail = temp
+    End If
+
+    count += 1
+End Sub
+
+Public Function Remove() As Integer
+    If count = 0 Then
+        Throw New System.InvalidOperationException("StackEmptyException")
+    End If
+
+    Dim value As Integer = 0
+
+    If tail Is tail.nextPtr Then
+        value = tail.value
+        tail = Nothing
+    Else
+        value = tail.nextPtr.value
+        tail.nextPtr = tail.nextPtr.nextPtr
+    End If
+    count -= 1
+    Return value
+End Function
+
+Public Shared Sub Main(ByVal args As String())
+    Dim que As QueueLL = New QueueLL()
+    que.Add(1)
+    que.Add(2)
+    que.Add(3)
+    Console.WriteLine("IsEmpty : " & que.IsEmpty())
+    Console.WriteLine("Size : " & que.Size())
+    Console.WriteLine("Queue remove : " & que.Remove())
+    Console.WriteLine("Queue remove : " & que.Remove())
+End Sub
 End Class
 
 ' IsEmpty : False

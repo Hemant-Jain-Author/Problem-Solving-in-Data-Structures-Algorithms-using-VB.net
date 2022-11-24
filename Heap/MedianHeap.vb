@@ -9,8 +9,7 @@ Public Class MedianHeap
 		maxHeap = New Heap(Of Integer)(False)
 	End Sub
 
-	' Other Methods.
-	Public Sub Add(ByVal value As Integer)
+	Public Sub Enqueue(ByVal value As Integer)
 		If maxHeap.Size() = 0 OrElse maxHeap.Peek() >= value Then
 			maxHeap.Enqueue(value)
 		Else
@@ -48,7 +47,7 @@ Public Class MedianHeap
 		Dim hp As New MedianHeap()
 
 		For i As Integer = 0 To 5
-			hp.Add(arr(i))
+			hp.Enqueue(arr(i))
 			Console.WriteLine("Median after addition of " & arr(i) & " is  " & hp.getMedian())
 		Next i
 	End Sub
@@ -122,7 +121,8 @@ Public Class Heap(Of T As IComparable(Of T))
 
     Public Sub Enqueue(ByVal value As T)
         If count = arr.Length Then DoubleSize()
-        arr(Math.Min(System.Threading.Interlocked.Increment(count), count - 1)) = value
+        arr(count) = value
+        count += 1
         PercolateUp(count - 1)
     End Sub
 

@@ -108,7 +108,8 @@ Public Class Heap(Of T As IComparable(Of T))
 
     Public Sub Enqueue(ByVal value As T)
         If count = arr.Length Then DoubleSize()
-        arr(Math.Min(System.Threading.Interlocked.Increment(count), count - 1)) = value
+        arr(count) = value
+        count += 1
         PercolateUp(count - 1)
     End Sub
 

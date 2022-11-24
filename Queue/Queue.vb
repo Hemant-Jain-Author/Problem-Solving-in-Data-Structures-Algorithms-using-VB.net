@@ -63,7 +63,8 @@ Public Class Queue
         While s > 0
             s -= 1
             Console.Write(data(temp) & " ")
-            temp = (System.Threading.Interlocked.Increment(temp)) Mod capacity
+            temp += 1
+            temp = temp Mod capacity
         End While
 
         Console.WriteLine()

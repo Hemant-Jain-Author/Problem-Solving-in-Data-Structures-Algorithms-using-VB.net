@@ -30,6 +30,7 @@ Public Class GraphAM
         Next
     End Sub
 
+    ' Testing code.
     Public Shared Sub Main1()
         Dim graph As GraphAM = New GraphAM(4)
         graph.AddUndirectedEdge(0, 1)
@@ -38,17 +39,14 @@ Public Class GraphAM
         graph.AddUndirectedEdge(2, 3)
         graph.Print()
     End Sub
-
-
-' Vertex 0 is connected to : 1(cost: 1) 2(cost: 1) 
+' Vertex 0 is connected to : 1(cost: 1) 2(cost: 1)
 ' Vertex 1 is connected to : 0(cost: 1) 2(cost: 1) 
 ' Vertex 2 is connected to : 0(cost: 1) 1(cost: 1) 3(cost: 1) 
 ' Vertex 3 is connected to : 2(cost: 1) 
+
     Private Class Edge
         Implements IComparable(Of Edge)
-
         Friend src, dest, cost As Integer
-
         Public Sub New(ByVal s As Integer, ByVal d As Integer, ByVal c As Integer)
             src = s
             dest = d
@@ -70,16 +68,15 @@ Public Class GraphAM
         Next i
         dist(source) = 0
         previous(source) = source
-        Dim pq As PriorityQueue(Of Edge) = New PriorityQueue(Of Edge)()
+        Dim hp As Heap(Of Edge) = New Heap(Of Edge)()
         Dim node As Edge = New Edge(source, source, 0)
-        pq.Enqueue(node)
+        hp.Enqueue(node)
         Dim curr As Integer
 
-        While pq.IsEmpty() <> True
-            node = pq.Dequeue()
+        While hp.IsEmpty() <> True
+            node = hp.Dequeue()
             curr = node.dest
             visited(curr) = True
-
             For dest As Integer = 0 To count - 1
                 Dim cost As Integer = adj(curr, dest)
                 If cost <> 0 Then
@@ -88,7 +85,7 @@ Public Class GraphAM
                         dist(dest) = alt
                         previous(dest) = curr
                         node = New Edge(curr, dest, alt)
-                        pq.Enqueue(node)
+                        hp.Enqueue(node)
                     End If
                 End If
             Next
@@ -133,25 +130,22 @@ Public Class GraphAM
         Next i
         dist(source) = 0
         previous(source) = source
-        Dim pq As PriorityQueue(Of Edge) = New PriorityQueue(Of Edge)()
+        Dim hp As Heap(Of Edge) = New Heap(Of Edge)()
         Dim node As Edge = New Edge(source, source, 0)
-        pq.Enqueue(node)
+        hp.Enqueue(node)
 
-        While pq.IsEmpty() <> True
-            node = pq.Dequeue()
+        While hp.IsEmpty() <> True
+            node = hp.Dequeue()
             source = node.dest
             visited(source) = True
-
             For dest As Integer = 0 To count - 1
                 Dim cost As Integer = adj(source, dest)
-
                 If cost <> 0 Then
-
                     If dist(dest) > cost AndAlso visited(dest) = False Then
                         dist(dest) = cost
                         previous(dest) = source
                         node = New Edge(source, dest, cost)
-                        pq.Enqueue(node)
+                        hp.Enqueue(node)
                     End If
                 End If
             Next
@@ -160,7 +154,6 @@ Public Class GraphAM
         Dim sum As Integer = 0
         Dim isMst As Boolean = True
         Dim output As String = "Edges are "
-
         For i As Integer = 0 To count - 1
             If dist(i) = 99999 Then
                 output += ("(" & i & ", Unreachable) ")
@@ -208,27 +201,23 @@ Public Class GraphAM
         End If
 
         For vertex As Integer = 0 To count - 1
-
             If pSize = 0 OrElse (adj(path(pSize - 1), vertex) = 1 AndAlso added(vertex) = 0) Then
-                path(Math.Min(System.Threading.Interlocked.Increment(pSize), pSize - 1)) = vertex
+                path(pSize) = vertex
+                pSize += 1
                 added(vertex) = 1
-
                 If HamiltonianPathUtil(path, pSize, added) Then
                     Return True
                 End If
-
                 pSize -= 1
                 added(vertex) = 0
             End If
         Next
-
         Return False
     End Function
 
     Public Function HamiltonianPath() As Boolean
         Dim path As Integer() = New Integer(count - 1) {}
         Dim added As Integer() = New Integer(count - 1) {}
-
         If HamiltonianPathUtil(path, 0, added) Then
             Console.Write("Hamiltonian Path found :: ")
             For i As Integer = 0 To count - 1
@@ -237,7 +226,6 @@ Public Class GraphAM
             Console.WriteLine()
             Return True
         End If
-
         Console.WriteLine("Hamiltonian Path not found")
         Return False
     End Function
@@ -254,36 +242,30 @@ Public Class GraphAM
 
         For vertex As Integer = 0 To count - 1
             If pSize = 0 OrElse (adj(path(pSize - 1), vertex) = 1 AndAlso added(vertex) = 0) Then
-                path(Math.Min(System.Threading.Interlocked.Increment(pSize), pSize - 1)) = vertex
+                path(pSize) = vertex
+                pSize += 1
                 added(vertex) = 1
-
                 If HamiltonianCycleUtil(path, pSize, added) Then
                     Return True
                 End If
-
                 pSize -= 1
                 added(vertex) = 0
             End If
         Next
-
         Return False
     End Function
 
     Public Function HamiltonianCycle() As Boolean
         Dim path As Integer() = New Integer(count + 1 - 1) {}
         Dim added As Integer() = New Integer(count - 1) {}
-
         If HamiltonianCycleUtil(path, 0, added) Then
             Console.Write("Hamiltonian Cycle found :: ")
-
             For i As Integer = 0 To count
                 Console.Write(" " & path(i))
             Next
-
             Console.WriteLine()
             Return True
         End If
-
         Console.WriteLine("Hamiltonian Cycle not found")
         Return False
     End Function
@@ -382,7 +364,7 @@ Public Class GraphAM
 End Class
 
 
-Public Class PriorityQueue(Of T As IComparable(Of T))
+Public Class Heap(Of T As IComparable(Of T))
     Private Capacity As Integer = 100
     Private count As Integer ' Number of elements in Heap
     Private arr() As T ' The Heap array
@@ -506,7 +488,7 @@ Public Class PriorityQueue(Of T As IComparable(Of T))
 
     Friend Shared Sub HeapSort(ByVal array() As Integer, ByVal inc As Boolean)
         ' Create max heap for increasing order sorting.
-        Dim hp As New PriorityQueue(Of Integer)(array, Not inc)
+        Dim hp As New Heap(Of Integer)(array, Not inc)
         For i As Integer = 0 To array.Length - 1
             array(array.Length - i - 1) = hp.Dequeue()
         Next i
