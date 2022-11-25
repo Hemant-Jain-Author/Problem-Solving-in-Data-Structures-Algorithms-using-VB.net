@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class MultipleStageGraph
-	Friend Shared INF As Integer = Integer.MaxValue
+Public Module MultipleStageGraph
+	Dim INF As Integer = Integer.MaxValue
 
 	' Returns shortest distance from 0 to N-1.
 	Function ShortestDist(ByVal graph(,) As Integer, ByVal n As Integer) As Integer
@@ -58,7 +58,7 @@ Public Class MultipleStageGraph
 
 		Console.WriteLine(ShortestDist(graph, 8))
 	End Sub
-End Class
+End Module
 
 '
 '7 6 3 0 

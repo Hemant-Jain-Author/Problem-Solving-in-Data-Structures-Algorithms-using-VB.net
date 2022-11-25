@@ -355,8 +355,8 @@ Sub Shuffle(ByVal str As String)
     Dim count As Integer = 0
     Dim k As Integer = 1
     Dim temp2 As Char, temp As Char = vbNullChar
-    Dim i As Integer = 1
-    For i As Integer = 1 To n - 1 Step 2
+    Dim i As Integer
+    For i = 1 To n - 1 Step 2
         temp = ar(i)
         k = i
         Do

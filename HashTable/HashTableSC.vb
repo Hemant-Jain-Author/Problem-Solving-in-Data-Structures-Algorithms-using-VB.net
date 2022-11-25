@@ -90,7 +90,7 @@ Public Class HashTableSC
         Return False
     End Function
 
-    Public Function [Get](ByVal key As Integer) As Integer
+    Public Function GetVal(ByVal key As Integer) As Integer
         Dim index As Integer = ComputeHash(key)
         Dim head As Node = listArray(index)
         While head IsNot Nothing
@@ -110,7 +110,7 @@ Public Class HashTableSC
         ht.Add(3, 30)
         ht.Print()
         Console.WriteLine("Find key 2 : " & ht.Find(2))
-        Console.WriteLine("Value at  key 2 : " & ht.[Get](2))
+        Console.WriteLine("Value at  key 2 : " & ht.GetVal(2))
         ht.Remove(2)
         Console.WriteLine("Find key 2 : " & ht.Find(2))
         ht.Print()

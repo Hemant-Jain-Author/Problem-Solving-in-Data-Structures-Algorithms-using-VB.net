@@ -58,7 +58,7 @@ Public Class JobSequencing
 	End Sub
 
 
-	Sub Main(ByVal args() As String)
+	Public Shared Sub Main(ByVal args() As String)
 		Dim id() As Char = {"a"c, "b"c, "c"c, "d"c, "e"c}
 		Dim deadline() As Integer = {3, 1, 2, 4, 4}
 		Dim profit() As Integer = {50, 40, 27, 31, 30}
