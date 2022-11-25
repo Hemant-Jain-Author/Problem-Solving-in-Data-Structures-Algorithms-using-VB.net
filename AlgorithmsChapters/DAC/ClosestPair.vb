@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Collections.Generic
 
-Public Class ClosestPair
+Public Module ClosestPair
     Public Class Point
         Friend x, y As Integer
         Friend Sub New(ByVal a As Integer, ByVal b As Integer)
@@ -26,27 +26,25 @@ Public Class ClosestPair
 		Return dmin
 	End Function
 	
-    Private Shared Function Distance(ByVal a As Point, ByVal b As Point) As Double
+    Function Distance(ByVal a As Point, ByVal b As Point) As Double
         Return Math.Sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y))
     End Function
 
-    	Class xComp
-		Implements IComparer(Of Point)
-
+    Class xComp 
+        Implements IComparer(Of Point)
 		Private Function IComparer_Compare(s1 As Point, s2 As Point) As Integer Implements IComparer(Of Point).Compare
 			Return (s1.x - s2.x)
 		End Function
 	End Class
 
-	Class yComp
-		Implements IComparer(Of Point)
-
+	Class yComp 
+        Implements IComparer(Of Point)
 		Private Function IComparer_Compare(s1 As Point, s2 As Point) As Integer Implements IComparer(Of Point).Compare
 			Return (s1.y - s2.y)
 		End Function
 	End Class
 
-    Private Shared Function StripMin(ByVal q As Point(), ByVal n As Integer, ByVal d As Double) As Double
+    Function StripMin(ByVal q As Point(), ByVal n As Integer, ByVal d As Double) As Double
         Dim min As Double = d
 
         For i As Integer = 0 To n - 1
@@ -66,7 +64,7 @@ Public Class ClosestPair
         Return min
     End Function
 
-    Private Function ClosestPairUtil(ByVal p As Point(), ByVal startVal As Integer, ByVal stopVal As Integer, ByVal q As Point(), ByVal n As Integer) As Double
+    Function ClosestPairUtil(ByVal p As Point(), ByVal startVal As Integer, ByVal stopVal As Integer, ByVal q As Point(), ByVal n As Integer) As Double
         If stopVal - startVal < 1 Then
             Return Double.MaxValue
         End If
@@ -107,18 +105,13 @@ Public Class ClosestPair
         Return ClosestPairUtil(p, 0, n - 1, q, n)
     End Function
 
-    Public Shared Sub Main(ByVal args As String())
+    Sub Main(ByVal args As String())
         Dim arr As Integer(,) = New Integer(,) {
-        {648, 896},
-        {269, 879},
-        {250, 922},
-        {453, 347},
-        {213, 17}}
-        Dim cp As ClosestPair = New ClosestPair()
-        Console.WriteLine("Smallest Distance is:" & cp.ClosestPairBF(arr))
-        Console.WriteLine("Smallest Distance is:" & cp.ClosestPairDC(arr))
+        {648, 896}, {269, 879}, {250, 922}, {453, 347}, {213, 17}}
+        Console.WriteLine("Smallest Distance is:" & ClosestPairBF(arr))
+        Console.WriteLine("Smallest Distance is:" & ClosestPairDC(arr))
     End Sub
-End Class
+End Module
 
 
 '

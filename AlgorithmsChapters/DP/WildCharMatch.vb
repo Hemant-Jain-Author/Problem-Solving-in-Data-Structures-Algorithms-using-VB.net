@@ -1,11 +1,11 @@
 ﻿Imports System
 
-Public Class WildCharMatch
-	Public Shared Function matchExp(ByVal exp As String, ByVal str As String) As Boolean
+Public Module WildCharMatch
+	Function matchExp(ByVal exp As String, ByVal str As String) As Boolean
 		Return matchExpUtil(exp.ToCharArray(), str.ToCharArray(), 0, 0)
 	End Function
 
-	Private Shared Function matchExpUtil(ByVal exp() As Char, ByVal str() As Char, ByVal m As Integer, ByVal n As Integer) As Boolean
+	Function matchExpUtil(ByVal exp() As Char, ByVal str() As Char, ByVal m As Integer, ByVal n As Integer) As Boolean
 		If m = exp.Length AndAlso (n = str.Length OrElse exp(m - 1) = "*"c) Then
 			Return True
 		End If
@@ -21,11 +21,11 @@ Public Class WildCharMatch
 		Return False
 	End Function
 
-	Public Shared Function matchExpDP(ByVal exp As String, ByVal str As String) As Boolean
+	Function matchExpDP(ByVal exp As String, ByVal str As String) As Boolean
 		Return matchExpUtilDP(exp.ToCharArray(), str.ToCharArray(), exp.Length, str.Length)
 	End Function
 
-	Private Shared Function matchExpUtilDP(ByVal exp() As Char, ByVal str() As Char, ByVal m As Integer, ByVal n As Integer) As Boolean
+	Function matchExpUtilDP(ByVal exp() As Char, ByVal str() As Char, ByVal m As Integer, ByVal n As Integer) As Boolean
 		Dim lookup(m, n) As Boolean
 		lookup(0, 0) = True ' empty exp and empty str match.
 
@@ -63,7 +63,7 @@ Public Class WildCharMatch
 		Return lookup(m, n)
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Console.WriteLine(matchExp("*llo,?World?", "Hello, World!"))
 		Console.WriteLine(matchExpDP("*llo,?World?", "Hello, World!"))
 	End Sub
@@ -72,7 +72,7 @@ Public Class WildCharMatch
 'True
 '
 
-	Public Shared Sub main2(ByVal args() As String)
+	Sub main2(ByVal args() As String)
 		Dim str As String = "baaabab"
 		Dim pattern() As String = {"*****ba*****ab", "ba*****ab", "ba*ab", "a*ab", "a*****ab", "*a*****ab", "ba*ab****", "****", "*", "aa?ab", "b*b", "a*a", "baaabab", "?baaabab", "*baaaba*"}
 
@@ -83,4 +83,4 @@ Public Class WildCharMatch
 			End If
 		Next p
 	End Sub
-End Class
+End Module

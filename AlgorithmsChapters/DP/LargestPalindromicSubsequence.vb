@@ -1,8 +1,8 @@
 ﻿Imports System
 
 ' Palindromic Subsequence
-Public Class LargestPalindromicSubsequence
-	Public Shared Function PalindromicSubsequence(ByVal str As String) As Integer
+Public Module LargestPalindromicSubsequence
+	Function PalindromicSubsequence(ByVal str As String) As Integer
 		Dim n As Integer = str.Length
 		Dim dp(n - 1, n - 1) As Integer
 
@@ -26,12 +26,12 @@ Public Class LargestPalindromicSubsequence
 		Return dp(0, n - 1)
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim str As String = "ABCAUCBCxxCBA"
 		Console.WriteLine("Max Palindromic Subsequence length: " & PalindromicSubsequence(str))
 
 	End Sub
-End Class
+End Module
 
 '
 'Max Palindromic Subsequence length: 9

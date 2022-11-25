@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class ALS
-    Public Shared Function FastestWayBU2(ByVal a As Integer(,), ByVal t As Integer(,), ByVal e As Integer(), ByVal x As Integer(), ByVal n As Integer) As Integer
+Public Module ALS
+    Function FastestWayBU2(ByVal a As Integer(,), ByVal t As Integer(,), ByVal e As Integer(), ByVal x As Integer(), ByVal n As Integer) As Integer
         Dim f1 As Integer() = New Integer(n - 1) {}
         Dim f2 As Integer() = New Integer(n - 1) {}
         f1(0) = e(0) + a(0, 0)
@@ -15,7 +15,7 @@ Public Class ALS
         Return Math.Min(f1(n - 1) + x(0), f2(n - 1) + x(1))
     End Function
 
-    Public Shared Function FastestWayBU(ByVal a As Integer(,), ByVal t As Integer(,), ByVal e As Integer(), ByVal x As Integer(), ByVal n As Integer) As Integer
+    Function FastestWayBU(ByVal a As Integer(,), ByVal t As Integer(,), ByVal e As Integer(), ByVal x As Integer(), ByVal n As Integer) As Integer
         Dim f As Integer(,) = New Integer(n - 1, n - 1) {}
         f(0, 0) = e(0) + a(0, 0)
         f(1, 0) = e(1) + a(1, 0)
@@ -28,7 +28,7 @@ Public Class ALS
         Return Math.Min(f(0, n - 1) + x(0), f(1, n - 1) + x(1))
     End Function
 
-    Public Shared Function FastestWayTD(ByVal a As Integer(,), ByVal t As Integer(,), ByVal e As Integer(), ByVal x As Integer(), ByVal n As Integer) As Integer
+    Function FastestWayTD(ByVal a As Integer(,), ByVal t As Integer(,), ByVal e As Integer(), ByVal x As Integer(), ByVal n As Integer) As Integer
         Dim f As Integer(,) = New Integer(n - 1, n - 1) {}
         f(0, 0) = e(0) + a(0, 0)
         f(1, 0) = e(1) + a(1, 0)
@@ -36,7 +36,7 @@ Public Class ALS
         Return Math.Min(f(0, n - 1) + x(0), f(1, n - 1) + x(1))
     End Function
 
-    Private Shared Sub FastestWayTD(ByVal f As Integer(,), ByVal a As Integer(,), ByVal t As Integer(,), ByVal i As Integer)
+    Sub FastestWayTD(ByVal f As Integer(,), ByVal a As Integer(,), ByVal t As Integer(,), ByVal i As Integer)
         If i = 0 Then
             Return
         End If
@@ -46,7 +46,7 @@ Public Class ALS
         f(1, i) = Math.Min(f(1, i - 1) + a(1, i), f(0, i - 1) + t(0, i - 1) + a(1, i))
     End Sub
 
-    Public Shared Sub Main(ByVal args As String())
+    Sub Main(ByVal args As String())
         Dim a As Integer(,) = New Integer(,) {
         {7, 9, 3, 4, 8, 4},
         {8, 5, 6, 4, 5, 7}}
@@ -60,7 +60,7 @@ Public Class ALS
         Console.WriteLine(FastestWayBU(a, t, e, x, n))
         Console.WriteLine(FastestWayTD(a, t, e, x, n))
     End Sub
-End Class
+End Module
 
 
 '

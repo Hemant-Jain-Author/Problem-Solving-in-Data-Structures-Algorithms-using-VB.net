@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class StockBuySell
-	Public Shared Function maxProfit(ByVal arr() As Integer) As Integer
+Public Module StockBuySell
+	Function maxProfit(ByVal arr() As Integer) As Integer
 		Dim buyProfit As Integer = -arr(0) ' Buy stock profit
 		Dim sellProfit As Integer = 0 ' Sell stock profit
 		Dim n As Integer = arr.Length
@@ -14,7 +14,7 @@ Public Class StockBuySell
 		Return sellProfit
 	End Function
 
-	Public Shared Function maxProfitTC(ByVal arr() As Integer, ByVal t As Integer) As Integer
+	Function maxProfitTC(ByVal arr() As Integer, ByVal t As Integer) As Integer
 		Dim buyProfit As Integer = -arr(0)
 		Dim sellProfit As Integer = 0
 		Dim n As Integer = arr.Length
@@ -27,7 +27,7 @@ Public Class StockBuySell
 		Return sellProfit
 	End Function
 
-	Public Shared Function maxProfit2(ByVal arr() As Integer) As Integer
+	Function maxProfit2(ByVal arr() As Integer) As Integer
 		Dim n As Integer = arr.Length
 		Dim dp(n - 1, 1) As Integer
 		dp(0, 0) = -arr(0) ' Buy stock profit
@@ -40,7 +40,7 @@ Public Class StockBuySell
 		Return dp(n - 1, 1)
 	End Function
 
-	Public Shared Function maxProfitTC2(ByVal arr() As Integer, ByVal t As Integer) As Integer
+	Function maxProfitTC2(ByVal arr() As Integer, ByVal t As Integer) As Integer
 		Dim n As Integer = arr.Length
 		Dim dp(n - 1, 1) As Integer
 		dp(0, 0) = -arr(0)
@@ -53,14 +53,14 @@ Public Class StockBuySell
 		Return dp(n - 1, 1)
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim arr() As Integer = {10, 12, 9, 23, 25, 55, 49, 70}
 		Console.WriteLine("Total profit: " & maxProfit(arr))
 		Console.WriteLine("Total profit: " & maxProfit2(arr))
 		Console.WriteLine("Total profit: " & maxProfitTC(arr, 2))
 		Console.WriteLine("Total profit: " & maxProfitTC2(arr, 2))
 	End Sub
-End Class
+End Module
 
 '
 'Total profit: 69

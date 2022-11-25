@@ -1,9 +1,9 @@
 ﻿Imports System
 
-Public Class FloydWarshall
-	Private Shared ReadOnly INF As Integer = Integer.MaxValue
+Public Module FloydWarshall
+	ReadOnly INF As Integer = Integer.MaxValue
 
-	Public Shared Sub FindAllPairPath(ByVal graph(,) As Integer, ByVal V As Integer)
+	Sub FindAllPairPath(ByVal graph(,) As Integer, ByVal V As Integer)
 		Dim dist(V - 1, V - 1) As Integer
 
 		For i As Integer = 0 To V - 1
@@ -31,7 +31,7 @@ Public Class FloydWarshall
 		PrintSolution(dist, V)
 	End Sub
 
-	Private Shared Sub PrintSolution(ByVal dist(,) As Integer, ByVal V As Integer)
+	Sub PrintSolution(ByVal dist(,) As Integer, ByVal V As Integer)
 		For i As Integer = 0 To V - 1
 			For j As Integer = 0 To V - 1
 				If dist(i, j) = INF Then
@@ -44,7 +44,7 @@ Public Class FloydWarshall
 		Next i
 	End Sub
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim graph(,) As Integer = {
 			{0, 2, 4, INF, INF, INF, INF},
 			{2, 0, 4, 1, INF, INF, INF},
@@ -57,7 +57,7 @@ Public Class FloydWarshall
 
 		FindAllPairPath(graph, 7)
 	End Sub
-End Class
+End Module
 
 '
 '0   2   4   3   6   8   7   

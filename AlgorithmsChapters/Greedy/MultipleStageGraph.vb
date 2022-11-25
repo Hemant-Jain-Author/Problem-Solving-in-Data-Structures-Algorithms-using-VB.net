@@ -4,7 +4,7 @@ Public Class MultipleStageGraph
 	Friend Shared INF As Integer = Integer.MaxValue
 
 	' Returns shortest distance from 0 to N-1.
-	Public Shared Function ShortestDist(ByVal graph(,) As Integer, ByVal n As Integer) As Integer
+	Function ShortestDist(ByVal graph(,) As Integer, ByVal n As Integer) As Integer
 		' dist[i] is going to store shortest
 		' distance from node i to node n-1.
 		Dim dist(n - 1) As Integer
@@ -42,7 +42,7 @@ Public Class MultipleStageGraph
 	End Function
 
 	' Driver code
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		' Graph stored in the form of an
 		' adjacency Matrix
 		Dim graph(,) As Integer = {

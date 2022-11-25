@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class LargestIncreasingSubseq
-	Public Shared Function LIS(ByVal arr() As Integer) As Integer
+Public Module LargestIncreasingSubseq
+	Function LIS(ByVal arr() As Integer) As Integer
 		Dim n As Integer = arr.Length
 		Dim dp(n - 1) As Integer
 		Dim max As Integer = 0
@@ -21,10 +21,10 @@ Public Class LargestIncreasingSubseq
 		Return max
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim arr() As Integer = {10, 12, 9, 23, 25, 55, 49, 70}
 		Console.WriteLine("Length of LIS is " & LIS(arr))
 	End Sub
-End Class
+End Module
 
 ' Length of LIS is 6

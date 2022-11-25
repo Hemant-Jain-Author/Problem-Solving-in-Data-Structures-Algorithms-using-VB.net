@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class LargestBitonicSubseq
-	Public Shared Function LBS(ByVal arr() As Integer) As Integer
+Public Module LargestBitonicSubseq
+	Function LBS(ByVal arr() As Integer) As Integer
 		Dim n As Integer = arr.Length
 		Dim lis(n - 1) As Integer
 		Dim lds(n - 1) As Integer
@@ -36,11 +36,11 @@ Public Class LargestBitonicSubseq
 		Return max
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim arr() As Integer = {1, 6, 3, 11, 1, 9, 5, 12, 3, 14, 6, 17, 3, 19, 2, 19}
 		Console.WriteLine("Length of LBS is " & LBS(arr))
 	End Sub
-End Class
+End Module
 '
 'Length of LBS is 8
 '

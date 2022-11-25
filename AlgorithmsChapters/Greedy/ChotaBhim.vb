@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class ChotaBhim
-	Public Shared Function TotalQuantity(ByVal cups() As Integer, ByVal size As Integer) As Integer
+Public Module ChotaBhim
+	Function TotalQuantity(ByVal cups() As Integer, ByVal size As Integer) As Integer
 		Dim time As Integer = 60
 		Array.Sort(cups)
 		Array.Reverse(cups)
@@ -23,7 +23,7 @@ Public Class ChotaBhim
 		Return total
 	End Function
 
-	Public Shared Function TotalQuantity2(ByVal cups() As Integer, ByVal size As Integer) As Integer
+	Function TotalQuantity2(ByVal cups() As Integer, ByVal size As Integer) As Integer
 		Dim time As Integer = 60
 		Dim pq As New PriorityQueue(Of Integer)(False)
 		Dim i As Integer = 0
@@ -44,7 +44,7 @@ Public Class ChotaBhim
 		Return total
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim cups() As Integer = {2, 1, 7, 4, 2}
 		ChotaBhim.TotalQuantity(cups, cups.Length)
 		Dim cups2() As Integer = {2, 1, 7, 4, 2}
@@ -55,7 +55,7 @@ Public Class ChotaBhim
 	' Total : 76 
 	' Total : 76 
 	'	 
-End Class
+End Module
 
 
 

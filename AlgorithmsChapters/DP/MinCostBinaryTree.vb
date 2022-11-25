@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class MinCostBinaryTree
-	Private Shared Function MaxVal(ByVal max(,) As Integer, ByVal i As Integer, ByVal j As Integer) As Integer
+Public Module MinCostBinaryTree
+	Function MaxVal(ByVal max(,) As Integer, ByVal i As Integer, ByVal j As Integer) As Integer
 		If max(i, j) <> Integer.MinValue Then
 			Return max(i, j)
 		End If
@@ -12,7 +12,7 @@ Public Class MinCostBinaryTree
 		Return max(i, j)
 	End Function
 
-	Private Shared Function FindSumTD(ByVal dp(,) As Integer, ByVal max(,) As Integer, ByVal i As Integer, ByVal j As Integer, ByVal arr() As Integer) As Integer
+	Function FindSumTD(ByVal dp(,) As Integer, ByVal max(,) As Integer, ByVal i As Integer, ByVal j As Integer, ByVal arr() As Integer) As Integer
 	If j <= i Then
 		Return 0
 	End If
@@ -27,7 +27,7 @@ Public Class MinCostBinaryTree
 	Return dp(i, j)
 	End Function
 
-	Public Shared Function FindSumTD(ByVal arr() As Integer) As Integer
+	Function FindSumTD(ByVal arr() As Integer) As Integer
 		Dim n As Integer = arr.Length
 		Dim dp(n - 1, n - 1) As Integer
 
@@ -51,7 +51,7 @@ Public Class MinCostBinaryTree
 		Return FindSumTD(dp, max, 0, n - 1, arr)
 	End Function
 
-	Public Shared Function FindSumBU(ByVal arr() As Integer) As Integer
+	Function FindSumBU(ByVal arr() As Integer) As Integer
 		Dim n As Integer = arr.Length
 		Dim dp(n - 1, n - 1) As Integer
 
@@ -76,12 +76,12 @@ Public Class MinCostBinaryTree
 		Return dp(0, n - 1)
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim arr() As Integer = {6, 2, 4}
 		Console.WriteLine("Total cost: " & FindSumTD(arr))
 		Console.WriteLine("Total cost: " & FindSumBU(arr))
 	End Sub
-End Class
+End Module
 
 '
 'Total cost: 32

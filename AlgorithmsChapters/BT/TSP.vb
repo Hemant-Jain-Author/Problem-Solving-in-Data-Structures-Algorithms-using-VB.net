@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class TSP
-    Private Shared Function TSPPath(ByVal graph As Integer(,), ByVal n As Integer, ByVal path As Integer(), ByVal pSize As Integer, ByVal pCost As Integer, ByVal visited As Boolean(), ByVal ans As Integer, ByVal ansPath As Integer()) As Integer
+Public Module TSP
+    Function TSPPath(ByVal graph As Integer(,), ByVal n As Integer, ByVal path As Integer(), ByVal pSize As Integer, ByVal pCost As Integer, ByVal visited As Boolean(), ByVal ans As Integer, ByVal ansPath As Integer()) As Integer
         Dim curr As Integer = path(pSize - 1)
 
         If pSize = n Then
@@ -30,7 +30,7 @@ Public Class TSP
         Return ans
     End Function
 
-    Public Shared Function TSPPath(ByVal graph As Integer(,), ByVal n As Integer) As Integer
+    Function TSPPath(ByVal graph As Integer(,), ByVal n As Integer) As Integer
         Dim visited As Boolean() = New Boolean(n - 1) {}
         Dim path As Integer() = New Integer(n - 1) {}
         Dim ansPath As Integer() = New Integer(n + 1 - 1) {}
@@ -48,7 +48,7 @@ Public Class TSP
         Return ans
     End Function
 
-    Public Shared Sub Main(ByVal args As String())
+    Sub Main(ByVal args As String())
         Dim n As Integer = 4
         Dim graph As Integer(,) = New Integer(,) {
         {0, 10, 15, 20},
@@ -57,7 +57,7 @@ Public Class TSP
         {20, 25, 30, 0}}
         TSPPath(graph, n)
     End Sub
-End Class
+End Module
 
 ' Path length : 80
 ' Path : 0 1 3 2 0 

@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class OptimalBST
-	Private Shared Function OptCost(ByVal freq() As Integer, ByVal i As Integer, ByVal j As Integer) As Integer
+Public Module OptimalBST
+	Function OptCost(ByVal freq() As Integer, ByVal i As Integer, ByVal j As Integer) As Integer
 		If i > j Then
 			Return 0
 		End If
@@ -19,12 +19,12 @@ Public Class OptimalBST
 		Return min + sum(freq, i, j)
 	End Function
 
-	Public Shared Function OptCost(ByVal keys() As Integer, ByVal freq() As Integer) As Integer
+	Function OptCost(ByVal keys() As Integer, ByVal freq() As Integer) As Integer
 		Dim n As Integer = freq.Length
 		Return OptCost(freq, 0, n - 1)
 	End Function
 
-	Public Shared Function OptCostTD(ByVal keys() As Integer, ByVal freq() As Integer) As Integer
+	Function OptCostTD(ByVal keys() As Integer, ByVal freq() As Integer) As Integer
 		Dim n As Integer = freq.Length
 		Dim cost(n - 1, n - 1) As Integer
 		For i As Integer = 0 To n - 1
@@ -40,7 +40,7 @@ Public Class OptimalBST
 		Return OptCostTD(freq, cost, 0, n - 1)
 	End Function
 
-	Private Shared Function OptCostTD(ByVal freq() As Integer, ByVal cost(,) As Integer, ByVal i As Integer, ByVal j As Integer) As Integer
+	Function OptCostTD(ByVal freq() As Integer, ByVal cost(,) As Integer, ByVal i As Integer, ByVal j As Integer) As Integer
 		If i > j Then
 			Return 0
 		End If
@@ -56,7 +56,7 @@ Public Class OptimalBST
 		Return cost(i, j)
 	End Function
 
-	Private Shared Function sum(ByVal freq() As Integer, ByVal i As Integer, ByVal j As Integer) As Integer
+	Function sum(ByVal freq() As Integer, ByVal i As Integer, ByVal j As Integer) As Integer
 		Dim s As Integer = 0
 		For k As Integer = i To j
 			s += freq(k)
@@ -64,7 +64,7 @@ Public Class OptimalBST
 		Return s
 	End Function
 
-	Private Shared Function SumInit(ByVal freq() As Integer, ByVal n As Integer) As Integer()
+	Function SumInit(ByVal freq() As Integer, ByVal n As Integer) As Integer()
 		Dim sum(n - 1) As Integer
 		sum(0) = freq(0)
 		For i As Integer = 1 To n - 1
@@ -73,14 +73,14 @@ Public Class OptimalBST
 		Return sum
 	End Function
 
-	Private Shared Function SumRange(ByVal sum() As Integer, ByVal i As Integer, ByVal j As Integer) As Integer
+	Function SumRange(ByVal sum() As Integer, ByVal i As Integer, ByVal j As Integer) As Integer
 		If i = 0 Then
 			Return sum(j)
 		End If
 		Return sum(j) - sum(i - 1)
 	End Function
 
-	Public Shared Function OptCostBU(ByVal keys() As Integer, ByVal freq() As Integer) As Integer
+	Function OptCostBU(ByVal keys() As Integer, ByVal freq() As Integer) As Integer
 		Dim n As Integer = freq.Length
 		Dim cost(n - 1, n - 1) As Integer
 
@@ -110,7 +110,7 @@ Public Class OptimalBST
 		Return cost(0, n - 1)
 	End Function
 
-	Public Shared Function OptCostBU2(ByVal keys() As Integer, ByVal freq() As Integer) As Integer
+	Function OptCostBU2(ByVal keys() As Integer, ByVal freq() As Integer) As Integer
 		Dim n As Integer = freq.Length
 		Dim cost(n - 1, n - 1) As Integer
 		For i As Integer = 0 To n - 1
@@ -140,7 +140,7 @@ Public Class OptimalBST
 		Return cost(0, n - 1)
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim keys() As Integer = {9, 15, 25}
 		Dim freq() As Integer = {30, 10, 40}
 		Console.WriteLine("OBST cost:" & OptCost(keys, freq))
@@ -148,7 +148,7 @@ Public Class OptimalBST
 		Console.WriteLine("OBST cost:" & OptCostBU(keys, freq))
 		Console.WriteLine("OBST cost:" & OptCostBU2(keys, freq))
 	End Sub
-End Class
+End Module
 
 '
 'OBST cost:130

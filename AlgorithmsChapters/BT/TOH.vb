@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class TOH
-    Private Shared Sub TOHUtil(ByVal num As Integer, ByVal from As Char, ByVal [to] As Char, ByVal temp As Char)
+Public Module TOH
+    Sub TOHUtil(ByVal num As Integer, ByVal from As Char, ByVal [to] As Char, ByVal temp As Char)
         If num < 1 Then
             Return
         End If
@@ -11,15 +11,15 @@ Public Class TOH
         TOHUtil(num - 1, temp, [to], from)
     End Sub
 
-    Public Shared Sub TOHSteps(ByVal num As Integer)
+    Sub TOHSteps(ByVal num As Integer)
         Console.WriteLine("Moves involved in the Tower of Hanoi are :")
         TOHUtil(num, "A"c, "C"c, "B"c)
     End Sub
 
-    Public Shared Sub Main(ByVal args As String())
+    Sub Main(ByVal args As String())
         TOH.TOHSteps(3)
     End Sub
-End Class
+End Module
 
 '
 ' Moves involved in the Tower of Hanoi are :

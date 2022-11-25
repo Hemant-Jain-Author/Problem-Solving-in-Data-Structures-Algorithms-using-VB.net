@@ -1,8 +1,8 @@
 ﻿
 Imports System
 
-Public Class JoinRopes
-	Public Shared Function Join(ByVal ropes() As Integer, ByVal size As Integer) As Integer
+Public Module JoinRopes
+	Function Join(ByVal ropes() As Integer, ByVal size As Integer) As Integer
 		Array.Sort(ropes)
 		Dim i As Integer = 0
 		Dim j As Integer = size - 1
@@ -33,7 +33,7 @@ Public Class JoinRopes
 		Return total
 	End Function
 
-	Public Shared Function Join2(ByVal ropes() As Integer, ByVal size As Integer) As Integer
+	Function Join2(ByVal ropes() As Integer, ByVal size As Integer) As Integer
 		Dim pq As New PriorityQueue(Of Integer)()
 		Dim i As Integer = 0
 		For i = 0 To size - 1
@@ -52,18 +52,18 @@ Public Class JoinRopes
 		Return total
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim ropes() As Integer = {4, 3, 2, 6}
-		JoinRopes.Join(ropes, ropes.Length)
+		Join(ropes, ropes.Length)
 		Dim rope2() As Integer = {4, 3, 2, 6}
-		JoinRopes.Join2(rope2, rope2.Length)
+		Join2(rope2, rope2.Length)
 	End Sub
 
 	'	
 	' Total : 29 
 	' Total : 29
 	'	 
-End Class
+End Module
 
 
 Public Class PriorityQueue(Of T As IComparable(Of T))

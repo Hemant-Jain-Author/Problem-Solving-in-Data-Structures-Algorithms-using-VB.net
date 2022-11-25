@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Public Class FractionalKnapsack
+Public Module FractionalKnapsack
 	Private Class Items
 		Implements IComparable(Of Items)
 
@@ -40,16 +40,15 @@ Public Class FractionalKnapsack
 		Return totalCost
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim wt() As Integer = {10, 40, 20, 30}
 		Dim cost() As Integer = {60, 40, 90, 120}
 		Dim capacity As Integer = 50
 
-		Dim kp As New FractionalKnapsack()
-		Dim maxCost As Double = kp.GetMaxCostFractional(wt, cost, capacity)
+		Dim maxCost As Double = GetMaxCostFractional(wt, cost, capacity)
 		Console.WriteLine("Maximum cost obtained = " & maxCost)
 	End Sub
-End Class
+End Module
 
 '
 'Maximum cost obtained = 230

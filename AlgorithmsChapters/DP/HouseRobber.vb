@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class HouseRobber
-	Public Shared Function MaxRobbery(ByVal house() As Integer) As Integer
+Public Module HouseRobber
+	Function MaxRobbery(ByVal house() As Integer) As Integer
 		Dim n As Integer = house.Length
 		Dim dp(n - 1) As Integer
 		dp(0) = house(0)
@@ -13,7 +13,7 @@ Public Class HouseRobber
 		Return Math.Max(dp(n - 1), dp(n - 2))
 	End Function
 
-	Public Shared Function MaxRobbery2(ByVal house() As Integer) As Integer
+	Function MaxRobbery2(ByVal house() As Integer) As Integer
 		Dim n As Integer = house.Length
 		Dim dp(n - 1, 1) As Integer
 
@@ -27,12 +27,12 @@ Public Class HouseRobber
 		Return Math.Max(dp(n - 1, 1), dp(n - 1, 0))
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim arr() As Integer = {10, 12, 9, 23, 25, 55, 49, 70}
 		Console.WriteLine("Total cash: " & MaxRobbery(arr))
 		Console.WriteLine("Total cash: " & MaxRobbery2(arr))
 	End Sub
-End Class
+End Module
 
 '
 'Total cash: 160

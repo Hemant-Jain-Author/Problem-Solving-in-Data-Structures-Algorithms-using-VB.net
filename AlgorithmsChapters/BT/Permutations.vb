@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class Permutations
-    Private Shared Sub PrintArray(ByVal arr As Integer(), ByVal n As Integer)
+Public Module Permutations
+    Sub PrintArray(ByVal arr As Integer(), ByVal n As Integer)
         For i As Integer = 0 To n - 1
             Console.Write(arr(i) & " ")
         Next
@@ -9,13 +9,13 @@ Public Class Permutations
         Console.WriteLine()
     End Sub
 
-    Private Shared Sub Swap(ByVal arr As Integer(), ByVal i As Integer, ByVal j As Integer)
+    Sub Swap(ByVal arr As Integer(), ByVal i As Integer, ByVal j As Integer)
         Dim temp As Integer = arr(i)
         arr(i) = arr(j)
         arr(j) = temp
     End Sub
 
-    Public Shared Sub Permutation(ByVal arr As Integer(), ByVal i As Integer, ByVal length As Integer)
+    Sub Permutation(ByVal arr As Integer(), ByVal i As Integer, ByVal length As Integer)
         If length = i Then
             PrintArray(arr, length)
             Return
@@ -38,7 +38,7 @@ Public Class Permutations
 	'4 1 2 3 
 	'
 
-    Private Shared Function IsValid(ByVal arr As Integer(), ByVal n As Integer) As Boolean
+    Function IsValid(ByVal arr As Integer(), ByVal n As Integer) As Boolean
         For j As Integer = 1 To n - 1
 
             If Math.Abs(arr(j) - arr(j - 1)) < 2 Then
@@ -49,7 +49,7 @@ Public Class Permutations
         Return True
     End Function
 
-    Public Shared Sub Permutation2(ByVal arr As Integer(), ByVal i As Integer, ByVal length As Integer)
+    Sub Permutation2(ByVal arr As Integer(), ByVal i As Integer, ByVal length As Integer)
         If length = i Then
 
             If IsValid(arr, length) Then
@@ -71,7 +71,7 @@ Public Class Permutations
 	'2 4 1 3 
 	'3 1 4 2
 
-    Private Shared Function IsValid2(ByVal arr As Integer(), ByVal i As Integer) As Boolean
+    Function IsValid2(ByVal arr As Integer(), ByVal i As Integer) As Boolean
         If i < 1 OrElse Math.Abs(arr(i) - arr(i - 1)) >= 2 Then
             Return True
         End If
@@ -79,7 +79,7 @@ Public Class Permutations
         Return False
     End Function
 
-    Public Shared Sub Permutation3(ByVal arr As Integer(), ByVal i As Integer, ByVal length As Integer)
+    Sub Permutation3(ByVal arr As Integer(), ByVal i As Integer, ByVal length As Integer)
         If length = i Then
             PrintArray(arr, length)
             Return
@@ -101,7 +101,7 @@ Public Class Permutations
 	'2 4 1 3 
 	'3 1 4 2
 
-    Public Shared Sub Main(ByVal args As String())
+    Sub Main(ByVal args As String())
         Dim arr As Integer() = {1, 2, 3, 4}
         Permutation(arr, 0, 4)
         Console.WriteLine()
@@ -109,4 +109,4 @@ Public Class Permutations
         Console.WriteLine()
         Permutation3(arr, 0, 4)
     End Sub
-End Class
+End Module

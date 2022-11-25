@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class GridUniqueWays
-	Public Shared Function UniqueWays(ByVal m As Integer, ByVal n As Integer) As Integer
+Public Module GridUniqueWays
+	Function UniqueWays(ByVal m As Integer, ByVal n As Integer) As Integer
 		Dim dp(m - 1, n - 1) As Integer
 		dp(0, 0) = 1
 
@@ -23,7 +23,7 @@ Public Class GridUniqueWays
 	End Function
 
 	' Diagonal movement allowed.
-	Public Shared Function Unique3Ways(ByVal m As Integer, ByVal n As Integer) As Integer
+	Function Unique3Ways(ByVal m As Integer, ByVal n As Integer) As Integer
 		Dim dp(m - 1, n - 1) As Integer
 		dp(0, 0) = 1
 
@@ -44,12 +44,12 @@ Public Class GridUniqueWays
 		Return dp(m - 1, n - 1)
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Console.WriteLine(UniqueWays(3, 3))
 		Console.WriteLine(Unique3Ways(3, 3))
 
 	End Sub
-End Class
+End Module
 
 '
 '6

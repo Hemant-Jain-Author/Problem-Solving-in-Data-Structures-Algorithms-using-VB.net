@@ -1,8 +1,8 @@
 ﻿Imports System
 
 ' Palindromic Substrings
-Public Class LargestPalindromicSubstr
-	Public Shared Function PalindromicSubstring(ByVal str As String) As Integer
+Public Module LargestPalindromicSubstr
+	Function PalindromicSubstring(ByVal str As String) As Integer
 		Dim n As Integer = str.Length
 		Dim dp(n - 1, n - 1) As Integer
 		For i As Integer = 0 To n - 1
@@ -33,11 +33,11 @@ Public Class LargestPalindromicSubstr
 		Return max
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim str As String = "ABCAUCBCxxCBA"
 		Console.WriteLine("Max Palindromic Substrings len: " & PalindromicSubstring(str))
 	End Sub
-End Class
+End Module
 
 '
 'Max Length Palindromic Substrings : BCxxCB

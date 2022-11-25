@@ -1,21 +1,21 @@
 ﻿Imports System
 
-Public Class Fibo
-	Public Shared Function Fibonacci(ByVal n As Integer) As Integer
+Public Module Fibo
+	Function Fibonacci(ByVal n As Integer) As Integer
 		If n <= 2 Then
 			Return n - 1
 		End If
 		Return Fibonacci(n - 1) + Fibonacci(n - 2)
 	End Function
 
-	Public Shared Sub FibonacciSeries(ByVal n As Integer)
+	Sub FibonacciSeries(ByVal n As Integer)
 		For i As Integer = 1 To n
 			Console.Write(Fibonacci(i) & " ")
 		Next i
 	End Sub
 
 
-	Public Shared Function FibonacciBU(ByVal n As Integer) As Integer
+	Function FibonacciBU(ByVal n As Integer) As Integer
 		If n <= 2 Then
 			Return n - 1
 		End If
@@ -31,7 +31,7 @@ Public Class Fibo
 		Return temp
 	End Function
 
-	Public Shared Sub FibonacciSeriesBU(ByVal n As Integer)
+	Sub FibonacciSeriesBU(ByVal n As Integer)
 		If n < 1 Then
 			Return
 		End If
@@ -49,7 +49,7 @@ Public Class Fibo
 		Next i
 	End Sub
 
-	Public Shared Sub FibonacciSeriesTD(ByVal n As Integer)
+	Sub FibonacciSeriesTD(ByVal n As Integer)
 		If n < 1 Then
 			Return
 		End If
@@ -62,7 +62,7 @@ Public Class Fibo
 		Next i
 	End Sub
 
-	Private Shared Function FibonacciSeriesTD(ByVal n As Integer, ByVal dp() As Integer) As Integer
+	Function FibonacciSeriesTD(ByVal n As Integer, ByVal dp() As Integer) As Integer
 		If n <= 1 Then
 			dp(n) = n
 			Return dp(n)
@@ -76,7 +76,7 @@ Public Class Fibo
 		Return dp(n)
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 
 		FibonacciSeries(6)
 		Console.WriteLine()
@@ -90,7 +90,7 @@ Public Class Fibo
 		Console.WriteLine(Fibonacci(6))
 		Console.WriteLine(FibonacciBU(6))
 	End Sub
-End Class
+End Module
 
 '
 '0 1 1 2 3 5 

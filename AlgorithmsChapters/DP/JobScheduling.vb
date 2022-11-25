@@ -1,7 +1,7 @@
 ﻿Imports System
 
 ' Also known as Activity Selection Weighted.
-Public Class JobScheduling
+Public Module JobScheduling
 	Public Class Job
 		Implements IComparable(Of Job)
 
@@ -18,7 +18,7 @@ Public Class JobScheduling
 		End Function
 	End Class
 
-	Public Shared Function MaxValueJobsUtil(ByVal arr() As Job, ByVal n As Integer) As Integer
+	Function MaxValueJobsUtil(ByVal arr() As Job, ByVal n As Integer) As Integer
 		' Base case
 		If n = 1 Then
 			Return arr(0).value
@@ -40,7 +40,7 @@ Public Class JobScheduling
 	End Function
 
 
-	Public Shared Function MaxValueJobs(ByVal s() As Integer, ByVal f() As Integer, ByVal v() As Integer, ByVal n As Integer) As Integer
+	Function MaxValueJobs(ByVal s() As Integer, ByVal f() As Integer, ByVal v() As Integer, ByVal n As Integer) As Integer
 		Dim act(n - 1) As Job
 		For i As Integer = 0 To n - 1
 			act(i) = New Job(s(i), f(i), v(i))
@@ -49,7 +49,7 @@ Public Class JobScheduling
 		Return MaxValueJobsUtil(act, n)
 	End Function
 
-	Private Shared Function MaxValueJobsUtilTD(ByVal dp() As Integer, ByVal arr() As Job, ByVal n As Integer) As Integer
+	Function MaxValueJobsUtilTD(ByVal dp() As Integer, ByVal arr() As Job, ByVal n As Integer) As Integer
 		' Base case
 		If n = 0 Then
 			Return 0
@@ -75,7 +75,7 @@ Public Class JobScheduling
 	End Function
 
 
-	Public Shared Function MaxValueJobsTD(ByVal s() As Integer, ByVal f() As Integer, ByVal v() As Integer, ByVal n As Integer) As Integer
+	Function MaxValueJobsTD(ByVal s() As Integer, ByVal f() As Integer, ByVal v() As Integer, ByVal n As Integer) As Integer
 		Dim act(n - 1) As Job
 		For i As Integer = 0 To n - 1
 			act(i) = New Job(s(i), f(i), v(i))
@@ -85,7 +85,7 @@ Public Class JobScheduling
 		Return MaxValueJobsUtilTD(dp, act, n)
 	End Function
 
-	Public Shared Function MaxValueJobsBU(ByVal s() As Integer, ByVal f() As Integer, ByVal v() As Integer, ByVal n As Integer) As Integer
+	Function MaxValueJobsBU(ByVal s() As Integer, ByVal f() As Integer, ByVal v() As Integer, ByVal n As Integer) As Integer
 		Dim act(n - 1) As Job
 		For i As Integer = 0 To n - 1
 			act(i) = New Job(s(i), f(i), v(i))
@@ -108,7 +108,7 @@ Public Class JobScheduling
 		Return dp(n - 1)
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim start() As Integer = {1, 5, 0, 3, 5, 6, 8}
 		Dim finish() As Integer = {2, 6, 5, 4, 9, 7, 9}
 		Dim value() As Integer = {2, 2, 4, 3, 10, 2, 8}
@@ -117,7 +117,7 @@ Public Class JobScheduling
 		Console.WriteLine(MaxValueJobsTD(start, finish, value, n))
 		Console.WriteLine(MaxValueJobsBU(start, finish, value, n))
 	End Sub
-End Class
+End Module
 
 '
 '17

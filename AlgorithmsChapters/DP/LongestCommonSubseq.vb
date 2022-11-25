@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class LongestCommonSubseq
-	Public Shared Function LCSubStr(ByVal st1 As String, ByVal st2 As String) As Integer
+Public Module LongestCommonSubseq
+	Function LCSubStr(ByVal st1 As String, ByVal st2 As String) As Integer
 		Dim X() As Char = st1.ToCharArray()
 		Dim Y() As Char = st2.ToCharArray()
 		Dim m As Integer = st1.Length
@@ -26,7 +26,7 @@ Public Class LongestCommonSubseq
 		Return dp(m, n)
 	End Function
 
-	Private Shared Sub PrintLCS(ByVal p(,) As Integer, ByVal X() As Char, ByVal i As Integer, ByVal j As Integer)
+	Sub PrintLCS(ByVal p(,) As Integer, ByVal X() As Char, ByVal i As Integer, ByVal j As Integer)
 		If i = 0 OrElse j = 0 Then
 			Return
 		End If
@@ -41,12 +41,12 @@ Public Class LongestCommonSubseq
 		End If
 	End Sub
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim X As String = "carpenter"
 		Dim Y As String = "sharpener"
 		Console.WriteLine(LCSubStr(X, Y))
 	End Sub
-End Class
+End Module
 
 '
 'arpener

@@ -1,8 +1,8 @@
 ﻿
 Imports System
 
-Public Class CoinChange
-	Public Shared Function MinCoins(ByVal coins() As Integer, ByVal n As Integer, ByVal val As Integer) As Integer ' Greedy may be wrong.
+Public Module CoinChange
+	Function MinCoins(ByVal coins() As Integer, ByVal n As Integer, ByVal val As Integer) As Integer ' Greedy may be wrong.
 		If val <= 0 Then
 			Return 0
 		End If
@@ -22,7 +22,7 @@ Public Class CoinChange
 		Return If(val = 0, count, -1)
 	End Function
 
-	Public Shared Function MinCoins2(ByVal coins() As Integer, ByVal n As Integer, ByVal val As Integer) As Integer ' Brute force.
+	Function MinCoins2(ByVal coins() As Integer, ByVal n As Integer, ByVal val As Integer) As Integer ' Brute force.
 		If val = 0 Then
 			Return 0
 		End If
@@ -41,7 +41,7 @@ Public Class CoinChange
 		Return If(count <> Integer.MaxValue, count, -1)
 	End Function
 
-	Public Shared Function MinCoinsTD(ByVal coins() As Integer, ByVal n As Integer, ByVal val As Integer) As Integer
+	Function MinCoinsTD(ByVal coins() As Integer, ByVal n As Integer, ByVal val As Integer) As Integer
 		Dim dp(val) As Integer
 		For i As Integer = 0 To val
 			dp(i)= Integer.MaxValue
@@ -49,7 +49,7 @@ Public Class CoinChange
 		Return MinCoinsTD(dp, coins, n, val)
 	End Function
 
-	Private Shared Function MinCoinsTD(ByVal dp() As Integer, ByVal coins() As Integer, ByVal n As Integer, ByVal val As Integer) As Integer
+	Function MinCoinsTD(ByVal dp() As Integer, ByVal coins() As Integer, ByVal n As Integer, ByVal val As Integer) As Integer
 		' Base Case
 		If val = 0 Then
 			Return 0
@@ -74,7 +74,7 @@ Public Class CoinChange
 	End Function
 
 
-	Public Shared Function MinCoinsBU(ByVal coins() As Integer, ByVal n As Integer, ByVal val As Integer) As Integer ' DP bottom up approach.
+	Function MinCoinsBU(ByVal coins() As Integer, ByVal n As Integer, ByVal val As Integer) As Integer ' DP bottom up approach.
 		Dim dp(val) As Integer 
 		For i As Integer = 0 To val
 			dp(i)= Integer.MaxValue
@@ -95,7 +95,7 @@ Public Class CoinChange
 		Return If(dp(val) <> Integer.MaxValue, dp(val), -1)
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim coins() As Integer = {5, 6}
 		Dim value As Integer = 16
 		Dim n As Integer = coins.Length
@@ -105,7 +105,7 @@ Public Class CoinChange
 		Console.WriteLine("Count is:" & MinCoinsTD(coins, n, value))
 	End Sub
 
-	Public Shared Sub main1(ByVal args() As String)
+	Sub main1(ByVal args() As String)
 		Dim coins() As Integer = {1, 5, 6, 9, 12}
 		Dim value As Integer = 15
 		Dim n As Integer = coins.Length
@@ -115,14 +115,14 @@ Public Class CoinChange
 		Console.WriteLine("Count is:" & MinCoinsTD(coins, n, value))
 	End Sub
 
-	Public Shared Sub main2(ByVal args() As String)
+	Sub main2(ByVal args() As String)
 		Dim coins() As Integer = {1, 5, 6, 9, 11}
 		Dim v As Integer = 15
 		Dim n As Integer = coins.Length
 		MinCoins(coins, n, v)
 		MinCoins2(coins, n, v)
 	End Sub
-End Class
+End Module
 
 'Count Is: -1
 'Count Is: 3

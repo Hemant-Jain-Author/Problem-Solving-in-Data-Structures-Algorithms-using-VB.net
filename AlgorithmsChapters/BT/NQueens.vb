@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class NQueens
-    Public Shared Sub Print(ByVal Q As Integer(), ByVal n As Integer)
+Public Module NQueens
+    Sub Print(ByVal Q As Integer(), ByVal n As Integer)
         For i As Integer = 0 To n - 1
             Console.Write(" " & Q(i))
         Next
@@ -9,7 +9,7 @@ Public Class NQueens
         Console.WriteLine(" ")
     End Sub
 
-    Public Shared Function Feasible(ByVal Q As Integer(), ByVal k As Integer) As Boolean
+    Function Feasible(ByVal Q As Integer(), ByVal k As Integer) As Boolean
         For i As Integer = 0 To k - 1
 
             If Q(k) = Q(i) OrElse Math.Abs(Q(i) - Q(k)) = Math.Abs(i - k) Then
@@ -20,7 +20,7 @@ Public Class NQueens
         Return True
     End Function
 
-    Public Shared Sub NQueensPattern(ByVal Q As Integer(), ByVal k As Integer, ByVal n As Integer)
+    Sub NQueensPattern(ByVal Q As Integer(), ByVal k As Integer, ByVal n As Integer)
         If k = n Then
             Print(Q, n)
             Return
@@ -35,11 +35,11 @@ Public Class NQueens
         Next
     End Sub
 
-    Public Shared Sub Main(ByVal args As String())
+    Sub Main(ByVal args As String())
         Dim Q As Integer() = New Integer(7) {}
         NQueensPattern(Q, 0, 8)
     End Sub
-End Class
+End Module
 
 
 '

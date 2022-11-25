@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class IsPrime
-    Public Shared Function TestPrime(ByVal n As Integer) As Boolean
+Public Module IsPrime
+    Function TestPrime(ByVal n As Integer) As Boolean
         Dim answer As Boolean = If((n > 1), True, False)
         Dim i As Integer = 2
 
@@ -18,9 +18,9 @@ Public Class IsPrime
         Return answer
     End Function
 
-    Public Shared Sub Main(ByVal args As String())
+    Sub Main(ByVal args As String())
         Console.WriteLine(IsPrime.TestPrime(7))
     End Sub
-End Class
+End Module
 
 ' True

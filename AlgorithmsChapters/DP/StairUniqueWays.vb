@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class StairUniqueWays
-	Public Shared Function diffWaysBU(ByVal n As Integer) As Integer
+Public Module StairUniqueWays
+	Function diffWaysBU(ByVal n As Integer) As Integer
 		If n <= 2 Then
 			Return n
 		End If
@@ -17,7 +17,7 @@ Public Class StairUniqueWays
 		Return temp
 	End Function
 
-	Public Shared Function diffWaysBU2(ByVal n As Integer) As Integer
+	Function diffWaysBU2(ByVal n As Integer) As Integer
 		If n < 2 Then
 			Return n
 		End If
@@ -33,11 +33,11 @@ Public Class StairUniqueWays
 		Return ways(n - 1)
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Console.WriteLine("Unique way to reach top:: " & diffWaysBU(4))
 		Console.WriteLine("Unique way to reach top:: " & diffWaysBU2(4))
 	End Sub
-End Class
+End Module
 '
 'Unique way to reach top:: 5
 'Unique way to reach top:: 5

@@ -8,7 +8,7 @@
 ' s() is an array that contains start time of all activities
 ' f() is an array that contains finish time of all activities
 
-Friend Class ActivitySelection
+Public Module ActivitySelection
 	Friend Class Activity
 		Implements IComparable(Of Activity)
 
@@ -45,14 +45,13 @@ Friend Class ActivitySelection
 		Next j
 	End Sub
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim s() As Integer = {1, 5, 0, 3, 5, 6, 8}
 		Dim f() As Integer = {2, 6, 5, 4, 9, 7, 9}
 		Dim n As Integer = s.Length
-		Dim act As New ActivitySelection()
-		act.MaxActivities(s, f, n)
+		MaxActivities(s, f, n)
 	End Sub
-End Class
+End Module
 
 '
 'Activities are : (1,2), (3,4), (5,6), (6,7), (8,9)

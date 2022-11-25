@@ -1,8 +1,8 @@
 ﻿Imports System
 
-Public Class MatrixCM
+Public Module MatrixCM
 
-	Private Shared Function MatrixChainMulBruteForce(ByVal p() As Integer, ByVal i As Integer, ByVal j As Integer) As Integer
+	Function MatrixChainMulBruteForce(ByVal p() As Integer, ByVal i As Integer, ByVal j As Integer) As Integer
 		If i = j Then
 			Return 0
 		End If
@@ -27,12 +27,12 @@ Public Class MatrixCM
 		Return min
 	End Function
 
-	Public Shared Function MatrixChainMulBruteForce(ByVal p() As Integer, ByVal n As Integer) As Integer
+	Function MatrixChainMulBruteForce(ByVal p() As Integer, ByVal n As Integer) As Integer
 		Dim i As Integer = 1, j As Integer = n - 1
 		Return MatrixChainMulBruteForce(p, i, j)
 	End Function
 
-	Public Shared Function MatrixChainMulTD(ByVal p() As Integer, ByVal n As Integer) As Integer
+	Function MatrixChainMulTD(ByVal p() As Integer, ByVal n As Integer) As Integer
 		Dim dp(n - 1, n - 1) As Integer
 		For i As Integer = 0 To n - 1
 			For j As Integer = 0 To n - 1
@@ -44,7 +44,7 @@ Public Class MatrixCM
 	End Function
 
 	' Function for matrix chain multiplication
-	Private Shared Function MatrixChainMulTD(ByVal dp(,) As Integer, ByVal p() As Integer, ByVal i As Integer, ByVal j As Integer) As Integer
+	Function MatrixChainMulTD(ByVal dp(,) As Integer, ByVal p() As Integer, ByVal i As Integer, ByVal j As Integer) As Integer
 		' Base Case
 		If i = j Then
 			Return 0
@@ -61,7 +61,7 @@ Public Class MatrixCM
 
 
 
-	Public Shared Function MatrixChainMulBU(ByVal p() As Integer, ByVal n As Integer) As Integer
+	Function MatrixChainMulBU(ByVal p() As Integer, ByVal n As Integer) As Integer
 		Dim dp(n - 1, n - 1) As Integer
 		For i As Integer = 0 To n - 1
 			For j As Integer = 0 To n - 1
@@ -88,14 +88,14 @@ Public Class MatrixCM
 	End Function
 
 	' Driver Code
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		Dim arr() As Integer = {1, 2, 3, 4}
 		Dim n As Integer = arr.Length
 		Console.WriteLine("Matrix Chain Multiplication is: " & MatrixChainMulBruteForce(arr, n))
 		Console.WriteLine("Matrix Chain Multiplication is: " & MatrixChainMulTD(arr, n))
 		Console.WriteLine("Matrix Chain Multiplication is: " & MatrixChainMulBU(arr, n))
 	End Sub
-End Class
+End Module
 
 '
 'Matrix Chain Multiplication is: 18

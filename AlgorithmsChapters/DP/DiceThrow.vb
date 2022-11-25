@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Class DiceThrow
-	Public Shared Function FindWays(ByVal n As Integer, ByVal m As Integer, ByVal V As Integer) As Integer
+Public Module DiceThrow
+	Function FindWays(ByVal n As Integer, ByVal m As Integer, ByVal V As Integer) As Integer
 		Dim dp(n, V) As Integer
 
 		' Table entries for only one dice.
@@ -22,12 +22,12 @@ Public Class DiceThrow
 		Return dp(n, V)
 	End Function
 
-	Public Shared Sub Main(ByVal args() As String)
+	Sub Main(ByVal args() As String)
 		For i As Integer = 1 To 6
 			Console.WriteLine(FindWays(i, 6, 6))
 		Next i
 	End Sub
-End Class
+End Module
 
 '
 '1
