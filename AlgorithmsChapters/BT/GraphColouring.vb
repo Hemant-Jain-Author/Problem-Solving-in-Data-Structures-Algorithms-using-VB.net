@@ -1,15 +1,14 @@
 ﻿Imports System
 
 Public Module GraphColouring
-    Function IsSafe(ByVal graph As Boolean(,), ByVal V As Integer, ByVal colour As Integer(), ByVal vs As Integer, ByVal c As Integer) As Boolean
-        For i As Integer = 0 To V - 1
+    Function Colouring(ByVal graph As Boolean(,), ByVal V As Integer, ByVal m As Integer) As Boolean
+        Dim colour As Integer() = New Integer(V - 1) {}
 
-            If graph(vs, i) = True AndAlso c = colour(i) Then
-                Return False
-            End If
-        Next
+        If ColouringUtil(graph, V, m, colour, 0) Then
+            Return True
+        End If
 
-        Return True
+        Return False
     End Function
 
     Function ColouringUtil(ByVal graph As Boolean(,), ByVal V As Integer, ByVal m As Integer, ByVal colour As Integer(), ByVal i As Integer) As Boolean
@@ -32,14 +31,16 @@ Public Module GraphColouring
         Return False
     End Function
 
-    Function Colouring(ByVal graph As Boolean(,), ByVal V As Integer, ByVal m As Integer) As Boolean
-        Dim colour As Integer() = New Integer(V - 1) {}
+    ' Is it safe to colour vth vertice with c colour.
+    Function IsSafe(ByVal graph As Boolean(,), ByVal V As Integer, ByVal colour As Integer(), ByVal vs As Integer, ByVal c As Integer) As Boolean
+        For i As Integer = 0 To V - 1
 
-        If ColouringUtil(graph, V, m, colour, 0) Then
-            Return True
-        End If
+            If graph(vs, i) = True AndAlso c = colour(i) Then
+                Return False
+            End If
+        Next
 
-        Return False
+        Return True
     End Function
 
     Sub PrintSolution(ByVal colour As Integer(), ByVal V As Integer)
@@ -98,6 +99,7 @@ Public Module GraphColouring
         Return False
     End Function
 
+    ' Testing code.
     Sub Main(ByVal args As String())
         Dim graph As Boolean(,) = New Boolean(,) {
         {False, True, False, False, True},

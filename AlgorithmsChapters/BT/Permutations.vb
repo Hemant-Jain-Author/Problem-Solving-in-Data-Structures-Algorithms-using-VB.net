@@ -101,6 +101,7 @@ Public Module Permutations
 	'2 4 1 3 
 	'3 1 4 2
 
+    ' Testing code.
     Sub Main(ByVal args As String())
         Dim arr As Integer() = {1, 2, 3, 4}
         Permutation(arr, 0, 4)

@@ -108,6 +108,7 @@ Public Module JobScheduling
 		Return dp(n - 1)
 	End Function
 
+	' Testing code.
 	Sub Main(ByVal args() As String)
 		Dim start() As Integer = {1, 5, 0, 3, 5, 6, 8}
 		Dim finish() As Integer = {2, 6, 5, 4, 9, 7, 9}

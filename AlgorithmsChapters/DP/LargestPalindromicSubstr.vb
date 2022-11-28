@@ -2,41 +2,42 @@
 
 ' Palindromic Substrings
 Public Module LargestPalindromicSubstr
-	Function PalindromicSubstring(ByVal str As String) As Integer
-		Dim n As Integer = str.Length
-		Dim dp(n - 1, n - 1) As Integer
-		For i As Integer = 0 To n - 1
-			dp(i, i) = 1
-		Next i
+    Function PalindromicSubstring(ByVal str As String) As Integer
+        Dim n As Integer = str.Length
+        Dim dp(n - 1, n - 1) As Integer
+        For i As Integer = 0 To n - 1
+            dp(i, i) = 1
+        Next i
 
-		Dim max As Integer = 1
-		Dim start As Integer = 0
+        Dim max As Integer = 1
+        Dim start As Integer = 0
 
-		For l As Integer = 1 To n - 1
-			Dim i As Integer = 0
-			Dim j As Integer = l
-			While j < n
-				If str.Chars(i) = str.Chars(j) AndAlso dp(i + 1, j - 1) = j - i - 1 Then
-					dp(i, j) = dp(i + 1, j - 1) + 2
-					If dp(i, j) > max Then
-						max = dp(i, j) ' Keeping track of max length and
-						start = i ' starting position of sub-string.
-					End If
-				Else
-					dp(i, j) = 0
-				End If
-				i += 1
-				j += 1
-			End While
-		Next l
-		Console.WriteLine("Max Length Palindromic Substrings : " & str.Substring(start, max))
-		Return max
-	End Function
+        For l As Integer = 1 To n - 1
+            Dim i As Integer = 0
+            Dim j As Integer = l
+            While j < n
+                If str.Chars(i) = str.Chars(j) AndAlso dp(i + 1, j - 1) = j - i - 1 Then
+                    dp(i, j) = dp(i + 1, j - 1) + 2
+                    If dp(i, j) > max Then
+                        max = dp(i, j) ' Keeping track of max length and
+                        start = i ' starting position of sub-string.
+                    End If
+                Else
+                    dp(i, j) = 0
+                End If
+                i += 1
+                j += 1
+            End While
+        Next l
+        Console.WriteLine("Max Length Palindromic Substrings : " & str.Substring(start, max))
+        Return max
+    End Function
 
-	Sub Main(ByVal args() As String)
-		Dim str As String = "ABCAUCBCxxCBA"
-		Console.WriteLine("Max Palindromic Substrings len: " & PalindromicSubstring(str))
-	End Sub
+    ' Testing code.
+    Sub Main(ByVal args() As String)
+        Dim str As String = "ABCAUCBCxxCBA"
+        Console.WriteLine("Max Palindromic Substrings len: " & PalindromicSubstring(str))
+    End Sub
 End Module
 
 '

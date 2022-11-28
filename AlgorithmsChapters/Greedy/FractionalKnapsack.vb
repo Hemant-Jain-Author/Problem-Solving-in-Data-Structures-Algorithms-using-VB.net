@@ -40,6 +40,7 @@ Public Module FractionalKnapsack
 		Return totalCost
 	End Function
 
+	' Testing code.
 	Sub Main(ByVal args() As String)
 		Dim wt() As Integer = {10, 40, 20, 30}
 		Dim cost() As Integer = {60, 40, 90, 120}

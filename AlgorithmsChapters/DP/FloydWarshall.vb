@@ -44,6 +44,7 @@ Public Module FloydWarshall
 		Next i
 	End Sub
 
+	' Testing code.
 	Sub Main(ByVal args() As String)
 		Dim graph(,) As Integer = {
 			{0, 2, 4, INF, INF, INF, INF},

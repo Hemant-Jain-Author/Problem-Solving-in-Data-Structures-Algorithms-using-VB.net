@@ -53,6 +53,7 @@ Public Module StockBuySell
 		Return dp(n - 1, 1)
 	End Function
 
+	' Testing code.
 	Sub Main(ByVal args() As String)
 		Dim arr() As Integer = {10, 12, 9, 23, 25, 55, 49, 70}
 		Console.WriteLine("Total profit: " & maxProfit(arr))

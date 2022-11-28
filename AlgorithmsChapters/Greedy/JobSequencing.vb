@@ -57,7 +57,7 @@ Public Class JobSequencing
 		Next i
 	End Sub
 
-
+    ' Testing code.
 	Public Shared Sub Main(ByVal args() As String)
 		Dim id() As Char = {"a"c, "b"c, "c"c, "d"c, "e"c}
 		Dim deadline() As Integer = {3, 1, 2, 4, 4}

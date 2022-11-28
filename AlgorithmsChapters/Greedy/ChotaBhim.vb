@@ -25,25 +25,26 @@ Public Module ChotaBhim
 
 	Function TotalQuantity2(ByVal cups() As Integer, ByVal size As Integer) As Integer
 		Dim time As Integer = 60
-		Dim pq As New PriorityQueue(Of Integer)(False)
+		Dim hp As New Heap(Of Integer)(False)
 		Dim i As Integer = 0
 		For i = 0 To size - 1
-			pq.Enqueue(cups(i))
+			hp.Enqueue(cups(i))
 		Next i
 
 		Dim total As Integer = 0
 		Dim value As Integer
 		Do While time > 0
-			value = pq.Dequeue()
+			value = hp.Dequeue()
 			total += value
 			value = CInt(Math.Truncate(Math.Ceiling(value / 2.0)))
-			pq.Enqueue(value)
+			hp.Enqueue(value)
 			time -= 1
 		Loop
 		Console.WriteLine("Total : " & total)
 		Return total
 	End Function
 
+	' Testing code.
 	Sub Main(ByVal args() As String)
 		Dim cups() As Integer = {2, 1, 7, 4, 2}
 		ChotaBhim.TotalQuantity(cups, cups.Length)
@@ -59,7 +60,7 @@ End Module
 
 
 
-Public Class PriorityQueue(Of T As IComparable(Of T))
+Public Class Heap(Of T As IComparable(Of T))
 	Private Capacity As Integer = 100
 	Private count As Integer ' Number of elements in Heap
 	Private arr() As T ' The Heap array
@@ -183,7 +184,7 @@ Public Class PriorityQueue(Of T As IComparable(Of T))
 
 	Friend Shared Sub HeapSort(ByVal array() As Integer, ByVal inc As Boolean)
 		' Create max heap for increasing order sorting.
-		Dim hp As New PriorityQueue(Of Integer)(array, Not inc)
+		Dim hp As New Heap(Of Integer)(array, Not inc)
 		For i As Integer = 0 To array.Length - 1
 			array(array.Length - i - 1) = hp.Dequeue()
 		Next i

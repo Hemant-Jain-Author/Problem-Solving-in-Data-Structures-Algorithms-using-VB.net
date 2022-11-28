@@ -45,6 +45,7 @@ Public Module ActivitySelection
 		Next j
 	End Sub
 
+	' Testing code.
 	Sub Main(ByVal args() As String)
 		Dim s() As Integer = {1, 5, 0, 3, 5, 6, 8}
 		Dim f() As Integer = {2, 6, 5, 4, 9, 7, 9}

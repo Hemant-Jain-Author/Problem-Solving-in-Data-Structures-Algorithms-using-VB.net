@@ -16,6 +16,7 @@ Public Module TOH
         TOHUtil(num, "A"c, "C"c, "B"c)
     End Sub
 
+    ' Testing code.
     Sub Main(ByVal args As String())
         TOH.TOHSteps(3)
     End Sub

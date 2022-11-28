@@ -35,6 +35,7 @@ Public Module NQueens
         Next
     End Sub
 
+    ' Testing code.
     Sub Main(ByVal args As String())
         Dim Q As Integer() = New Integer(7) {}
         NQueensPattern(Q, 0, 8)

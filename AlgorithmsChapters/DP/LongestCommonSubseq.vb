@@ -1,7 +1,7 @@
 ﻿Imports System
 
 Public Module LongestCommonSubseq
-	Function LCSubStr(ByVal st1 As String, ByVal st2 As String) As Integer
+	Function LCSubSeq(ByVal st1 As String, ByVal st2 As String) As Integer
 		Dim X() As Char = st1.ToCharArray()
 		Dim Y() As Char = st2.ToCharArray()
 		Dim m As Integer = st1.Length
@@ -41,10 +41,11 @@ Public Module LongestCommonSubseq
 		End If
 	End Sub
 
+	' Testing code.
 	Sub Main(ByVal args() As String)
 		Dim X As String = "carpenter"
 		Dim Y As String = "sharpener"
-		Console.WriteLine(LCSubStr(X, Y))
+		Console.WriteLine(LCSubSeq(X, Y))
 	End Sub
 End Module
 

@@ -1,7 +1,7 @@
 ﻿Imports System
 
-Public Module GridUniqueWays
-	Function UniqueWays(ByVal m As Integer, ByVal n As Integer) As Integer
+Public Module GridUniquePaths
+	Function GridUniquePaths(ByVal m As Integer, ByVal n As Integer) As Integer
 		Dim dp(m - 1, n - 1) As Integer
 		dp(0, 0) = 1
 
@@ -23,7 +23,7 @@ Public Module GridUniqueWays
 	End Function
 
 	' Diagonal movement allowed.
-	Function Unique3Ways(ByVal m As Integer, ByVal n As Integer) As Integer
+	Function GridUnique3Paths(ByVal m As Integer, ByVal n As Integer) As Integer
 		Dim dp(m - 1, n - 1) As Integer
 		dp(0, 0) = 1
 
@@ -44,10 +44,10 @@ Public Module GridUniqueWays
 		Return dp(m - 1, n - 1)
 	End Function
 
+	' Testing code.
 	Sub Main(ByVal args() As String)
-		Console.WriteLine(UniqueWays(3, 3))
-		Console.WriteLine(Unique3Ways(3, 3))
-
+		Console.WriteLine(GridUniquePaths(3, 3))
+		Console.WriteLine(GridUnique3Paths(3, 3))
 	End Sub
 End Module
 

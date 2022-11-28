@@ -1,55 +1,55 @@
 ﻿Imports System
 
 Public Module MinCostBinaryTree
-	Function MaxVal(ByVal max(,) As Integer, ByVal i As Integer, ByVal j As Integer) As Integer
-		If max(i, j) <> Integer.MinValue Then
-			Return max(i, j)
-		End If
+Function MaxVal(ByVal max(,) As Integer, ByVal i As Integer, ByVal j As Integer) As Integer
+    If max(i, j) <> Integer.MinValue Then
+        Return max(i, j)
+    End If
 
-		For k As Integer = i To j - 1
-			max(i, j) = Math.Max(max(i, j), Math.Max(MaxVal(max, i, k), MaxVal(max, k + 1, j)))
-		Next k
-		Return max(i, j)
-	End Function
+    For k As Integer = i To j - 1
+        max(i, j) = Math.Max(max(i, j), Math.Max(MaxVal(max, i, k), MaxVal(max, k + 1, j)))
+    Next k
+    Return max(i, j)
+End Function
 
-	Function FindSumTD(ByVal dp(,) As Integer, ByVal max(,) As Integer, ByVal i As Integer, ByVal j As Integer, ByVal arr() As Integer) As Integer
-	If j <= i Then
-		Return 0
-	End If
+Function FindSumTD(ByVal dp(,) As Integer, ByVal max(,) As Integer, ByVal i As Integer, ByVal j As Integer, ByVal arr() As Integer) As Integer
+If j <= i Then
+    Return 0
+End If
 
-	If dp(i, j) <> Integer.MaxValue Then
-		Return dp(i, j)
-	End If
+If dp(i, j) <> Integer.MaxValue Then
+    Return dp(i, j)
+End If
 
-	For k As Integer = i To j - 1
-		dp(i, j) = Math.Min(dp(i, j), FindSumTD(dp, max, i, k, arr) + FindSumTD(dp, max, k + 1, j, arr) + MaxVal(max, i, k) * MaxVal(max, k + 1,j))
-	Next k
-	Return dp(i, j)
-	End Function
+For k As Integer = i To j - 1
+    dp(i, j) = Math.Min(dp(i, j), FindSumTD(dp, max, i, k, arr) + FindSumTD(dp, max, k + 1, j, arr) + MaxVal(max, i, k) * MaxVal(max, k + 1,j))
+Next k
+Return dp(i, j)
+End Function
 
-	Function FindSumTD(ByVal arr() As Integer) As Integer
-		Dim n As Integer = arr.Length
-		Dim dp(n - 1, n - 1) As Integer
+Function FindSumTD(ByVal arr() As Integer) As Integer
+    Dim n As Integer = arr.Length
+    Dim dp(n - 1, n - 1) As Integer
 
-		For i As Integer = 0 To n - 1
-			For j As Integer = 0 To n - 1
-				dp(i, j) = Integer.MaxValue
-			Next j
-		Next i
+    For i As Integer = 0 To n - 1
+        For j As Integer = 0 To n - 1
+            dp(i, j) = Integer.MaxValue
+        Next j
+    Next i
 
-		Dim max(n - 1, n - 1) As Integer
-		For i As Integer = 0 To n - 1
-			For j As Integer = 0 To n - 1
-				max(i, j) = Integer.MinValue
-			Next j
-		Next i
+    Dim max(n - 1, n - 1) As Integer
+    For i As Integer = 0 To n - 1
+        For j As Integer = 0 To n - 1
+            max(i, j) = Integer.MinValue
+        Next j
+    Next i
 
-		For i As Integer = 0 To n - 1
-			max(i, i) = arr(i)
-		Next i
+    For i As Integer = 0 To n - 1
+        max(i, i) = arr(i)
+    Next i
 
-		Return FindSumTD(dp, max, 0, n - 1, arr)
-	End Function
+    Return FindSumTD(dp, max, 0, n - 1, arr)
+End Function
 
 	Function FindSumBU(ByVal arr() As Integer) As Integer
 		Dim n As Integer = arr.Length
@@ -76,6 +76,7 @@ Public Module MinCostBinaryTree
 		Return dp(0, n - 1)
 	End Function
 
+	' Testing code.
 	Sub Main(ByVal args() As String)
 		Dim arr() As Integer = {6, 2, 4}
 		Console.WriteLine("Total cost: " & FindSumTD(arr))

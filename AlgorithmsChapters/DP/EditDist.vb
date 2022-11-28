@@ -30,38 +30,39 @@ Public Module EditDist
 		Return 1 + Min(FindEditDist(str1, str2, m, n - 1), FindEditDist(str1, str2, m - 1, n), FindEditDist(str1, str2, m - 1, n - 1)) ' Replace
 	End Function
 
-	Function FindEditDistDP(ByVal str1 As String, ByVal str2 As String) As Integer
-		Dim m As Integer = str1.Length
-		Dim n As Integer = str2.Length
-		Dim dp(m, n) As Integer
+    Function FindEditDistDP(ByVal str1 As String, ByVal str2 As String) As Integer
+        Dim m As Integer = str1.Length
+        Dim n As Integer = str2.Length
+        Dim dp(m, n) As Integer
 
-		' Fill dp[, ] in bottom up manner.
-		For i As Integer = 0 To m
-			For j As Integer = 0 To n
-				' If any one string is empty, then empty the other string.
-				If i = 0 OrElse j = 0 Then
-					dp(i, j) = (i + j)
-				' If last characters of both strings are same, ignore last characters.
-				ElseIf str1.Chars(i - 1) = str2.Chars(j - 1) Then
-					dp(i, j) = dp(i - 1, j - 1)
-				' If last characters are not same, consider all three operations:
-				' Insert last char of second into first.
-				' Remove last char of first.
-				' Replace last char of first with second.
-				Else
-					dp(i, j) = 1 + Min(dp(i, j - 1), dp(i - 1, j), dp(i - 1, j - 1)) ' Replace
-				End If
-			Next j
-		Next i
-		Return dp(m, n)
-	End Function
+        ' Fill dp[, ] in bottom up manner.
+        For i As Integer = 0 To m
+            For j As Integer = 0 To n
+                ' If any one string is empty, then empty the other string.
+                If i = 0 OrElse j = 0 Then
+                    dp(i, j) = (i + j)
+                ' If last characters of both strings are same, ignore last characters.
+                ElseIf str1.Chars(i - 1) = str2.Chars(j - 1) Then
+                    dp(i, j) = dp(i - 1, j - 1)
+                ' If last characters are not same, consider all three operations:
+                ' Insert last char of second into first.
+                ' Remove last char of first.
+                ' Replace last char of first with second.
+                Else
+                    dp(i, j) = 1 + Min(dp(i, j - 1), dp(i - 1, j), dp(i - 1, j - 1)) ' Replace
+                End If
+            Next j
+        Next i
+        Return dp(m, n)
+    End Function
 
-	Sub Main(ByVal args() As String)
-		Dim str1 As String = "sunday"
-		Dim str2 As String = "saturday"
-		Console.WriteLine(FindEditDist(str1, str2))
-		Console.WriteLine(FindEditDistDP(str1, str2))
-	End Sub
+    ' Testing code.
+    Sub Main(ByVal args() As String)
+        Dim str1 As String = "sunday"
+        Dim str2 As String = "saturday"
+        Console.WriteLine(FindEditDist(str1, str2))
+        Console.WriteLine(FindEditDistDP(str1, str2))
+    End Sub
 End Module
 
 '

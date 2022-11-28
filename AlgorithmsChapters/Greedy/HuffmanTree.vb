@@ -25,23 +25,23 @@ Public Class HuffmanTree
 
 	Public Sub New(ByVal arr() As Char, ByVal freq() As Integer)
 		Dim n As Integer = arr.Length
-		Dim pq As New PriorityQueue(Of Node)()
+		Dim hp As New Heap(Of Node)()
 
 		For i As Integer = 0 To n - 1
 			Dim node As New Node(arr(i), freq(i), Nothing, Nothing)
-			pq.Enqueue(node)
+			hp.Enqueue(node)
 		Next i
 
-		Do While pq.Size() > 1
-			Dim lt As Node = pq.Peek()
-			pq.Dequeue()
-			Dim rt As Node = pq.Peek()
-			pq.Dequeue()
+		Do While hp.Size() > 1
+			Dim lt As Node = hp.Peek()
+			hp.Dequeue()
+			Dim rt As Node = hp.Peek()
+			hp.Dequeue()
 
 			Dim nd As New Node("+"c, lt.freq + rt.freq, lt, rt)
-			pq.Enqueue(nd)
+			hp.Enqueue(nd)
 		Loop
-		root = pq.Peek()
+		root = hp.Peek()
 	End Sub
 
 	Private Sub Print(ByVal root As Node, ByVal s As String)
@@ -58,6 +58,7 @@ Public Class HuffmanTree
 		Print(root, "")
 	End Sub
 
+	' Testing code.
 	Public Shared Sub Main(ByVal args() As String)
 		Dim ar() As Char = {"A"c, "B"c, "C"c, "D"c, "E"c}
 		Dim fr() As Integer = {30, 25, 21, 14, 10}
@@ -77,7 +78,7 @@ End Class
 
 
 
-Public Class PriorityQueue(Of T As IComparable(Of T))
+Public Class Heap(Of T As IComparable(Of T))
 	Private Capacity As Integer = 100
 	Private count As Integer ' Number of elements in Heap
 	Private arr() As T ' The Heap array
@@ -201,7 +202,7 @@ Public Class PriorityQueue(Of T As IComparable(Of T))
 
 	Friend Shared Sub HeapSort(ByVal array() As Integer, ByVal inc As Boolean)
 		' Create max heap for increasing order sorting.
-		Dim hp As New PriorityQueue(Of Integer)(array, Not inc)
+		Dim hp As New Heap(Of Integer)(array, Not inc)
 		For i As Integer = 0 To array.Length - 1
 			array(array.Length - i - 1) = hp.Dequeue()
 		Next i

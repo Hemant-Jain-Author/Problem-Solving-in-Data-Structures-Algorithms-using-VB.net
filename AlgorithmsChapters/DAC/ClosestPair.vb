@@ -10,22 +10,22 @@ Public Module ClosestPair
         End Sub
     End Class
 
-	Public Function ClosestPairBF(ByVal arr(,) As Integer) As Double
-		Dim n As Integer = arr.GetLength(0)
-		Dim dmin As Double = Double.MaxValue, d As Double
-		Dim i As Integer = 0
-		While i < n - 1
-			For j As Integer = i + 1 To n - 1
-				d = Math.Sqrt((arr(i, 0) - arr(j, 0)) * (arr(i, 0) - arr(j, 0)) + (arr(i, 1) - arr(j, 1)) * (arr(i, 1) - arr(j, 1)))
-				If d < dmin Then
-					dmin = d
-				End If
-			Next j
-			i += 1
-		End While
-		Return dmin
-	End Function
-	
+    Public Function ClosestPairBF(ByVal arr(,) As Integer) As Double
+        Dim n As Integer = arr.GetLength(0)
+        Dim dmin As Double = Double.MaxValue, d As Double
+        Dim i As Integer = 0
+        While i < n - 1
+            For j As Integer = i + 1 To n - 1
+                d = Math.Sqrt((arr(i, 0) - arr(j, 0)) * (arr(i, 0) - arr(j, 0)) + (arr(i, 1) - arr(j, 1)) * (arr(i, 1) - arr(j, 1)))
+                If d < dmin Then
+                    dmin = d
+                End If
+            Next j
+            i += 1
+        End While
+        Return dmin
+    End Function
+        
     Function Distance(ByVal a As Point, ByVal b As Point) As Double
         Return Math.Sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y))
     End Function

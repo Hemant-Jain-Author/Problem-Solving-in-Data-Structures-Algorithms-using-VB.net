@@ -34,24 +34,25 @@ Public Module JoinRopes
 	End Function
 
 	Function Join2(ByVal ropes() As Integer, ByVal size As Integer) As Integer
-		Dim pq As New PriorityQueue(Of Integer)()
+		Dim hp As New Heap(Of Integer)()
 		Dim i As Integer = 0
 		For i = 0 To size - 1
-			pq.Enqueue(ropes(i))
+			hp.Enqueue(ropes(i))
 		Next i
 
 		Dim total As Integer = 0
 		Dim value As Integer = 0
-		Do While pq.Size() > 1
-			value = pq.Dequeue()
-			value += pq.Dequeue()
-			pq.Enqueue(value)
+		Do While hp.Size() > 1
+			value = hp.Dequeue()
+			value += hp.Dequeue()
+			hp.Enqueue(value)
 			total += value
 		Loop
 		Console.WriteLine("Total : " & total)
 		Return total
 	End Function
 
+    ' Testing code.
 	Sub Main(ByVal args() As String)
 		Dim ropes() As Integer = {4, 3, 2, 6}
 		Join(ropes, ropes.Length)
@@ -66,7 +67,7 @@ Public Module JoinRopes
 End Module
 
 
-Public Class PriorityQueue(Of T As IComparable(Of T))
+Public Class Heap(Of T As IComparable(Of T))
 	Private Capacity As Integer = 100
 	Private count As Integer ' Number of elements in Heap
 	Private arr() As T ' The Heap array
@@ -190,7 +191,7 @@ Public Class PriorityQueue(Of T As IComparable(Of T))
 
 	Friend Shared Sub HeapSort(ByVal array() As Integer, ByVal inc As Boolean)
 		' Create max heap for increasing order sorting.
-		Dim hp As New PriorityQueue(Of Integer)(array, Not inc)
+		Dim hp As New Heap(Of Integer)(array, Not inc)
 		For i As Integer = 0 To array.Length - 1
 			array(array.Length - i - 1) = hp.Dequeue()
 		Next i

@@ -41,7 +41,7 @@ Public Module MultipleStageGraph
 		Return dist(n - 1)
 	End Function
 
-	' Driver code
+	' Testing code.
 	Sub Main(ByVal args() As String)
 		' Graph stored in the form of an
 		' adjacency Matrix

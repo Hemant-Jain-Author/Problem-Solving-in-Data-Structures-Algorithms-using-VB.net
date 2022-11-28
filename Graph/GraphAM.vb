@@ -58,41 +58,41 @@ Public Class GraphAM
 		End Function
     End Class
 
-Public Sub Dijkstra(ByVal source As Integer)
-    Dim previous As Integer() = New Integer(count - 1) {}
-    Dim dist As Integer() = New Integer(count - 1) {}
-    Dim visited As Boolean() = New Boolean(count - 1) {}
-    For i As Integer = 0 To (count - 1)
-        previous(i) = -1
-        dist(i) = Integer.MaxValue ' infinite
-    Next i
-    dist(source) = 0
-    previous(source) = source
-    Dim hp As Heap(Of Edge) = New Heap(Of Edge)()
-    Dim node As Edge = New Edge(source, source, 0)
-    hp.Enqueue(node)
-    Dim curr As Integer
+    Public Sub Dijkstra(ByVal source As Integer)
+        Dim previous As Integer() = New Integer(count - 1) {}
+        Dim dist As Integer() = New Integer(count - 1) {}
+        Dim visited As Boolean() = New Boolean(count - 1) {}
+        For i As Integer = 0 To (count - 1)
+            previous(i) = -1
+            dist(i) = Integer.MaxValue ' infinite
+        Next i
+        dist(source) = 0
+        previous(source) = source
+        Dim hp As Heap(Of Edge) = New Heap(Of Edge)()
+        Dim node As Edge = New Edge(source, source, 0)
+        hp.Enqueue(node)
+        Dim curr As Integer
 
-    While hp.IsEmpty() <> True
-        node = hp.Dequeue()
-        curr = node.dest
-        visited(curr) = True
-        For dest As Integer = 0 To count - 1
-            Dim cost As Integer = adj(curr, dest)
-            If cost <> 0 Then
-                Dim alt As Integer = cost + dist(curr)
-                If dist(dest) > alt AndAlso visited(dest) = False Then
-                    dist(dest) = alt
-                    previous(dest) = curr
-                    node = New Edge(curr, dest, alt)
-                    hp.Enqueue(node)
+        While hp.IsEmpty() <> True
+            node = hp.Dequeue()
+            curr = node.dest
+            visited(curr) = True
+            For dest As Integer = 0 To count - 1
+                Dim cost As Integer = adj(curr, dest)
+                If cost <> 0 Then
+                    Dim alt As Integer = cost + dist(curr)
+                    If dist(dest) > alt AndAlso visited(dest) = False Then
+                        dist(dest) = alt
+                        previous(dest) = curr
+                        node = New Edge(curr, dest, alt)
+                        hp.Enqueue(node)
+                    End If
                 End If
-            End If
-        Next
-    End While
+            Next
+        End While
 
-    PrintPath(previous, dist, count, source)
-End Sub
+        PrintPath(previous, dist, count, source)
+    End Sub
 
     Private Function PrintPathUtil(ByVal previous As Integer(), ByVal source As Integer, ByVal dest As Integer) As String
         Dim path As String = ""
@@ -119,59 +119,60 @@ End Sub
         Console.WriteLine(output)
     End Sub
 
-Public Sub PrimsMST()
-    Dim previous As Integer() = New Integer(count - 1) {}
-    Dim dist As Integer() = New Integer(count - 1) {}
-    Dim source As Integer = 0
-    Dim visited As Boolean() = New Boolean(count - 1) {}
-    For i As Integer = 0 To (count - 1)
-        previous(i) = -1
-        dist(i) = Integer.MaxValue ' infinite
-    Next i
-    dist(source) = 0
-    previous(source) = source
-    Dim hp As Heap(Of Edge) = New Heap(Of Edge)()
-    Dim node As Edge = New Edge(source, source, 0)
-    hp.Enqueue(node)
+    Public Sub PrimsMST()
+        Dim previous As Integer() = New Integer(count - 1) {}
+        Dim dist As Integer() = New Integer(count - 1) {}
+        Dim source As Integer = 0
+        Dim visited As Boolean() = New Boolean(count - 1) {}
+        For i As Integer = 0 To (count - 1)
+            previous(i) = -1
+            dist(i) = Integer.MaxValue ' infinite
+        Next i
+        dist(source) = 0
+        previous(source) = source
+        Dim hp As Heap(Of Edge) = New Heap(Of Edge)()
+        Dim node As Edge = New Edge(source, source, 0)
+        hp.Enqueue(node)
 
-    While hp.IsEmpty() <> True
-        node = hp.Dequeue()
-        source = node.dest
-        visited(source) = True
-        For dest As Integer = 0 To count - 1
-            Dim cost As Integer = adj(source, dest)
-            If cost <> 0 Then
-                If dist(dest) > cost AndAlso visited(dest) = False Then
-                    dist(dest) = cost
-                    previous(dest) = source
-                    node = New Edge(source, dest, cost)
-                    hp.Enqueue(node)
+        While hp.IsEmpty() <> True
+            node = hp.Dequeue()
+            source = node.dest
+            visited(source) = True
+            For dest As Integer = 0 To count - 1
+                Dim cost As Integer = adj(source, dest)
+                If cost <> 0 Then
+                    If dist(dest) > cost AndAlso visited(dest) = False Then
+                        dist(dest) = cost
+                        previous(dest) = source
+                        node = New Edge(source, dest, cost)
+                        hp.Enqueue(node)
+                    End If
                 End If
+            Next
+        End While
+
+        Dim sum As Integer = 0
+        Dim isMst As Boolean = True
+        Dim output As String = "Edges are "
+        For i As Integer = 0 To count - 1
+            If dist(i) = 99999 Then
+                output += ("(" & i & ", Unreachable) ")
+                isMst = False
+            ElseIf previous(i) <> i Then
+                output += ("(" & previous(i) & "->" & i & " @ " & dist(i) & ") ")
+                sum += dist(i)
             End If
         Next
-    End While
 
-    Dim sum As Integer = 0
-    Dim isMst As Boolean = True
-    Dim output As String = "Edges are "
-    For i As Integer = 0 To count - 1
-        If dist(i) = 99999 Then
-            output += ("(" & i & ", Unreachable) ")
-            isMst = False
-        ElseIf previous(i) <> i Then
-            output += ("(" & previous(i) & "->" & i & " @ " & dist(i) & ") ")
-            sum += dist(i)
+        If isMst Then
+            Console.WriteLine(output)
+            Console.WriteLine("Total MST cost: " & sum)
+        Else
+            Console.WriteLine("Can't get a Spanning Tree")
         End If
-    Next
+    End Sub
 
-    If isMst Then
-        Console.WriteLine(output)
-        Console.WriteLine("Total MST cost: " & sum)
-    Else
-        Console.WriteLine("Can't get a Spanning Tree")
-    End If
-End Sub
-
+    'Testing code.
     Public Shared Sub Main2()
         Dim gph As GraphAM = New GraphAM(9)
         gph.AddUndirectedEdge(0, 1, 4)
@@ -195,160 +196,160 @@ End Sub
 ' Total MST cost: 37
 ' Shortest Paths: (0->1 @ 4) (0->1->2 @ 12) (0->1->2->3 @ 19) (0->7->6->5->4 @ 21) (0->7->6->5 @ 11) (0->7->6 @ 9) (0->7 @ 8) (0->1->2->8 @ 14)
 
-Public Function HamiltonianPathUtil(ByVal path As Integer(), ByVal pSize As Integer, ByVal added As Integer()) As Boolean
-    If pSize = count Then
-        Return True
-    End If
-
-    For vertex As Integer = 0 To count - 1
-        If pSize = 0 OrElse (adj(path(pSize - 1), vertex) = 1 AndAlso added(vertex) = 0) Then
-            path(pSize) = vertex
-            pSize += 1
-            added(vertex) = 1
-            If HamiltonianPathUtil(path, pSize, added) Then
-                Return True
-            End If
-            pSize -= 1
-            added(vertex) = 0
-        End If
-    Next
-    Return False
-End Function
-
-Public Function HamiltonianPath() As Boolean
-    Dim path As Integer() = New Integer(count - 1) {}
-    Dim added As Integer() = New Integer(count - 1) {}
-    If HamiltonianPathUtil(path, 0, added) Then
-        Console.Write("Hamiltonian Path found :: ")
-        For i As Integer = 0 To count - 1
-            Console.Write(" " & path(i))
-        Next
-        Console.WriteLine()
-        Return True
-    End If
-    Console.WriteLine("Hamiltonian Path not found")
-    Return False
-End Function
-
-Public Function HamiltonianCycleUtil(ByVal path As Integer(), ByVal pSize As Integer, ByVal added As Integer()) As Boolean
-    If pSize = count Then
-        If adj(path(pSize - 1), path(0)) = 1 Then
-            path(pSize) = path(0)
+    Public Function HamiltonianPathUtil(ByVal path As Integer(), ByVal pSize As Integer, ByVal added As Integer()) As Boolean
+        If pSize = count Then
             Return True
-        Else
-            Return False
         End If
-    End If
 
-    For vertex As Integer = 0 To count - 1
-        If pSize = 0 OrElse (adj(path(pSize - 1), vertex) = 1 AndAlso added(vertex) = 0) Then
-            path(pSize) = vertex
-            pSize += 1
-            added(vertex) = 1
-            If HamiltonianCycleUtil(path, pSize, added) Then
+        For vertex As Integer = 0 To count - 1
+            If pSize = 0 OrElse (adj(path(pSize - 1), vertex) = 1 AndAlso added(vertex) = 0) Then
+                path(pSize) = vertex
+                pSize += 1
+                added(vertex) = 1
+                If HamiltonianPathUtil(path, pSize, added) Then
+                    Return True
+                End If
+                pSize -= 1
+                added(vertex) = 0
+            End If
+        Next
+        Return False
+    End Function
+
+    Public Function HamiltonianPath() As Boolean
+        Dim path As Integer() = New Integer(count - 1) {}
+        Dim added As Integer() = New Integer(count - 1) {}
+        If HamiltonianPathUtil(path, 0, added) Then
+            Console.Write("Hamiltonian Path found :: ")
+            For i As Integer = 0 To count - 1
+                Console.Write(" " & path(i))
+            Next
+            Console.WriteLine()
+            Return True
+        End If
+        Console.WriteLine("Hamiltonian Path not found")
+        Return False
+    End Function
+
+    Public Function HamiltonianCycleUtil(ByVal path As Integer(), ByVal pSize As Integer, ByVal added As Integer()) As Boolean
+        If pSize = count Then
+            If adj(path(pSize - 1), path(0)) = 1 Then
+                path(pSize) = path(0)
                 Return True
+            Else
+                Return False
             End If
-            pSize -= 1
-            added(vertex) = 0
         End If
-    Next
-    Return False
-End Function
 
-Public Function HamiltonianCycle() As Boolean
-    Dim path As Integer() = New Integer(count + 1 - 1) {}
-    Dim added As Integer() = New Integer(count - 1) {}
-    If HamiltonianCycleUtil(path, 0, added) Then
-        Console.Write("Hamiltonian Cycle found :: ")
-        For i As Integer = 0 To count
-            Console.Write(" " & path(i))
-        Next
-        Console.WriteLine()
-        Return True
-    End If
-    Console.WriteLine("Hamiltonian Cycle not found")
-    Return False
-End Function
-
-Public Shared Sub Main3()
-    Dim count As Integer = 5
-    Dim graph As GraphAM = New GraphAM(count)
-    Dim adj As Integer(,) = New Integer(,) {
-    {0, 1, 0, 1, 0},
-    {1, 0, 1, 1, 0},
-    {0, 1, 0, 0, 1},
-    {1, 1, 0, 0, 1},
-    {0, 1, 1, 1, 0}}
-
-    For i As Integer = 0 To count - 1
-        For j As Integer = 0 To count - 1
-            If adj(i, j) = 1 Then
-                graph.AddDirectedEdge(i, j, 1)
+        For vertex As Integer = 0 To count - 1
+            If pSize = 0 OrElse (adj(path(pSize - 1), vertex) = 1 AndAlso added(vertex) = 0) Then
+                path(pSize) = vertex
+                pSize += 1
+                added(vertex) = 1
+                If HamiltonianCycleUtil(path, pSize, added) Then
+                    Return True
+                End If
+                pSize -= 1
+                added(vertex) = 0
             End If
         Next
-    Next
+        Return False
+    End Function
 
-    Console.WriteLine("HamiltonianPath : " & graph.HamiltonianPath())
-    Dim graph2 As GraphAM = New GraphAM(count)
-    Dim adj2 As Integer(,) = New Integer(,) {
-    {0, 1, 0, 1, 0},
-    {1, 0, 1, 1, 0},
-    {0, 1, 0, 0, 1},
-    {1, 1, 0, 0, 0},
-    {0, 1, 1, 0, 0}}
+    Public Function HamiltonianCycle() As Boolean
+        Dim path As Integer() = New Integer(count + 1 - 1) {}
+        Dim added As Integer() = New Integer(count - 1) {}
+        If HamiltonianCycleUtil(path, 0, added) Then
+            Console.Write("Hamiltonian Cycle found :: ")
+            For i As Integer = 0 To count
+                Console.Write(" " & path(i))
+            Next
+            Console.WriteLine()
+            Return True
+        End If
+        Console.WriteLine("Hamiltonian Cycle not found")
+        Return False
+    End Function
 
-    For i As Integer = 0 To count - 1
-        For j As Integer = 0 To count - 1
-            If adj2(i, j) = 1 Then
-                graph2.AddDirectedEdge(i, j, 1)
-            End If
+    Public Shared Sub Main3()
+        Dim count As Integer = 5
+        Dim graph As GraphAM = New GraphAM(count)
+        Dim adj As Integer(,) = New Integer(,) {
+        {0, 1, 0, 1, 0},
+        {1, 0, 1, 1, 0},
+        {0, 1, 0, 0, 1},
+        {1, 1, 0, 0, 1},
+        {0, 1, 1, 1, 0}}
+
+        For i As Integer = 0 To count - 1
+            For j As Integer = 0 To count - 1
+                If adj(i, j) = 1 Then
+                    graph.AddDirectedEdge(i, j, 1)
+                End If
+            Next
         Next
-    Next
 
-    Console.WriteLine("HamiltonianPath :  " & graph2.HamiltonianPath())
-End Sub
+        Console.WriteLine("HamiltonianPath : " & graph.HamiltonianPath())
+        Dim graph2 As GraphAM = New GraphAM(count)
+        Dim adj2 As Integer(,) = New Integer(,) {
+        {0, 1, 0, 1, 0},
+        {1, 0, 1, 1, 0},
+        {0, 1, 0, 0, 1},
+        {1, 1, 0, 0, 0},
+        {0, 1, 1, 0, 0}}
+
+        For i As Integer = 0 To count - 1
+            For j As Integer = 0 To count - 1
+                If adj2(i, j) = 1 Then
+                    graph2.AddDirectedEdge(i, j, 1)
+                End If
+            Next
+        Next
+
+        Console.WriteLine("HamiltonianPath :  " & graph2.HamiltonianPath())
+    End Sub
 ' Hamiltonian Path found ::  0 1 2 4 3
 ' HamiltonianPath : True
 ' Hamiltonian Path found ::  0 3 1 2 4
 ' HamiltonianPath :  True
 
-Public Shared Sub Main4()
-    Dim count As Integer = 5
-    Dim graph As GraphAM = New GraphAM(count)
-    Dim adj As Integer(,) = New Integer(,) {
-    {0, 1, 0, 1, 0},
-    {1, 0, 1, 1, 0},
-    {0, 1, 0, 0, 1},
-    {1, 1, 0, 0, 1},
-    {0, 1, 1, 1, 0}}
+    Public Shared Sub Main4()
+        Dim count As Integer = 5
+        Dim graph As GraphAM = New GraphAM(count)
+        Dim adj As Integer(,) = New Integer(,) {
+        {0, 1, 0, 1, 0},
+        {1, 0, 1, 1, 0},
+        {0, 1, 0, 0, 1},
+        {1, 1, 0, 0, 1},
+        {0, 1, 1, 1, 0}}
 
-    For i As Integer = 0 To count - 1
-        For j As Integer = 0 To count - 1
-            If adj(i, j) = 1 Then
-                graph.AddDirectedEdge(i, j, 1)
-            End If
+        For i As Integer = 0 To count - 1
+            For j As Integer = 0 To count - 1
+                If adj(i, j) = 1 Then
+                    graph.AddDirectedEdge(i, j, 1)
+                End If
+            Next
         Next
-    Next
 
-    Console.WriteLine("HamiltonianCycle : " & graph.HamiltonianCycle())
-    Dim graph2 As GraphAM = New GraphAM(count)
-    Dim adj2 As Integer(,) = New Integer(,) {
-    {0, 1, 0, 1, 0},
-    {1, 0, 1, 1, 0},
-    {0, 1, 0, 0, 1},
-    {1, 1, 0, 0, 0},
-    {0, 1, 1, 0, 0}}
+        Console.WriteLine("HamiltonianCycle : " & graph.HamiltonianCycle())
+        Dim graph2 As GraphAM = New GraphAM(count)
+        Dim adj2 As Integer(,) = New Integer(,) {
+        {0, 1, 0, 1, 0},
+        {1, 0, 1, 1, 0},
+        {0, 1, 0, 0, 1},
+        {1, 1, 0, 0, 0},
+        {0, 1, 1, 0, 0}}
 
-    For i As Integer = 0 To count - 1
-        For j As Integer = 0 To count - 1
-            If adj2(i, j) = 1 Then
-                graph2.AddDirectedEdge(i, j, 1)
-            End If
+        For i As Integer = 0 To count - 1
+            For j As Integer = 0 To count - 1
+                If adj2(i, j) = 1 Then
+                    graph2.AddDirectedEdge(i, j, 1)
+                End If
+            Next
         Next
-    Next
 
-    Console.WriteLine("HamiltonianCycle :  " & graph2.HamiltonianCycle())
-End Sub
+        Console.WriteLine("HamiltonianCycle :  " & graph2.HamiltonianCycle())
+    End Sub
 
 ' Hamiltonian Cycle found ::  0 1 2 4 3 0
 ' HamiltonianCycle : True

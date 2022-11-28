@@ -23,19 +23,20 @@ Public Module SubsetSum
         End If
 
         ' constraint check
-		If curr >= n OrElse sum > target Then
+        If curr >= n OrElse sum > target Then
             ' Backtracking.
-			Return
+            Return
         End If
 
         ' Current element included.
-		flags(curr) = True
+        flags(curr) = True
         FindSubsetSum(arr, n, flags, sum + arr(curr), curr + 1, target)
         ' Current element excluded.
-		flags(curr) = False
+        flags(curr) = False
         FindSubsetSum(arr, n, flags, sum, curr + 1, target)
     End Sub
 
+    ' Testing code.
     Sub Main(ByVal args As String())
         Dim arr As Integer() = New Integer() {15, 22, 14, 26, 32, 9, 16, 8}
         Dim target As Integer = 53
